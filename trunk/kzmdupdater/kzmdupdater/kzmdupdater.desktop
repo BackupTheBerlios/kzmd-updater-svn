@@ -1,7 +1,0 @@
-[Desktop Entry]
-Encoding=UTF-8
-Name=kzmdupdater
-Exec=kzmdupdater %i %m -caption "%c"
-Type=Application
-Terminal=0
-GenericName=A KDE Application
