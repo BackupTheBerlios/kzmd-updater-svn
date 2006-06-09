@@ -46,6 +46,7 @@ class SUSEUpdater : public KMainWindow {
 		void slotExit();
 		void slotPackageSelected(QListViewItem *packageSelected);
 		void configClicked();
+		void installClicked();
 
 	private:
 

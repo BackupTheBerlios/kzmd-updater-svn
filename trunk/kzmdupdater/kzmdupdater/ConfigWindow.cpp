@@ -57,5 +57,6 @@ void ConfigWindow::initGUI() {
 	mainLayout->setMargin(10);	
 	setMinimumWidth(400);
 	setMinimumHeight(500);
+	setCaption(i18n("Configure Updater"));
 	show();
 }

@@ -60,12 +60,14 @@ am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(desktopdir)"
 binPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
 PROGRAMS = $(bin_PROGRAMS)
 am_kzmdupdater_OBJECTS = main.$(OBJEXT) SUSEUpdater.$(OBJEXT) \
-	HeaderWidget.$(OBJEXT) ConfigWindow.$(OBJEXT)
+	HeaderWidget.$(OBJEXT) ConfigWindow.$(OBJEXT) \
+	InstallWindow.$(OBJEXT)
 #>- kzmdupdater_OBJECTS = $(am_kzmdupdater_OBJECTS)
-#>+ 6
+#>+ 7
 kzmdupdater_final_OBJECTS = kzmdupdater.all_cpp.o 
 kzmdupdater_nofinal_OBJECTS = main.$(OBJEXT) SUSEUpdater.$(OBJEXT) \
-	HeaderWidget.$(OBJEXT) ConfigWindow.$(OBJEXT)\
+	HeaderWidget.$(OBJEXT) ConfigWindow.$(OBJEXT) \
+	InstallWindow.$(OBJEXT)\
 SUSEUpdater.moc.o HeaderWidget.moc.o InstallWindow.moc.o ConfigWindow.moc.o 
 @KDE_USE_FINAL_FALSE@kzmdupdater_OBJECTS = $(kzmdupdater_nofinal_OBJECTS)
 @KDE_USE_FINAL_TRUE@kzmdupdater_OBJECTS = $(kzmdupdater_final_OBJECTS)
@@ -365,10 +367,10 @@ kzmdupdater_LDFLAGS = $(KDE_RPATH) $(all_libraries)
 kzmdupdater_LDADD = $(LIB_KFILE)
 
 # which sources should be compiled for kzmdupdater
-kzmdupdater_SOURCES = main.cpp  SUSEUpdater.cpp HeaderWidget.cpp ConfigWindow.cpp
+kzmdupdater_SOURCES = main.cpp  SUSEUpdater.cpp HeaderWidget.cpp ConfigWindow.cpp InstallWindow.cpp
 
 # these are the headers for your project that won't be installed
-noinst_HEADERS = SUSEUpdater.h HeaderWidget.h ConfigWindow.h
+noinst_HEADERS = SUSEUpdater.h HeaderWidget.h ConfigWindow.h InstallWindow.h
 
 # let automoc handle all of the meta source files (moc)
 #>- METASOURCES = AUTO
@@ -464,6 +466,7 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ConfigWindow.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/HeaderWidget.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/InstallWindow.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/SUSEUpdater.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
 
@@ -729,7 +732,7 @@ clean-metasources:
 	-rm -f  SUSEUpdater.moc.cpp HeaderWidget.moc.cpp InstallWindow.moc.cpp ConfigWindow.moc.cpp
 
 #>+ 2
-KDE_DIST=kzmdupdater.desktop Makefile.in InstallWindow.h UpdaterCore.txt Makefile.am 
+KDE_DIST=kzmdupdater.desktop Makefile.in Makefile.am 
 
 #>+ 2
 docs-am:
@@ -773,11 +776,11 @@ bcheck-am:
 
 
 #>+ 11
-kzmdupdater.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/main.cpp $(srcdir)/SUSEUpdater.cpp $(srcdir)/HeaderWidget.cpp $(srcdir)/ConfigWindow.cpp SUSEUpdater.moc.cpp HeaderWidget.moc.cpp ConfigWindow.moc.cpp InstallWindow.moc.cpp 
+kzmdupdater.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/main.cpp $(srcdir)/SUSEUpdater.cpp $(srcdir)/HeaderWidget.cpp $(srcdir)/ConfigWindow.cpp $(srcdir)/InstallWindow.cpp SUSEUpdater.moc.cpp HeaderWidget.moc.cpp ConfigWindow.moc.cpp InstallWindow.moc.cpp 
 	@echo 'creating kzmdupdater.all_cpp.cpp ...'; \
 	rm -f kzmdupdater.all_cpp.files kzmdupdater.all_cpp.final; \
 	echo "#define KDE_USE_FINAL 1" >> kzmdupdater.all_cpp.final; \
-	for file in main.cpp SUSEUpdater.cpp HeaderWidget.cpp ConfigWindow.cpp SUSEUpdater.moc.cpp HeaderWidget.moc.cpp ConfigWindow.moc.cpp InstallWindow.moc.cpp ; do \
+	for file in main.cpp SUSEUpdater.cpp HeaderWidget.cpp ConfigWindow.cpp InstallWindow.cpp SUSEUpdater.moc.cpp HeaderWidget.moc.cpp ConfigWindow.moc.cpp InstallWindow.moc.cpp ; do \
 	  echo "#include \"$$file\"" >> kzmdupdater.all_cpp.files; \
 	  test ! -f $(srcdir)/$$file || egrep '^#pragma +implementation' $(srcdir)/$$file >> kzmdupdater.all_cpp.final; \
 	done; \

@@ -20,10 +20,17 @@
 #ifndef _INSTALL_WINDOW_
 #define _INSTALL_WINDOW_
 
-#include <kmainwindow.h>
+#include <kprogress.h>
+#include <kpushbutton.h>
 
-/*
-class InstallWindow : public KMainWindow {
+#include <qwidget.h>
+#include <qlistview.h>
+#include <qlabel.h>
+#include <qlayout.h>
+
+#include "HeaderWidget.h"
+
+class InstallWindow : public QWidget {
 
 	Q_OBJECT
 
@@ -34,8 +41,15 @@ class InstallWindow : public KMainWindow {
 
 	private:
 
+		void initGUI();
+
+		HeaderWidget *header;
+		QListView *installList;
+		KProgress *progressBar;
+		KPushButton *abortButton;
+
+		QVBoxLayout *mainLayout;
 };
-*/
 
 
 #endif

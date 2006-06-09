@@ -22,6 +22,7 @@
 #include <kiconloader.h>
 #include <klocale.h>
 #include "ConfigWindow.h"
+#include "InstallWindow.h"
 #include <iostream>
 using namespace std;
 
@@ -63,6 +64,7 @@ void SUSEUpdater::initGUI() {
 	buttonsLayout->addWidget(installButton,false, Qt::AlignRight);
 
 	connect(configureButton, SIGNAL(clicked()), this, SLOT(configClicked()));
+	connect(installButton, SIGNAL(clicked()), this, SLOT(installClicked()));
 
 	header->setDescription(i18n("<b>Available Updates:</b><br> The following are software upgrades and patches to add features and fix bugs.<br> <u>Select those you would like and press install.</u>"));
 
@@ -84,6 +86,10 @@ void SUSEUpdater::initGUI() {
 
 void SUSEUpdater::configClicked() {
 	ConfigWindow *win = new ConfigWindow();
+}
+
+void SUSEUpdater::installClicked() {
+	InstallWindow *win = new InstallWindow();
 }
 
 SUSEUpdater::~SUSEUpdater() {
