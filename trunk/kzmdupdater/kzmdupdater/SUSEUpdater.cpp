@@ -26,7 +26,7 @@
 #include <iostream>
 using namespace std;
 
-#define TRAY_ICON_GREEN "trayicon-green.png"
+#define TRAY_ICON_GREEN "suse_green.png"
 
 
 SUSEUpdater::SUSEUpdater() : KMainWindow(0L, "kzmdupdater") {
@@ -79,6 +79,8 @@ void SUSEUpdater::initGUI() {
 	mainBox->setSpacing(10);
 	mainBox->setMargin(10);
 	setCentralWidget(mainBox);
+	setMinimumWidth(400);
+	setMinimumHeight(600);
 	trayApplet->show();
 	hide();
 	return;
@@ -93,14 +95,6 @@ void SUSEUpdater::installClicked() {
 }
 
 SUSEUpdater::~SUSEUpdater() {
-	delete configureButton;
-	delete cancelButton;
-	delete installButton;
-	delete buttons;
-	delete packageDescription;
-	delete updateList;
-	delete header;
-	delete trayApplet;
 }
 
 void SUSEUpdater::checkUpdates() {
@@ -108,8 +102,14 @@ void SUSEUpdater::checkUpdates() {
 	QCheckListItem *testItem = new QCheckListItem(updateList, QString("Testing"), QCheckListItem::CheckBox);
 
 	testItem->setText(1,"0.3");
+	testItem->setText(2,"0.4");
+	testItem->setText(3, "5kb");
 
 	testItem = new QCheckListItem(updateList, "Testing 2", QCheckListItem::CheckBox);
+
+	testItem->setText(1,"0.3");
+	testItem->setText(2,"0.4");
+	testItem->setText(3, "5kb");
 }
 
 void SUSEUpdater::slotPackageSelected(QListViewItem *packageSelected) {

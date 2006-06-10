@@ -1952,7 +1952,7 @@ fi
 
 
 # Define the identity of the package.
- PACKAGE=kzmdupdater-0.0.1
+ PACKAGE=kzmdupdater
  VERSION="3.5.1"
 
 

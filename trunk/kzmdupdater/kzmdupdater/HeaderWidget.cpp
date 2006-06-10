@@ -6,7 +6,7 @@ HeaderWidget::HeaderWidget(QWidget *parent) : QWidget(parent) {
 	suseLogo = new QLabel(this);
 	text = new QLabel(this);
 
-	suseLogo->setPixmap(UserIcon("opensuse.png"));
+	suseLogo->setPixmap(UserIcon("suse_logo.png"));
 
 	layout->addWidget(suseLogo,false,Qt::AlignLeft);
 	layout->addWidget(text,true,Qt::AlignRight);
