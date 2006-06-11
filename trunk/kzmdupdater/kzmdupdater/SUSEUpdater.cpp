@@ -21,10 +21,9 @@
 #include "SUSEUpdater.h"
 #include <kiconloader.h>
 #include <klocale.h>
+#include "HeaderWidget.h"
 #include "ConfigWindow.h"
 #include "InstallWindow.h"
-#include <iostream>
-using namespace std;
 
 #define TRAY_ICON_GREEN "suse_green.png"
 
@@ -50,6 +49,8 @@ void SUSEUpdater::initGUI() {
 	configureButton = new QPushButton(i18n("Configure Updater"),buttons);
 	cancelButton = new QPushButton(i18n("Cancel"),buttons);
 	installButton = new QPushButton(i18n("Install"),buttons);
+	configureWin = NULL;
+	installWin = NULL;
 
 	trayApplet->setPixmap(UserIcon(TRAY_ICON_GREEN));
 	trayApplet->setScaledContents(true);
@@ -87,14 +88,18 @@ void SUSEUpdater::initGUI() {
 }
 
 void SUSEUpdater::configClicked() {
-	ConfigWindow *win = new ConfigWindow();
+	configureWin = new ConfigWindow();
 }
 
 void SUSEUpdater::installClicked() {
-	InstallWindow *win = new InstallWindow();
+	installWin = new InstallWindow();
 }
 
 SUSEUpdater::~SUSEUpdater() {
+	if (configureWin)
+		delete configureWin;
+	if (installWin)
+		delete installWin;
 }
 
 void SUSEUpdater::checkUpdates() {

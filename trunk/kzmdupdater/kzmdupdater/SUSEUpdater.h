@@ -30,7 +30,10 @@
 #include <qvbox.h>
 #include <qpushbutton.h>
 
-#include "HeaderWidget.h"
+class HeaderWidget;
+class ConfigWindow;
+class InstallWindow;
+
 
 class SUSEUpdater : public KMainWindow {
 
@@ -65,6 +68,10 @@ class SUSEUpdater : public KMainWindow {
 		QVBox *mainBox;
 		QWidget *buttons;
 		QHBoxLayout *buttonsLayout;
+
+
+		InstallWindow *installWin;
+		ConfigWindow *configureWin;
 		
 };
 

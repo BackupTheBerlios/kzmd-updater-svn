@@ -18,7 +18,6 @@
 */
 
 #include "ConfigWindow.h"
-
 #include <klocale.h>
 
 ConfigWindow::ConfigWindow(QWidget *parent) : QWidget(parent) {
@@ -29,7 +28,6 @@ ConfigWindow::ConfigWindow(QWidget *parent) : QWidget(parent) {
 
 
 ConfigWindow::~ConfigWindow() {
-
 }
 
 void ConfigWindow::initGUI() {
