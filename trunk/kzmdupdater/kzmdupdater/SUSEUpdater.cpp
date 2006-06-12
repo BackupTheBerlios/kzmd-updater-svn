@@ -49,8 +49,6 @@ void SUSEUpdater::initGUI() {
 	configureButton = new QPushButton(i18n("Configure Updater"),buttons);
 	cancelButton = new QPushButton(i18n("Cancel"),buttons);
 	installButton = new QPushButton(i18n("Install"),buttons);
-	configureWin = NULL;
-	installWin = NULL;
 
 	trayApplet->setPixmap(UserIcon(TRAY_ICON_GREEN));
 	trayApplet->setScaledContents(true);
@@ -66,6 +64,7 @@ void SUSEUpdater::initGUI() {
 
 	connect(configureButton, SIGNAL(clicked()), this, SLOT(configClicked()));
 	connect(installButton, SIGNAL(clicked()), this, SLOT(installClicked()));
+	connect(cancelButton, SIGNAL(clicked()), this, SLOT(hide()));
 
 	header->setDescription(i18n("<b>Available Updates:</b><br> The following are software upgrades and patches to add features and fix bugs.<br> <u>Select those you would like and press install.</u>"));
 
@@ -80,26 +79,21 @@ void SUSEUpdater::initGUI() {
 	mainBox->setSpacing(10);
 	mainBox->setMargin(10);
 	setCentralWidget(mainBox);
-	setMinimumWidth(400);
-	setMinimumHeight(600);
 	trayApplet->show();
+	resize(400,500);
 	hide();
 	return;
 }
 
 void SUSEUpdater::configClicked() {
-	configureWin = new ConfigWindow();
+	ConfigWindow *win = new ConfigWindow();
 }
 
 void SUSEUpdater::installClicked() {
-	installWin = new InstallWindow();
+	InstallWindow *win = new InstallWindow();
 }
 
 SUSEUpdater::~SUSEUpdater() {
-	if (configureWin)
-		delete configureWin;
-	if (installWin)
-		delete installWin;
 }
 
 void SUSEUpdater::checkUpdates() {

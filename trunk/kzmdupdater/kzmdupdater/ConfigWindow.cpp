@@ -20,10 +20,10 @@
 #include "ConfigWindow.h"
 #include <klocale.h>
 
-ConfigWindow::ConfigWindow(QWidget *parent) : QWidget(parent) {
+ConfigWindow::ConfigWindow(QWidget *parent) : 
+	QWidget(parent,0,Qt::WDestructiveClose) {
 
 	initGUI();
-
 }
 
 
@@ -44,17 +44,23 @@ void ConfigWindow::initGUI() {
 
 	mainLayout->addWidget(header);
 	mainLayout->addWidget(serverList);
+	mainLayout->setSpacing(10);
 
 	buttonLayout = new QHBoxLayout(mainLayout);
 	buttonLayout->addWidget(addButton, false, 0);
-	buttonLayout->addSpacing(100);
+	buttonLayout->addSpacing(300);
 	buttonLayout->addWidget(removeButton, false, 0);
+
+	addButton->setMinimumHeight(30);
+	removeButton->setMinimumHeight(30);
+	closeButton->setMinimumHeight(30);
+
+	connect(closeButton, SIGNAL(clicked()), this, SLOT(close()));
 
 	mainLayout->addWidget(closeButton, false, Qt::AlignRight);
 
 	mainLayout->setMargin(10);	
-	setMinimumWidth(400);
-	setMinimumHeight(500);
 	setCaption(i18n("Configure Updater"));
+	resize(250,400);
 	show();
 }

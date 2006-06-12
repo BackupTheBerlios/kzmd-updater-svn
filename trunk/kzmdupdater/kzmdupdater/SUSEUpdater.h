@@ -23,6 +23,8 @@
 
 #include <kmainwindow.h>
 #include <ksystemtray.h>
+#include <dcopclient.h>
+#include <dcopobject.h>
 
 #include <qlistview.h>
 #include <ktextedit.h>
@@ -31,8 +33,6 @@
 #include <qpushbutton.h>
 
 class HeaderWidget;
-class ConfigWindow;
-class InstallWindow;
 
 
 class SUSEUpdater : public KMainWindow {
@@ -69,10 +69,6 @@ class SUSEUpdater : public KMainWindow {
 		QWidget *buttons;
 		QHBoxLayout *buttonsLayout;
 
-
-		InstallWindow *installWin;
-		ConfigWindow *configureWin;
-		
 };
 
 #endif

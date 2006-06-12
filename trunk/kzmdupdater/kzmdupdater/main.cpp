@@ -17,13 +17,28 @@
    Boston, MA 02110-1301, USA.
 */
 
-
-#include <kapplication.h>
+#include <kuniqueapplication.h>
+#include <kcmdlineargs.h>
+#include <kaboutdata.h>
+#include <kdebug.h>
 #include "SUSEUpdater.h"
+
+#define VERSION "0.0.1"
 
 int main(int argc, char **argv) {
 
-	KApplication app(argc, argv, "KZMD-Updater");
+	KAboutData about("kzmdupdater", "kzmdupdater", VERSION, "SUSE Updater");
+	KCmdLineArgs::init(argc, argv, &about);
+	KUniqueApplication::addCmdLineOptions();
+
+
+	if (!KUniqueApplication::start()) {
+		kdError() << "ERROR: We are already running" << endl;
+		exit(0);
+	}	
+	KUniqueApplication app(true,true,false);
 	SUSEUpdater *mainApp = new SUSEUpdater();
-	return app.exec();
+	app.setMainWidget(mainApp);
+	app.exec();
+	return 0;
 }
