@@ -20,10 +20,11 @@
 #include "ConfigWindow.h"
 #include <klocale.h>
 
-ConfigWindow::ConfigWindow(QWidget *parent) : 
+ConfigWindow::ConfigWindow(UpdaterCore *_core, QWidget *parent) : 
 	QWidget(parent,0,Qt::WDestructiveClose) {
 
 	initGUI();
+	core = _core;
 }
 
 
@@ -64,3 +65,10 @@ void ConfigWindow::initGUI() {
 	resize(250,400);
 	show();
 }
+void ConfigWindow::gotList(QValueList<Service> *servers) {
+}
+void ConfigWindow::addedServer(int status) {
+}
+void ConfigWindow::removedServer(int status) {
+}
+

@@ -27,6 +27,7 @@
 #include <qlayout.h>
 
 #include "HeaderWidget.h"
+#include "UpdaterCore.h"
 
 class ConfigWindow : public QWidget {
 
@@ -34,8 +35,16 @@ class ConfigWindow : public QWidget {
 
 	public:
 
-		ConfigWindow(QWidget *parent=0);
+		ConfigWindow(UpdaterCore *_core, QWidget *parent=0);
 		~ConfigWindow();
+
+
+	private slots:
+
+		void gotList(QValueList<Service>*);
+		void addedServer(int);
+		void removedServer(int);
+
 
 	private:
 
@@ -50,6 +59,8 @@ class ConfigWindow : public QWidget {
 		KPushButton *closeButton;
 
 		QHBoxLayout *buttonLayout;
+
+		UpdaterCore *core;
 };
 
 #endif

@@ -49,6 +49,7 @@ void SUSEUpdater::initGUI() {
 	configureButton = new QPushButton(i18n("Configure Updater"),buttons);
 	cancelButton = new QPushButton(i18n("Cancel"),buttons);
 	installButton = new QPushButton(i18n("Install"),buttons);
+	core = new UpdaterCore();
 
 	trayApplet->setPixmap(UserIcon(TRAY_ICON_GREEN));
 	trayApplet->setScaledContents(true);
@@ -86,7 +87,7 @@ void SUSEUpdater::initGUI() {
 }
 
 void SUSEUpdater::configClicked() {
-	ConfigWindow *win = new ConfigWindow();
+	ConfigWindow *win = new ConfigWindow(core);
 }
 
 void SUSEUpdater::installClicked() {
@@ -117,4 +118,7 @@ void SUSEUpdater::slotPackageSelected(QListViewItem *packageSelected) {
 
 void SUSEUpdater::slotExit() {
 	close();
+}	
+
+void SUSEUpdater::gotList(QValueList<Package> *packageList,QValueList<Patch> *patchList) {
 }

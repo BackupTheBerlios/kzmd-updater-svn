@@ -32,6 +32,8 @@
 #include <qvbox.h>
 #include <qpushbutton.h>
 
+#include "UpdaterCore.h"
+
 class HeaderWidget;
 
 
@@ -51,6 +53,10 @@ class SUSEUpdater : public KMainWindow {
 		void configClicked();
 		void installClicked();
 
+	private slots:
+
+		void gotList(QValueList<Package>*,QValueList<Patch>*);
+
 	private:
 
 		void initGUI();
@@ -68,6 +74,8 @@ class SUSEUpdater : public KMainWindow {
 		QVBox *mainBox;
 		QWidget *buttons;
 		QHBoxLayout *buttonsLayout;
+
+		UpdaterCore *core;
 
 };
 

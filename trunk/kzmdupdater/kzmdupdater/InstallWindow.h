@@ -39,6 +39,8 @@ class InstallWindow : public QWidget {
 		InstallWindow(QWidget *parent=0);
 		~InstallWindow();
 
+	private slots:
+
 	private:
 
 		void initGUI();

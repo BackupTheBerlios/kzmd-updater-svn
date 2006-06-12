@@ -66,7 +66,7 @@ struct Patch {
 
 /* Core Typedef */
 
-typedef ZmdUpdaterCore UpdaterCore;
+typedef class ZmdUpdaterCore UpdaterCore;
 
 
 #endif
