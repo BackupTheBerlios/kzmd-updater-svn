@@ -20,6 +20,9 @@
 #ifndef _UPDATER_CORE_H_
 #define _UPDATER_CORE_H_
 
+#include <qstring.h>
+#include <qvaluelist.h>
+#include <qobject.h>
 
 /* Error Codes */
 
