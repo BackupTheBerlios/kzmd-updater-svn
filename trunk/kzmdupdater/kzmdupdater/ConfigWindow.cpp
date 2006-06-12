@@ -57,6 +57,9 @@ void ConfigWindow::initGUI() {
 	closeButton->setMinimumHeight(30);
 
 	connect(closeButton, SIGNAL(clicked()), this, SLOT(close()));
+	connect(addButton, SIGNAL(clicked()), this, SLOT(addServer()));
+	connect(removeButton, SIGNAL(clicked()), this, SLOT(removeServer()));
+	connect(serverList, SIGNAL(selectionChanged(QListViewItem*)), this, SLOT(selection(QListViewItem*)));
 
 	mainLayout->addWidget(closeButton, false, Qt::AlignRight);
 
@@ -65,10 +68,19 @@ void ConfigWindow::initGUI() {
 	resize(250,400);
 	show();
 }
+
+void ConfigWindow::initList() {
+}
+
 void ConfigWindow::gotList(QValueList<Service> *servers) {
 }
 void ConfigWindow::addedServer(int status) {
 }
 void ConfigWindow::removedServer(int status) {
 }
-
+void ConfigWindow::addButtonClicked() {
+}
+void ConfigWindow::removeButtonClicked() {
+}
+void ConfigWindow::selection(QListViewItem *item) {
+}

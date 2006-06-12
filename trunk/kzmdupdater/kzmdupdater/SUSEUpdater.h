@@ -60,6 +60,7 @@ class SUSEUpdater : public KMainWindow {
 	private:
 
 		void initGUI();
+//		void initList();
 		void checkUpdates();
 
 		KSystemTray *trayApplet;

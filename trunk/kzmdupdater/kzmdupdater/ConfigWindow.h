@@ -41,6 +41,13 @@ class ConfigWindow : public QWidget {
 
 	private slots:
 
+		void addButtonClicked();
+		void removeButtonClicked();
+		void selection(QListViewItem*);
+
+
+		//Core Signals
+
 		void gotList(QValueList<Service>*);
 		void addedServer(int);
 		void removedServer(int);
@@ -49,6 +56,7 @@ class ConfigWindow : public QWidget {
 	private:
 
 		void initGUI();
+		void initList();
 
 		QVBoxLayout *mainLayout;
 
