@@ -49,7 +49,7 @@ void SUSEUpdater::initGUI() {
 	configureButton = new QPushButton(i18n("Configure Updater"),buttons);
 	cancelButton = new QPushButton(i18n("Cancel"),buttons);
 	installButton = new QPushButton(i18n("Install"),buttons);
-	core = new UpdaterCore();
+	//core = new UpdaterCore();
 
 	trayApplet->setPixmap(UserIcon(TRAY_ICON_GREEN));
 	trayApplet->setScaledContents(true);

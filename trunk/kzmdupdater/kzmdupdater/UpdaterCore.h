@@ -20,7 +20,14 @@
 #ifndef _UPDATER_CORE_H_
 #define _UPDATER_CORE_H_
 
-#include "ZmdUpdaterCore/ZmdUpdaterCore.h"
+
+/* Error Codes */
+
+#define SUCCEEDED 0
+#define ERROR_DEPENDENCY_FAILURE 1
+#define ERROR_INVALID_URI 2
+
+//More will obviously be added later
 
 /* Data Types */
 
@@ -64,9 +71,39 @@ struct Patch {
 	bool installed;
 };
 
-/* Core Typedef */
+/* Core Backend Class */
 
-typedef class ZmdUpdaterCore UpdaterCore;
+class UpdaterCore : public QObject {
 
+	Q_OBJECT
+
+	public:
+
+		virtual QValueList<Service> *getServices() = 0;
+		virtual void addService(Service) = 0;
+		virtual void removeService(Service) = 0;
+
+		virtual QValueList<Catalog> *getCatalogs() = 0;
+		virtual void subscribeCatalog(Catalog) = 0;
+		virtual void unsubscribeCatalog(Catalog) = 0;
+
+		virtual QValueList<Patch> *getPatches(Catalog) = 0;
+		virtual QValueList<Package> *getUpdates(Catalog) = 0;
+
+		virtual void runTransaction(QValueList<Patch>*, QValueList<Package>*) = 0;
+
+	signals:
+
+		virtual void serviceListing(QValueList<Service>) = 0;
+		virtual void catalogListing(QValueList<Catalog>) = 0;
+		virtual void patchListing(QValueList<Patch>) = 0;
+		virtual void updateListing(QValueList<Package>) = 0;
+
+		virtual void transactionProgress(int progress) = 0;
+		virtual void transactionFinished(int flags) = 0;
+		virtual void serviceChange(int flags) = 0;
+		virtual void catalogChange(int flags) = 0;
+
+};
 
 #endif

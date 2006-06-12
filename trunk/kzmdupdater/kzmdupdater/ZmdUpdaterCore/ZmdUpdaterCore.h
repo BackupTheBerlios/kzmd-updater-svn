@@ -21,8 +21,9 @@
 #define _ZMD_UPDATER_CORE_H_
 
 #include <qobject.h>
+#include "../UpdaterCore.h"
 
-class ZmdUpdaterCore : public QObject {
+class ZmdUpdaterCore : public UpdaterCore {
 
 
 	public:
