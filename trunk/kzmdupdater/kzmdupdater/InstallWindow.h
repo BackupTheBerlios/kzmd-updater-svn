@@ -29,6 +29,7 @@
 #include <qlayout.h>
 
 #include "HeaderWidget.h"
+#include "UpdaterCore.h"
 
 class InstallWindow : public QWidget {
 
@@ -36,10 +37,18 @@ class InstallWindow : public QWidget {
 
 	public:
 
-		InstallWindow(QWidget *parent=0);
+		InstallWindow(UpdaterCore *_core, QWidget *parent=0);
 		~InstallWindow();
 
 	private slots:
+
+		void abortButtonClicked();
+
+		//Core Signals
+
+		void progress(int);
+		void finished(int);
+
 
 	private:
 
@@ -51,6 +60,8 @@ class InstallWindow : public QWidget {
 		KPushButton *abortButton;
 
 		QVBoxLayout *mainLayout;
+
+		UpdaterCore *core;
 };
 
 

@@ -91,7 +91,7 @@ void SUSEUpdater::configClicked() {
 }
 
 void SUSEUpdater::installClicked() {
-	InstallWindow *win = new InstallWindow();
+	InstallWindow *win = new InstallWindow(core);
 }
 
 SUSEUpdater::~SUSEUpdater() {

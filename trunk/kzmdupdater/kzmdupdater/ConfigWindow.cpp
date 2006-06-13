@@ -22,9 +22,9 @@
 
 ConfigWindow::ConfigWindow(UpdaterCore *_core, QWidget *parent) : 
 	QWidget(parent,0,Qt::WDestructiveClose) {
-
-	initGUI();
 	core = _core;
+	initGUI();
+	initList();
 }
 
 
@@ -40,8 +40,11 @@ void ConfigWindow::initGUI() {
 	removeButton = new KPushButton(i18n("Remove Server"), this);
 	closeButton = new KPushButton(i18n("Close"), this);
 
+	serverList->addColumn(i18n("Services/Catalogs"), 400);
+	serverList->setTreeStepSize(30);
+	serverList->setRootIsDecorated(true);
 
-	header->setDescription("<b>Add/Remove Package Servers:</b><br> You may add or remove update servers below or change your software catalog subscriptions.<br> <u>Make whatever changes you wish and press accept.</u>");
+	header->setDescription(i18n("<b>Add/Remove Package Servers:</b><br> You may add or remove update servers below or change your software catalog subscriptions.<br> <u>Make whatever changes you wish and press accept.</u>"));
 
 	mainLayout->addWidget(header);
 	mainLayout->addWidget(serverList);
@@ -57,9 +60,8 @@ void ConfigWindow::initGUI() {
 	closeButton->setMinimumHeight(30);
 
 	connect(closeButton, SIGNAL(clicked()), this, SLOT(close()));
-	connect(addButton, SIGNAL(clicked()), this, SLOT(addServer()));
-	connect(removeButton, SIGNAL(clicked()), this, SLOT(removeServer()));
-	connect(serverList, SIGNAL(selectionChanged(QListViewItem*)), this, SLOT(selection(QListViewItem*)));
+	connect(addButton, SIGNAL(clicked()), this, SLOT(addButtonClicked()));
+	connect(removeButton, SIGNAL(clicked()), this, SLOT(removeButtonClicked()));
 
 	mainLayout->addWidget(closeButton, false, Qt::AlignRight);
 
@@ -70,6 +72,10 @@ void ConfigWindow::initGUI() {
 }
 
 void ConfigWindow::initList() {
+//Mockup
+	QListViewItem *itemOne = new QListViewItem(serverList, QString("Packman"));
+	QCheckListItem *itemTwo = new QCheckListItem(itemOne, "Packman", QCheckListItem::CheckBoxController);
+	itemTwo->setState(QCheckListItem::On);
 }
 
 void ConfigWindow::gotList(QValueList<Service> *servers) {
@@ -81,6 +87,4 @@ void ConfigWindow::removedServer(int status) {
 void ConfigWindow::addButtonClicked() {
 }
 void ConfigWindow::removeButtonClicked() {
-}
-void ConfigWindow::selection(QListViewItem *item) {
 }
