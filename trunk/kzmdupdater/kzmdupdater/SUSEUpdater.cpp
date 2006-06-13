@@ -63,8 +63,8 @@ void SUSEUpdater::initGUI() {
 	buttonsLayout->addWidget(cancelButton,false, Qt::AlignRight);
 	buttonsLayout->addWidget(installButton,false, Qt::AlignRight);
 
-	connect(configureButton, SIGNAL(clicked()), this, SLOT(configClicked()));
-	connect(installButton, SIGNAL(clicked()), this, SLOT(installClicked()));
+	connect(configureButton, SIGNAL(clicked()), this, SLOT(configButtonClicked()));
+	connect(installButton, SIGNAL(clicked()), this, SLOT(installButtonClicked()));
 	connect(cancelButton, SIGNAL(clicked()), this, SLOT(hide()));
 
 	header->setDescription(i18n("<b>Available Updates:</b><br> The following are software upgrades and patches to add features and fix bugs.<br> <u>Select those you would like and press install.</u>"));
@@ -86,11 +86,11 @@ void SUSEUpdater::initGUI() {
 	return;
 }
 
-void SUSEUpdater::configClicked() {
+void SUSEUpdater::configButtonClicked() {
 	ConfigWindow *win = new ConfigWindow(core);
 }
 
-void SUSEUpdater::installClicked() {
+void SUSEUpdater::installButtonClicked() {
 	InstallWindow *win = new InstallWindow(core);
 }
 

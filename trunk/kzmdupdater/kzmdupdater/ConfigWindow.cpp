@@ -18,6 +18,7 @@
 */
 
 #include "ConfigWindow.h"
+#include "ServerDialog.h"
 #include <klocale.h>
 
 ConfigWindow::ConfigWindow(UpdaterCore *_core, QWidget *parent) : 
@@ -85,6 +86,21 @@ void ConfigWindow::addedServer(int status) {
 void ConfigWindow::removedServer(int status) {
 }
 void ConfigWindow::addButtonClicked() {
+
+	QValueList<QString> list;
+	ServerDialog diag;
+
+	diag.exec();
+	list = diag.getServerInfo();
+	if (list.front() != "" && list.back() != "") { //Really the name could be blank
+		/* 
+		Service newServ;
+		newServ.name = list.front();
+		nerServ.uri = list.back();
+		core->addService(serv);
+		*/
+		new QListViewItem(serverList, list.front());
+	}
 }
 void ConfigWindow::removeButtonClicked() {
 }

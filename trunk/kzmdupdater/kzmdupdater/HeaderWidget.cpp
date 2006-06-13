@@ -23,8 +23,4 @@ void HeaderWidget::setDescription(QString description) {
 }
 
 HeaderWidget::~HeaderWidget() {
-
-	delete suseLogo;
-	delete text;
-	delete layout;
 }

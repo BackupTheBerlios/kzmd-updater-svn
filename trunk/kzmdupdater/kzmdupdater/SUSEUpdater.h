@@ -25,9 +25,9 @@
 #include <ksystemtray.h>
 #include <dcopclient.h>
 #include <dcopobject.h>
+#include <ktextedit.h>
 
 #include <qlistview.h>
-#include <ktextedit.h>
 #include <qlabel.h>
 #include <qvbox.h>
 #include <qpushbutton.h>
@@ -50,8 +50,8 @@ class SUSEUpdater : public KMainWindow {
 
 		void slotExit();
 		void slotPackageSelected(QListViewItem *packageSelected);
-		void configClicked();
-		void installClicked();
+		void configButtonClicked();
+		void installButtonClicked();
 
 	private slots:
 
