@@ -32,32 +32,33 @@ SUSEUpdater::SUSEUpdater() : KMainWindow(0L, "kzmdupdater") {
 
 	KIconLoader iconLoader("kzmdupdater");
 	initGUI();
-//	loadPreferences(); ?
 	checkUpdates();
 }
 
 //Build GUI, setup system tray and hide GUI initially.
 void SUSEUpdater::initGUI() {
 
-	mainBox = new QVBox(this);
+	mainBox = new QVBoxLayout(this);
 	trayApplet = new KSystemTray(this);
-	header = new HeaderWidget(mainBox);
-	updateList = new QListView(mainBox);
-	packageDescription = new KTextEdit(mainBox);
-	buttons = new QWidget(mainBox);
-	buttonsLayout = new QHBoxLayout(buttons);
-	configureButton = new QPushButton(i18n("Configure Updater"),buttons);
-	cancelButton = new QPushButton(i18n("Cancel"),buttons);
-	installButton = new QPushButton(i18n("Install"),buttons);
-	//core = new UpdaterCore();
-
+	header = new HeaderWidget(this);
+	updateList = new QListView(this);
+	packageDescription = new KTextEdit(this);
+	configureButton = new QPushButton(i18n("Configure Updater"),this);
+	cancelButton = new QPushButton(i18n("Cancel"),this);
+	installButton = new QPushButton(i18n("Install"),this);
+	
 	trayApplet->setPixmap(UserIcon(TRAY_ICON_GREEN));
 	trayApplet->setScaledContents(true);
+
+	mainBox->addWidget(header,0,0);
+	mainBox->addWidget(updateList,0,0);
+	mainBox->addWidget(packageDescription,0,0);
 
 	configureButton->setMinimumHeight(30);
 	cancelButton->setMinimumHeight(30);
 	installButton->setMinimumHeight(30);
 
+	buttonsLayout = new QHBoxLayout(mainBox);
 	buttonsLayout->addWidget(configureButton,false, Qt::AlignLeft);
 	buttonsLayout->insertSpacing(1, 250);
 	buttonsLayout->addWidget(cancelButton,false, Qt::AlignRight);
@@ -70,7 +71,6 @@ void SUSEUpdater::initGUI() {
 	header->setDescription(i18n("<b>Available Updates:</b><br> The following are software upgrades and patches to add features and fix bugs.<br> <u>Select those you would like and press install.</u>"));
 
 	packageDescription->setReadOnly(true);
-
 	updateList->addColumn(i18n("Name"));
 	updateList->addColumn(i18n("Old Version"));
 	updateList->addColumn(i18n("New Version"));
@@ -79,7 +79,6 @@ void SUSEUpdater::initGUI() {
 
 	mainBox->setSpacing(10);
 	mainBox->setMargin(10);
-	setCentralWidget(mainBox);
 	trayApplet->show();
 	resize(400,500);
 	hide();
@@ -110,6 +109,7 @@ void SUSEUpdater::checkUpdates() {
 	testItem->setText(1,"0.3");
 	testItem->setText(2,"0.4");
 	testItem->setText(3, "5kb");
+
 }
 
 void SUSEUpdater::slotPackageSelected(QListViewItem *packageSelected) {

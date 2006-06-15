@@ -29,7 +29,6 @@
 
 #include <qlistview.h>
 #include <qlabel.h>
-#include <qvbox.h>
 #include <qpushbutton.h>
 
 #include "UpdaterCore.h"
@@ -60,7 +59,6 @@ class SUSEUpdater : public KMainWindow {
 	private:
 
 		void initGUI();
-//		void initList();
 		void checkUpdates();
 
 		KSystemTray *trayApplet;
@@ -72,8 +70,7 @@ class SUSEUpdater : public KMainWindow {
 		QPushButton *cancelButton;
 		QPushButton *configureButton;
 
-		QVBox *mainBox;
-		QWidget *buttons;
+		QVBoxLayout *mainBox;
 		QHBoxLayout *buttonsLayout;
 
 		UpdaterCore *core;

@@ -103,4 +103,16 @@ void ConfigWindow::addButtonClicked() {
 	}
 }
 void ConfigWindow::removeButtonClicked() {
+
+	if (serverList->currentItem() == NULL)
+		return;
+	delete serverList->currentItem();
+	
+	/*
+	Service serv;
+	serv.name = serverList->currentItem->text(0);
+	core.removeService(serv);
+	*/
+
+
 }
