@@ -24,14 +24,18 @@
 #include "HeaderWidget.h"
 #include "ConfigWindow.h"
 #include "InstallWindow.h"
+#include "ZmdUpdaterCore.h"
 
 #define TRAY_ICON_GREEN "suse_green.png"
 
+#include <iostream>
+using namespace std;
 
 SUSEUpdater::SUSEUpdater() : KMainWindow(0L, "kzmdupdater") {
 
 	KIconLoader iconLoader("kzmdupdater");
 	initGUI();
+	core = new ZmdUpdaterCore();
 	checkUpdates();
 }
 
@@ -97,20 +101,12 @@ SUSEUpdater::~SUSEUpdater() {
 }
 
 void SUSEUpdater::checkUpdates() {
-
-	QCheckListItem *testItem = new QCheckListItem(updateList, QString("Testing"), QCheckListItem::CheckBox);
-
-	testItem->setText(1,"0.3");
-	testItem->setText(2,"0.4");
-	testItem->setText(3, "5kb");
-
-	testItem = new QCheckListItem(updateList, "Testing 2", QCheckListItem::CheckBox);
-
-	testItem->setText(1,"0.3");
-	testItem->setText(2,"0.4");
-	testItem->setText(3, "5kb");
-
+	connect(core, SIGNAL(catalogListing(QValueList<Catalog>)), this, SLOT(gotCatalogs(QValueList<Catalog>)));
+	connect(core, SIGNAL(updateListing(QValueList<Package>)), this, SLOT(gotUpdateListing(QValueList<Package>)));
+	connect(core, SIGNAL(patchListing(QValueList<Patch>)), this, SLOT(gotPatchListing(QValueList<Patch>)));
+	core->getCatalogs(); //this will return to gotCatalogs
 }
+
 
 void SUSEUpdater::slotPackageSelected(QListViewItem *packageSelected) {
 	packageDescription->setText(((QCheckListItem*)packageSelected)->text());
@@ -118,7 +114,47 @@ void SUSEUpdater::slotPackageSelected(QListViewItem *packageSelected) {
 
 void SUSEUpdater::slotExit() {
 	close();
-}	
+}
 
-void SUSEUpdater::gotList(QValueList<Package> *packageList,QValueList<Patch> *patchList) {
+void SUSEUpdater::gotCatalogs(QValueList<Catalog> catalogs) {
+	QValueList<Catalog>::iterator iter;
+
+	if (catalogs.size() <= 0)
+		return;
+
+	for (iter = catalogs.begin(); iter != catalogs.end(); iter++) {
+		core->getUpdates(*iter);
+	}
+}
+
+void SUSEUpdater::gotUpdateListing(QValueList<Package> packageList) {
+	QValueList<Package>::iterator iter;
+	QCheckListItem *newItem;
+
+	for (iter = packageList.begin(); iter != packageList.end(); iter++) {
+		newItem = new QCheckListItem(updateList, (*iter).name, QCheckListItem::CheckBox);
+
+		newItem->setText(1,"Unknown");
+		newItem->setText(2,(*iter).version);
+		newItem->setText(3, "Unknown");
+	}
+}
+
+void SUSEUpdater::gotPatchListing(QValueList<Patch> patchList) {
+	QValueList<Patch>::iterator iter;
+	QCheckListItem *newItem;
+
+	for (iter = patchList.begin(); iter != patchList.end(); iter++) {
+		newItem = new QCheckListItem(updateList, (*iter).name, QCheckListItem::CheckBox);
+
+		newItem->setText(1,"Unknown");
+		newItem->setText(2,(*iter).version);
+		newItem->setText(3, "Unknown");
+	}
+}
+
+void SUSEUpdater::authorizeCore() {
+	//Hobbled together -- This obviously only works on mine
+	core->setUser("8489a518dd084e2d83cdd00c3beaed8b");
+	core->setPass("12acc5618a004a26863c034a24a6f31f");
 }

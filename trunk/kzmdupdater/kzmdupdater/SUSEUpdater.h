@@ -35,6 +35,7 @@
 
 class HeaderWidget;
 
+#define ZMD_CONFIG_PATH "/etc/zmd"
 
 class SUSEUpdater : public KMainWindow {
 
@@ -54,12 +55,15 @@ class SUSEUpdater : public KMainWindow {
 
 	private slots:
 
-		void gotList(QValueList<Package>*,QValueList<Patch>*);
+		void gotCatalogs(QValueList<Catalog>);
+		void gotUpdateListing(QValueList<Package>);
+		void gotPatchListing(QValueList<Patch>);
 
 	private:
 
 		void initGUI();
 		void checkUpdates();
+		void authorizeCore();
 
 		KSystemTray *trayApplet;
 		QListView *updateList;
