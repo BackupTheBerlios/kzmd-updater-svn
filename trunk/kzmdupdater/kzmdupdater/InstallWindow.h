@@ -40,6 +40,9 @@ class InstallWindow : public QWidget {
 		InstallWindow(UpdaterCore *_core, QWidget *parent=0);
 		~InstallWindow();
 
+		void setCore(UpdaterCore *newCore);
+		void setPackageList(QValueList<Package>, QValueList<Patch>);
+
 	private slots:
 
 		void abortButtonClicked();

@@ -23,7 +23,7 @@
 #include "UpdaterCore.h"
 #include "xmlrpciface.h"
 
-#define SERVER_ADDY "http://127.0.0.1:2544/zdm/RPC2"
+#define SERVER_ADDY "http://127.0.0.1:2544/zmd/RPC2"
 
 class ZmdUpdaterCore : public UpdaterCore {
 
@@ -48,20 +48,8 @@ class ZmdUpdaterCore : public UpdaterCore {
 		void getPatches(Catalog);
 		void getUpdates(Catalog);
 
-		void runTransaction(QValueList<Patch>*, QValueList<Package>*);
+		void runTransaction(QValueList<Patch>, QValueList<Package>);
 
-/*	signals:
-
-		void serviceListing(QValueList<Service>);
-		void catalogListing(QValueList<Catalog>);
-		void patchListing(QValueList<Patch>);
-		void updateListing(QValueList<Package>);
-
-		void transactionProgress(int progress);
-		void transactionFinished(int flags);
-		void serviceChange(int flags);
-		void catalogChange(int flags);
-*/
 	private slots:
 
 		void catalogData(const QValueList<QVariant>&, const QVariant&);

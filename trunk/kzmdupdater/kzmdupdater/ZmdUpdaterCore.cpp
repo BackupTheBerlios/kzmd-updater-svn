@@ -19,15 +19,20 @@
 
 #include "ZmdUpdaterCore.h"
 
+#include <iostream>
+using namespace std;
+
 ZmdUpdaterCore::ZmdUpdaterCore(QObject *parent) : UpdaterCore(parent) {
-	server = new KXMLRPC::Server(KURL(SERVER_ADDY), this);
+	KURL url(SERVER_ADDY);
+	server = new KXMLRPC::Server(url, this);
+	server->setUserAgent("kzmdupdater");
 }
 
 ZmdUpdaterCore::~ZmdUpdaterCore() {
 }
 
 void ZmdUpdaterCore::setUser(QString user) {
-	KURL url(SERVER_ADDY);
+	KURL url(server->url());
 	username = user;
 
 	url.setUser(user);
@@ -35,7 +40,7 @@ void ZmdUpdaterCore::setUser(QString user) {
 }
 
 void ZmdUpdaterCore::setPass(QString pass) {
-	KURL url(SERVER_ADDY);
+	KURL url(server->url());
 	password = pass;
 
 	url.setPass(pass);
@@ -45,6 +50,7 @@ void ZmdUpdaterCore::setPass(QString pass) {
 /* Service Handling (call and data slot) */
 
 void ZmdUpdaterCore::getServices() {
+	cout << server->url().url() << endl;
 	server->call("zmd.system.service_list", QValueList<QVariant>(),
 	this, SLOT(serviceData(const QValueList<QVariant>&, const QVariant&)), 
 	this, SLOT(faultData(int, const QString&, const QVariant&)));
@@ -52,14 +58,27 @@ void ZmdUpdaterCore::getServices() {
 
 void ZmdUpdaterCore::addService(Service serv) {
 
+	QValueList<QVariant> data;
+	QMap<QString, QVariant> map;
+	map["name"] = QVariant(serv.name);
+	map["type"] = QVariant(serv.type);
+	map["uri"] = QVariant(serv.uri);
+	data.append(QVariant(map));
+
+	server->call("zmd.system.service_add", data,
+	this, SLOT(serviceData(const QValueList<QVariant>&, const QVariant&)), 
+	this, SLOT(faultData(int, const QString&, const QVariant&)));
 }
 
 void ZmdUpdaterCore::removeService(Service serv) {
+	server->call("zmd.system.service_remove", serv.id,
+	this, SLOT(serviceData(const QValueList<QVariant>&, const QVariant&)), 
+	this, SLOT(faultData(int, const QString&, const QVariant&)));
 }
 
 void ZmdUpdaterCore::serviceData(const QValueList<QVariant>& data, const QVariant& t) {
 	if (data.front().canCast(QVariant::String) == true) {
-		//Handle add and remove service
+		//This is the poll ID of adding the service, I am not doing anything with it right now
 	} else if (data.front().canCast(QVariant::List) == true) {
 		QValueList<QVariant> list;
 		list = (data.front().toList());
@@ -90,22 +109,27 @@ void ZmdUpdaterCore::getCatalogs() {
 
 void ZmdUpdaterCore::catalogData(const QValueList<QVariant>& data, const QVariant& t) {
 
-	QValueList<QVariant> list;
-	list = (data.front().toList());
-	QValueList<QVariant>::iterator iter;
-	QValueList<Catalog> catalogList;
+	if (data.front().canCast(QVariant::String) == true) {
+		//Handle subscribe and unsubscribe
+	} else if (data.front().canCast(QVariant::List) == true) {
 
-	for (iter = list.begin(); iter != list.end(); iter++) {
-		QMap<QString, QVariant> map = (*iter).toMap();
-		Catalog cat;
-		cat.id = map["id"].toString();
-		cat.name = map["name"].toString();
-		cat.displayName = map["display_name"].toString();
-		cat.service = map["service"].toString();
-		cat.subscribed = map["subscribed"].toBool();
-		catalogList.append(cat);
+		QValueList<QVariant> list;
+		list = (data.front().toList());
+		QValueList<QVariant>::iterator iter;
+		QValueList<Catalog> catalogList;
+
+		for (iter = list.begin(); iter != list.end(); iter++) {
+			QMap<QString, QVariant> map = (*iter).toMap();
+			Catalog cat;
+			cat.id = map["id"].toString();
+			cat.name = map["name"].toString();
+			cat.displayName = map["display_name"].toString();
+			cat.service = map["service"].toString();
+			cat.subscribed = map["subscribed"].toBool();
+			catalogList.append(cat);
+		}
+		emit(catalogListing(catalogList));
 	}
-	emit(catalogListing(catalogList));
 }
 
 void ZmdUpdaterCore::subscribeCatalog(Catalog cat) {
@@ -114,14 +138,19 @@ void ZmdUpdaterCore::subscribeCatalog(Catalog cat) {
 void ZmdUpdaterCore::unsubscribeCatalog(Catalog cat) {
 }
 
+/* Package Handling (call and data slot) */
 void ZmdUpdaterCore::getPatches(Catalog cat) {
 }
 
 void ZmdUpdaterCore::getUpdates(Catalog cat) {
 }
 
-void ZmdUpdaterCore::runTransaction(QValueList<Patch>* patchList, QValueList<Package>* packageList) {
+/* Transaction call, data slot, timer */
+
+void ZmdUpdaterCore::runTransaction(QValueList<Patch> patchList, QValueList<Package> packageList) {
 }
 
+/* Global fault slot */
 void ZmdUpdaterCore::faultData(int code, const QString& t, const QVariant& m) {
+	cout << "FAULT: code=" << code << " " << t << endl;
 }

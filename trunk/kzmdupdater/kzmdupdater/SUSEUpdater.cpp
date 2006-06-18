@@ -31,14 +31,18 @@
 
 #define TRAY_ICON_GREEN "suse_green.png"
 
-#include <iostream>
-using namespace std;
-
 SUSEUpdater::SUSEUpdater() : KMainWindow(0L, "kzmdupdater") {
 
 	KIconLoader iconLoader("kzmdupdater");
 	initGUI();
 	core = new ZmdUpdaterCore();
+
+	//Connect core
+	connect(core, SIGNAL(catalogListing(QValueList<Catalog>)), this, SLOT(gotCatalogs(QValueList<Catalog>)));
+	connect(core, SIGNAL(updateListing(QValueList<Package>)), this, SLOT(gotUpdateListing(QValueList<Package>)));
+	connect(core, SIGNAL(patchListing(QValueList<Patch>)), this, SLOT(gotPatchListing(QValueList<Patch>)));
+
+
 	authorizeCore();
 	checkUpdates();
 }
@@ -95,20 +99,19 @@ void SUSEUpdater::initGUI() {
 
 void SUSEUpdater::configButtonClicked() {
 	ConfigWindow *win = new ConfigWindow(core);
+	win->show();
 }
 
 void SUSEUpdater::installButtonClicked() {
 	InstallWindow *win = new InstallWindow(core);
+	win->show();
 }
 
 SUSEUpdater::~SUSEUpdater() {
 }
 
 void SUSEUpdater::checkUpdates() {
-	connect(core, SIGNAL(catalogListing(QValueList<Catalog>)), this, SLOT(gotCatalogs(QValueList<Catalog>)));
-	connect(core, SIGNAL(updateListing(QValueList<Package>)), this, SLOT(gotUpdateListing(QValueList<Package>)));
-	connect(core, SIGNAL(patchListing(QValueList<Patch>)), this, SLOT(gotPatchListing(QValueList<Patch>)));
-	core->getCatalogs(); //this will return to gotCatalogs
+//	core->getCatalogs(); //this will return to gotCatalogs
 }
 
 
@@ -168,19 +171,22 @@ void SUSEUpdater::authorizeCore() {
 
 	if(status != KPasswordDialog::Accepted) {
 		exit(1);
-	}	
+	}
+	if (client.ping() == -1)
+		client.startServer();
 	client.setPass(pass,60);
 	client.exec("kzmdauthutil /etc/zmd", "root");	
 
 	if ( (fd = fopen("/var/tmp/kzmd-auth", "r")) != NULL) {
-
 		
 		fgets(buffer, 1023, fd);
+		buffer[strlen(buffer)-1] = '\0'; //get rid of newline
 		core->setUser(buffer);
-		puts(buffer);
+		printf("User: %s\n", buffer);
 		memset(buffer, '\0', 1024);
 		fgets(buffer, 1023, fd);
-		puts(buffer);		
+		buffer[strlen(buffer)-1] = '\0'; // get rid of newline
+		printf("Pass: %s\n", buffer);
 		core->setPass(buffer);
 		memset(buffer, '\0', 1024);
 		fclose(fd);

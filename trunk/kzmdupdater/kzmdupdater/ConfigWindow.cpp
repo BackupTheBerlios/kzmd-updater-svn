@@ -20,10 +20,15 @@
 #include "ConfigWindow.h"
 #include "ServerDialog.h"
 #include <klocale.h>
+#include <iostream>
+using namespace std;
 
 ConfigWindow::ConfigWindow(UpdaterCore *_core, QWidget *parent) : 
 	QWidget(parent,0,Qt::WDestructiveClose) {
 	core = _core;
+
+	connect(core, SIGNAL(serviceListing(QValueList<Service>)), this, SLOT(gotList(QValueList<Service>)));
+
 	initGUI();
 	initList();
 }
@@ -69,12 +74,10 @@ void ConfigWindow::initGUI() {
 	mainLayout->setMargin(10);	
 	setCaption(i18n("Configure Updater"));
 	resize(250,400);
-	show();
 }
 
 void ConfigWindow::initList() {
 	core->getServices();
-	connect(core, SIGNAL(serviceListing(QValueList<Service>)), this, SLOT(gotList(QValueList<Service>)));
 }
 
 void ConfigWindow::gotList(QValueList<Service> servers) {
@@ -86,7 +89,13 @@ void ConfigWindow::gotList(QValueList<Service> servers) {
 	}
 }
 void ConfigWindow::addedServer(int status) {
+	if (status != ERROR_INVALID) {
+		initList();
+	}
+	disconnect(core, SIGNAL(serviceChange(int)), this, SLOT(addedServer(int)));
+
 }
+
 void ConfigWindow::removedServer(int status) {
 }
 void ConfigWindow::addButtonClicked() {
@@ -97,13 +106,16 @@ void ConfigWindow::addButtonClicked() {
 	diag.exec();
 	list = diag.getServerInfo();
 	if (list.front() != "" && list.back() != "") { //Really the name could be blank
-		/* 
 		Service newServ;
 		newServ.name = list.front();
-		nerServ.uri = list.back();
-		core->addService(serv);
-		*/
-		new QListViewItem(serverList, list.front());
+		newServ.uri = list.back();
+		newServ.type = "zypp"; //This should be prompted for
+		cout << "Adding Service ..." << endl;
+		cout << newServ.name << endl;
+		cout << newServ.uri << endl;
+		cout << newServ.type << endl;
+		core->addService(newServ);
+		connect(core, SIGNAL(serviceChange(int)), this, SLOT(addedServer(int)));
 	}
 }
 void ConfigWindow::removeButtonClicked() {

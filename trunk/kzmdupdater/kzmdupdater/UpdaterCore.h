@@ -28,12 +28,21 @@
 
 #define SUCCEEDED 0
 #define ERROR_DEPENDENCY_FAILURE 1
-#define ERROR_INVALID_URI 2
+#define ERROR_INVALID 2
 #define ERROR_AUTH_REJECT 3
 
 //More will obviously be added later
 
 /* Data Types */
+
+struct Progress {
+//NNN: Look at this again, might not be realistic
+
+	QValueList<QString> messages;
+	int expectedTime;
+	int remainingTime;
+	float percent;
+};
 
 struct Service {
 
@@ -99,7 +108,7 @@ class UpdaterCore : public QObject {
 		virtual void getPatches(Catalog) = 0;
 		virtual void getUpdates(Catalog) = 0;
 
-		virtual void runTransaction(QValueList<Patch>*, QValueList<Package>*) = 0;
+		virtual void runTransaction(QValueList<Patch>, QValueList<Package>) = 0;
 
 	signals:
 
@@ -107,11 +116,15 @@ class UpdaterCore : public QObject {
 		void catalogListing(QValueList<Catalog>);
 		void patchListing(QValueList<Patch>);
 		void updateListing(QValueList<Package>);
-
-		void transactionProgress(int progress);
+	
 		void transactionFinished(int flags);
-		void serviceChange(int flags);
-		void catalogChange(int flags);
+		void progress(Progress);
+
+		void serviceAdded(int flags);
+		void serviceRemoved(int flags);
+
+		void catalogAdded(int flags);
+		void catalogRemoved(int flags);
 
 };
 
