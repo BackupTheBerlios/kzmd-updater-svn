@@ -62,7 +62,7 @@ class ZmdUpdaterCore : public UpdaterCore {
 		//These really need to be stored somewhere else. Kwallet?
 		QString username;
 		QString password;
-	    KXMLRPC::Server *server; 
+		KXMLRPC::Server *server; 
 };
 
 #endif

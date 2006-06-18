@@ -111,7 +111,7 @@ SUSEUpdater::~SUSEUpdater() {
 }
 
 void SUSEUpdater::checkUpdates() {
-//	core->getCatalogs(); //this will return to gotCatalogs
+	core->getCatalogs(); //this will return to gotCatalogs
 }
 
 
