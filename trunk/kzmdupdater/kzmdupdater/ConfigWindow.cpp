@@ -73,13 +73,17 @@ void ConfigWindow::initGUI() {
 }
 
 void ConfigWindow::initList() {
-//Mockup
-	QListViewItem *itemOne = new QListViewItem(serverList, QString("Packman"));
-	QCheckListItem *itemTwo = new QCheckListItem(itemOne, "Packman", QCheckListItem::CheckBoxController);
-	itemTwo->setState(QCheckListItem::On);
+	core->getServices();
+	connect(core, SIGNAL(serviceListing(QValueList<Service>)), this, SLOT(gotList(QValueList<Service>)));
 }
 
-void ConfigWindow::gotList(QValueList<Service> *servers) {
+void ConfigWindow::gotList(QValueList<Service> servers) {
+	QValueList<Service>::iterator iter;
+	QListViewItem *item;
+
+	for (iter = servers.begin(); iter != servers.end(); iter++) {
+		item = new QListViewItem(serverList, (*iter).name);
+	}
 }
 void ConfigWindow::addedServer(int status) {
 }

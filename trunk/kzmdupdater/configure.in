@@ -67,11 +67,13 @@ dnl =======================================================
 KDE_CREATE_SUBDIRSLIST
 AM_CONDITIONAL(admin_SUBDIR_included, test "x$admin_SUBDIR_included" = xyes)
 AM_CONDITIONAL(images_SUBDIR_included, test "x$images_SUBDIR_included" = xyes)
+AM_CONDITIONAL(kzmdauthutil_SUBDIR_included, test "x$kzmdauthutil_SUBDIR_included" = xyes)
 AM_CONDITIONAL(kzmdupdater_SUBDIR_included, test "x$kzmdupdater_SUBDIR_included" = xyes)
 AM_CONDITIONAL(po_SUBDIR_included, test "x$po_SUBDIR_included" = xyes)
 AC_CONFIG_FILES([ Makefile ])
 AC_CONFIG_FILES([ admin/Makefile ])
 AC_CONFIG_FILES([ images/Makefile ])
+AC_CONFIG_FILES([ kzmdauthutil/Makefile ])
 AC_CONFIG_FILES([ kzmdupdater/Makefile ])
 AC_CONFIG_FILES([ po/Makefile ])
 AC_OUTPUT

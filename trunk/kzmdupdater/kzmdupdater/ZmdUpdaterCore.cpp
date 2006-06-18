@@ -45,12 +45,39 @@ void ZmdUpdaterCore::setPass(QString pass) {
 /* Service Handling (call and data slot) */
 
 void ZmdUpdaterCore::getServices() {
+	server->call("zmd.system.service_list", QValueList<QVariant>(),
+	this, SLOT(serviceData(const QValueList<QVariant>&, const QVariant&)), 
+	this, SLOT(faultData(int, const QString&, const QVariant&)));
 }
 
 void ZmdUpdaterCore::addService(Service serv) {
+
 }
 
 void ZmdUpdaterCore::removeService(Service serv) {
+}
+
+void ZmdUpdaterCore::serviceData(const QValueList<QVariant>& data, const QVariant& t) {
+	if (data.front().canCast(QVariant::String) == true) {
+		//Handle add and remove service
+	} else if (data.front().canCast(QVariant::List) == true) {
+		QValueList<QVariant> list;
+		list = (data.front().toList());
+		QValueList<QVariant>::iterator iter;
+		QValueList<Service> serviceList;
+
+		for (iter = list.begin(); iter != list.end(); iter++) {
+			QMap<QString, QVariant> map = (*iter).toMap();
+			Service serv;
+			serv.name = map["name"].toString();
+			serv.id = map["id"].toString();
+			serv.uri = map["uri"].toString();
+			serv.type = map["type"].toString();
+			serv.activated = map["active"].toString();
+			serviceList.append(serv);
+		}
+		emit(serviceListing(serviceList));
+	}
 }
 
 /* Catalog Handling (call and data slot) */

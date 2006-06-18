@@ -329,6 +329,8 @@ kde_templatesdir = @kde_templatesdir@
 kde_wallpaperdir = @kde_wallpaperdir@
 kde_widgetdir = @kde_widgetdir@
 kdeinitdir = @kdeinitdir@
+kzmdauthutil_SUBDIR_included_FALSE = @kzmdauthutil_SUBDIR_included_FALSE@
+kzmdauthutil_SUBDIR_included_TRUE = @kzmdauthutil_SUBDIR_included_TRUE@
 kzmdupdater_SUBDIR_included_FALSE = @kzmdupdater_SUBDIR_included_FALSE@
 kzmdupdater_SUBDIR_included_TRUE = @kzmdupdater_SUBDIR_included_TRUE@
 libdir = @libdir@
@@ -765,7 +767,7 @@ clean-metasources:
 	-rm -f  ServerDialog.moc.cpp ZmdUpdaterCore.moc.cpp UpdaterCore.moc.cpp xmlrpciface.moc.cpp SUSEUpdater.moc.cpp HeaderWidget.moc.cpp InstallWindow.moc.cpp ConfigWindow.moc.cpp
 
 #>+ 2
-KDE_DIST=FakeUpdaterCore.h kzmdupdater.desktop Makefile.in kzmdupdater Makefile.am 
+KDE_DIST=kzmdupdater.desktop Makefile.in kzmdupdater Makefile.am 
 
 #>+ 2
 docs-am:

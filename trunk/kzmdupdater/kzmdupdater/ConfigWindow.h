@@ -47,7 +47,7 @@ class ConfigWindow : public QWidget {
 
 		//Core Signals
 
-		void gotList(QValueList<Service>*);
+		void gotList(QValueList<Service>);
 		void addedServer(int);
 		void removedServer(int);
 

@@ -65,6 +65,7 @@ class ZmdUpdaterCore : public UpdaterCore {
 	private slots:
 
 		void catalogData(const QValueList<QVariant>&, const QVariant&);
+		void serviceData(const QValueList<QVariant>&, const QVariant&);
 
 		void faultData(int, const QString&, const QVariant&);
 

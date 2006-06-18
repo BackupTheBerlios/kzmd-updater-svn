@@ -21,6 +21,9 @@
 #include "SUSEUpdater.h"
 #include <kiconloader.h>
 #include <klocale.h>
+#include <kdesu/client.h>
+#include <kpassdlg.h>
+
 #include "HeaderWidget.h"
 #include "ConfigWindow.h"
 #include "InstallWindow.h"
@@ -36,6 +39,7 @@ SUSEUpdater::SUSEUpdater() : KMainWindow(0L, "kzmdupdater") {
 	KIconLoader iconLoader("kzmdupdater");
 	initGUI();
 	core = new ZmdUpdaterCore();
+	authorizeCore();
 	checkUpdates();
 }
 
@@ -154,7 +158,35 @@ void SUSEUpdater::gotPatchListing(QValueList<Patch> patchList) {
 }
 
 void SUSEUpdater::authorizeCore() {
-	//Hobbled together -- This obviously only works on mine
-	core->setUser("8489a518dd084e2d83cdd00c3beaed8b");
-	core->setPass("12acc5618a004a26863c034a24a6f31f");
+
+	FILE *fd;
+	char buffer[1024];
+	KDEsuClient client;
+	QCString pass;
+
+	int status = KPasswordDialog::getPassword(pass, i18n("Please enter the root password for this machine:"));
+
+	if(status != KPasswordDialog::Accepted) {
+		exit(1);
+	}	
+	client.setPass(pass,60);
+	client.exec("kzmdauthutil /etc/zmd", "root");	
+
+	if ( (fd = fopen("/var/tmp/kzmd-auth", "r")) != NULL) {
+
+		
+		fgets(buffer, 1023, fd);
+		core->setUser(buffer);
+		puts(buffer);
+		memset(buffer, '\0', 1024);
+		fgets(buffer, 1023, fd);
+		puts(buffer);		
+		core->setPass(buffer);
+		memset(buffer, '\0', 1024);
+		fclose(fd);
+	} else {
+		//Jury-rig for devs comp
+		core->setUser("8489a518dd084e2d83cdd00c3beaed8b");
+		core->setPass("12acc5618a004a26863c034a24a6f31f");
+	}
 }
