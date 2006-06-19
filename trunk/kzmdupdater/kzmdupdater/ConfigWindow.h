@@ -58,17 +58,17 @@ class ConfigWindow : public QWidget {
 		void initGUI();
 		void initList();
 
-		QVBoxLayout *mainLayout;
+		QVBoxLayout 	*mainLayout;
 
-		HeaderWidget *header;
-		QListView *serverList;
-		KPushButton *addButton;
-		KPushButton *removeButton;
-		KPushButton *closeButton;
+		HeaderWidget 	*header;
+		QListView 		*serverList;
+		KPushButton 	*addButton;
+		KPushButton 	*removeButton;
+		KPushButton 	*closeButton;
 
-		QHBoxLayout *buttonLayout;
+		QHBoxLayout 	*buttonLayout;
 
-		UpdaterCore *core;
+		UpdaterCore 	*core;
 };
 
 #endif

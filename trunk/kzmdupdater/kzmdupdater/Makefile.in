@@ -767,7 +767,7 @@ clean-metasources:
 	-rm -f  ServerDialog.moc.cpp ZmdUpdaterCore.moc.cpp UpdaterCore.moc.cpp xmlrpciface.moc.cpp SUSEUpdater.moc.cpp HeaderWidget.moc.cpp InstallWindow.moc.cpp ConfigWindow.moc.cpp
 
 #>+ 2
-KDE_DIST=kzmdupdater.desktop Makefile.in kzmdupdater Makefile.am 
+KDE_DIST=kzmdupdater.desktop Makefile.in Makefile.am 
 
 #>+ 2
 docs-am:
@@ -811,7 +811,7 @@ bcheck-am:
 
 
 #>+ 11
-kzmdupdater.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/main.cpp $(srcdir)/SUSEUpdater.cpp $(srcdir)/HeaderWidget.cpp $(srcdir)/ConfigWindow.cpp $(srcdir)/InstallWindow.cpp $(srcdir)/ServerDialog.cpp $(srcdir)/xmlrpciface.cpp $(srcdir)/ZmdUpdaterCore.cpp $(srcdir)/ServerDialog.moc.cpp $(srcdir)/UpdaterCore.moc.cpp $(srcdir)/SUSEUpdater.moc.cpp $(srcdir)/InstallWindow.moc.cpp $(srcdir)/ZmdUpdaterCore.moc.cpp $(srcdir)/xmlrpciface.moc.cpp $(srcdir)/HeaderWidget.moc.cpp $(srcdir)/ConfigWindow.moc.cpp 
+kzmdupdater.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/main.cpp $(srcdir)/SUSEUpdater.cpp $(srcdir)/HeaderWidget.cpp $(srcdir)/ConfigWindow.cpp InstallWindow.cpp $(srcdir)/ServerDialog.cpp $(srcdir)/xmlrpciface.cpp $(srcdir)/ZmdUpdaterCore.cpp ServerDialog.moc.cpp UpdaterCore.moc.cpp SUSEUpdater.moc.cpp InstallWindow.moc.cpp ZmdUpdaterCore.moc.cpp xmlrpciface.moc.cpp HeaderWidget.moc.cpp ConfigWindow.moc.cpp 
 	@echo 'creating kzmdupdater.all_cpp.cpp ...'; \
 	rm -f kzmdupdater.all_cpp.files kzmdupdater.all_cpp.final; \
 	echo "#define KDE_USE_FINAL 1" >> kzmdupdater.all_cpp.final; \

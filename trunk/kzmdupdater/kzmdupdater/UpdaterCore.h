@@ -41,7 +41,7 @@ struct Progress {
 	QValueList<QString> messages;
 	int expectedTime;
 	int remainingTime;
-	float percent;
+	double percent;
 };
 
 struct Service {

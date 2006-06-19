@@ -56,13 +56,16 @@ void ServerDialog::initGUI() {
 	buttonLayout->addWidget(cancelButton,0,Qt::AlignLeft);
 	buttonLayout->addSpacing(100);
 	buttonLayout->addWidget(addButton,0, Qt::AlignRight);
+	addButton->setDefault(true);
 	cancelButton->setMinimumHeight(30);
 	addButton->setMinimumHeight(30);
 
 	connect(addButton, SIGNAL(clicked()), this, SLOT(addButtonClicked()));
 	connect(cancelButton, SIGNAL(clicked()), this, SLOT(cancelButtonClicked()));
 
-	resize(200,100);
+	layout->setMargin(20);
+	resize(400,100);
+	setCaption(i18n("Add Server"));
 	show();
 }
 

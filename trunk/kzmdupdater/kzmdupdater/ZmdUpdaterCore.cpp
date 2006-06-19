@@ -26,11 +26,15 @@ ZmdUpdaterCore::ZmdUpdaterCore(QObject *parent) : UpdaterCore(parent) {
 	KURL url(SERVER_ADDY);
 	server = new KXMLRPC::Server(url, this);
 	server->setUserAgent("kzmdupdater");
+
+	timer = new QTimer(this);
+	connect(timer, SIGNAL(timeout()), this, SLOT(timerSlot()));
 }
 
 ZmdUpdaterCore::~ZmdUpdaterCore() {
 }
 
+/* User and Pass functions */
 void ZmdUpdaterCore::setUser(QString user) {
 	KURL url(server->url());
 	username = user;
@@ -50,6 +54,8 @@ void ZmdUpdaterCore::setPass(QString pass) {
 /* Service Handling (call and data slot) */
 
 void ZmdUpdaterCore::getServices() {
+	IS_ZMD_BUSY;
+
 	cout << server->url().url() << endl;
 	server->call("zmd.system.service_list", QValueList<QVariant>(),
 	this, SLOT(serviceData(const QValueList<QVariant>&, const QVariant&)), 
@@ -57,6 +63,7 @@ void ZmdUpdaterCore::getServices() {
 }
 
 void ZmdUpdaterCore::addService(Service serv) {
+	IS_ZMD_BUSY;
 
 	QValueList<QVariant> data;
 	QMap<QString, QVariant> map;
@@ -71,6 +78,8 @@ void ZmdUpdaterCore::addService(Service serv) {
 }
 
 void ZmdUpdaterCore::removeService(Service serv) {
+	IS_ZMD_BUSY;
+
 	server->call("zmd.system.service_remove", serv.id,
 	this, SLOT(serviceData(const QValueList<QVariant>&, const QVariant&)), 
 	this, SLOT(faultData(int, const QString&, const QVariant&)));
@@ -78,7 +87,8 @@ void ZmdUpdaterCore::removeService(Service serv) {
 
 void ZmdUpdaterCore::serviceData(const QValueList<QVariant>& data, const QVariant& t) {
 	if (data.front().canCast(QVariant::String) == true) {
-		//This is the poll ID of adding the service, I am not doing anything with it right now
+		ZMD_BLOCK(data.front().toString());
+		timer->start(CHECK_INTERVAL,false);
 	} else if (data.front().canCast(QVariant::List) == true) {
 		QValueList<QVariant> list;
 		list = (data.front().toList());
@@ -102,6 +112,8 @@ void ZmdUpdaterCore::serviceData(const QValueList<QVariant>& data, const QVarian
 /* Catalog Handling (call and data slot) */
 
 void ZmdUpdaterCore::getCatalogs() {
+	IS_ZMD_BUSY;
+
 	server->call("zmd.system.catalog_list", QValueList<QVariant>(), 
 	this, SLOT(catalogData(const QValueList<QVariant>&, const QVariant&)),
 	this, SLOT(faultData(int, const QString&, const QVariant&)));
@@ -110,7 +122,8 @@ void ZmdUpdaterCore::getCatalogs() {
 void ZmdUpdaterCore::catalogData(const QValueList<QVariant>& data, const QVariant& t) {
 
 	if (data.front().canCast(QVariant::String) == true) {
-		//Handle subscribe and unsubscribe
+		ZMD_BLOCK(data.front().toString());
+		timer->start(CHECK_INTERVAL, false);
 	} else if (data.front().canCast(QVariant::List) == true) {
 
 		QValueList<QVariant> list;
@@ -134,24 +147,50 @@ void ZmdUpdaterCore::catalogData(const QValueList<QVariant>& data, const QVarian
 }
 
 void ZmdUpdaterCore::subscribeCatalog(Catalog cat) {
+	IS_ZMD_BUSY;
 }
 
 void ZmdUpdaterCore::unsubscribeCatalog(Catalog cat) {
+	IS_ZMD_BUSY;
 }
 
 /* Package Handling (call and data slot) */
 void ZmdUpdaterCore::getPatches(Catalog cat) {
+	IS_ZMD_BUSY;
 }
 
 void ZmdUpdaterCore::getUpdates(Catalog cat) {
+	IS_ZMD_BUSY;
 }
 
 /* Transaction call, data slot, timer */
 
 void ZmdUpdaterCore::runTransaction(QValueList<Patch> patchList, QValueList<Package> packageList) {
+	IS_ZMD_BUSY;
 }
 
-/* Global fault slot */
-void ZmdUpdaterCore::faultData(int code, const QString& t, const QVariant& m) {
-	cout << "FAULT: code=" << code << " " << t << endl;
+
+/* Global timer slot and data slot -- this keeps track of poll events */
+void ZmdUpdaterCore::timerSlot() {
+	server->call("zmd.system.poll", pollID, 
+	this, SLOT(timerData(const QValueList<QVariant>&, const QVariant&)),
+	this, SLOT(faultData(int, const QString&, const QVariant&)));
+}
+
+void ZmdUpdaterCore::timerData(const QValueList<QVariant>& data, const QVariant &t) {
+
+	if (data.front().canCast(QVariant::List) == true) {
+		QMap<QString, QVariant> map = data.front().toList().front().toMap();
+		Progress status;
+		status.percent = map["percent"].toDouble();
+		status.expectedTime = map["expected_time"].toInt();
+		status.remainingTime = map["remaning_time"].toInt();
+		emit(progress(status));
+		if (map["status"].toInt() == 2)
+			ZMD_CLEAR;
+	}
+}
+
+void ZmdUpdaterCore::faultData(int code, const QString& message, const QVariant&t) {
+	cout << "Fault: " << message << endl;
 }

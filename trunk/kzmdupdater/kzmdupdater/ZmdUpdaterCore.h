@@ -22,8 +22,15 @@
 
 #include "UpdaterCore.h"
 #include "xmlrpciface.h"
+#include <qtimer.h>
 
 #define SERVER_ADDY "http://127.0.0.1:2544/zmd/RPC2"
+
+#define CHECK_INTERVAL (100) 
+
+#define IS_ZMD_BUSY if (!pollID.isEmpty()) return
+#define ZMD_BLOCK(ID) (pollID = (ID))
+#define ZMD_CLEAR (pollID = "")
 
 class ZmdUpdaterCore : public UpdaterCore {
 
@@ -57,12 +64,21 @@ class ZmdUpdaterCore : public UpdaterCore {
 
 		void faultData(int, const QString&, const QVariant&);
 
+		void timerSlot();
+		void timerData(const QValueList<QVariant>&, const QVariant&);
+
 	private:
 
 		//These really need to be stored somewhere else. Kwallet?
-		QString username;
-		QString password;
-		KXMLRPC::Server *server; 
+		QString 			username;
+		QString 			password;
+
+		//Holds current pollID
+		// Right now we can only watch one thing
+		QString 			pollID;
+
+		KXMLRPC::Server 	*server; 
+		QTimer 				*timer;
 };
 
 #endif

@@ -57,14 +57,14 @@ class InstallWindow : public QWidget {
 
 		void initGUI();
 
-		HeaderWidget *header;
-		QListView *installList;
-		KProgress *progressBar;
-		KPushButton *abortButton;
+		HeaderWidget 	*header;
+		QListView 		*installList;
+		KProgress 		*progressBar;
+		KPushButton 	*abortButton;
 
-		QVBoxLayout *mainLayout;
+		QVBoxLayout 	*mainLayout;
 
-		UpdaterCore *core;
+		UpdaterCore 	*core;
 };
 
 
