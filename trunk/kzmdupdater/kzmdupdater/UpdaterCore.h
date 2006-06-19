@@ -118,7 +118,6 @@ class UpdaterCore : public QObject {
 		void updateListing(QValueList<Package>);
 	
 		void transactionFinished(int flags);
-		void progress(Progress);
 
 		void serviceAdded(int flags);
 		void serviceRemoved(int flags);
@@ -126,6 +125,10 @@ class UpdaterCore : public QObject {
 		void catalogAdded(int flags);
 		void catalogRemoved(int flags);
 
+		/**
+			General progress signal, reports progress on any on-going process.
+		**/
+		void progress(Progress);
 };
 
 #endif

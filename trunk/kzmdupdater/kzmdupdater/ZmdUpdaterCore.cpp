@@ -127,6 +127,7 @@ void ZmdUpdaterCore::catalogData(const QValueList<QVariant>& data, const QVarian
 			cat.service = map["service"].toString();
 			cat.subscribed = map["subscribed"].toBool();
 			catalogList.append(cat);
+			cout << cat.name << endl;
 		}
 		emit(catalogListing(catalogList));
 	}

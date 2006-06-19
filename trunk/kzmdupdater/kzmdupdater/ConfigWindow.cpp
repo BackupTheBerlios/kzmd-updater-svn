@@ -27,7 +27,8 @@ ConfigWindow::ConfigWindow(UpdaterCore *_core, QWidget *parent) :
 	QWidget(parent,0,Qt::WDestructiveClose) {
 	core = _core;
 
-	connect(core, SIGNAL(serviceListing(QValueList<Service>)), this, SLOT(gotList(QValueList<Service>)));
+	connect(core, SIGNAL(serviceListing(QValueList<Service>)), this, SLOT(gotServiceList(QValueList<Service>)));
+	connect(core, SIGNAL(catalogListing(QValueList<Catalog>)), this, SLOT(gotCatalogList(QValueList<Catalog>)));
 
 	initGUI();
 	initList();
@@ -80,13 +81,14 @@ void ConfigWindow::initList() {
 	core->getServices();
 }
 
-void ConfigWindow::gotList(QValueList<Service> servers) {
+void ConfigWindow::gotServiceList(QValueList<Service> servers) {
 	QValueList<Service>::iterator iter;
 	QListViewItem *item;
 
 	for (iter = servers.begin(); iter != servers.end(); iter++) {
 		item = new QListViewItem(serverList, (*iter).name);
 	}
+	core->getCatalogs();
 }
 void ConfigWindow::addedServer(int status) {
 	if (status != ERROR_INVALID) {
@@ -94,6 +96,16 @@ void ConfigWindow::addedServer(int status) {
 	}
 	disconnect(core, SIGNAL(serviceChange(int)), this, SLOT(addedServer(int)));
 
+}
+
+void ConfigWindow::gotCatalogList(QValueList<Catalog> catalogs) {
+	QValueList<Catalog>::iterator iter;
+	QListViewItem *item;
+
+	for (iter = catalogs.begin(); iter != catalogs.end(); iter++) {
+	//add in subtree support
+		item = new QListViewItem(serverList->firstChild(), (*iter).name);
+	}
 }
 
 void ConfigWindow::removedServer(int status) {
