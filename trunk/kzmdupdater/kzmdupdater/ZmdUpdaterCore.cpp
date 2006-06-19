@@ -161,6 +161,33 @@ void ZmdUpdaterCore::getPatches(Catalog cat) {
 
 void ZmdUpdaterCore::getUpdates(Catalog cat) {
 	IS_ZMD_BUSY;
+	server->call("zmd.packsys.get_updates", cat.id, 
+	this, SLOT(updateData(const QValueList<QVariant>&, const QVariant&)),
+	this, SLOT(faultData(int, const QString&, const QVariant&)));
+
+}
+void ZmdUpdaterCore::updateData(const QValueList<QVariant>& data, const QVariant&t) {
+	QValueList<QVariant> list;
+	list = (data.front().toList());
+	QValueList<QVariant>::iterator iter;
+	QValueList<Package> packageList;
+
+	for (iter = list.begin(); iter != list.end(); iter++) {
+		QMap<QString, QVariant> map = (*iter).toMap();
+		Package pack;
+		pack.id = map["id"].toString();
+		pack.name = map["name"].toString();
+		pack.version = map["version"].toString();
+		pack.catalog = map["catalog"].toString();
+		pack.description = map["summary"].toString();
+		pack.installed = map["installed"].toBool();
+		packageList.append(pack);
+	}
+	emit(updateListing(packageList));
+}
+
+void ZmdUpdaterCore::patchData(const QValueList<QVariant>& data, const QVariant& t) {
+
 }
 
 /* Transaction call, data slot, timer */

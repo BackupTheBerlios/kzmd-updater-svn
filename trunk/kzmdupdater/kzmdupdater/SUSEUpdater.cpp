@@ -47,6 +47,10 @@ SUSEUpdater::SUSEUpdater() : KMainWindow(0L, "kzmdupdater") {
 	checkUpdates();
 }
 
+void SUSEUpdater::fakeCall() {
+
+}
+
 //Build GUI, setup system tray and hide GUI initially.
 void SUSEUpdater::initGUI() {
 
@@ -93,6 +97,7 @@ void SUSEUpdater::initGUI() {
 	mainBox->setMargin(10);
 	trayApplet->show();
 	resize(400,500);
+	setIcon(UserIcon(TRAY_ICON_GREEN));
 	hide();
 	return;
 }
@@ -104,6 +109,7 @@ void SUSEUpdater::configButtonClicked() {
 
 void SUSEUpdater::installButtonClicked() {
 	InstallWindow *win = new InstallWindow(core);
+	hide();
 	win->show();
 }
 

@@ -32,12 +32,13 @@
 #include <qpushbutton.h>
 
 #include "UpdaterCore.h"
+#include "SUSEUpdaterIface.h"
 
 class HeaderWidget;
 
 #define ZMD_CONFIG_PATH "/etc/zmd"
 
-class SUSEUpdater : public KMainWindow {
+class SUSEUpdater : public KMainWindow, public SUSEUpdaterIface {
 
 	Q_OBJECT
 
@@ -45,6 +46,8 @@ class SUSEUpdater : public KMainWindow {
 
 		SUSEUpdater();
 		~SUSEUpdater();
+
+		void fakeCall();
 
 	public slots:
 

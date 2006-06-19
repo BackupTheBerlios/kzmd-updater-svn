@@ -62,6 +62,9 @@ class ZmdUpdaterCore : public UpdaterCore {
 		void catalogData(const QValueList<QVariant>&, const QVariant&);
 		void serviceData(const QValueList<QVariant>&, const QVariant&);
 
+		void updateData(const QValueList<QVariant>&, const QVariant&);
+		void patchData(const QValueList<QVariant>&, const QVariant&);
+
 		void faultData(int, const QString&, const QVariant&);
 
 		void timerSlot();
