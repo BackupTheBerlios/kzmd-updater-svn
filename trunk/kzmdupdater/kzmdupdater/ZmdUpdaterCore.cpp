@@ -157,6 +157,10 @@ void ZmdUpdaterCore::unsubscribeCatalog(Catalog cat) {
 /* Package Handling (call and data slot) */
 void ZmdUpdaterCore::getPatches(Catalog cat) {
 	IS_ZMD_BUSY;
+	server->call("zmd.packsys.get_patches", cat.id, 
+	this, SLOT(patchData(const QValueList<QVariant>&, const QVariant&)),
+	this, SLOT(faultData(int, const QString&, const QVariant&)));
+
 }
 
 void ZmdUpdaterCore::getUpdates(Catalog cat) {
@@ -187,6 +191,23 @@ void ZmdUpdaterCore::updateData(const QValueList<QVariant>& data, const QVariant
 }
 
 void ZmdUpdaterCore::patchData(const QValueList<QVariant>& data, const QVariant& t) {
+	QValueList<QVariant> list;
+	list = (data.front().toList());
+	QValueList<QVariant>::iterator iter;
+	QValueList<Patch> patchList;
+
+	for (iter = list.begin(); iter != list.end(); iter++) {
+		QMap<QString, QVariant> map = (*iter).toMap();
+		Patch patch;
+		patch.id = map["id"].toString();
+		patch.name = map["name"].toString();
+		patch.version = map["version"].toString();
+		patch.catalog = map["catalog"].toString();
+		patch.description = map["summary"].toString();
+		patch.installed = map["installed"].toBool();
+		patchList.append(patch);
+	}
+	emit(patchListing(patchList));
 
 }
 
