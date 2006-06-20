@@ -31,7 +31,10 @@
 
 #define TRAY_ICON_GREEN "suse_green.png"
 
-SUSEUpdater::SUSEUpdater() : KMainWindow(0L, "kzmdupdater") {
+#include <iostream>
+using namespace std;
+
+SUSEUpdater::SUSEUpdater() : KMainWindow(0L, "kzmdupdater"), DCOPObject("kzmdupdater") {
 
 	KIconLoader iconLoader("kzmdupdater");
 	initGUI();
@@ -181,7 +184,7 @@ void SUSEUpdater::authorizeCore() {
 	if (client.ping() == -1)
 		client.startServer();
 	client.setPass(pass,60);
-	client.exec("kzmdauthutil /etc/zmd", "root");	
+	client.exec("kzmdauthutil /etc/zmd", "root");
 
 	if ( (fd = fopen("/var/tmp/kzmd-auth", "r")) != NULL) {
 		

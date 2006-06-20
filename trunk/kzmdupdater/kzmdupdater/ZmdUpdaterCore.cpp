@@ -56,7 +56,6 @@ void ZmdUpdaterCore::setPass(QString pass) {
 void ZmdUpdaterCore::getServices() {
 	IS_ZMD_BUSY;
 
-	cout << server->url().url() << endl;
 	server->call("zmd.system.service_list", QValueList<QVariant>(),
 	this, SLOT(serviceData(const QValueList<QVariant>&, const QVariant&)), 
 	this, SLOT(faultData(int, const QString&, const QVariant&)));
@@ -104,6 +103,9 @@ void ZmdUpdaterCore::serviceData(const QValueList<QVariant>& data, const QVarian
 			serv.type = map["type"].toString();
 			serv.activated = map["active"].toString();
 			serviceList.append(serv);
+#ifdef DEBUG
+			cout << "Service drop: " << serv.name << endl;
+#endif
 		}
 		emit(serviceListing(serviceList));
 	}
@@ -140,7 +142,9 @@ void ZmdUpdaterCore::catalogData(const QValueList<QVariant>& data, const QVarian
 			cat.service = map["service"].toString();
 			cat.subscribed = map["subscribed"].toBool();
 			catalogList.append(cat);
-			cout << cat.name << endl;
+#ifdef DEBUG
+			cout << "Catalog name: " << cat.name << endl;
+#endif
 		}
 		emit(catalogListing(catalogList));
 	}
@@ -186,6 +190,9 @@ void ZmdUpdaterCore::updateData(const QValueList<QVariant>& data, const QVariant
 		pack.description = map["summary"].toString();
 		pack.installed = map["installed"].toBool();
 		packageList.append(pack);
+#ifdef DEBUG
+		cout << "Package drop: " << pack.name << endl;
+#endif
 	}
 	emit(updateListing(packageList));
 }
@@ -206,6 +213,9 @@ void ZmdUpdaterCore::patchData(const QValueList<QVariant>& data, const QVariant&
 		patch.description = map["summary"].toString();
 		patch.installed = map["installed"].toBool();
 		patchList.append(patch);
+#ifdef DEBUG
+		cout << "Patch drop: " << patch.name << endl;
+#endif
 	}
 	emit(patchListing(patchList));
 
@@ -233,6 +243,9 @@ void ZmdUpdaterCore::timerData(const QValueList<QVariant>& data, const QVariant 
 		status.percent = map["percent"].toDouble();
 		status.expectedTime = map["expected_time"].toInt();
 		status.remainingTime = map["remaning_time"].toInt();
+#ifdef DEBUG
+		cout << "Timer data drop: " << status.percent << endl;
+#endif
 		emit(progress(status));
 		if (map["status"].toInt() == 2)
 			ZMD_CLEAR;
@@ -240,5 +253,7 @@ void ZmdUpdaterCore::timerData(const QValueList<QVariant>& data, const QVariant 
 }
 
 void ZmdUpdaterCore::faultData(int code, const QString& message, const QVariant&t) {
+#ifdef DEBUG
 	cout << "Fault: " << message << endl;
+#endif
 }

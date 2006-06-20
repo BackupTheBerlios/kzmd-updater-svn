@@ -24,8 +24,9 @@
 #include "xmlrpciface.h"
 #include <qtimer.h>
 
-#define SERVER_ADDY "http://127.0.0.1:2544/zmd/RPC2"
+#define DEBUG
 
+#define SERVER_ADDY "http://127.0.0.1:2544/zmd/RPC2"
 #define CHECK_INTERVAL (100) 
 
 #define IS_ZMD_BUSY if (!pollID.isEmpty()) return
