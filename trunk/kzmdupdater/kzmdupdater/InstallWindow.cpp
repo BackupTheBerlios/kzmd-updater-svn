@@ -67,6 +67,6 @@ void InstallWindow::setCore(UpdaterCore *newCore) {
 	core = newCore;
 }
 
-void setPackageList(QValueList<Package> packageList, QValueList<Patch> patchList) {
+void InstallWindow::setPackageList(QValueList<Package> packageList, QValueList<Patch> patchList) {
 
 }

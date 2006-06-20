@@ -94,6 +94,8 @@ void SUSEUpdater::initGUI() {
 	updateList->addColumn(i18n("Old Version"));
 	updateList->addColumn(i18n("New Version"));
 	updateList->addColumn(i18n("Size"));
+	updateList->addColumn("ID", 0); // This is a hidden column to hold the ID of the patch/package
+
 	connect(updateList, SIGNAL(selectionChanged(QListViewItem*)), this, SLOT(slotPackageSelected(QListViewItem*)));
 
 	mainBox->setSpacing(10);
@@ -112,7 +114,20 @@ void SUSEUpdater::configButtonClicked() {
 
 void SUSEUpdater::installButtonClicked() {
 	InstallWindow *win = new InstallWindow(core);
-	hide();
+	QValueList<Package> packList;
+	//QValueList<Patch> patchList;
+	QListViewItem *item = updateList->firstChild();
+
+	do {
+
+		Package p;
+		p.name = item->text(0); //gets the name
+		p.id = item->text(4); //gets the id
+		packList.append(p);
+	} while ((item = item->nextSibling()) != 0);
+	/* From reading the ZMD source, we only need name and ID for packages or patches. This may change in the future, was not in the API */
+
+	win->setPackageList(packList, QValueList<Patch>());
 	win->show();
 }
 
@@ -166,6 +181,7 @@ void SUSEUpdater::gotPatchListing(QValueList<Patch> patchList) {
 		newItem->setText(1,"Unknown");
 		newItem->setText(2,(*iter).version);
 		newItem->setText(3, "Unknown");
+		newItem->setText(3, (*iter).id);
 	}
 }
 
@@ -199,9 +215,5 @@ void SUSEUpdater::authorizeCore() {
 		core->setPass(buffer);
 		memset(buffer, '\0', 1024);
 		fclose(fd);
-	} else {
-		//Jury-rig for devs comp
-		core->setUser("8489a518dd084e2d83cdd00c3beaed8b");
-		core->setPass("12acc5618a004a26863c034a24a6f31f");
 	}
 }
