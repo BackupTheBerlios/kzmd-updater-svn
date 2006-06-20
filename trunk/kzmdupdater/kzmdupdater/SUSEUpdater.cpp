@@ -122,6 +122,11 @@ void SUSEUpdater::installButtonClicked() {
 	//QValueList<Patch> patchList;
 	QListViewItem *item = updateList->firstChild();
 
+	if (item == NULL) {
+		delete win;
+		return; //Don't install 0 updates...
+	}
+
 	do {
 
 		Package p;
