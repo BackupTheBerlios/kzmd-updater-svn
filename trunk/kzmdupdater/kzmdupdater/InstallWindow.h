@@ -49,7 +49,7 @@ class InstallWindow : public QWidget {
 
 		//Core Signals
 
-		void progress(int);
+		void progress(Progress);
 		void finished(int);
 
 
@@ -57,14 +57,18 @@ class InstallWindow : public QWidget {
 
 		void initGUI();
 
-		HeaderWidget 	*header;
-		QListView 		*installList;
-		KProgress 		*progressBar;
-		KPushButton 	*abortButton;
+		HeaderWidget 			*header;
+		QListView 				*installList;
+		KProgress 				*progressBar;
+		KPushButton 			*abortButton;
 
-		QVBoxLayout 	*mainLayout;
+		QVBoxLayout 			*mainLayout;
 
-		UpdaterCore 	*core;
+		UpdaterCore 			*core;
+
+		QValueList<QVariant> 	updates;
+		QValueList<QVariant> 	installs;
+		QValueList<QVariant> 	removes;
 };
 
 

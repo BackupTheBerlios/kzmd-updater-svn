@@ -144,6 +144,7 @@ void ZmdUpdaterCore::catalogData(const QValueList<QVariant>& data, const QVarian
 			catalogList.append(cat);
 #ifdef DEBUG
 			cout << "Catalog name: " << cat.name << endl;
+			cout << "Catalot service: " << cat.service << endl;
 #endif
 		}
 		emit(catalogListing(catalogList));
@@ -152,10 +153,28 @@ void ZmdUpdaterCore::catalogData(const QValueList<QVariant>& data, const QVarian
 
 void ZmdUpdaterCore::subscribeCatalog(Catalog cat) {
 	IS_ZMD_BUSY;
+
+	QValueList<QVariant> argList;
+	argList.append(cat.id);
+	argList.append(true);
+
+	server->call("zmd.packsys.catalog_subscribe", argList, 
+	this, SLOT(catalogData(const QValueList<QVariant>&, const QVariant&)),
+	this, SLOT(faultData(int, const QString&, const QVariant&)));
+
+
 }
 
 void ZmdUpdaterCore::unsubscribeCatalog(Catalog cat) {
 	IS_ZMD_BUSY;
+	QValueList<QVariant> argList;
+	argList.append(cat.id);
+	argList.append(false);
+
+	server->call("zmd.packsys.catalog_subscribe", argList, 
+	this, SLOT(catalogData(const QValueList<QVariant>&, const QVariant&)),
+	this, SLOT(faultData(int, const QString&, const QVariant&)));
+
 }
 
 /* Package Handling (call and data slot) */
@@ -225,11 +244,45 @@ void ZmdUpdaterCore::patchData(const QValueList<QVariant>& data, const QVariant&
 
 void ZmdUpdaterCore::runTransaction(QValueList<Patch> patchList, QValueList<Package> packageList) {
 	IS_ZMD_BUSY;
+	
+	QValueList<QVariant> argList;
+	QValueList<QVariant> updateList;
+
+	for (QValueList<Package>::iterator iter = packageList.begin();
+		 iter != packageList.end(); iter++) {
+		 QMap<QString, QVariant> map;
+		 map["id"] = (*iter).id;
+		 map["name"] = (*iter).name;
+		 updateList.append(map);
+	}
+	argList.append(QValueList<QVariant>());
+	argList.append(updateList);	
+	argList.append(QValueList<QVariant>());
+	argList.append(0);
+	server->call("zmd.packsys.transact", argList, 
+	this, SLOT(transactData(const QValueList<QVariant>&, const QVariant&)),
+	this, SLOT(faultData(int, const QString&, const QVariant&)));
+
+}
+
+void ZmdUpdaterCore::transactData(const QValueList<QVariant>& data, const QVariant &t) {
+	downloadID = data.first().toString();
+	ZMD_BLOCK(data.last().toString());
+	timer->start(CHECK_INTERVAL,false);
+}
+
+void ZmdUpdaterCore::cancelTransaction() {
+
 }
 
 
 /* Global timer slot and data slot -- this keeps track of poll events */
 void ZmdUpdaterCore::timerSlot() {
+	if (!downloadID.isEmpty()) {
+		server->call("zmd.system.poll", downloadID, 
+		this, SLOT(timerData(const QValueList<QVariant>&, const QVariant&)),
+		this, SLOT(faultData(int, const QString&, const QVariant&)));
+	}
 	server->call("zmd.system.poll", pollID, 
 	this, SLOT(timerData(const QValueList<QVariant>&, const QVariant&)),
 	this, SLOT(faultData(int, const QString&, const QVariant&)));

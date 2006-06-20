@@ -57,6 +57,7 @@ class ZmdUpdaterCore : public UpdaterCore {
 		void getUpdates(Catalog);
 
 		void runTransaction(QValueList<Patch>, QValueList<Package>);
+		void cancelTransaction();
 
 	private slots:
 
@@ -68,6 +69,7 @@ class ZmdUpdaterCore : public UpdaterCore {
 
 		void faultData(int, const QString&, const QVariant&);
 
+		void transactData(const QValueList<QVariant>&, const QVariant&);
 		void timerSlot();
 		void timerData(const QValueList<QVariant>&, const QVariant&);
 
@@ -80,6 +82,8 @@ class ZmdUpdaterCore : public UpdaterCore {
 		//Holds current pollID
 		// Right now we can only watch one thing
 		QString 			pollID;
+		//A "special" pollID for the download ID of a transact process
+		QString				downloadID;
 
 		KXMLRPC::Server 	*server; 
 		QTimer 				*timer;

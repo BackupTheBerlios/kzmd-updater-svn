@@ -27,11 +27,12 @@ ConfigWindow::ConfigWindow(UpdaterCore *_core, QWidget *parent) :
 	QWidget(parent,0,Qt::WDestructiveClose) {
 	core = _core;
 
+	initGUI();
+	initList();
+
 	connect(core, SIGNAL(serviceListing(QValueList<Service>)), this, SLOT(gotServiceList(QValueList<Service>)));
 	connect(core, SIGNAL(catalogListing(QValueList<Catalog>)), this, SLOT(gotCatalogList(QValueList<Catalog>)));
 
-	initGUI();
-	initList();
 }
 
 
@@ -50,6 +51,7 @@ void ConfigWindow::initGUI() {
 	serverList->addColumn(i18n("Services/Catalogs"), 400);
 	serverList->setTreeStepSize(30);
 	serverList->setRootIsDecorated(true);
+	serverList->addColumn("URI", 0); // Hidden column to hold uri for searching
 
 	header->setDescription(i18n("<b>Add/Remove Package Servers:</b><br> You may add or remove update servers below or change your software catalog subscriptions.<br> <u>Make whatever changes you wish and press accept.</u>"));
 
@@ -87,10 +89,11 @@ void ConfigWindow::gotServiceList(QValueList<Service> servers) {
 
 	for (iter = servers.begin(); iter != servers.end(); iter++) {
 		item = new QListViewItem(serverList, (*iter).name);
+		item->setText(1,(*iter).uri);
 	}
 	core->getCatalogs();
 }
-void ConfigWindow::addedServer(int status) {
+void ConfigWindow::addedServer(QString server, int status) {
 	if (status != ERROR_INVALID) {
 		initList();
 	}
@@ -103,13 +106,16 @@ void ConfigWindow::gotCatalogList(QValueList<Catalog> catalogs) {
 	QListViewItem *item;
 
 	for (iter = catalogs.begin(); iter != catalogs.end(); iter++) {
-	//add in subtree support
-		item = new QListViewItem(serverList->firstChild(), (*iter).name);
+		item = new QListViewItem(serverList->findItem((*iter).service,1), (*iter).name);
 	}
 }
 
-void ConfigWindow::removedServer(int status) {
+void ConfigWindow::removedServer(QString server, int status) {
+	QListViewItem *item;
+	if ((item = serverList->findItem(server,0)) != NULL)
+		delete item;
 }
+
 void ConfigWindow::addButtonClicked() {
 
 	QValueList<QString> list;
@@ -131,16 +137,9 @@ void ConfigWindow::addButtonClicked() {
 	}
 }
 void ConfigWindow::removeButtonClicked() {
-
-	if (serverList->currentItem() == NULL)
-		return;
-	delete serverList->currentItem();
-	
-	/*
 	Service serv;
-	serv.name = serverList->currentItem->text(0);
-	core.removeService(serv);
-	*/
 
-
+	serv.name = serverList->currentItem()->text(0);
+	serv.name = serverList->currentItem()->text(1);
+	core->removeService(serv);
 }

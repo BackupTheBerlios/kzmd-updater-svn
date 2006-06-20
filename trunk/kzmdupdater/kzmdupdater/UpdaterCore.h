@@ -109,6 +109,7 @@ class UpdaterCore : public QObject {
 		virtual void getUpdates(Catalog) = 0;
 
 		virtual void runTransaction(QValueList<Patch>, QValueList<Package>) = 0;
+		virtual void cancelTransaction() = 0;
 
 	signals:
 
@@ -119,11 +120,11 @@ class UpdaterCore : public QObject {
 	
 		void transactionFinished(int flags);
 
-		void serviceAdded(int flags);
-		void serviceRemoved(int flags);
+		void serviceAdded(QString serviceName, int flags);
+		void serviceRemoved(QString serviceName, int flags);
 
-		void catalogAdded(int flags);
-		void catalogRemoved(int flags);
+		void catalogAdded(QString catalogName, int flags);
+		void catalogRemoved(QString catalogName, int flags);
 
 		/**
 			General progress signal, reports progress on any on-going process.

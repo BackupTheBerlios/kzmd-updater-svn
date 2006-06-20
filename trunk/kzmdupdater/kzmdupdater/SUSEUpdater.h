@@ -21,7 +21,6 @@
 #ifndef _SUSE_UPDATER_
 #define _SUSE_UPDATER_
 
-#include <kmainwindow.h>
 #include <ksystemtray.h>
 #include <dcopclient.h>
 #include <dcopobject.h>
@@ -33,18 +32,17 @@
 
 #include "UpdaterCore.h"
 #include "SUSEUpdaterIface.h"
-
-class HeaderWidget;
+#include "HeaderWidget.h"
 
 #define ZMD_CONFIG_PATH "/etc/zmd"
 
-class SUSEUpdater : public KMainWindow, public SUSEUpdaterIface {
+class SUSEUpdater : public QWidget, public SUSEUpdaterIface {
 
 	Q_OBJECT
 
 	public:
 
-		SUSEUpdater();
+		SUSEUpdater(QWidget *parent=0);
 		~SUSEUpdater();
 
 		void fakeCall();

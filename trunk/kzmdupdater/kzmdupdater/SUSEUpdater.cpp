@@ -23,20 +23,22 @@
 #include <klocale.h>
 #include <kprocess.h>
 
-#include "HeaderWidget.h"
 #include "ConfigWindow.h"
 #include "InstallWindow.h"
+
+//Cores
 #include "ZmdUpdaterCore.h"
 
 #define TRAY_ICON_GREEN "suse_green.png"
 
+//Enum for updateListing
 enum { COLUMN_NAME, COLUMN_OLD_VERSION, COLUMN_NEW_VERSION,
 		COLUMN_SIZE, COLUMN_ID, COLUMN_DESC };
 
 #include <iostream>
 using namespace std;
 
-SUSEUpdater::SUSEUpdater() : KMainWindow(0L, "kzmdupdater"), DCOPObject("kzmdupdater") {
+SUSEUpdater::SUSEUpdater(QWidget *parent) : QWidget(parent), DCOPObject("kzmdupdater") {
 
 	KIconLoader iconLoader("kzmdupdater");
 	core = new ZmdUpdaterCore();
@@ -47,7 +49,6 @@ SUSEUpdater::SUSEUpdater() : KMainWindow(0L, "kzmdupdater"), DCOPObject("kzmdupd
 	connect(core, SIGNAL(catalogListing(QValueList<Catalog>)), this, SLOT(gotCatalogs(QValueList<Catalog>)));
 	connect(core, SIGNAL(updateListing(QValueList<Package>)), this, SLOT(gotUpdateListing(QValueList<Package>)));
 	connect(core, SIGNAL(patchListing(QValueList<Patch>)), this, SLOT(gotPatchListing(QValueList<Patch>)));
-
 
 	checkUpdates();
 }

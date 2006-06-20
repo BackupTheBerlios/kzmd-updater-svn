@@ -49,8 +49,8 @@ class ConfigWindow : public QWidget {
 
 		void gotServiceList(QValueList<Service>);
 		void gotCatalogList(QValueList<Catalog>);
-		void addedServer(int);
-		void removedServer(int);
+		void addedServer(QString server, int);
+		void removedServer(QString server, int);
 
 
 	private:

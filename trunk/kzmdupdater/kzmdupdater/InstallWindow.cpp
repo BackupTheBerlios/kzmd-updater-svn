@@ -20,11 +20,16 @@
 #include "InstallWindow.h"
 #include <klocale.h>
 
+#include <qvariant.h>
+
 
 InstallWindow::InstallWindow(UpdaterCore *_core, QWidget *parent) : 
 	QWidget(parent,0,Qt::WDestructiveClose) {
 	core = _core;
 	initGUI();
+
+	connect(core, SIGNAL(progress(Progress)), this, SLOT(progress(Progress)));
+	connect(core, SIGNAL(transactionFinished(int)), this, SLOT(finished(int)));
 }
 
 InstallWindow::~InstallWindow() {
@@ -57,7 +62,7 @@ void InstallWindow::initGUI() {
 void InstallWindow::abortButtonClicked() {
 }
 
-void InstallWindow::progress(int status) {
+void InstallWindow::progress(Progress status) {
 }
 
 void InstallWindow::finished(int status) {
@@ -68,5 +73,21 @@ void InstallWindow::setCore(UpdaterCore *newCore) {
 }
 
 void InstallWindow::setPackageList(QValueList<Package> packageList, QValueList<Patch> patchList) {
+//for now we only load the update list
+
+	QValueList<Package>::iterator iter;
+
+	for (iter = packageList.begin(); iter != packageList.end(); iter++) {
+		QMap<QString, QVariant> map;
+		map["id"] = (*iter).id;
+		map["name"] = (*iter).name;
+/*		map["version"] = "";
+		map["arch"] = "";
+		map["catalog"] = "";
+		map["install"] = true;
+		map["summary"] = "";
+*/
+		updates.append(map);
+	}
 
 }
