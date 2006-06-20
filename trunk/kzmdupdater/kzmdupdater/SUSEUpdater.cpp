@@ -21,8 +21,7 @@
 #include "SUSEUpdater.h"
 #include <kiconloader.h>
 #include <klocale.h>
-#include <kdesu/client.h>
-#include <kpassdlg.h>
+#include <kprocess.h>
 
 #include "HeaderWidget.h"
 #include "ConfigWindow.h"
@@ -189,18 +188,12 @@ void SUSEUpdater::authorizeCore() {
 
 	FILE *fd;
 	char buffer[1024];
-	KDEsuClient client;
+	KProcess proc;
 	QCString pass;
 
-	int status = KPasswordDialog::getPassword(pass, i18n("Please enter the root password for this machine:"));
-
-	if(status != KPasswordDialog::Accepted) {
-		exit(1);
-	}
-	if (client.ping() == -1)
-		client.startServer();
-	client.setPass(pass,60);
-	client.exec("kzmdauthutil /etc/zmd", "root");
+	proc << "kdesu";
+	proc << QString("kzmdauthutil ") + QString(ZMD_CONFIG_PATH);
+	proc.start();
 
 	if ( (fd = fopen("/var/tmp/kzmd-auth", "r")) != NULL) {
 		
