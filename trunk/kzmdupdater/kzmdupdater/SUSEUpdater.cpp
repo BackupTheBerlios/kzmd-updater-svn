@@ -30,14 +30,18 @@
 
 #define TRAY_ICON_GREEN "suse_green.png"
 
+enum { COLUMN_NAME, COLUMN_OLD_VERSION, COLUMN_NEW_VERSION,
+		COLUMN_SIZE, COLUMN_ID, COLUMN_DESC };
+
 #include <iostream>
 using namespace std;
 
 SUSEUpdater::SUSEUpdater() : KMainWindow(0L, "kzmdupdater"), DCOPObject("kzmdupdater") {
 
 	KIconLoader iconLoader("kzmdupdater");
-	initGUI();
 	core = new ZmdUpdaterCore();
+	authorizeCore();
+	initGUI();
 
 	//Connect core
 	connect(core, SIGNAL(catalogListing(QValueList<Catalog>)), this, SLOT(gotCatalogs(QValueList<Catalog>)));
@@ -45,7 +49,6 @@ SUSEUpdater::SUSEUpdater() : KMainWindow(0L, "kzmdupdater"), DCOPObject("kzmdupd
 	connect(core, SIGNAL(patchListing(QValueList<Patch>)), this, SLOT(gotPatchListing(QValueList<Patch>)));
 
 
-	authorizeCore();
 	checkUpdates();
 }
 
@@ -94,6 +97,7 @@ void SUSEUpdater::initGUI() {
 	updateList->addColumn(i18n("New Version"));
 	updateList->addColumn(i18n("Size"));
 	updateList->addColumn("ID", 0); // This is a hidden column to hold the ID of the patch/package
+	updateList->addColumn("Description", 0); //Another Hidden Column
 
 	connect(updateList, SIGNAL(selectionChanged(QListViewItem*)), this, SLOT(slotPackageSelected(QListViewItem*)));
 
@@ -120,8 +124,8 @@ void SUSEUpdater::installButtonClicked() {
 	do {
 
 		Package p;
-		p.name = item->text(0); //gets the name
-		p.id = item->text(4); //gets the id
+		p.name = item->text(COLUMN_NAME); //gets the name
+		p.id = item->text(COLUMN_ID); //gets the id
 		packList.append(p);
 	} while ((item = item->nextSibling()) != 0);
 	/* From reading the ZMD source, we only need name and ID for packages or patches. This may change in the future, was not in the API */
@@ -139,7 +143,7 @@ void SUSEUpdater::checkUpdates() {
 
 
 void SUSEUpdater::slotPackageSelected(QListViewItem *packageSelected) {
-	packageDescription->setText(((QCheckListItem*)packageSelected)->text());
+	packageDescription->setText(((QCheckListItem*)packageSelected)->text(COLUMN_DESC));
 }
 
 void SUSEUpdater::slotExit() {
@@ -164,9 +168,11 @@ void SUSEUpdater::gotUpdateListing(QValueList<Package> packageList) {
 	for (iter = packageList.begin(); iter != packageList.end(); iter++) {
 		newItem = new QCheckListItem(updateList, (*iter).name, QCheckListItem::CheckBox);
 
-		newItem->setText(1,"Unknown");
-		newItem->setText(2,(*iter).version);
-		newItem->setText(3, "Unknown");
+		newItem->setText(COLUMN_OLD_VERSION,"Unknown");
+		newItem->setText(COLUMN_NEW_VERSION,(*iter).version);
+		newItem->setText(COLUMN_SIZE, "Unknown");
+		newItem->setText(COLUMN_ID, (*iter).id);
+		newItem->setText(COLUMN_DESC, (*iter).description);
 	}
 }
 
@@ -177,12 +183,19 @@ void SUSEUpdater::gotPatchListing(QValueList<Patch> patchList) {
 	for (iter = patchList.begin(); iter != patchList.end(); iter++) {
 		newItem = new QCheckListItem(updateList, (*iter).name, QCheckListItem::CheckBox);
 
-		newItem->setText(1,"Unknown");
-		newItem->setText(2,(*iter).version);
-		newItem->setText(3, "Unknown");
-		newItem->setText(3, (*iter).id);
+		newItem->setText(COLUMN_OLD_VERSION,"Unknown");
+		newItem->setText(COLUMN_NEW_VERSION ,(*iter).version);
+		newItem->setText(COLUMN_SIZE, "Unknown");
+		newItem->setText(COLUMN_ID, (*iter).id);
+		newItem->setText(COLUMN_DESC, (*iter).description);
 	}
 }
+
+/*
+
+	This is a sticky point. Seems to work at the moment, but it is "flaky"
+
+*/
 
 void SUSEUpdater::authorizeCore() {
 
