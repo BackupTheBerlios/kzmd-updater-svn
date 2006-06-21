@@ -36,7 +36,7 @@
 
 #define ZMD_CONFIG_PATH "/etc/zmd"
 
-class SUSEUpdater : public QWidget, public SUSEUpdaterIface {
+class SUSEUpdater : public QWidget, virtual SUSEUpdaterIface {
 
 	Q_OBJECT
 

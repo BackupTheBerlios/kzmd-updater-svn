@@ -30,6 +30,8 @@
 #include "ZmdUpdaterCore.h"
 
 #define TRAY_ICON_GREEN "suse_green.png"
+#define TRAY_ICON_RED	"suse_red.png"
+
 
 //Enum for updateListing
 enum { COLUMN_NAME, COLUMN_OLD_VERSION, COLUMN_NEW_VERSION,
@@ -171,6 +173,12 @@ void SUSEUpdater::gotUpdateListing(QValueList<Package> packageList) {
 	QValueList<Package>::iterator iter;
 	QCheckListItem *newItem;
 
+	if (packageList.size() > 0) {
+		trayApplet->setPixmap(UserIcon(TRAY_ICON_RED));
+	} else {
+		trayApplet->setPixmap(UserIcon(TRAY_ICON_GREEN));
+	}
+
 	for (iter = packageList.begin(); iter != packageList.end(); iter++) {
 		newItem = new QCheckListItem(updateList, (*iter).name, QCheckListItem::CheckBox);
 
@@ -185,6 +193,12 @@ void SUSEUpdater::gotUpdateListing(QValueList<Package> packageList) {
 void SUSEUpdater::gotPatchListing(QValueList<Patch> patchList) {
 	QValueList<Patch>::iterator iter;
 	QCheckListItem *newItem;
+
+	if (patchList.size() > 0) {
+		trayApplet->setPixmap(UserIcon(TRAY_ICON_RED));
+	} else {
+		trayApplet->setPixmap(UserIcon(TRAY_ICON_GREEN));
+	}
 
 	for (iter = patchList.begin(); iter != patchList.end(); iter++) {
 		newItem = new QCheckListItem(updateList, (*iter).name, QCheckListItem::CheckBox);
