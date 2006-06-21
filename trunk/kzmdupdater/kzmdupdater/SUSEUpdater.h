@@ -56,7 +56,7 @@ class SUSEUpdater : public QWidget, virtual SUSEUpdaterIface {
 
 	private slots:
 
-		void gotCatalogs(QValueList<Catalog>);
+		void gotCatalogListing(QValueList<Catalog>);
 		void gotUpdateListing(QValueList<Package>);
 		void gotPatchListing(QValueList<Patch>);
 

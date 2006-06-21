@@ -38,8 +38,8 @@ InstallWindow::~InstallWindow() {
 void InstallWindow::initGUI() {
 
 	header = new HeaderWidget(this);
-	installList = new QListView(this);
-	progressBar = new KProgress(this);
+	installList = new KTextEdit(this);
+	progressBar = new KProgress(100, this);
 	abortButton = new KPushButton(i18n("Abort Upgrade"), this);
 	mainLayout = new QVBoxLayout(this);
 
@@ -63,6 +63,8 @@ void InstallWindow::abortButtonClicked() {
 }
 
 void InstallWindow::progress(Progress status) {
+	progressBar->advance(status.percent);
+	installList->setText(status.messages.front());
 }
 
 void InstallWindow::finished(int status) {

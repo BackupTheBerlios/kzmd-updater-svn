@@ -30,9 +30,6 @@ ConfigWindow::ConfigWindow(UpdaterCore *_core, QWidget *parent) :
 	initGUI();
 	initList();
 
-	connect(core, SIGNAL(serviceListing(QValueList<Service>)), this, SLOT(gotServiceList(QValueList<Service>)));
-	connect(core, SIGNAL(catalogListing(QValueList<Catalog>)), this, SLOT(gotCatalogList(QValueList<Catalog>)));
-
 }
 
 
@@ -81,6 +78,10 @@ void ConfigWindow::initGUI() {
 
 void ConfigWindow::initList() {
 	core->getServices();
+	connect(core, SIGNAL(serviceListing(QValueList<Service>)), this, SLOT(gotServiceList(QValueList<Service>)));
+	connect(core, SIGNAL(catalogListing(QValueList<Catalog>)), this, SLOT(gotCatalogList(QValueList<Catalog>)));
+
+
 }
 
 void ConfigWindow::gotServiceList(QValueList<Service> servers) {
@@ -91,6 +92,7 @@ void ConfigWindow::gotServiceList(QValueList<Service> servers) {
 		item = new QListViewItem(serverList, (*iter).name);
 		item->setText(1,(*iter).uri);
 	}
+	disconnect(core, SIGNAL(serviceListing(QValueList<Service>)), this, SLOT(gotServiceList(QValueList<Service>)));
 	core->getCatalogs();
 }
 void ConfigWindow::addedServer(QString server, int status) {
@@ -108,6 +110,7 @@ void ConfigWindow::gotCatalogList(QValueList<Catalog> catalogs) {
 	for (iter = catalogs.begin(); iter != catalogs.end(); iter++) {
 		item = new QListViewItem(serverList->findItem((*iter).service,1), (*iter).name);
 	}
+	connect(core, SIGNAL(catalogListing(QValueList<Catalog>)), this, SLOT(gotCatalogList(QValueList<Catalog>)));
 }
 
 void ConfigWindow::removedServer(QString server, int status) {

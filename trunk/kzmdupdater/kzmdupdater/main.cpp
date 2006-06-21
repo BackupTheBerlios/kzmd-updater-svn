@@ -37,6 +37,7 @@ int main(int argc, char **argv) {
 		exit(0);
 	}	
 	KUniqueApplication app(true,true,false);
+	app.disableSessionManagement();
 	SUSEUpdater *mainApp = new SUSEUpdater();
 	app.setMainWidget(mainApp);
 	app.exec();

@@ -47,8 +47,8 @@ SUSEUpdater::SUSEUpdater(QWidget *parent) : QWidget(parent), DCOPObject("kzmdupd
 	authorizeCore();
 	initGUI();
 
-	//Connect core
-	connect(core, SIGNAL(catalogListing(QValueList<Catalog>)), this, SLOT(gotCatalogs(QValueList<Catalog>)));
+	// We connect these here because they don't actually start an update cycle
+	// Plus, strangely, sometimes we get multiple Package/Patch drops
 	connect(core, SIGNAL(updateListing(QValueList<Package>)), this, SLOT(gotUpdateListing(QValueList<Package>)));
 	connect(core, SIGNAL(patchListing(QValueList<Patch>)), this, SLOT(gotPatchListing(QValueList<Patch>)));
 
@@ -122,7 +122,7 @@ void SUSEUpdater::installButtonClicked() {
 	InstallWindow *win = new InstallWindow(core);
 	QValueList<Package> packList;
 	//QValueList<Patch> patchList;
-	QListViewItem *item = updateList->firstChild();
+	QCheckListItem *item = (QCheckListItem*)(updateList->firstChild());
 
 	if (item == NULL) {
 		delete win;
@@ -130,12 +130,13 @@ void SUSEUpdater::installButtonClicked() {
 	}
 
 	do {
-
-		Package p;
-		p.name = item->text(COLUMN_NAME); //gets the name
-		p.id = item->text(COLUMN_ID); //gets the id
-		packList.append(p);
-	} while ((item = item->nextSibling()) != 0);
+		if (item->isOn()) {
+			Package p;
+			p.name = item->text(COLUMN_NAME); //gets the name
+			p.id = item->text(COLUMN_ID); //gets the id
+			packList.append(p);
+		}
+	} while ((item = (QCheckListItem*)(item->nextSibling())) != 0);
 	/* From reading the ZMD source, we only need name and ID for packages or patches. This may change in the future, was not in the API */
 
 	win->setPackageList(packList, QValueList<Patch>());
@@ -146,6 +147,8 @@ SUSEUpdater::~SUSEUpdater() {
 }
 
 void SUSEUpdater::checkUpdates() {
+	connect(core, SIGNAL(catalogListing(QValueList<Catalog>)), this, SLOT(gotCatalogListing(QValueList<Catalog>)));
+
 	core->getCatalogs(); //this will return to gotCatalogs
 }
 
@@ -158,7 +161,7 @@ void SUSEUpdater::slotExit() {
 	close();
 }
 
-void SUSEUpdater::gotCatalogs(QValueList<Catalog> catalogs) {
+void SUSEUpdater::gotCatalogListing(QValueList<Catalog> catalogs) {
 	QValueList<Catalog>::iterator iter;
 
 	if (catalogs.size() <= 0)
@@ -167,13 +170,14 @@ void SUSEUpdater::gotCatalogs(QValueList<Catalog> catalogs) {
 	for (iter = catalogs.begin(); iter != catalogs.end(); iter++) {
 		core->getUpdates(*iter);
 	}
+	disconnect(core, SIGNAL(catalogListing(QValueList<Catalog>)), this, SLOT(gotCatalogListing(QValueList<Catalog>)));
 }
 
 void SUSEUpdater::gotUpdateListing(QValueList<Package> packageList) {
 	QValueList<Package>::iterator iter;
 	QCheckListItem *newItem;
 
-	if (packageList.size() > 0) {
+	if (packageList.size() > 0 || updateList->childCount() > 0) {
 		trayApplet->setPixmap(UserIcon(TRAY_ICON_RED));
 	} else {
 		trayApplet->setPixmap(UserIcon(TRAY_ICON_GREEN));
@@ -188,13 +192,15 @@ void SUSEUpdater::gotUpdateListing(QValueList<Package> packageList) {
 		newItem->setText(COLUMN_ID, (*iter).id);
 		newItem->setText(COLUMN_DESC, (*iter).description);
 	}
+	updateList->setSelected(updateList->firstChild(), true);
+
 }
 
 void SUSEUpdater::gotPatchListing(QValueList<Patch> patchList) {
 	QValueList<Patch>::iterator iter;
 	QCheckListItem *newItem;
 
-	if (patchList.size() > 0) {
+	if (patchList.size() > 0 || updateList->childCount() > 0) {
 		trayApplet->setPixmap(UserIcon(TRAY_ICON_RED));
 	} else {
 		trayApplet->setPixmap(UserIcon(TRAY_ICON_GREEN));
@@ -209,6 +215,8 @@ void SUSEUpdater::gotPatchListing(QValueList<Patch> patchList) {
 		newItem->setText(COLUMN_ID, (*iter).id);
 		newItem->setText(COLUMN_DESC, (*iter).description);
 	}
+	updateList->setSelected(updateList->firstChild(), true);
+
 }
 
 /*

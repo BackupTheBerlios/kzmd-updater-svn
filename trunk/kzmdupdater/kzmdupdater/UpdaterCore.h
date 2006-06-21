@@ -26,10 +26,13 @@
 
 /* Error Codes */
 
-#define SUCCEEDED 0
-#define ERROR_DEPENDENCY_FAILURE 1
-#define ERROR_INVALID 2
-#define ERROR_AUTH_REJECT 3
+enum {
+
+	ERROR_NONE = 0,
+	ERROR_DEP_FAIL,
+	ERROR_INVALID,
+	ERROR_AUTH_REJECT
+};
 
 //More will obviously be added later
 

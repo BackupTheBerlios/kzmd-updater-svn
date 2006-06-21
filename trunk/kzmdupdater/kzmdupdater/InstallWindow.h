@@ -22,6 +22,7 @@
 
 #include <kprogress.h>
 #include <kpushbutton.h>
+#include <ktextedit.h>
 
 #include <qwidget.h>
 #include <qlistview.h>
@@ -58,7 +59,7 @@ class InstallWindow : public QWidget {
 		void initGUI();
 
 		HeaderWidget 			*header;
-		QListView 				*installList;
+		KTextEdit 				*installList;
 		KProgress 				*progressBar;
 		KPushButton 			*abortButton;
 
