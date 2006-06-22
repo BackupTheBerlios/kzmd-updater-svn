@@ -19,9 +19,14 @@
 
 #include "ConfigWindow.h"
 #include "ServerDialog.h"
+#include "ProgressDialog.h"
 #include <klocale.h>
+#include <kmessagebox.h>
 #include <iostream>
 using namespace std;
+
+//Column IDs for the configure window
+enum { CONFW_NAME=0, CONFW_URI, CONFW_ID };
 
 ConfigWindow::ConfigWindow(UpdaterCore *_core, QWidget *parent) : 
 	QWidget(parent,0,Qt::WDestructiveClose) {
@@ -29,9 +34,7 @@ ConfigWindow::ConfigWindow(UpdaterCore *_core, QWidget *parent) :
 
 	initGUI();
 	initList();
-
 }
-
 
 ConfigWindow::~ConfigWindow() {
 }
@@ -49,6 +52,7 @@ void ConfigWindow::initGUI() {
 	serverList->setTreeStepSize(30);
 	serverList->setRootIsDecorated(true);
 	serverList->addColumn("URI", 0); // Hidden column to hold uri for searching
+	serverList->addColumn("ID", 0);
 
 	header->setDescription(i18n("<b>Add/Remove Package Servers:</b><br> You may add or remove update servers below or change your software catalog subscriptions.<br> <u>Make whatever changes you wish and press accept.</u>"));
 
@@ -90,59 +94,75 @@ void ConfigWindow::gotServiceList(QValueList<Service> servers) {
 
 	for (iter = servers.begin(); iter != servers.end(); iter++) {
 		item = new QListViewItem(serverList, (*iter).name);
-		item->setText(1,(*iter).uri);
+		item->setText(CONFW_URI,(*iter).uri);
+		item->setText(CONFW_ID,(*iter).id);
 	}
 	disconnect(core, SIGNAL(serviceListing(QValueList<Service>)), this, SLOT(gotServiceList(QValueList<Service>)));
-	core->getCatalogs();
-}
-void ConfigWindow::addedServer(QString server, int status) {
-	if (status != ERROR_INVALID) {
-		initList();
-	}
-	disconnect(core, SIGNAL(serviceChange(int)), this, SLOT(addedServer(int)));
-
+	if (servers.size() > 0)
+		core->getCatalogs();
 }
 
 void ConfigWindow::gotCatalogList(QValueList<Catalog> catalogs) {
 	QValueList<Catalog>::iterator iter;
-	QListViewItem *item;
+	QCheckListItem *item;
 
 	for (iter = catalogs.begin(); iter != catalogs.end(); iter++) {
-		item = new QListViewItem(serverList->findItem((*iter).service,1), (*iter).name);
+		item = new QCheckListItem(serverList->findItem((*iter).service,CONFW_NAME), (*iter).name,
+									QCheckListItem::CheckBoxController);
+		item->setOn((*iter).subscribed);
 	}
-	connect(core, SIGNAL(catalogListing(QValueList<Catalog>)), this, SLOT(gotCatalogList(QValueList<Catalog>)));
-}
-
-void ConfigWindow::removedServer(QString server, int status) {
-	QListViewItem *item;
-	if ((item = serverList->findItem(server,0)) != NULL)
-		delete item;
+	disconnect(core, SIGNAL(catalogListing(QValueList<Catalog>)), this, 
+				SLOT(gotCatalogList(QValueList<Catalog>)));
 }
 
 void ConfigWindow::addButtonClicked() {
 
 	QValueList<QString> list;
 	ServerDialog diag;
+	ProgressDialog prog(true,this);
 
 	diag.exec();
 	list = diag.getServerInfo();
-	if (list.front() != "" && list.back() != "") { //Really the name could be blank
+	if (list.front() != "" && list.back() != "") { //Really the name could be blank, but makes no sense
 		Service newServ;
 		newServ.name = list.front();
 		newServ.uri = list.back();
 		newServ.type = "zypp"; //This should be prompted for
-		cout << "Adding Service ..." << endl;
-		cout << newServ.name << endl;
-		cout << newServ.uri << endl;
-		cout << newServ.type << endl;
 		core->addService(newServ);
-		connect(core, SIGNAL(serviceChange(int)), this, SLOT(addedServer(int)));
+		connect(core, SIGNAL(serviceAdded(QString,int)), this, SLOT(addedServer(QString,int)));
 	}
+
+	prog.setTitle(i18n("Adding server.."));
+	prog.setDescription(i18n("We are adding a server to the updater, this may take some time. \nPlease be patient"));
+	prog.connectProgress(core, SIGNAL(progress(Progress)));
+	prog.connectFinished(core, SIGNAL(serviceAdded(QString,int)));
+	prog.exec();
 }
+
+void ConfigWindow::addedServer(QString server, int status) {
+	if (status != ERROR_INVALID) {
+		initList();
+	} else {
+		KMessageBox::error(this, i18n("Sorry, the server information you entered was invalid."));
+	}
+	disconnect(core, SIGNAL(serviceAdded(QString,int)), this, SLOT(addedServer(QString,int)));
+
+}
+
 void ConfigWindow::removeButtonClicked() {
 	Service serv;
 
-	serv.name = serverList->currentItem()->text(0);
-	serv.name = serverList->currentItem()->text(1);
+	serv.name = serverList->currentItem()->text(CONFW_NAME);
+	serv.id = serverList->currentItem()->text(CONFW_ID);
+	serv.uri = serverList->currentItem()->text(CONFW_URI);
 	core->removeService(serv);
+	connect(core, SIGNAL(serviceRemoved(QString,int)), this, SLOT(removedServer(QString,int)));
+}
+
+void ConfigWindow::removedServer(QString server, int status) {
+	QListViewItem *item;
+
+	if (status == ERROR_NONE)
+		if ((item = serverList->findItem(server,CONFW_NAME)) != NULL)
+			delete item;
 }

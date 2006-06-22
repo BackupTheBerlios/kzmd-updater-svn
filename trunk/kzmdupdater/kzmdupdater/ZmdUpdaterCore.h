@@ -86,6 +86,10 @@ class ZmdUpdaterCore : public UpdaterCore {
 		// Right now we can only watch one thing
 		QString pollID;
 
+		//Holds the name of the server or catalog we just added/removed
+		//I don't like this, but I am not sure at the moment
+		QString name;
+
 		KXMLRPC::Server *server; 
 		QTimer *timer;
 };

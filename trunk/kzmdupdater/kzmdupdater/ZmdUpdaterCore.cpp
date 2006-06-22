@@ -79,13 +79,14 @@ void ZmdUpdaterCore::addService(Service serv) {
 void ZmdUpdaterCore::removeService(Service serv) {
 	IS_ZMD_BUSY;
 
+	name = serv.name;
 	server->call("zmd.system.service_remove", serv.id,
 	this, SLOT(serviceData(const QValueList<QVariant>&, const QVariant&)), 
 	this, SLOT(faultData(int, const QString&, const QVariant&)));
 }
 
 void ZmdUpdaterCore::serviceData(const QValueList<QVariant>& data, const QVariant& t) {
-	if (data.front().canCast(QVariant::String) == true) {
+	if (data.front().canCast(QVariant::String) == true && data.front().toString().isEmpty() != true) {
 		ZMD_BLOCK(data.front().toString());
 		timer->start(CHECK_INTERVAL,false);
 	} else if (data.front().canCast(QVariant::List) == true) {
@@ -108,6 +109,9 @@ void ZmdUpdaterCore::serviceData(const QValueList<QVariant>& data, const QVarian
 #endif
 		}
 		emit(serviceListing(serviceList));
+	} else {
+		//we just got the return from a service removal
+		emit(serviceRemoved(name,ERROR_NONE));
 	}
 }
 
@@ -358,6 +362,10 @@ void ZmdUpdaterCore::timerData(const QValueList<QVariant>& data, const QVariant 
 void ZmdUpdaterCore::faultData(int code, const QString& message, const QVariant&t) {
 	switch (code) {
 
+		case 0:
+			//Service already exists -- this was experimentally found, might change
+			emit(serviceAdded(message, ERROR_INVALID));
+			break;
 		case -603:
 			//Dep Failure
 			emit(transactionFinished(ERROR_DEP_FAIL));
@@ -387,9 +395,10 @@ void ZmdUpdaterCore::faultData(int code, const QString& message, const QVariant&
 			cout << "ERROR: Something really strange just happened -- " << message << endl;
 			break;
 	}
-
+	ZMD_CLEAR;
+	timer->stop();
 #ifdef DEBUG
 	cout << "Fault: " << message << endl;
-	cout << "Fault Code: " << t.toString() << endl;
+	cout << "Fault Code: " << code << endl;
 #endif
 }
