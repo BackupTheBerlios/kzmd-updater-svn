@@ -66,8 +66,15 @@ void InstallWindow::abortButtonClicked() {
 }
 
 void InstallWindow::progress(Progress status) {
+	static QString text;
+	
+	text = transactionList->text();
 	progressBar->advance((int)status.percent);
-	transactionList->setText(status.name);
+	if (currentPackage != status.name) {
+		transactionList->setText(text + "\n" + status.name);
+	}
+	if (status.percent == 100) 
+		transactionList->setText(text + " Done.");
 }
 
 void InstallWindow::finished(int status) {

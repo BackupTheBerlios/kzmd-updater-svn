@@ -85,8 +85,6 @@ class ZmdUpdaterCore : public UpdaterCore {
 		//Holds current pollID
 		// Right now we can only watch one thing
 		QString pollID;
-		//A "special" pollID for the download ID of a transact process
-		QString	downloadID;
 
 		KXMLRPC::Server *server; 
 		QTimer *timer;

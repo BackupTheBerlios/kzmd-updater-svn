@@ -249,8 +249,17 @@ void ZmdUpdaterCore::runTransaction(QValueList<Package> installList,
 	IS_ZMD_BUSY;
 	
 	QValueList<QVariant> argList;
-	QValueList<QVariant> updates;
+	QValueList<QVariant> installs;	
+	QValueList<QVariant> updates;	
+	QValueList<QVariant> removals;
 
+	for (QValueList<Package>::iterator iter = installList.begin();
+		 iter != updateList.end(); iter++) {
+		 QMap<QString, QVariant> map;
+		 map["id"] = (*iter).id;
+		 map["name"] = (*iter).name;
+		 installs.append(map);
+	}
 	for (QValueList<Package>::iterator iter = updateList.begin();
 		 iter != updateList.end(); iter++) {
 		 QMap<QString, QVariant> map;
@@ -258,16 +267,23 @@ void ZmdUpdaterCore::runTransaction(QValueList<Package> installList,
 		 map["name"] = (*iter).name;
 		 updates.append(map);
 	}
-	argList.append(QValueList<QVariant>());
+	for (QValueList<Package>::iterator iter = removeList.begin();
+		 iter != updateList.end(); iter++) {
+		 QMap<QString, QVariant> map;
+		 map["id"] = (*iter).id;
+		 map["name"] = (*iter).name;
+		 removals.append(map);
+	}
+	argList.append(installs);
 	argList.append(updates);	
-	argList.append(QValueList<QVariant>());
+	argList.append(removals);
+
 #ifdef DEBUG
 	cout << "Asking for dep resolve" << endl;
 #endif
 	server->call("zmd.packsys.resolve_dependencies", argList, 
 	this, SLOT(transactData(const QValueList<QVariant>&, const QVariant&)),
 	this, SLOT(faultData(int, const QString&, const QVariant&)));
-
 }
 
 void ZmdUpdaterCore::transactData(const QValueList<QVariant>& data, const QVariant &t) {
@@ -300,7 +316,7 @@ void ZmdUpdaterCore::transactData(const QValueList<QVariant>& data, const QVaria
 
 
 	} else { //or else we got two IDs for transact
-		downloadID = data.first().toString();
+		//right now are are ignoring the downloading part
 		ZMD_BLOCK(data.last().toString());
 		timer->start(CHECK_INTERVAL,false);
 	}
@@ -313,11 +329,6 @@ void ZmdUpdaterCore::cancelTransaction() {
 
 /* Global timer slot and data slot -- this keeps track of poll events */
 void ZmdUpdaterCore::timerSlot() {
-	if (!downloadID.isEmpty()) {
-		server->call("zmd.system.poll", downloadID, 
-		this, SLOT(timerData(const QValueList<QVariant>&, const QVariant&)),
-		this, SLOT(faultData(int, const QString&, const QVariant&)));
-	}
 	server->call("zmd.system.poll", pollID, 
 	this, SLOT(timerData(const QValueList<QVariant>&, const QVariant&)),
 	this, SLOT(faultData(int, const QString&, const QVariant&)));
@@ -337,13 +348,16 @@ void ZmdUpdaterCore::timerData(const QValueList<QVariant>& data, const QVariant 
 		cout << "Name: " << status.name << endl;
 #endif
 		emit(progress(status));
-		if (map["status"].toInt() == 2)
+		if (map["status"].toInt() == 2) {
 			ZMD_CLEAR;
+			timer->stop();
+		}
 	}
 }
 
 void ZmdUpdaterCore::faultData(int code, const QString& message, const QVariant&t) {
 #ifdef DEBUG
 	cout << "Fault: " << message << endl;
+	cout << "Fault Code: " << t.toString() << endl;
 #endif
 }

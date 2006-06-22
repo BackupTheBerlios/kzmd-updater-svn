@@ -70,6 +70,7 @@ class InstallWindow : public QWidget {
 		QValueList<Package>	installList;
 		QValueList<Package>	updateList;
 		QValueList<Package>	removeList;
+		QString currentPackage;
 };
 
 
