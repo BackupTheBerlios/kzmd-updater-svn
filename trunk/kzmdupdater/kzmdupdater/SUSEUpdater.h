@@ -29,6 +29,7 @@
 #include <qlistview.h>
 #include <qlabel.h>
 #include <qpushbutton.h>
+#include <qtimer.h>
 
 #include "UpdaterCore.h"
 #include "SUSEUpdaterIface.h"
@@ -59,11 +60,12 @@ class SUSEUpdater : public QWidget, virtual SUSEUpdaterIface {
 		void gotCatalogListing(QValueList<Catalog>);
 		void gotUpdateListing(QValueList<Package>);
 		void gotPatchListing(QValueList<Patch>);
+		void checkUpdates();
 
 	private:
 
 		void initGUI();
-		void checkUpdates();
+		void initMenu();
 		void authorizeCore();
 
 		KSystemTray	*trayApplet;
@@ -79,6 +81,7 @@ class SUSEUpdater : public QWidget, virtual SUSEUpdaterIface {
 		QHBoxLayout *buttonsLayout;
 
 		UpdaterCore *core;
+		QTimer *timer;
 
 };
 

@@ -22,6 +22,7 @@
 #include <kiconloader.h>
 #include <klocale.h>
 #include <kprocess.h>
+#include <kpopupmenu.h>
 
 #include "ConfigWindow.h"
 #include "InstallWindow.h"
@@ -31,7 +32,7 @@
 
 #define TRAY_ICON_GREEN "suse_green.png"
 #define TRAY_ICON_RED	"suse_red.png"
-
+#define TIMER_INTERVAL	(100*60*15) //1000 ms * 60 s * 5 min = 15 min
 
 //Enum for updateListing
 enum { COLUMN_NAME, COLUMN_OLD_VERSION, COLUMN_NEW_VERSION,
@@ -40,14 +41,19 @@ enum { COLUMN_NAME, COLUMN_OLD_VERSION, COLUMN_NEW_VERSION,
 #include <iostream>
 using namespace std;
 
-SUSEUpdater::SUSEUpdater(QWidget *parent) : QWidget(parent), DCOPObject("kzmdupdater") {
+SUSEUpdater::SUSEUpdater(QWidget *parent) : DCOPObject("kzmdupdater"), QWidget(parent) {
 
 	KIconLoader iconLoader("kzmdupdater");
 	core = new ZmdUpdaterCore();
+	timer = new QTimer(this);
+
 	authorizeCore();
 	initGUI();
-
+	initMenu();
+	connect(timer, SIGNAL(timeout()), this, SLOT(checkUpdates()));
+	timer->start(TIMER_INTERVAL, false);
 	checkUpdates();
+
 }
 
 void SUSEUpdater::fakeCall() {
@@ -106,6 +112,12 @@ void SUSEUpdater::initGUI() {
 	setIcon(UserIcon(TRAY_ICON_GREEN));
 	hide();
 	return;
+}
+
+void SUSEUpdater::initMenu() {
+	KPopupMenu *menu = trayApplet->contextMenu();
+//	menu->insertItem(i18n("About"), this, SLOT(configButtonClicked()),0,-1,1);
+	menu->insertItem(i18n("Configure"), this, SLOT(configButtonClicked()),0,-1,1);
 }
 
 void SUSEUpdater::configButtonClicked() {

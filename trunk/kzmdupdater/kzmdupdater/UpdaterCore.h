@@ -24,7 +24,23 @@
 #include <qvaluelist.h>
 #include <qobject.h>
 
+/**
+	@libdoc A class to represent an updater backend
+	@author Narayan Newton
+	@version 0.0.1
+**/
+
+
 /* Error Codes */
+
+/**
+	Defines our error codes used throughout. 
+	@li ERROR_NONE is obvious, no error
+	@li ERROR_DEP_FAIL is also obvious
+	@li ERROR_INVALID is less obvious and determined by context
+	@li ERROR_INVALID_TYPE is an invalid service type
+	@li ERROR_AUTH_REJECT is obvious
+**/
 
 enum {
 
@@ -34,8 +50,6 @@ enum {
 	ERROR_INVALID_TYPE,
 	ERROR_AUTH_REJECT
 };
-
-//More will obviously be added later
 
 /* Data Types */
 class Progress;
