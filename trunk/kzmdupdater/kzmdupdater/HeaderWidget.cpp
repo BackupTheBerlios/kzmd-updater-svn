@@ -19,7 +19,6 @@ HeaderWidget::HeaderWidget(QWidget *parent) : QWidget(parent) {
 
 void HeaderWidget::setDescription(QString description) {
 	text->setText(description);
-	repaint();
 }
 
 HeaderWidget::~HeaderWidget() {

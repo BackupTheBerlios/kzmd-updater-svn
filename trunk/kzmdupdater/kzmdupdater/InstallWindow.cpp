@@ -38,7 +38,7 @@ InstallWindow::~InstallWindow() {
 void InstallWindow::initGUI() {
 
 	header = new HeaderWidget(this);
-	installList = new KTextEdit(this);
+	transactionList = new KTextEdit(this);
 	progressBar = new KProgress(100, this);
 	abortButton = new KPushButton(i18n("Abort Upgrade"), this);
 	mainLayout = new QVBoxLayout(this);
@@ -46,9 +46,11 @@ void InstallWindow::initGUI() {
 	header->setDescription("<b>Installing updates and patches:</b><br> Below is a description of the packages being installed.<br>");
 
 	mainLayout->addWidget(header, false, 0);
-	mainLayout->addWidget(installList, false, 0);
+	mainLayout->addWidget(transactionList, false, 0);
 	mainLayout->addWidget(progressBar, false, 0);
 	mainLayout->addWidget(abortButton, false, Qt::AlignRight);
+
+	transactionList->setReadOnly(true);
 
 	abortButton->setMinimumHeight(30);
 	connect(abortButton, SIGNAL(clicked()), this, SLOT(close()));
@@ -57,39 +59,33 @@ void InstallWindow::initGUI() {
 	mainLayout->setSpacing(10);
 	setCaption(i18n("Installing Packages..."));
 	resize(300,350);
+
 }
 
 void InstallWindow::abortButtonClicked() {
 }
 
 void InstallWindow::progress(Progress status) {
-	progressBar->advance(status.percent);
-	installList->setText(status.messages.front());
+	progressBar->advance((int)status.percent);
+	transactionList->setText(status.name);
 }
 
 void InstallWindow::finished(int status) {
-}
-
-void InstallWindow::setCore(UpdaterCore *newCore) {
-	core = newCore;
-}
-
-void InstallWindow::setPackageList(QValueList<Package> packageList, QValueList<Patch> patchList) {
-//for now we only load the update list
-
-	QValueList<Package>::iterator iter;
-
-	for (iter = packageList.begin(); iter != packageList.end(); iter++) {
-		QMap<QString, QVariant> map;
-		map["id"] = (*iter).id;
-		map["name"] = (*iter).name;
-/*		map["version"] = "";
-		map["arch"] = "";
-		map["catalog"] = "";
-		map["install"] = true;
-		map["summary"] = "";
-*/
-		updates.append(map);
+	if (status == ERROR_DEP_FAIL) {
+		transactionList->setText("ERROR: Dep Failure");
+	} else {
+		transactionList->setText("Done!");
 	}
+}
 
+void InstallWindow::setPackageList(QValueList<Package> installs, 
+								   QValueList<Package> updates,
+								   QValueList<Package> removals) {
+	installList = installs;
+	updateList = updates;
+	removeList = removals;
+}
+
+void InstallWindow::startUpdate() {
+	core->runTransaction(installList, updateList, removeList);	
 }

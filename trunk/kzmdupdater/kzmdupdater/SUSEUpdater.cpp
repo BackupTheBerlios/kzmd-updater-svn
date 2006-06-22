@@ -121,7 +121,6 @@ void SUSEUpdater::configButtonClicked() {
 void SUSEUpdater::installButtonClicked() {
 	InstallWindow *win = new InstallWindow(core);
 	QValueList<Package> packList;
-	//QValueList<Patch> patchList;
 	QCheckListItem *item = (QCheckListItem*)(updateList->firstChild());
 
 	if (item == NULL) {
@@ -139,7 +138,8 @@ void SUSEUpdater::installButtonClicked() {
 	} while ((item = (QCheckListItem*)(item->nextSibling())) != 0);
 	/* From reading the ZMD source, we only need name and ID for packages or patches. This may change in the future, was not in the API */
 
-	win->setPackageList(packList, QValueList<Patch>());
+	win->setPackageList(QValueList<Package>(), packList, QValueList<Package>());
+	win->startUpdate();
 	win->show();
 }
 

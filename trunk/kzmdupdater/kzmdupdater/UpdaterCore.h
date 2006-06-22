@@ -37,55 +37,12 @@ enum {
 //More will obviously be added later
 
 /* Data Types */
+class Progress;
+class Package;
+class Patch;
+class Service;
+class Catalog;
 
-struct Progress {
-//NNN: Look at this again, might not be realistic
-
-	QValueList<QString> messages;
-	int expectedTime;
-	int remainingTime;
-	double percent;
-};
-
-struct Service {
-
-	QString name;
-	QString id;
-	QString uri;
-	QString type;
-	bool activated;
-	
-};
-
-struct Catalog {
-
-	QString name;
-	QString id;
-	QString displayName;
-	QString service;
-	bool subscribed;
-};
-
-struct Package {
-
-	QString name;
-	QString id;
-	QString version;
-	QString catalog;
-	QString description;
-	bool installed;	
-};
-
-struct Patch {
-
-	QString name;
-	QString id;
-	QString version;
-	QString catalog;
-	QString description;
-	QString category;
-	bool installed;
-};
 
 /* Core Backend Class */
 
@@ -97,21 +54,70 @@ class UpdaterCore : public QObject {
 
 		UpdaterCore(QObject *parent=0) : QObject(parent) {}
 
+		/**
+			Sets the user name used to authenticate the updater
+		**/
 		virtual void setUser(QString) = 0;
+
+		/**
+			Sets the password used to authenticate the updater
+		**/
 		virtual void setPass(QString) = 0;
 
+		/**
+			Get a list of update servers. Data arrives via signal serviceListing
+		**/
 		virtual void getServices() = 0;
+
+		/**
+			Add the specified update server to the updater. Service needs type, 		   name and uri specified. 
+			Signal serviceAdded sent on success or failure.
+		**/
 		virtual void addService(Service) = 0;
+
+		/**
+			Remove the specified update server to the updater.
+			Signal serviceRemoved sent on success or failure.
+		**/
 		virtual void removeService(Service) = 0;
 
+		/**
+			Get a list of catalogs. Data arrives via signal catalogListing.
+		**/
 		virtual void getCatalogs() = 0;
+
+		/**
+			Subscribe to the specified catalog. 
+			Signal catalogAdded sent on success or failure.
+		**/
 		virtual void subscribeCatalog(Catalog) = 0;
+
+		/**
+			Unsubscribe to the specified catalog.
+			Signal catalogRemoved sent on success or failure.
+		**/
 		virtual void unsubscribeCatalog(Catalog) = 0;
 
+		/**
+			Get patches available (and needed) for specified catalog.
+			Data arrives via signal patchListing.
+		**/
 		virtual void getPatches(Catalog) = 0;
+
+		/**
+			Get updates available (and needed) for specified catalog.
+			Data arrives via signal updateListing.
+		**/
 		virtual void getUpdates(Catalog) = 0;
 
-		virtual void runTransaction(QValueList<Patch>, QValueList<Package>) = 0;
+		/**
+			BROKEN -- This api is in flux.
+		**/
+		virtual void runTransaction(QValueList<Package> installList, QValueList<Package> updateList, QValueList<Package> removeList) = 0;
+
+		/**
+			Cancel current transaction.
+		**/
 		virtual void cancelTransaction() = 0;
 
 	signals:
@@ -133,6 +139,77 @@ class UpdaterCore : public QObject {
 			General progress signal, reports progress on any on-going process.
 		**/
 		void progress(Progress);
+};
+
+
+
+class Progress {
+
+	public:
+
+		Progress() : expectedTime(0), remainingTime(0), percent(0.0L), download(false) {}
+
+		QString name;
+		int expectedTime;
+		int remainingTime;
+		double percent;	
+		QValueList<QString> messages;
+		bool download; //true if this is a download
+};
+
+class Service {
+
+	public:
+
+		Service() : activated(false) {}
+
+		QString name;
+		QString id;
+		QString uri;
+		QString type;
+		bool activated;
+	
+};
+
+struct Catalog {
+
+	public:
+
+		Catalog() : subscribed(false) {}
+
+		QString name;
+		QString id;
+		QString displayName;
+		QString service;
+		bool subscribed;
+};
+
+/*
+
+	This is the "base" class. It can represent either a package 
+	or a patch for the backend
+*/
+struct Package {
+	
+	public:
+
+		Package() : installed(false) {}
+
+		QString name;
+		QString id;
+		QString version;
+		QString catalog;
+		QString description;
+		bool installed;	
+};
+
+struct Patch : public Package {
+
+	public:
+
+		Patch() : Package() {}
+
+		QString category;
 };
 
 #endif

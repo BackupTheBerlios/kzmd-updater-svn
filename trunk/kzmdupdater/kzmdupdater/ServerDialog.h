@@ -51,17 +51,17 @@ class ServerDialog : public QDialog {
 
 		void initGUI();
 
-		QVBoxLayout 	*layout;
-		QHBoxLayout 	*buttonLayout;
-		QLabel 			*nameLabel;
-		QLabel 			*serverLabel;
-		KLineEdit 		*nameEdit;
-		KLineEdit 		*serverEdit;
-		KPushButton 	*cancelButton;
-		KPushButton 	*addButton;
+		QVBoxLayout	*layout;
+		QHBoxLayout	*buttonLayout;
+		QLabel *nameLabel;
+		QLabel *serverLabel;
+		KLineEdit *nameEdit;
+		KLineEdit *serverEdit;
+		KPushButton *cancelButton;
+		KPushButton *addButton;
 
-		QString 		server;
-		QString 		name;
+		QString server;
+		QString name;
 };
 
 

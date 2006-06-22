@@ -41,8 +41,8 @@ class InstallWindow : public QWidget {
 		InstallWindow(UpdaterCore *_core, QWidget *parent=0);
 		~InstallWindow();
 
-		void setCore(UpdaterCore *newCore);
-		void setPackageList(QValueList<Package>, QValueList<Patch>);
+		void setPackageList(QValueList<Package> installs, QValueList<Package> updates, QValueList<Package> removals);
+		void startUpdate();
 
 	private slots:
 
@@ -58,18 +58,18 @@ class InstallWindow : public QWidget {
 
 		void initGUI();
 
-		HeaderWidget 			*header;
-		KTextEdit 				*installList;
-		KProgress 				*progressBar;
-		KPushButton 			*abortButton;
+		HeaderWidget *header;
+		KTextEdit *transactionList;
+		KProgress *progressBar;
+		KPushButton *abortButton;
 
-		QVBoxLayout 			*mainLayout;
+		QVBoxLayout *mainLayout;
 
-		UpdaterCore 			*core;
+		UpdaterCore	*core;
 
-		QValueList<QVariant> 	updates;
-		QValueList<QVariant> 	installs;
-		QValueList<QVariant> 	removes;
+		QValueList<Package>	installList;
+		QValueList<Package>	updateList;
+		QValueList<Package>	removeList;
 };
 
 

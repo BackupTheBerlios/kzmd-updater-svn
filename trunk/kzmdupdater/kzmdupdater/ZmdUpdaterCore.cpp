@@ -242,33 +242,68 @@ void ZmdUpdaterCore::patchData(const QValueList<QVariant>& data, const QVariant&
 
 /* Transaction call, data slot, timer */
 
-void ZmdUpdaterCore::runTransaction(QValueList<Patch> patchList, QValueList<Package> packageList) {
+void ZmdUpdaterCore::runTransaction(QValueList<Package> installList, 
+									QValueList<Package> updateList,
+									QValueList<Package> removeList) {
+
 	IS_ZMD_BUSY;
 	
 	QValueList<QVariant> argList;
-	QValueList<QVariant> updateList;
+	QValueList<QVariant> updates;
 
-	for (QValueList<Package>::iterator iter = packageList.begin();
-		 iter != packageList.end(); iter++) {
+	for (QValueList<Package>::iterator iter = updateList.begin();
+		 iter != updateList.end(); iter++) {
 		 QMap<QString, QVariant> map;
 		 map["id"] = (*iter).id;
 		 map["name"] = (*iter).name;
-		 updateList.append(map);
+		 updates.append(map);
 	}
 	argList.append(QValueList<QVariant>());
-	argList.append(updateList);	
+	argList.append(updates);	
 	argList.append(QValueList<QVariant>());
-	argList.append(0);
-	server->call("zmd.packsys.transact", argList, 
+#ifdef DEBUG
+	cout << "Asking for dep resolve" << endl;
+#endif
+	server->call("zmd.packsys.resolve_dependencies", argList, 
 	this, SLOT(transactData(const QValueList<QVariant>&, const QVariant&)),
 	this, SLOT(faultData(int, const QString&, const QVariant&)));
 
 }
 
 void ZmdUpdaterCore::transactData(const QValueList<QVariant>& data, const QVariant &t) {
-	downloadID = data.first().toString();
-	ZMD_BLOCK(data.last().toString());
-	timer->start(CHECK_INTERVAL,false);
+
+	// Is the first member of the arg list a list? If so, we just got dep info
+	if ((data.front()).canCast(QVariant::List) == true) {
+		QValueList<QVariant> installList;
+		QValueList<QVariant> updateList;
+		QValueList<QVariant> removeList;
+		QMap<QString, QVariant> map;
+
+		QValueList<QVariant>::const_iterator iter = data.begin();
+		installList = (*iter).toList().front().toList();
+		iter++;
+		updateList = (*iter).toList().front().toList();
+		iter++;
+		removeList = (*iter).toList().front().toList();
+
+#ifdef DEBUG
+		for (iter = updateList.begin(); iter != updateList.end(); iter++) {
+			map = (*iter).toMap();
+			cout << "Updated package: " << map["name"].toString() << endl;
+		}
+		cout << "Starting transaction" << endl;
+#endif
+
+		server->call("zmd.packsys.transact", data, 
+		this, SLOT(transactData(const QValueList<QVariant>&, const QVariant&)),
+		this, SLOT(faultData(int, const QString&, const QVariant&)));
+
+
+	} else { //or else we got two IDs for transact
+		downloadID = data.first().toString();
+		ZMD_BLOCK(data.last().toString());
+		timer->start(CHECK_INTERVAL,false);
+	}
 }
 
 void ZmdUpdaterCore::cancelTransaction() {
@@ -296,8 +331,10 @@ void ZmdUpdaterCore::timerData(const QValueList<QVariant>& data, const QVariant 
 		status.percent = map["percent"].toDouble();
 		status.expectedTime = map["expected_time"].toInt();
 		status.remainingTime = map["remaning_time"].toInt();
+		status.name = map["name"].toString();
 #ifdef DEBUG
 		cout << "Timer data drop: " << status.percent << endl;
+		cout << "Name: " << status.name << endl;
 #endif
 		emit(progress(status));
 		if (map["status"].toInt() == 2)

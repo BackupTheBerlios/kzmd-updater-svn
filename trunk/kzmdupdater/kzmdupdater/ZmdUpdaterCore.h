@@ -56,7 +56,10 @@ class ZmdUpdaterCore : public UpdaterCore {
 		void getPatches(Catalog);
 		void getUpdates(Catalog);
 
-		void runTransaction(QValueList<Patch>, QValueList<Package>);
+		void runTransaction(QValueList<Package> installList, 
+							QValueList<Package> updateList,
+							QValueList<Package> removeList);
+
 		void cancelTransaction();
 
 	private slots:
@@ -76,17 +79,17 @@ class ZmdUpdaterCore : public UpdaterCore {
 	private:
 
 		//These really need to be stored somewhere else. Kwallet?
-		QString 			username;
-		QString 			password;
+		QString username;
+		QString password;
 
 		//Holds current pollID
 		// Right now we can only watch one thing
-		QString 			pollID;
+		QString pollID;
 		//A "special" pollID for the download ID of a transact process
-		QString				downloadID;
+		QString	downloadID;
 
-		KXMLRPC::Server 	*server; 
-		QTimer 				*timer;
+		KXMLRPC::Server *server; 
+		QTimer *timer;
 };
 
 #endif

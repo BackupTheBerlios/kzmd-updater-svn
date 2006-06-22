@@ -84,7 +84,9 @@ void Query::call( const QString &server, const QString &method,
            this, SLOT( slotResult( KIO::Job * ) ) );
 
   m_pendingJobs.append( job );
+#ifdef DEBUG
   cout << xmlMarkup << endl;
+#endif
 }
 
 void Query::slotData( KIO::Job *, const QByteArray &data )

@@ -37,9 +37,9 @@ class HeaderWidget : public QWidget {
 
 	private:
 
-		QHBoxLayout 	*layout;
-		QLabel 			*suseLogo;
-		QLabel 			*text;
+		QHBoxLayout	*layout;
+		QLabel *suseLogo;
+		QLabel *text;
 };
 
 #endif

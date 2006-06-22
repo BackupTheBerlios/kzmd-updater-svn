@@ -66,19 +66,19 @@ class SUSEUpdater : public QWidget, virtual SUSEUpdaterIface {
 		void checkUpdates();
 		void authorizeCore();
 
-		KSystemTray 		*trayApplet;
-		QListView 			*updateList;
-		KTextEdit 			*packageDescription;
-		HeaderWidget 		*header;
+		KSystemTray	*trayApplet;
+		QListView *updateList;
+		KTextEdit *packageDescription;
+		HeaderWidget *header;
 
-		QPushButton 		*installButton;
-		QPushButton 		*cancelButton;
-		QPushButton 		*configureButton;
+		QPushButton *installButton;
+		QPushButton *cancelButton;
+		QPushButton *configureButton;
 
-		QVBoxLayout 		*mainBox;
-		QHBoxLayout 		*buttonsLayout;
+		QVBoxLayout *mainBox;
+		QHBoxLayout *buttonsLayout;
 
-		UpdaterCore 		*core;
+		UpdaterCore *core;
 
 };
 
