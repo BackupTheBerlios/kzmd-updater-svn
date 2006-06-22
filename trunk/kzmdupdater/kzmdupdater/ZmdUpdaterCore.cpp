@@ -81,7 +81,7 @@ void ZmdUpdaterCore::addService(Service serv) {
 	map["type"] = QVariant(serv.type);
 	map["uri"] = QVariant(serv.uri);
 	data.append(QVariant(map));
-	name = serv.name;
+	tempServiceName = serv.name;
 
 	server->call("zmd.system.service_add", data,
 	this, SLOT(serviceData(const QValueList<QVariant>&, const QVariant&)), 
@@ -91,7 +91,8 @@ void ZmdUpdaterCore::addService(Service serv) {
 void ZmdUpdaterCore::removeService(Service serv) {
 	IS_ZMD_BUSY;
 
-	name = serv.name;
+	tempServiceName = serv.name;
+
 	server->call("zmd.system.service_remove", serv.id,
 	this, SLOT(serviceData(const QValueList<QVariant>&, const QVariant&)), 
 	this, SLOT(faultData(int, const QString&, const QVariant&)));
@@ -99,10 +100,14 @@ void ZmdUpdaterCore::removeService(Service serv) {
 
 //Data slot, returning information from xml-rpc
 void ZmdUpdaterCore::serviceData(const QValueList<QVariant>& data, const QVariant& t) {
+
 	if (data.front().canCast(QVariant::String) == true && data.front().toString().isEmpty() != true) {
+		//We get a string back and its not empty, must have come from adding a service
+		//So, we block and start the poll loop
 		ZMD_BLOCK(data.front().toString());
 		timer->start(CHECK_INTERVAL,false);
 	} else if (data.front().canCast(QVariant::List) == true) {
+		//We got a list back, is a service list
 		QValueList<QVariant> list;
 		list = (data.front().toList());
 		QValueList<QVariant>::iterator iter;
@@ -124,8 +129,8 @@ void ZmdUpdaterCore::serviceData(const QValueList<QVariant>& data, const QVarian
 		emit(serviceListing(serviceList));
 	} else {
 		//we just got the return from a service removal
-		emit(serviceRemoved(name,ERROR_NONE));
-		name = "";
+		emit(serviceRemoved(tempServiceName,ERROR_NONE));
+		tempServiceName = "";
 	}
 }
 
@@ -149,7 +154,6 @@ void ZmdUpdaterCore::subscribeCatalog(Catalog cat) {
 	QValueList<QVariant> argList;
 	argList.append(cat.id);
 	argList.append(true);
-	name = cat.name;
 
 	server->call("zmd.packsys.catalog_subscribe", argList, 
 	this, SLOT(catalogData(const QValueList<QVariant>&, const QVariant&)),
@@ -163,7 +167,6 @@ void ZmdUpdaterCore::unsubscribeCatalog(Catalog cat) {
 	QValueList<QVariant> argList;
 	argList.append(cat.id);
 	argList.append(false);
-	name = cat.name;
 
 	server->call("zmd.packsys.catalog_subscribe", argList, 
 	this, SLOT(catalogData(const QValueList<QVariant>&, const QVariant&)),
@@ -174,10 +177,12 @@ void ZmdUpdaterCore::unsubscribeCatalog(Catalog cat) {
 void ZmdUpdaterCore::catalogData(const QValueList<QVariant>& data, const QVariant& t) {
 
 	if (data.front().canCast(QVariant::String) == true) {
-		ZMD_BLOCK(data.front().toString());
-		timer->start(CHECK_INTERVAL, false);
+		/*
+			If we get a string back, it is from a catalog sub/unsub
+			No need to do anything else.
+		*/
 	} else if (data.front().canCast(QVariant::List) == true) {
-
+		//If we get a list, it is because we got a catalog listing
 		QValueList<QVariant> list;
 		list = (data.front().toList());
 		QValueList<QVariant>::iterator iter;
@@ -261,6 +266,7 @@ void ZmdUpdaterCore::patchData(const QValueList<QVariant>& data, const QVariant&
 		patch.catalog = map["catalog"].toString();
 		patch.description = map["summary"].toString();
 		patch.installed = map["installed"].toBool();
+		patch.category = map["category"].toString();
 		patchList.append(patch);
 #ifdef DEBUG
 		cout << "Patch drop: " << patch.name << endl;
@@ -404,7 +410,8 @@ void ZmdUpdaterCore::faultData(int code, const QString& message, const QVariant&
 
 		case 0:
 			//Service already exists -- this was experimentally found, might change
-			emit(serviceAdded(message, ERROR_INVALID));
+			emit(serviceAdded(tempServiceName, ERROR_INVALID));
+			tempServiceName = "";
 			break;
 		case -603:
 			//Dep Failure
@@ -416,7 +423,6 @@ void ZmdUpdaterCore::faultData(int code, const QString& message, const QVariant&
 			break;
 		case -606:
 			//Invalid catalog specified
-			emit(catalogAdded(message, ERROR_INVALID));
 			break;
 		case -607:
 			//Invalid progress ID
@@ -424,11 +430,13 @@ void ZmdUpdaterCore::faultData(int code, const QString& message, const QVariant&
 			break;
 		case -617:
 			//Invalid service specified
-			emit(serviceAdded(message, ERROR_INVALID));
+			emit(serviceAdded(tempServiceName, ERROR_INVALID));
+			tempServiceName = "";
 			break;
 		case -619: 
 			//Invalid service type specified
-			emit(serviceAdded(message, ERROR_INVALID_TYPE));
+			emit(serviceAdded(tempServiceName, ERROR_INVALID_TYPE));
+			tempServiceName = "";
 			break;
 		default:
 			//Things we do not handle

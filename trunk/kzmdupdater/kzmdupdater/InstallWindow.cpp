@@ -19,6 +19,7 @@
 
 #include "InstallWindow.h"
 #include <klocale.h>
+#include <kmessagebox.h>
 
 #include <qvariant.h>
 
@@ -27,9 +28,6 @@ InstallWindow::InstallWindow(UpdaterCore *_core, QWidget *parent) :
 	QWidget(parent,0,Qt::WDestructiveClose) {
 	core = _core;
 	initGUI();
-
-	connect(core, SIGNAL(progress(Progress)), this, SLOT(progress(Progress)));
-	connect(core, SIGNAL(transactionFinished(int)), this, SLOT(finished(int)));
 }
 
 InstallWindow::~InstallWindow() {
@@ -79,9 +77,10 @@ void InstallWindow::progress(Progress status) {
 
 void InstallWindow::finished(int status) {
 	if (status == ERROR_DEP_FAIL) {
-		transactionList->setText("ERROR: Dep Failure");
+		KMessageBox::error(this, i18n("Sorry, we couldn't resolve the dependencies for this update."));
 	} else {
 		transactionList->setText("Done!");
+		close();
 	}
 }
 
@@ -95,4 +94,6 @@ void InstallWindow::setPackageList(QValueList<Package> installs,
 
 void InstallWindow::startUpdate() {
 	core->runTransaction(installList, updateList, removeList);	
+	connect(core, SIGNAL(progress(Progress)), this, SLOT(progress(Progress)));
+	connect(core, SIGNAL(transactionFinished(int)), this, SLOT(finished(int)));
 }

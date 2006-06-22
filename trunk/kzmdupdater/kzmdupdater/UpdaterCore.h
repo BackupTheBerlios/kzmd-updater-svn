@@ -103,13 +103,11 @@ class UpdaterCore : public QObject {
 
 		/**
 			Subscribe to the specified catalog. 
-			Signal catalogAdded sent on success or failure.
 		**/
 		virtual void subscribeCatalog(Catalog) = 0;
 
 		/**
 			Unsubscribe to the specified catalog.
-			Signal catalogRemoved sent on success or failure.
 		**/
 		virtual void unsubscribeCatalog(Catalog) = 0;
 
@@ -146,9 +144,6 @@ class UpdaterCore : public QObject {
 
 		void serviceAdded(QString serviceName, int flags);
 		void serviceRemoved(QString serviceName, int flags);
-
-		void catalogAdded(QString catalogName, int flags);
-		void catalogRemoved(QString catalogName, int flags);
 
 		/**
 			General progress signal, reports progress on any on-going process.
@@ -210,8 +205,10 @@ struct Package {
 
 		Package() : installed(false) {}
 
-		QString name;
+		//********
+		QString name; //These are the only two that actually matter to anything but the UI
 		QString id;
+		//********
 		QString version;
 		QString catalog;
 		QString description;

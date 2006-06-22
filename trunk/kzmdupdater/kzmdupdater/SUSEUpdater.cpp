@@ -216,7 +216,7 @@ void SUSEUpdater::gotPatchListing(QValueList<Patch> patchList) {
 	}
 
 	for (iter = patchList.begin(); iter != patchList.end(); iter++) {
-		newItem = new QCheckListItem(updateList, (*iter).name, QCheckListItem::CheckBox);
+		newItem = new QCheckListItem(updateList, (*iter).name + " (Patch)", QCheckListItem::CheckBox);
 
 		newItem->setText(COLUMN_OLD_VERSION,"Unknown");
 		newItem->setText(COLUMN_NEW_VERSION ,(*iter).version);
