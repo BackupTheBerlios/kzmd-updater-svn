@@ -22,6 +22,12 @@
 #include <iostream>
 using namespace std;
 
+/********************************************************************
+ *
+ *                     Init/User/Pass Methods
+ *
+ ********************************************************************/
+
 ZmdUpdaterCore::ZmdUpdaterCore(QObject *parent) : UpdaterCore(parent) {
 	KURL url(SERVER_ADDY);
 	server = new KXMLRPC::Server(url, this);
@@ -51,7 +57,12 @@ void ZmdUpdaterCore::setPass(QString pass) {
 	server->setUrl(url);
 }
 
-/* Service Handling (call and data slot) */
+
+/********************************************************************
+ *
+ *                     Add/Remove/Get Services 
+ *
+ ********************************************************************/
 
 void ZmdUpdaterCore::getServices() {
 	IS_ZMD_BUSY;
@@ -70,6 +81,7 @@ void ZmdUpdaterCore::addService(Service serv) {
 	map["type"] = QVariant(serv.type);
 	map["uri"] = QVariant(serv.uri);
 	data.append(QVariant(map));
+	name = serv.name;
 
 	server->call("zmd.system.service_add", data,
 	this, SLOT(serviceData(const QValueList<QVariant>&, const QVariant&)), 
@@ -85,6 +97,7 @@ void ZmdUpdaterCore::removeService(Service serv) {
 	this, SLOT(faultData(int, const QString&, const QVariant&)));
 }
 
+//Data slot, returning information from xml-rpc
 void ZmdUpdaterCore::serviceData(const QValueList<QVariant>& data, const QVariant& t) {
 	if (data.front().canCast(QVariant::String) == true && data.front().toString().isEmpty() != true) {
 		ZMD_BLOCK(data.front().toString());
@@ -112,10 +125,15 @@ void ZmdUpdaterCore::serviceData(const QValueList<QVariant>& data, const QVarian
 	} else {
 		//we just got the return from a service removal
 		emit(serviceRemoved(name,ERROR_NONE));
+		name = "";
 	}
 }
 
-/* Catalog Handling (call and data slot) */
+/********************************************************************
+ *
+ *                     Sub/Unsub/Get Catalogs 
+ *
+ ********************************************************************/
 
 void ZmdUpdaterCore::getCatalogs() {
 	IS_ZMD_BUSY;
@@ -123,6 +141,34 @@ void ZmdUpdaterCore::getCatalogs() {
 	server->call("zmd.system.catalog_list", QValueList<QVariant>(), 
 	this, SLOT(catalogData(const QValueList<QVariant>&, const QVariant&)),
 	this, SLOT(faultData(int, const QString&, const QVariant&)));
+}
+
+void ZmdUpdaterCore::subscribeCatalog(Catalog cat) {
+	IS_ZMD_BUSY;
+
+	QValueList<QVariant> argList;
+	argList.append(cat.id);
+	argList.append(true);
+	name = cat.name;
+
+	server->call("zmd.packsys.catalog_subscribe", argList, 
+	this, SLOT(catalogData(const QValueList<QVariant>&, const QVariant&)),
+	this, SLOT(faultData(int, const QString&, const QVariant&)));
+
+
+}
+
+void ZmdUpdaterCore::unsubscribeCatalog(Catalog cat) {
+	IS_ZMD_BUSY;
+	QValueList<QVariant> argList;
+	argList.append(cat.id);
+	argList.append(false);
+	name = cat.name;
+
+	server->call("zmd.packsys.catalog_subscribe", argList, 
+	this, SLOT(catalogData(const QValueList<QVariant>&, const QVariant&)),
+	this, SLOT(faultData(int, const QString&, const QVariant&)));
+
 }
 
 void ZmdUpdaterCore::catalogData(const QValueList<QVariant>& data, const QVariant& t) {
@@ -155,31 +201,11 @@ void ZmdUpdaterCore::catalogData(const QValueList<QVariant>& data, const QVarian
 	}
 }
 
-void ZmdUpdaterCore::subscribeCatalog(Catalog cat) {
-	IS_ZMD_BUSY;
-
-	QValueList<QVariant> argList;
-	argList.append(cat.id);
-	argList.append(true);
-
-	server->call("zmd.packsys.catalog_subscribe", argList, 
-	this, SLOT(catalogData(const QValueList<QVariant>&, const QVariant&)),
-	this, SLOT(faultData(int, const QString&, const QVariant&)));
-
-
-}
-
-void ZmdUpdaterCore::unsubscribeCatalog(Catalog cat) {
-	IS_ZMD_BUSY;
-	QValueList<QVariant> argList;
-	argList.append(cat.id);
-	argList.append(false);
-
-	server->call("zmd.packsys.catalog_subscribe", argList, 
-	this, SLOT(catalogData(const QValueList<QVariant>&, const QVariant&)),
-	this, SLOT(faultData(int, const QString&, const QVariant&)));
-
-}
+/********************************************************************
+ *
+ *                     Get Patches/GetUpdates
+ *
+ ********************************************************************/
 
 /* Package Handling (call and data slot) */
 void ZmdUpdaterCore::getPatches(Catalog cat) {
@@ -244,7 +270,11 @@ void ZmdUpdaterCore::patchData(const QValueList<QVariant>& data, const QVariant&
 
 }
 
-/* Transaction call, data slot, timer */
+/********************************************************************
+ *
+ *                     Install Packages/Patches
+ *
+ ********************************************************************/
 
 void ZmdUpdaterCore::runTransaction(QValueList<Package> installList, 
 									QValueList<Package> updateList,
@@ -330,8 +360,12 @@ void ZmdUpdaterCore::cancelTransaction() {
 
 }
 
+/********************************************************************
+ *
+ *                     Progress Tracking Methods/QTimer
+ *
+ ********************************************************************/
 
-/* Global timer slot and data slot -- this keeps track of poll events */
 void ZmdUpdaterCore::timerSlot() {
 	server->call("zmd.system.poll", pollID, 
 	this, SLOT(timerData(const QValueList<QVariant>&, const QVariant&)),
@@ -358,6 +392,12 @@ void ZmdUpdaterCore::timerData(const QValueList<QVariant>& data, const QVariant 
 		}
 	}
 }
+
+/********************************************************************
+ *
+ *                     Fault Handling
+ *
+ ********************************************************************/
 
 void ZmdUpdaterCore::faultData(int code, const QString& message, const QVariant&t) {
 	switch (code) {
