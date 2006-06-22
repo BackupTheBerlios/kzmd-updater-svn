@@ -356,6 +356,38 @@ void ZmdUpdaterCore::timerData(const QValueList<QVariant>& data, const QVariant 
 }
 
 void ZmdUpdaterCore::faultData(int code, const QString& message, const QVariant&t) {
+	switch (code) {
+
+		case -603:
+			//Dep Failure
+			emit(transactionFinished(ERROR_DEP_FAIL));
+			break;
+		case -605:
+			//Invalid package specified
+			emit(transactionFinished(ERROR_INVALID));
+			break;
+		case -606:
+			//Invalid catalog specified
+			emit(catalogAdded(message, ERROR_INVALID));
+			break;
+		case -607:
+			//Invalid progress ID
+			emit(transactionFinished(ERROR_INVALID));
+			break;
+		case -617:
+			//Invalid service specified
+			emit(serviceAdded(message, ERROR_INVALID));
+			break;
+		case -619: 
+			//Invalid service type specified
+			emit(serviceAdded(message, ERROR_INVALID_TYPE));
+			break;
+		default:
+			//Things we do not handle
+			cout << "ERROR: Something really strange just happened -- " << message << endl;
+			break;
+	}
+
 #ifdef DEBUG
 	cout << "Fault: " << message << endl;
 	cout << "Fault Code: " << t.toString() << endl;

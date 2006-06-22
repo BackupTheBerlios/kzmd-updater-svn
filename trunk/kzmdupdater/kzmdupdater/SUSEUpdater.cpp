@@ -47,11 +47,6 @@ SUSEUpdater::SUSEUpdater(QWidget *parent) : QWidget(parent), DCOPObject("kzmdupd
 	authorizeCore();
 	initGUI();
 
-	// We connect these here because they don't actually start an update cycle
-	// Plus, strangely, sometimes we get multiple Package/Patch drops
-	connect(core, SIGNAL(updateListing(QValueList<Package>)), this, SLOT(gotUpdateListing(QValueList<Package>)));
-	connect(core, SIGNAL(patchListing(QValueList<Patch>)), this, SLOT(gotPatchListing(QValueList<Patch>)));
-
 	checkUpdates();
 }
 
@@ -148,6 +143,8 @@ SUSEUpdater::~SUSEUpdater() {
 
 void SUSEUpdater::checkUpdates() {
 	connect(core, SIGNAL(catalogListing(QValueList<Catalog>)), this, SLOT(gotCatalogListing(QValueList<Catalog>)));
+	connect(core, SIGNAL(updateListing(QValueList<Package>)), this, SLOT(gotUpdateListing(QValueList<Package>)));
+	connect(core, SIGNAL(patchListing(QValueList<Patch>)), this, SLOT(gotPatchListing(QValueList<Patch>)));
 
 	core->getCatalogs(); //this will return to gotCatalogs
 }
