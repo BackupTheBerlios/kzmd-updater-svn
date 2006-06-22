@@ -44,7 +44,6 @@ void ProgressDialog::initProgressGUI() {
 	mainLayout->setSpacing(10);
 	mainLayout->setMargin(10);
 	resize(300,100);
-	show();
 }
 
 void ProgressDialog::initTextGUI() {
@@ -55,7 +54,6 @@ void ProgressDialog::initTextGUI() {
 	mainLayout->addWidget(description,0,0);
 	mainLayout->setMargin(10);
 	resize(200,100);
-	show();
 }
 
 void ProgressDialog::setTitle(QString title) {
