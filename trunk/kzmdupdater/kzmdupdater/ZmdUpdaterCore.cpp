@@ -155,7 +155,7 @@ void ZmdUpdaterCore::subscribeCatalog(Catalog cat) {
 	argList.append(cat.id);
 	argList.append(true);
 
-	server->call("zmd.packsys.catalog_subscribe", argList, 
+	server->call("zmd.system.catalog_subscribe", argList, 
 	this, SLOT(catalogData(const QValueList<QVariant>&, const QVariant&)),
 	this, SLOT(faultData(int, const QString&, const QVariant&)));
 
@@ -168,7 +168,7 @@ void ZmdUpdaterCore::unsubscribeCatalog(Catalog cat) {
 	argList.append(cat.id);
 	argList.append(false);
 
-	server->call("zmd.packsys.catalog_subscribe", argList, 
+	server->call("zmd.system.catalog_subscribe", argList, 
 	this, SLOT(catalogData(const QValueList<QVariant>&, const QVariant&)),
 	this, SLOT(faultData(int, const QString&, const QVariant&)));
 

@@ -73,6 +73,7 @@ void ConfigWindow::initGUI() {
 	connect(closeButton, SIGNAL(clicked()), this, SLOT(close()));
 	connect(addButton, SIGNAL(clicked()), this, SLOT(addButtonClicked()));
 	connect(removeButton, SIGNAL(clicked()), this, SLOT(removeButtonClicked()));
+	connect(serverList, SIGNAL(clicked(QListViewItem*)), this, SLOT(listClicked(QListViewItem*)));
 
 	mainLayout->addWidget(closeButton, false, Qt::AlignRight);
 
@@ -86,25 +87,26 @@ void ConfigWindow::initList() {
 	connect(core, SIGNAL(serviceListing(QValueList<Service>)), this, SLOT(gotServiceList(QValueList<Service>)));
 	connect(core, SIGNAL(catalogListing(QValueList<Catalog>)), this, SLOT(gotCatalogList(QValueList<Catalog>)));
 
-
 }
 
 void ConfigWindow::listClicked(QListViewItem *item) {
 	bool state = ((QCheckListItem*)item)->isOn();
 	bool oldState = (item->text(CONFW_STATE) == "1") ? true : false;
-
-	if (state == oldState)
+	
+	if (state == oldState) {
 		return;
-	else {
+	} else {
 		Catalog cat;
 		cat.name = item->text(CONFW_NAME);
 		cat.id = item->text(CONFW_ID); //NNN SEG Possible
-		if (state == true)
+		if (state == true) {
 			core->subscribeCatalog(cat);
-		else 
+			((QCheckListItem*)item)->setOn(true);
+		} else {
 			core->unsubscribeCatalog(cat);
+			((QCheckListItem*)item)->setOn(false);
+		}
 		connect(core, SIGNAL(catalogListing(QValueList<Catalog>)), this, SLOT(gotCatalogList(QValueList<Catalog>)));
-		core->getCatalogs();
 	}	
 }
 
