@@ -243,7 +243,8 @@ void SUSEUpdater::authorizeCore() {
 
 	proc << "kdesu";
 	proc << QString("kzmdauthutil ") + QString(ZMD_CONFIG_PATH);
-	proc.start();
+	if (proc.start() == false)
+		cout << "ERROR: Could not start the kzmdauthutil" << endl;
 
 	if ( (fd = fopen("/var/tmp/kzmd-auth", "r")) != NULL) {
 		
