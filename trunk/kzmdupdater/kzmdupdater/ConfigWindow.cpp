@@ -91,7 +91,7 @@ void ConfigWindow::initList() {
 
 void ConfigWindow::listClicked(QListViewItem *item) {
 
-	if (item->parent() != NULL) {
+	if (item != NULL && item->parent() != NULL) {
 		bool state = ((QCheckListItem*)item)->isOn();
 		bool oldState = (item->text(CONFW_STATE) == "1") ? true : false;
 		
