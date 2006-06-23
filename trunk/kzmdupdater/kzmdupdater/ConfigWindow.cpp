@@ -90,24 +90,26 @@ void ConfigWindow::initList() {
 }
 
 void ConfigWindow::listClicked(QListViewItem *item) {
-	bool state = ((QCheckListItem*)item)->isOn();
-	bool oldState = (item->text(CONFW_STATE) == "1") ? true : false;
-	
-	if (state == oldState) {
-		return;
-	} else {
-		Catalog cat;
-		cat.name = item->text(CONFW_NAME);
-		cat.id = item->text(CONFW_ID); //NNN SEG Possible
-		if (state == true) {
-			core->subscribeCatalog(cat);
-			((QCheckListItem*)item)->setOn(true);
+
+	if (item->parent() != NULL) {
+		bool state = ((QCheckListItem*)item)->isOn();
+		bool oldState = (item->text(CONFW_STATE) == "1") ? true : false;
+		
+		if (state == oldState) {
+			return;
 		} else {
-			core->unsubscribeCatalog(cat);
-			((QCheckListItem*)item)->setOn(false);
+			Catalog cat;
+			cat.name = item->text(CONFW_NAME);
+			cat.id = item->text(CONFW_ID); //NNN SEG Possible
+			if (state == true) {
+				core->subscribeCatalog(cat);
+				((QCheckListItem*)item)->setOn(true);
+			} else {
+				core->unsubscribeCatalog(cat);
+				((QCheckListItem*)item)->setOn(false);
+			}
 		}
-		connect(core, SIGNAL(catalogListing(QValueList<Catalog>)), this, SLOT(gotCatalogList(QValueList<Catalog>)));
-	}	
+	}
 }
 
 
