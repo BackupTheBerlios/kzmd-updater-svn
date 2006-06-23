@@ -232,6 +232,13 @@ void ZmdUpdaterCore::getUpdates(Catalog cat) {
 
 }
 void ZmdUpdaterCore::updateData(const QValueList<QVariant>& data, const QVariant&t) {
+	QValueList<Package> packageList;
+	
+	packageList = mapListToPackageList(data);
+	emit(updateListing(packageList));
+}
+
+QValueList<Package> ZmdUpdaterCore::mapListToPackageList(const QValueList<QVariant> data) {
 	QValueList<QVariant> list;
 	list = (data.front().toList());
 	QValueList<QVariant>::iterator iter;
@@ -247,11 +254,8 @@ void ZmdUpdaterCore::updateData(const QValueList<QVariant>& data, const QVariant
 		pack.description = map["summary"].toString();
 		pack.installed = map["installed"].toBool();
 		packageList.append(pack);
-#ifdef DEBUG
-		cout << "Package drop: " << pack.name << endl;
-#endif
 	}
-	emit(updateListing(packageList));
+	return packageList;
 }
 
 void ZmdUpdaterCore::patchData(const QValueList<QVariant>& data, const QVariant& t) {
@@ -291,71 +295,94 @@ void ZmdUpdaterCore::runTransaction(QValueList<Package> installList,
 
 	IS_ZMD_BUSY;
 	
-	QValueList<QVariant> argList;
-	QValueList<QVariant> installs;	
-	QValueList<QVariant> updates;	
-	QValueList<QVariant> removals;
-
 	for (QValueList<Package>::iterator iter = installList.begin();
 		 iter != installList.end(); iter++) {
 		 QMap<QString, QVariant> map;
 		 map["id"] = (*iter).id;
 		 map["name"] = (*iter).name;
-		 installs.append(map);
+		 packagesToInstall.append(map);
 	}
 	for (QValueList<Package>::iterator iter = updateList.begin();
 		 iter != updateList.end(); iter++) {
 		 QMap<QString, QVariant> map;
 		 map["id"] = (*iter).id;
 		 map["name"] = (*iter).name;
-		 updates.append(map);
+		 packagesToUpdate.append(map);
 	}
 	for (QValueList<Package>::iterator iter = removeList.begin();
 		 iter != removeList.end(); iter++) {
 		 QMap<QString, QVariant> map;
 		 map["id"] = (*iter).id;
 		 map["name"] = (*iter).name;
-		 removals.append(map);
+		 packagesToRemove.append(map);
 	}
-	argList.append(installs);
-	argList.append(updates);	
-	argList.append(removals);
 
 #ifdef DEBUG
-	cout << "Asking for dep resolve" << endl;
+	cout << "Asking for dep verification" << endl;
 #endif
-	server->call("zmd.packsys.resolve_dependencies", argList, 
+	server->call("zmd.packsys.verify", QValueList<QVariant>(), 
 	this, SLOT(transactData(const QValueList<QVariant>&, const QVariant&)),
 	this, SLOT(faultData(int, const QString&, const QVariant&)));
 }
 
 void ZmdUpdaterCore::transactData(const QValueList<QVariant>& data, const QVariant &t) {
+	static bool verification = true;
+	QValueList<QVariant> argList;
 
 	// Is the first member of the arg list a list? If so, we just got dep info
 	if ((data.front()).canCast(QVariant::List) == true) {
-		QValueList<QVariant> installList;
-		QValueList<QVariant> updateList;
-		QValueList<QVariant> removeList;
-		QMap<QString, QVariant> map;
+		QValueList<QVariant> list;
+		
+		for (QValueList<QVariant>::const_iterator iter = data.begin(); iter != data.end();
+			 iter++) {
 
-		QValueList<QVariant>::const_iterator iter = data.begin();
-		installList = (*iter).toList().front().toList();
-		iter++;
-		updateList = (*iter).toList().front().toList();
-		iter++;
-		removeList = (*iter).toList().front().toList();
+			list = (*iter).toList().front().toList();
+			QValueList<QVariant>::iterator listIter = list.begin();
 
-#ifdef DEBUG
-		for (iter = updateList.begin(); iter != updateList.end(); iter++) {
-			map = (*iter).toMap();
-			cout << "Updated package: " << map["name"].toString() << endl;
+			for (int count = 0; listIter != list.end(); listIter++, count++) {
+				switch(count) {
+					case 0:
+						packagesToInstall.append(*listIter);
+						break;
+					case 1:
+						packagesToUpdate.append(*listIter);
+						break;
+					case 2:
+						packagesToRemove.append(*listIter);
+						break;
+				}
+			}
 		}
-		cout << "Starting transaction" << endl;
-#endif
 
-		server->call("zmd.packsys.transact", data, 
-		this, SLOT(transactData(const QValueList<QVariant>&, const QVariant&)),
-		this, SLOT(faultData(int, const QString&, const QVariant&)));
+		argList.append(packagesToInstall);
+		argList.append(packagesToUpdate);
+		argList.append(packagesToRemove);
+
+		if (verification) { //If this is true, the info we just got is verification info 
+			server->call("zmd.packsys.resolve_dependencies", argList, 
+			this, SLOT(transactData(const QValueList<QVariant>&, const QVariant&)),
+			this, SLOT(faultData(int, const QString&, const QVariant&))); 
+			verification = false; //next time true we do the transact
+		} else {
+
+			QValueList<Package> installs;
+			QValueList<Package> removals;
+			QValueList<Package> updates;
+
+			installs = mapListToPackageList(packagesToInstall);
+			removals = mapListToPackageList(packagesToRemove);
+			updates = mapListToPackageList(packagesToUpdate);
+			emit(realPackages(installs, updates, removals));
+
+
+			server->call("zmd.packsys.transact", argList, 
+			this, SLOT(transactData(const QValueList<QVariant>&, const QVariant&)),
+			this, SLOT(faultData(int, const QString&, const QVariant&)));
+			verification = true; //next time through we do the resolving again
+			packagesToInstall.clear();
+			packagesToRemove.clear();
+			packagesToUpdate.clear();
+		}
 
 
 	} else { //or else we got two IDs for transact

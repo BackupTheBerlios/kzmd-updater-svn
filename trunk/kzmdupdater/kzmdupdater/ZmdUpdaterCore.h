@@ -77,7 +77,7 @@ class ZmdUpdaterCore : public UpdaterCore {
 		void timerData(const QValueList<QVariant>&, const QVariant&);
 
 	private:
-
+		QValueList<Package> mapListToPackageList(const QValueList<QVariant>);
 		//These really need to be stored somewhere else. Kwallet?
 		QString username;
 		QString password;
@@ -89,6 +89,9 @@ class ZmdUpdaterCore : public UpdaterCore {
 		//Holds the name of the server we just added/removed
 		//I don't like this, but I am not sure at the moment
 		QString tempServiceName;
+		QValueList<QVariant> packagesToInstall;
+		QValueList<QVariant> packagesToUpdate;
+		QValueList<QVariant> packagesToRemove;
 
 		KXMLRPC::Server *server; 
 		QTimer *timer;

@@ -139,6 +139,13 @@ class UpdaterCore : public QObject {
 		void catalogListing(QValueList<Catalog>);
 		void patchListing(QValueList<Patch>);
 		void updateListing(QValueList<Package>);
+
+		//Signal sent to the GUI
+		//to inform of packages required to resolve
+		//deps. The real install list.
+		void realPackages(QValueList<Package> installs,
+						  QValueList<Package> removals,
+						  QValueList<Package> updates);
 	
 		void transactionFinished(int flags);
 
