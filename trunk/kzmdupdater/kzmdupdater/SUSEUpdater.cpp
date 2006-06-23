@@ -36,7 +36,8 @@
 
 //Enum for updateListing
 enum { COLUMN_NAME, COLUMN_OLD_VERSION, COLUMN_NEW_VERSION,
-		COLUMN_SIZE, COLUMN_ID, COLUMN_DESC };
+		COLUMN_SIZE, COLUMN_ID, COLUMN_DESC, COLUMN_INSTALLED,
+		COLUMN_CATALOG };
 
 #include <iostream>
 using namespace std;
@@ -102,6 +103,8 @@ void SUSEUpdater::initGUI() {
 	updateList->addColumn(i18n("Size"));
 	updateList->addColumn("ID", 0); // This is a hidden column to hold the ID of the patch/package
 	updateList->addColumn("Description", 0); //Another Hidden Column
+	updateList->addColumn("Installed?", 0);
+	updateList->addColumn(i18n("Catalog"));
 
 	connect(updateList, SIGNAL(selectionChanged(QListViewItem*)), this, SLOT(slotPackageSelected(QListViewItem*)));
 
@@ -127,7 +130,8 @@ void SUSEUpdater::configButtonClicked() {
 
 void SUSEUpdater::installButtonClicked() {
 	InstallWindow *win = new InstallWindow(core);
-	QValueList<Package> packList;
+	QValueList<Package> upList;
+	QValueList<Package> instList;
 	QCheckListItem *item = (QCheckListItem*)(updateList->firstChild());
 
 	if (item == NULL) {
@@ -140,12 +144,17 @@ void SUSEUpdater::installButtonClicked() {
 			Package p;
 			p.name = item->text(COLUMN_NAME); //gets the name
 			p.id = item->text(COLUMN_ID); //gets the id
-			packList.append(p);
+			p.catalog = item->text(COLUMN_CATALOG);
+			p.installed = (item->text(COLUMN_INSTALLED) == "Yes") ? true : false;
+			if (p.installed == true)
+				upList.append(p);
+			else
+				instList.append(p);
 		}
 	} while ((item = (QCheckListItem*)(item->nextSibling())) != 0);
 	/* From reading the ZMD source, we only need name and ID for packages or patches. This may change in the future, was not in the API */
 
-	win->setPackageList(QValueList<Package>(), packList, QValueList<Package>());
+	win->setPackageList(instList, upList, QValueList<Package>());
 	win->startUpdate();
 	win->show();
 	hide();
@@ -201,8 +210,8 @@ void SUSEUpdater::gotUpdateListing(QValueList<Package> packageList) {
 		newItem->setText(COLUMN_SIZE, "Unknown");
 		newItem->setText(COLUMN_ID, (*iter).id);
 		newItem->setText(COLUMN_DESC, (*iter).description);
-		cout << (*iter).name << endl;
-		cout << (*iter).installed << endl;
+		newItem->setText(COLUMN_INSTALLED, ((*iter).installed == true) ? "Yes" : "No");
+		newItem->setText(COLUMN_CATALOG, (*iter).catalog);
 	}
 	updateList->setSelected(updateList->firstChild(), true);
 
@@ -222,10 +231,12 @@ void SUSEUpdater::gotPatchListing(QValueList<Patch> patchList) {
 		newItem = new QCheckListItem(updateList, (*iter).name + " (Patch)", QCheckListItem::CheckBox);
 
 		newItem->setText(COLUMN_OLD_VERSION,"Unknown");
-		newItem->setText(COLUMN_NEW_VERSION ,(*iter).version);
+		newItem->setText(COLUMN_NEW_VERSION,(*iter).version);
 		newItem->setText(COLUMN_SIZE, "Unknown");
 		newItem->setText(COLUMN_ID, (*iter).id);
 		newItem->setText(COLUMN_DESC, (*iter).description);
+		newItem->setText(COLUMN_INSTALLED, ((*iter).installed == true) ? "Yes" : "No");
+		newItem->setText(COLUMN_CATALOG, (*iter).catalog);	
 	}
 	updateList->setSelected(updateList->firstChild(), true);
 
