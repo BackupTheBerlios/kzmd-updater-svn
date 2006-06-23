@@ -94,7 +94,9 @@ void ConfigWindow::listClicked(QListViewItem *item) {
 	if (item != NULL && item->parent() != NULL) {
 		bool state = ((QCheckListItem*)item)->isOn();
 		bool oldState = (item->text(CONFW_STATE) == "1") ? true : false;
-		
+	
+		cout << "Selection Changed: state is " << state << endl;
+		cout << "Old state is: " << oldState << endl;
 		if (state == oldState) {
 			return;
 		} else {

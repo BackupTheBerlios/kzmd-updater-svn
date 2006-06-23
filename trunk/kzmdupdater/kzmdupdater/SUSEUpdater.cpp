@@ -191,7 +191,7 @@ void SUSEUpdater::gotUpdateListing(QValueList<Package> packageList) {
 	} else {
 		trayApplet->setPixmap(UserIcon(TRAY_ICON_GREEN));
 	}
-
+	updateList->clear();	
 	for (iter = packageList.begin(); iter != packageList.end(); iter++) {
 		newItem = new QCheckListItem(updateList, (*iter).name, QCheckListItem::CheckBox);
 
