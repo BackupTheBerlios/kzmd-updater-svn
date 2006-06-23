@@ -29,6 +29,7 @@
 #include <qdialog.h>
 #include <qstring.h>
 #include <qlayout.h>
+#include <qbuttongroup.h>
 
 
 class ServerDialog : public QDialog {
@@ -59,6 +60,7 @@ class ServerDialog : public QDialog {
 		KLineEdit *serverEdit;
 		KPushButton *cancelButton;
 		KPushButton *addButton;
+		QButtonGroup *typeGroup;
 
 		QString server;
 		QString name;

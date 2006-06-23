@@ -107,8 +107,7 @@ void ConfigWindow::gotCatalogList(QValueList<Catalog> catalogs) {
 	QCheckListItem *item;
 
 	for (iter = catalogs.begin(); iter != catalogs.end(); iter++) {
-		item = new QCheckListItem(serverList->findItem((*iter).service,CONFW_NAME), (*iter).name,
-									QCheckListItem::CheckBoxController);
+		item = new QCheckListItem(serverList->findItem((*iter).service,CONFW_URI), (*iter).name, QCheckListItem::CheckBoxController);
 		item->setOn((*iter).subscribed);
 	}
 	disconnect(core, SIGNAL(catalogListing(QValueList<Catalog>)), this, 
@@ -125,18 +124,20 @@ void ConfigWindow::addButtonClicked() {
 	list = diag.getServerInfo();
 	if (list.front() != "" && list.back() != "") { //Really the name could be blank, but makes no sense
 		Service newServ;
-		newServ.name = list.front();
-		newServ.uri = list.back();
-		newServ.type = "zypp"; //This should be prompted for
+		newServ.name = list[0];
+		newServ.uri = list[1];
+		newServ.type = list[2];
 		core->addService(newServ);
 		connect(core, SIGNAL(serviceAdded(QString,int)), this, SLOT(addedServer(QString,int)));
+
+		prog.setTitle(i18n("Adding server.."));
+		prog.setDescription(i18n("We are adding a server to the updater, this may take some time. \nPlease be patient"));
+		prog.connectProgress(core, SIGNAL(progress(Progress)));
+		prog.connectFinished(core, SIGNAL(serviceAdded(QString,int)));
+		prog.exec();
+
 	}
 
-	prog.setTitle(i18n("Adding server.."));
-	prog.setDescription(i18n("We are adding a server to the updater, this may take some time. \nPlease be patient"));
-	prog.connectProgress(core, SIGNAL(progress(Progress)));
-	prog.connectFinished(core, SIGNAL(serviceAdded(QString,int)));
-	prog.exec();
 }
 
 void ConfigWindow::addedServer(QString server, int status) {

@@ -19,7 +19,9 @@
 
 
 #include "ServerDialog.h"
+#include <qradiobutton.h>
 
+enum { TYPE_ZYPP=1, TYPE_YUM, TYPE_APT };
 
 ServerDialog::ServerDialog(QWidget *parent) : QDialog(parent) {
 	initGUI();
@@ -32,6 +34,17 @@ QValueList<QString> ServerDialog::getServerInfo() {
 	QValueList<QString> list;
 	list.append(name);
 	list.append(server);
+	switch (typeGroup->selectedId()) {
+		case TYPE_ZYPP:
+			list.append("zypp");
+			break;
+		case TYPE_YUM:
+			list.append("yum");
+			break;
+		case TYPE_APT:
+			list.append("apt-rpm"); //FIX
+			break;
+	}
 	return list;
 }
 
@@ -44,13 +57,23 @@ void ServerDialog::initGUI() {
 	serverEdit = new KLineEdit(this);
 	cancelButton = new KPushButton(i18n("Cancel"), this);
 	addButton = new KPushButton(i18n("Add"), this);
+	typeGroup = new QButtonGroup(this);
 
 	layout->addWidget(nameLabel,0,0);
 	layout->addWidget(nameEdit,0,0);
 	layout->addWidget(serverLabel,0,0);
 	layout->addWidget(serverEdit,0,0);
+	layout->addWidget(typeGroup,0,0);
 	layout->setMargin(10);
 	layout->setSpacing(5);
+
+	typeGroup->setExclusive(true);
+	typeGroup->insert(new QRadioButton("ZYPP",this), TYPE_ZYPP);
+	typeGroup->insert(new QRadioButton("YUM",this), TYPE_YUM);
+	typeGroup->insert(new QRadioButton("APT-RPM",this), TYPE_APT);
+	typeGroup->setButton(TYPE_ZYPP);
+	typeGroup->setTitle(i18n("Server Type"));
+	typeGroup->setOrientation(Qt::Horizontal);
 
 	buttonLayout = new QHBoxLayout(layout);
 	buttonLayout->addWidget(cancelButton,0,Qt::AlignLeft);
