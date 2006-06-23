@@ -21,7 +21,7 @@
 #include "ServerDialog.h"
 #include <qradiobutton.h>
 
-enum { TYPE_ZYPP=1, TYPE_YUM, TYPE_APT };
+enum { TYPE_ZYPP=0, TYPE_YUM, TYPE_APT };
 
 ServerDialog::ServerDialog(QWidget *parent) : QDialog(parent) {
 	initGUI();
@@ -57,7 +57,10 @@ void ServerDialog::initGUI() {
 	serverEdit = new KLineEdit(this);
 	cancelButton = new KPushButton(i18n("Cancel"), this);
 	addButton = new KPushButton(i18n("Add"), this);
-	typeGroup = new QButtonGroup(this);
+	typeGroup = new QHButtonGroup(this);
+	QRadioButton *zButton = new QRadioButton("ZYPP", typeGroup);
+	QRadioButton *yButton = new QRadioButton("YUM", typeGroup);
+	QRadioButton *aButton = new QRadioButton("APT-RPM", typeGroup);
 
 	layout->addWidget(nameLabel,0,0);
 	layout->addWidget(nameEdit,0,0);
@@ -68,9 +71,9 @@ void ServerDialog::initGUI() {
 	layout->setSpacing(5);
 
 	typeGroup->setExclusive(true);
-	typeGroup->insert(new QRadioButton("ZYPP",this), TYPE_ZYPP);
-	typeGroup->insert(new QRadioButton("YUM",this), TYPE_YUM);
-	typeGroup->insert(new QRadioButton("APT-RPM",this), TYPE_APT);
+	typeGroup->insert(zButton, TYPE_ZYPP);
+	typeGroup->insert(yButton, TYPE_YUM);
+	typeGroup->insert(aButton, TYPE_APT);
 	typeGroup->setButton(TYPE_ZYPP);
 	typeGroup->setTitle(i18n("Server Type"));
 	typeGroup->setOrientation(Qt::Horizontal);
@@ -87,7 +90,7 @@ void ServerDialog::initGUI() {
 	connect(cancelButton, SIGNAL(clicked()), this, SLOT(cancelButtonClicked()));
 
 	layout->setMargin(20);
-	resize(400,100);
+//	resize(400,100);
 	setCaption(i18n("Add Server"));
 	show();
 }

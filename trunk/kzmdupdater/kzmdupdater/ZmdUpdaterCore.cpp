@@ -392,9 +392,14 @@ void ZmdUpdaterCore::timerData(const QValueList<QVariant>& data, const QVariant 
 		cout << "Name: " << status.name << endl;
 #endif
 		emit(progress(status));
-		if (map["status"].toInt() == 2) {
+		if (map["status"].toInt() > 1) {
 			ZMD_CLEAR;
 			timer->stop();
+			
+			if (tempServiceName != "") {
+				emit(serviceAdded(tempServiceName, ERROR_NONE));
+				tempServiceName = "";
+			}
 		}
 	}
 }
