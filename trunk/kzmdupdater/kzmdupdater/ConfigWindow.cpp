@@ -159,7 +159,7 @@ void ConfigWindow::addButtonClicked() {
 
 	diag.exec();
 	list = diag.getServerInfo();
-	if (list.front() != "" && list.back() != "") { //Really the name could be blank, but makes no sense
+	if (list.front() != "" && list.back() != "") {
 		Service newServ;
 		newServ.name = list[0];
 		newServ.uri = list[1];

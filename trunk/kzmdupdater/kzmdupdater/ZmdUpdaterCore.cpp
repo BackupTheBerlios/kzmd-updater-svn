@@ -129,6 +129,9 @@ void ZmdUpdaterCore::serviceData(const QValueList<QVariant>& data, const QVarian
 		emit(serviceListing(serviceList));
 	} else {
 		//we just got the return from a service removal
+#ifdef DEBUG
+		cout << "Just Removed Service: " << tempServiceName << endl;
+#endif
 		emit(serviceRemoved(tempServiceName,ERROR_NONE));
 		tempServiceName = "";
 	}
@@ -198,8 +201,8 @@ void ZmdUpdaterCore::catalogData(const QValueList<QVariant>& data, const QVarian
 			cat.subscribed = map["subscribed"].toBool();
 			catalogList.append(cat);
 #ifdef DEBUG
-			cout << "Catalog name: " << cat.name << endl;
-			cout << "Catalot service: " << cat.service << endl;
+			cout << "Catalog Drop name: " << cat.name << endl;
+			cout << "Catalog service: " << cat.service << endl;
 #endif
 		}
 		emit(catalogListing(catalogList));
@@ -397,6 +400,9 @@ void ZmdUpdaterCore::timerData(const QValueList<QVariant>& data, const QVariant 
 			timer->stop();
 			
 			if (tempServiceName != "") {
+#ifdef DEBUG
+				cout << "Just added a service: " << tempServiceName << endl;
+#endif
 				emit(serviceAdded(tempServiceName, ERROR_NONE));
 				tempServiceName = "";
 			}
