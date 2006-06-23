@@ -73,7 +73,7 @@ void ConfigWindow::initGUI() {
 	connect(closeButton, SIGNAL(clicked()), this, SLOT(close()));
 	connect(addButton, SIGNAL(clicked()), this, SLOT(addButtonClicked()));
 	connect(removeButton, SIGNAL(clicked()), this, SLOT(removeButtonClicked()));
-	connect(serverList, SIGNAL(clicked(QListViewItem*)), this, SLOT(listClicked(QListViewItem*)));
+	connect(serverList, SIGNAL(selectionChanged(QListViewItem*)), this, SLOT(listClicked(QListViewItem*)));
 
 	mainLayout->addWidget(closeButton, false, Qt::AlignRight);
 
@@ -134,11 +134,16 @@ void ConfigWindow::gotCatalogList(QValueList<Catalog> catalogs) {
 
 	for (iter = catalogs.begin(); iter != catalogs.end(); iter++) {
 		parentItem = serverList->findItem((*iter).service,CONFW_URI);
-		item = new QCheckListItem(parentItem, (*iter).name, QCheckListItem::CheckBoxController);
-		item->setOn((*iter).subscribed);
-		item->setText(CONFW_STATE, ((*iter).subscribed == true) ? "1" : "0");
-		item->setText(CONFW_ID, (*iter).id);
-		parentItem->setOpen(true);
+		if (parentItem == NULL) {
+			KMessageBox::error(this, "You have a catalog that has no service attached to it. This is is strange and you may want to look into it");
+			continue;
+		} else {
+			item = new QCheckListItem(parentItem, (*iter).name, QCheckListItem::CheckBoxController);
+			item->setOn((*iter).subscribed);
+			item->setText(CONFW_STATE, ((*iter).subscribed == true) ? "1" : "0");
+			item->setText(CONFW_ID, (*iter).id);
+			parentItem->setOpen(true);
+		}
 	}
 	disconnect(core, SIGNAL(catalogListing(QValueList<Catalog>)), this, 
 				SLOT(gotCatalogList(QValueList<Catalog>)));
