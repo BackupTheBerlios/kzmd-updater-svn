@@ -64,10 +64,16 @@ void InstallWindow::abortButtonClicked() {
 }
 
 void InstallWindow::progress(Progress status) {
-	QString text;
+	static QString text;
 	static bool isDownload = false; //We will keep track of this to tell us
 									//if we are watching a download or not
 	static bool watchingPackage = false; 
+
+	/* QString text will only be blank the first time, because its static
+	   So, we use it to test if this is our first run
+	*/
+	if (text.isEmpty())
+		transactionList->setText("");
 
 	if (isDownload) {
 		progressBar->advance((int)status.percent);
@@ -119,4 +125,5 @@ void InstallWindow::startUpdate() {
 	core->runTransaction(installList, updateList, removeList);	
 	connect(core, SIGNAL(progress(Progress)), this, SLOT(progress(Progress)));
 	connect(core, SIGNAL(transactionFinished(int)), this, SLOT(finished(int)));
+	transactionList->setText(i18n("Resolving Dependencies..."));
 }
