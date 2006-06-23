@@ -359,6 +359,8 @@ void ZmdUpdaterCore::transactData(const QValueList<QVariant>& data, const QVaria
 		argList.append(packagesToRemove);
 
 		if (verification) { //If this is true, the info we just got is verification info 
+			cout << "Asking for dep resolve" << endl;
+
 			server->call("zmd.packsys.resolve_dependencies", argList, 
 			this, SLOT(transactData(const QValueList<QVariant>&, const QVariant&)),
 			this, SLOT(faultData(int, const QString&, const QVariant&))); 
@@ -374,6 +376,7 @@ void ZmdUpdaterCore::transactData(const QValueList<QVariant>& data, const QVaria
 			updates = mapListToPackageList(packagesToUpdate);
 			emit(realPackages(installs, updates, removals));
 
+			cout << "Running transaction" << endl;
 
 			server->call("zmd.packsys.transact", argList, 
 			this, SLOT(transactData(const QValueList<QVariant>&, const QVariant&)),
@@ -387,8 +390,13 @@ void ZmdUpdaterCore::transactData(const QValueList<QVariant>& data, const QVaria
 
 	} else { //or else we got two IDs for transact
 		//right now are are ignoring the downloading part
-		ZMD_BLOCK(data.last().toString());
-		timer->start(CHECK_INTERVAL,false);
+		if (data.size() == 2) {
+			cout << "starting poll" << endl;
+			ZMD_BLOCK(data.last().toString());
+			timer->start(CHECK_INTERVAL,false);
+		} else {
+			cout << "Got bad response?" << endl;
+		}
 	}
 }
 
