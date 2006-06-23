@@ -834,7 +834,7 @@ bcheck-am:
 
 
 #>+ 11
-kzmdupdater.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/main.cpp $(srcdir)/SUSEUpdater.cpp $(srcdir)/HeaderWidget.cpp $(srcdir)/ConfigWindow.cpp $(srcdir)/InstallWindow.cpp $(srcdir)/ServerDialog.cpp $(srcdir)/xmlrpciface.cpp $(srcdir)/ZmdUpdaterCore.cpp $(srcdir)/ProgressDialog.cpp $(srcdir)/SUSEUpdaterIface_skel.cpp $(srcdir)/ServerDialog.moc.cpp $(srcdir)/UpdaterCore.moc.cpp $(srcdir)/SUSEUpdater.moc.cpp $(srcdir)/InstallWindow.moc.cpp ProgressDialog.moc.cpp $(srcdir)/ZmdUpdaterCore.moc.cpp $(srcdir)/xmlrpciface.moc.cpp $(srcdir)/HeaderWidget.moc.cpp $(srcdir)/ConfigWindow.moc.cpp 
+kzmdupdater.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/main.cpp $(srcdir)/SUSEUpdater.cpp $(srcdir)/HeaderWidget.cpp $(srcdir)/ConfigWindow.cpp $(srcdir)/InstallWindow.cpp $(srcdir)/ServerDialog.cpp $(srcdir)/xmlrpciface.cpp $(srcdir)/ZmdUpdaterCore.cpp $(srcdir)/ProgressDialog.cpp $(srcdir)/SUSEUpdaterIface_skel.cpp $(srcdir)/ServerDialog.moc.cpp $(srcdir)/UpdaterCore.moc.cpp $(srcdir)/SUSEUpdater.moc.cpp $(srcdir)/InstallWindow.moc.cpp $(srcdir)/ProgressDialog.moc.cpp $(srcdir)/ZmdUpdaterCore.moc.cpp $(srcdir)/xmlrpciface.moc.cpp $(srcdir)/HeaderWidget.moc.cpp $(srcdir)/ConfigWindow.moc.cpp 
 	@echo 'creating kzmdupdater.all_cpp.cpp ...'; \
 	rm -f kzmdupdater.all_cpp.files kzmdupdater.all_cpp.final; \
 	echo "#define KDE_USE_FINAL 1" >> kzmdupdater.all_cpp.final; \

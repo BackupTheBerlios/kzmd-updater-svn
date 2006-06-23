@@ -27,7 +27,7 @@
 #define DEBUG
 
 #define SERVER_ADDY "http://127.0.0.1:2544/zmd/RPC2"
-#define CHECK_INTERVAL (5000) 
+#define CHECK_INTERVAL (10000)  //10 seconds
 
 #define IS_ZMD_BUSY if (!pollID.isEmpty()) return
 #define ZMD_BLOCK(ID) (pollID = (ID))

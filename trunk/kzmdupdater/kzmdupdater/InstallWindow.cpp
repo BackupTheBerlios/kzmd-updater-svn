@@ -64,15 +64,38 @@ void InstallWindow::abortButtonClicked() {
 }
 
 void InstallWindow::progress(Progress status) {
-	static QString text;
-	
-	text = transactionList->text();
-	progressBar->advance((int)status.percent);
-	if (currentPackage != status.name) {
-		transactionList->setText(text + "\n" + status.name);
+	QString text;
+	static bool isDownload = false; //We will keep track of this to tell us
+									//if we are watching a download or not
+	static bool watchingPackage = false; 
+
+	if (isDownload) {
+		progressBar->advance((int)status.percent);
+		if (watchingPackage == false) {
+			text = transactionList->text();
+			transactionList->setText(text + "\n" + status.name + " Is Downloading...");
+			watchingPackage = true;
+		}
+		if (status.percent >= 100) {
+			text =transactionList->text();
+			transactionList->setText(text + " Done.");
+			watchingPackage = false;
+			isDownload = false;
+		}
+	} else {
+		progressBar->advance((int)status.percent);
+		if (watchingPackage == false) {
+			text = transactionList->text();
+			transactionList->setText(text + "\n" + status.name + " Is Being Installed...");
+			watchingPackage = true;
+		}
+		if (status.percent >= 100) {
+			text =transactionList->text();
+			transactionList->setText(text + " Done.");
+			watchingPackage = false;
+//			isDownload = true; //Next
+		}	
 	}
-	if (status.percent == 100) 
-		transactionList->setText(text + " Done.");
 }
 
 void InstallWindow::finished(int status) {

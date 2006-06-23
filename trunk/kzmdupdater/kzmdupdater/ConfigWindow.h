@@ -43,6 +43,7 @@ class ConfigWindow : public QWidget {
 
 		void addButtonClicked();
 		void removeButtonClicked();
+		void listClicked(QListViewItem *);
 
 
 		//Core Signals

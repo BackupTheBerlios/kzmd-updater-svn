@@ -26,7 +26,7 @@
 using namespace std;
 
 //Column IDs for the configure window
-enum { CONFW_NAME=0, CONFW_URI, CONFW_ID };
+enum { CONFW_NAME=0, CONFW_URI, CONFW_ID, CONFW_STATE };
 
 ConfigWindow::ConfigWindow(UpdaterCore *_core, QWidget *parent) : 
 	QWidget(parent,0,Qt::WDestructiveClose) {
@@ -53,6 +53,7 @@ void ConfigWindow::initGUI() {
 	serverList->setRootIsDecorated(true);
 	serverList->addColumn("URI", 0); // Hidden column to hold uri for searching
 	serverList->addColumn("ID", 0);
+	serverList->addColumn("Subscribed", 0); //Yet another hidden column, for catalogs this time
 
 	header->setDescription(i18n("<b>Add/Remove Package Servers:</b><br> You may add or remove update servers below or change your software catalog subscriptions.<br> <u>Make whatever changes you wish and press accept.</u>"));
 
@@ -88,6 +89,26 @@ void ConfigWindow::initList() {
 
 }
 
+void ConfigWindow::listClicked(QListViewItem *item) {
+	bool state = ((QCheckListItem*)item)->isOn();
+	bool oldState = (item->text(CONFW_STATE) == "1") ? true : false;
+
+	if (state == oldState)
+		return;
+	else {
+		Catalog cat;
+		cat.name = item->text(CONFW_NAME);
+		cat.id = item->text(CONFW_ID); //NNN SEG Possible
+		if (state == true)
+			core->subscribeCatalog(cat);
+		else 
+			core->unsubscribeCatalog(cat);
+		connect(core, SIGNAL(catalogListing(QValueList<Catalog>)), this, SLOT(gotCatalogList(QValueList<Catalog>)));
+		core->getCatalogs();
+	}	
+}
+
+
 void ConfigWindow::gotServiceList(QValueList<Service> servers) {
 	QValueList<Service>::iterator iter;
 	QListViewItem *item;
@@ -105,10 +126,15 @@ void ConfigWindow::gotServiceList(QValueList<Service> servers) {
 void ConfigWindow::gotCatalogList(QValueList<Catalog> catalogs) {
 	QValueList<Catalog>::iterator iter;
 	QCheckListItem *item;
+	QListViewItem *parentItem;
 
 	for (iter = catalogs.begin(); iter != catalogs.end(); iter++) {
-		item = new QCheckListItem(serverList->findItem((*iter).service,CONFW_URI), (*iter).name, QCheckListItem::CheckBoxController);
+		parentItem = serverList->findItem((*iter).service,CONFW_URI);
+		item = new QCheckListItem(parentItem, (*iter).name, QCheckListItem::CheckBoxController);
 		item->setOn((*iter).subscribed);
+		item->setText(CONFW_STATE, ((*iter).subscribed == true) ? "1" : "0");
+		item->setText(CONFW_ID, (*iter).id);
+		parentItem->setOpen(true);
 	}
 	disconnect(core, SIGNAL(catalogListing(QValueList<Catalog>)), this, 
 				SLOT(gotCatalogList(QValueList<Catalog>)));
