@@ -104,7 +104,7 @@ void SUSEUpdater::initGUI() {
 	updateList->addColumn("ID", 0); // This is a hidden column to hold the ID of the patch/package
 	updateList->addColumn("Description", 0); //Another Hidden Column
 	updateList->addColumn("Installed?", 0);
-	updateList->addColumn(i18n("Catalog"));
+	updateList->addColumn("Catalog", 0);
 
 	connect(updateList, SIGNAL(selectionChanged(QListViewItem*)), this, SLOT(slotPackageSelected(QListViewItem*)));
 
@@ -144,6 +144,7 @@ void SUSEUpdater::installButtonClicked() {
 			Package p;
 			p.name = item->text(COLUMN_NAME); //gets the name
 			p.id = item->text(COLUMN_ID); //gets the id
+			p.version = item->text(COLUMN_NEW_VERSION);
 			p.catalog = item->text(COLUMN_CATALOG);
 			p.installed = (item->text(COLUMN_INSTALLED) == "Yes") ? true : false;
 			if (p.installed == true)
