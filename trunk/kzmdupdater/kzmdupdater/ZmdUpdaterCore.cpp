@@ -297,7 +297,7 @@ void ZmdUpdaterCore::runTransaction(QValueList<Package> installList,
 	QValueList<QVariant> removals;
 
 	for (QValueList<Package>::iterator iter = installList.begin();
-		 iter != updateList.end(); iter++) {
+		 iter != installList.end(); iter++) {
 		 QMap<QString, QVariant> map;
 		 map["id"] = (*iter).id;
 		 map["name"] = (*iter).name;
@@ -311,7 +311,7 @@ void ZmdUpdaterCore::runTransaction(QValueList<Package> installList,
 		 updates.append(map);
 	}
 	for (QValueList<Package>::iterator iter = removeList.begin();
-		 iter != updateList.end(); iter++) {
+		 iter != removeList.end(); iter++) {
 		 QMap<QString, QVariant> map;
 		 map["id"] = (*iter).id;
 		 map["name"] = (*iter).name;
