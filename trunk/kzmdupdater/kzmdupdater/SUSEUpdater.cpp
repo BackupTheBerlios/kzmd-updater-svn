@@ -148,6 +148,7 @@ void SUSEUpdater::installButtonClicked() {
 	win->setPackageList(QValueList<Package>(), packList, QValueList<Package>());
 	win->startUpdate();
 	win->show();
+	hide();
 }
 
 SUSEUpdater::~SUSEUpdater() {
@@ -200,6 +201,8 @@ void SUSEUpdater::gotUpdateListing(QValueList<Package> packageList) {
 		newItem->setText(COLUMN_SIZE, "Unknown");
 		newItem->setText(COLUMN_ID, (*iter).id);
 		newItem->setText(COLUMN_DESC, (*iter).description);
+		cout << (*iter).name << endl;
+		cout << (*iter).installed << endl;
 	}
 	updateList->setSelected(updateList->firstChild(), true);
 

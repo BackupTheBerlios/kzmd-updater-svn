@@ -107,6 +107,7 @@ void InstallWindow::progress(Progress status) {
 void InstallWindow::finished(int status) {
 	if (status == ERROR_DEP_FAIL) {
 		KMessageBox::error(this, i18n("Sorry, we couldn't resolve the dependencies for this update."));
+		close();
 	} else {
 		transactionList->setText("Done!");
 		close();
