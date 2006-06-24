@@ -17,16 +17,16 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include "ConfigWindow.h"
-#include "ServerDialog.h"
-#include "ProgressDialog.h"
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <iostream>
-using namespace std;
 
-//Column IDs for the configure window
-enum { CONFW_NAME=0, CONFW_URI, CONFW_ID, CONFW_STATE };
+#include "ConfigWindow.h"
+#include "ServerDialog.h"
+#include "ProgressDialog.h"
+#include "CatalogListItem.h"
+
+using namespace std;
 
 ConfigWindow::ConfigWindow(UpdaterCore *_core, QWidget *parent) : 
 	QWidget(parent,0,Qt::WDestructiveClose) {
@@ -73,7 +73,6 @@ void ConfigWindow::initGUI() {
 	connect(closeButton, SIGNAL(clicked()), this, SLOT(close()));
 	connect(addButton, SIGNAL(clicked()), this, SLOT(addButtonClicked()));
 	connect(removeButton, SIGNAL(clicked()), this, SLOT(removeButtonClicked()));
-	connect(serverList, SIGNAL(selectionChanged(QListViewItem*)), this, SLOT(listClicked(QListViewItem*)));
 
 	mainLayout->addWidget(closeButton, false, Qt::AlignRight);
 
@@ -88,32 +87,6 @@ void ConfigWindow::initList() {
 	connect(core, SIGNAL(catalogListing(QValueList<Catalog>)), this, SLOT(gotCatalogList(QValueList<Catalog>)));
 
 }
-
-void ConfigWindow::listClicked(QListViewItem *item) {
-
-	if (item != NULL && item->parent() != NULL) {
-		bool state = ((QCheckListItem*)item)->isOn();
-		bool oldState = (item->text(CONFW_STATE) == "1") ? true : false;
-	
-		cout << "Selection Changed: state is " << state << endl;
-		cout << "Old state is: " << oldState << endl;
-		if (state == oldState) {
-			return;
-		} else {
-			Catalog cat;
-			cat.name = item->text(CONFW_NAME);
-			cat.id = item->text(CONFW_ID); //NNN SEG Possible
-			if (state == true) {
-				core->subscribeCatalog(cat);
-				((QCheckListItem*)item)->setOn(true);
-			} else {
-				core->unsubscribeCatalog(cat);
-				((QCheckListItem*)item)->setOn(false);
-			}
-		}
-	}
-}
-
 
 void ConfigWindow::gotServiceList(QValueList<Service> servers) {
 	QValueList<Service>::iterator iter;
@@ -131,7 +104,7 @@ void ConfigWindow::gotServiceList(QValueList<Service> servers) {
 
 void ConfigWindow::gotCatalogList(QValueList<Catalog> catalogs) {
 	QValueList<Catalog>::iterator iter;
-	QCheckListItem *item;
+	CatalogListItem *item;
 	QListViewItem *parentItem;
 
 	for (iter = catalogs.begin(); iter != catalogs.end(); iter++) {
@@ -140,9 +113,8 @@ void ConfigWindow::gotCatalogList(QValueList<Catalog> catalogs) {
 			KMessageBox::error(this, "You have a catalog that has no service attached to it. This is is strange and you may want to look into it");
 			continue;
 		} else {
-			item = new QCheckListItem(parentItem, (*iter).name, QCheckListItem::CheckBoxController);
+			item = new CatalogListItem(parentItem, (*iter).name, core);
 			item->setOn((*iter).subscribed);
-			item->setText(CONFW_STATE, ((*iter).subscribed == true) ? "1" : "0");
 			item->setText(CONFW_ID, (*iter).id);
 			parentItem->setOpen(true);
 		}

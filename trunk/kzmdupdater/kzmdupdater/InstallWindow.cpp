@@ -63,17 +63,40 @@ void InstallWindow::initGUI() {
 void InstallWindow::abortButtonClicked() {
 }
 
+void InstallWindow::gotDepInfo(QValueList<Package> installs,
+							   QValueList<Package> updates,
+							   QValueList<Package> removals) {
+	QString text;
+	QValueList<Package>::iterator iter;
+	
+	text = i18n("The following packages most also be installed/updated:\n");
+	for (iter = installs.begin(); iter != installs.end(); iter++) {
+		text += (*iter).name;
+		text += " (I)\n";
+	}
+	for (iter = updates.begin(); iter != updates.end(); iter++) {
+		text += (*iter).name;
+		text += " (U)\n";
+	}
+	for (iter = removals.begin(); iter != removals.end(); iter++) {
+		text += (*iter).name;
+		text += " (R)\n";
+	}
+	if (KMessageBox::questionYesNo(this, text, i18n("Install Other Packages?")) == 0) {
+		connect(core, SIGNAL(progress(Progress)), this, SLOT(progress(Progress)));
+		connect(core, SIGNAL(transactionFinished(int)), this, SLOT(finished(int)));	
+		core->runTransaction();
+	} else {
+		core->cancelTransaction();
+		close();
+	}
+}
+
 void InstallWindow::progress(Progress status) {
-	static QString text;
+	QString text;
 	static bool isDownload = false; //We will keep track of this to tell us
 									//if we are watching a download or not
 	static bool watchingPackage = false; 
-
-	/* QString text will only be blank the first time, because its static
-	   So, we use it to test if this is our first run
-	*/
-	if (text.isEmpty())
-		transactionList->setText("");
 
 	if (isDownload) {
 		progressBar->advance((int)status.percent);
@@ -95,8 +118,8 @@ void InstallWindow::progress(Progress status) {
 			transactionList->setText(text + "\n" + status.name + " Is Being Installed...");
 			watchingPackage = true;
 		}
-		if (status.percent >= 100) {
-			text =transactionList->text();
+		if (status.percent >= 99) {
+			text = transactionList->text();
 			transactionList->setText(text + " Done.");
 			watchingPackage = false;
 //			isDownload = true; //Next
@@ -123,8 +146,9 @@ void InstallWindow::setPackageList(QValueList<Package> installs,
 }
 
 void InstallWindow::startUpdate() {
-	core->runTransaction(installList, updateList, removeList);	
-	connect(core, SIGNAL(progress(Progress)), this, SLOT(progress(Progress)));
-	connect(core, SIGNAL(transactionFinished(int)), this, SLOT(finished(int)));
+	core->startTransaction(installList, updateList, removeList);	
+	connect(core, SIGNAL(realPackages(QValueList<Package>, QValueList<Package>, 
+			QValueList<Package>)), this, SLOT(gotDepInfo(QValueList<Package>,
+			QValueList<Package>, QValueList<Package>)));
 	transactionList->setText(i18n("Resolving Dependencies..."));
 }

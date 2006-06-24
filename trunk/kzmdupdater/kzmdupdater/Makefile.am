@@ -16,10 +16,10 @@ kzmdupdater_LDFLAGS = $(KDE_RPATH) $(all_libraries)
 kzmdupdater_LDADD   = $(LIB_KFILE)
 
 # which sources should be compiled for kzmdupdater
-kzmdupdater_SOURCES = main.cpp  SUSEUpdater.cpp HeaderWidget.cpp ConfigWindow.cpp InstallWindow.cpp ServerDialog.cpp xmlrpciface.cpp ZmdUpdaterCore.cpp SUSEUpdaterIface.skel ProgressDialog.cpp
+kzmdupdater_SOURCES = main.cpp  SUSEUpdater.cpp HeaderWidget.cpp ConfigWindow.cpp InstallWindow.cpp ServerDialog.cpp xmlrpciface.cpp ZmdUpdaterCore.cpp SUSEUpdaterIface.skel ProgressDialog.cpp CatalogListItem.cpp
 
 # these are the headers for your project that won't be installed
-noinst_HEADERS = SUSEUpdater.h HeaderWidget.h ConfigWindow.h InstallWindow.h UpdaterCore.h ServerDialog.h xmlrpciface.h ZmdUpdaterCore.h SUSEUpdaterIface.h ProgressDialog.h
+noinst_HEADERS = SUSEUpdater.h HeaderWidget.h ConfigWindow.h InstallWindow.h UpdaterCore.h ServerDialog.h xmlrpciface.h ZmdUpdaterCore.h SUSEUpdaterIface.h ProgressDialog.h CatalogListItem.h
 
 
 # let automoc handle all of the meta source files (moc)

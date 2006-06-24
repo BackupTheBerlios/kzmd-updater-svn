@@ -52,6 +52,7 @@ class InstallWindow : public QWidget {
 
 		void progress(Progress);
 		void finished(int);
+		void gotDepInfo(QValueList<Package>, QValueList<Package>, QValueList<Package>);
 
 
 	private:

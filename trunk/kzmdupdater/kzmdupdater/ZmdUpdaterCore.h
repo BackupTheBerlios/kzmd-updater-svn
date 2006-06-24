@@ -27,7 +27,7 @@
 #define DEBUG
 
 #define SERVER_ADDY "http://127.0.0.1:2544/zmd/RPC2"
-#define CHECK_INTERVAL (10000)  //10 seconds
+#define CHECK_INTERVAL (1000)  //1 second
 
 #define IS_ZMD_BUSY if (!pollID.isEmpty()) return
 #define ZMD_BLOCK(ID) (pollID = (ID))
@@ -56,9 +56,10 @@ class ZmdUpdaterCore : public UpdaterCore {
 		void getPatches(Catalog);
 		void getUpdates(Catalog);
 
-		void runTransaction(QValueList<Package> installList, 
+		void startTransaction(QValueList<Package> installList, 
 							QValueList<Package> updateList,
 							QValueList<Package> removeList);
+		void runTransaction();
 
 		void cancelTransaction();
 

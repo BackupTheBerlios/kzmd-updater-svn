@@ -124,9 +124,20 @@ class UpdaterCore : public QObject {
 		virtual void getUpdates(Catalog) = 0;
 
 		/**
-			BROKEN -- This api is in flux.
+			Deliver the package list to the updater and start dep resolving.
+			Signal realPackages delivers the results for user confirmation
 		**/
-		virtual void runTransaction(QValueList<Package> installList, QValueList<Package> updateList, QValueList<Package> removeList) = 0;
+
+		virtual void startTransaction(QValueList<Package> installList, QValueList<Package> updateList, QValueList<Package> removeList) = 0;
+
+		/**
+
+			Actually starts the transaction. Results are delivered via progress.
+			Signal transactionFinished delivers the actual results. 
+
+		**/
+
+		virtual void runTransaction() = 0;
 
 		/**
 			Cancel current transaction.

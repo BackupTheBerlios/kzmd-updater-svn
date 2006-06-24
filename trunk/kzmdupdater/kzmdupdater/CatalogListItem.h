@@ -17,62 +17,24 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef _CONFIG_WINDOW_
-#define _CONFIG_WINDOW_
-
-#include <kpushbutton.h>
+#ifndef _CATALOG_LIST_ITEM_H_
+#define _CATALOG_LIST_ITEM_H_
 
 #include <qlistview.h>
-#include <qvbox.h>
-#include <qlayout.h>
-
-#include "HeaderWidget.h"
 #include "UpdaterCore.h"
 
-
-//Column IDs for the configure window
-enum { CONFW_NAME=0, CONFW_URI, CONFW_ID };
-
-class ConfigWindow : public QWidget {
-
-	Q_OBJECT
+class CatalogListItem : public QCheckListItem {
 
 	public:
 
-		ConfigWindow(UpdaterCore *_core, QWidget *parent=0);
-		~ConfigWindow();
-
-
-	private slots:
-
-		void addButtonClicked();
-		void removeButtonClicked();
-
-
-		//Core Signals
-
-		void gotServiceList(QValueList<Service>);
-		void gotCatalogList(QValueList<Catalog>);
-		void addedServer(QString server, int);
-		void removedServer(QString server, int);
-
+		CatalogListItem(QListViewItem *parent, const QString &, UpdaterCore *_core);
 
 	private:
 
-		void initGUI();
-		void initList();
-
-		QVBoxLayout	*mainLayout;
-
-		HeaderWidget *header;
-		QListView *serverList;
-		KPushButton *addButton;
-		KPushButton *removeButton;
-		KPushButton *closeButton;
-
-		QHBoxLayout *buttonLayout;
+		void stateChange(bool);
 
 		UpdaterCore *core;
+
 };
 
 #endif

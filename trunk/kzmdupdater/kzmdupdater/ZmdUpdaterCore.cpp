@@ -167,6 +167,7 @@ void ZmdUpdaterCore::subscribeCatalog(Catalog cat) {
 
 void ZmdUpdaterCore::unsubscribeCatalog(Catalog cat) {
 	IS_ZMD_BUSY;
+
 	QValueList<QVariant> argList;
 	argList.append(cat.id);
 	argList.append(false);
@@ -289,7 +290,7 @@ void ZmdUpdaterCore::patchData(const QValueList<QVariant>& data, const QVariant&
  *
  ********************************************************************/
 
-void ZmdUpdaterCore::runTransaction(QValueList<Package> installList, 
+void ZmdUpdaterCore::startTransaction(QValueList<Package> installList, 
 									QValueList<Package> updateList,
 									QValueList<Package> removeList) {
 
@@ -332,6 +333,26 @@ void ZmdUpdaterCore::runTransaction(QValueList<Package> installList,
 	server->call("zmd.packsys.verify", QValueList<QVariant>(), 
 	this, SLOT(transactData(const QValueList<QVariant>&, const QVariant&)),
 	this, SLOT(faultData(int, const QString&, const QVariant&)));
+}
+
+void ZmdUpdaterCore::runTransaction() {
+	
+	QValueList<QVariant> argList;
+
+
+	cout << "Running transaction" << endl;
+	
+	argList.append(packagesToInstall);
+	argList.append(packagesToUpdate);
+	argList.append(packagesToRemove);
+	argList.append(0); //Run it, no dry run
+
+	server->call("zmd.packsys.transact", argList, 
+	this, SLOT(transactData(const QValueList<QVariant>&, const QVariant&)),
+	this, SLOT(faultData(int, const QString&, const QVariant&)));
+	packagesToInstall.clear();
+	packagesToRemove.clear();
+	packagesToUpdate.clear();
 }
 
 void ZmdUpdaterCore::transactData(const QValueList<QVariant>& data, const QVariant &t) {
@@ -388,18 +409,8 @@ void ZmdUpdaterCore::transactData(const QValueList<QVariant>& data, const QVaria
 			removals = mapListToPackageList(packagesToRemove);
 			updates = mapListToPackageList(packagesToUpdate);
 			emit(realPackages(installs, updates, removals));
-
-			cout << "Running transaction" << endl;
-
-			argList.append(0); //Run it, no dry run
-
-			server->call("zmd.packsys.transact", argList, 
-			this, SLOT(transactData(const QValueList<QVariant>&, const QVariant&)),
-			this, SLOT(faultData(int, const QString&, const QVariant&)));
 			verification = true; //next time through we do the resolving again
-			packagesToInstall.clear();
-			packagesToRemove.clear();
-			packagesToUpdate.clear();
+
 		}
 
 
@@ -438,7 +449,7 @@ void ZmdUpdaterCore::timerData(const QValueList<QVariant>& data, const QVariant 
 		status.name = map["name"].toString();
 #ifdef DEBUG
 		cout << "Timer data drop: " << status.percent << endl;
-		cout << "Name: " << status.name << endl;
+		cout << "Name: " << map["message"].toList().front().toString() << endl;
 #endif
 		emit(progress(status));
 		if (map["status"].toInt() > 1) {
@@ -446,11 +457,10 @@ void ZmdUpdaterCore::timerData(const QValueList<QVariant>& data, const QVariant 
 			timer->stop();
 			
 			if (tempServiceName != "") {
-#ifdef DEBUG
-				cout << "Just added a service: " << tempServiceName << endl;
-#endif
 				emit(serviceAdded(tempServiceName, ERROR_NONE));
 				tempServiceName = "";
+			} else {
+				emit(transactionFinished(ERROR_NONE));
 			}
 		}
 	}

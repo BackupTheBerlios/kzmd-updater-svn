@@ -170,6 +170,7 @@ void SUSEUpdater::checkUpdates() {
 	connect(core, SIGNAL(patchListing(QValueList<Patch>)), this, SLOT(gotPatchListing(QValueList<Patch>)));
 
 	core->getCatalogs(); //this will return to gotCatalogs
+	updateList->clear();
 }
 
 
@@ -202,7 +203,7 @@ void SUSEUpdater::gotUpdateListing(QValueList<Package> packageList) {
 	} else {
 		trayApplet->setPixmap(UserIcon(TRAY_ICON_GREEN));
 	}
-	updateList->clear();	
+
 	for (iter = packageList.begin(); iter != packageList.end(); iter++) {
 		newItem = new QCheckListItem(updateList, (*iter).name, QCheckListItem::CheckBox);
 
