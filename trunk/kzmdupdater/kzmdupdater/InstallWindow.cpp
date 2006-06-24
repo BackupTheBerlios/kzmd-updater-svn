@@ -21,6 +21,7 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 
+#include <qmessagebox.h>
 #include <qvariant.h>
 
 
@@ -82,7 +83,8 @@ void InstallWindow::gotDepInfo(QValueList<Package> installs,
 		text += (*iter).name;
 		text += " (R)\n";
 	}
-	if (KMessageBox::questionYesNo(this, text, i18n("Install Other Packages?")) == KMessageBox::Yes) {
+	if (QMessageBox::question(this, i18n("Install Other Packages?"), text,
+		QMessageBox::Ok | QMessageBox::Default, QMessageBox::Cancel | QMessageBox::Cancel) == QMessageBox::Ok) {
 		connect(core, SIGNAL(progress(Progress)), this, SLOT(progress(Progress)));
 		connect(core, SIGNAL(transactionFinished(int)), this, SLOT(finished(int)));	
 		core->runTransaction();
