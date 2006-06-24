@@ -32,7 +32,7 @@
 
 #define TRAY_ICON_GREEN "suse_green.png"
 #define TRAY_ICON_RED	"suse_red.png"
-#define TIMER_INTERVAL	(100*60*15) //1000 ms * 60 s * 5 min = 15 min
+#define TIMER_INTERVAL	(1000*60*15) //1000 ms * 60 s * 5 min = 15 min
 
 //Enum for updateListing
 enum { COLUMN_NAME, COLUMN_OLD_VERSION, COLUMN_NEW_VERSION,
@@ -166,8 +166,6 @@ SUSEUpdater::~SUSEUpdater() {
 
 void SUSEUpdater::checkUpdates() {
 
-	updateList->clear();
-
 	connect(core, SIGNAL(catalogListing(QValueList<Catalog>)), this, SLOT(gotCatalogListing(QValueList<Catalog>)));
 	connect(core, SIGNAL(updateListing(QValueList<Package>)), this, SLOT(gotUpdateListing(QValueList<Package>)));
 	connect(core, SIGNAL(patchListing(QValueList<Patch>)), this, SLOT(gotPatchListing(QValueList<Patch>)));
@@ -186,6 +184,8 @@ void SUSEUpdater::slotExit() {
 
 void SUSEUpdater::gotCatalogListing(QValueList<Catalog> catalogs) {
 	QValueList<Catalog>::iterator iter;
+
+	updateList->clear();
 
 	if (catalogs.size() <= 0)
 		return;

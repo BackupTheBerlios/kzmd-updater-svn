@@ -17,13 +17,14 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include "InstallWindow.h"
 #include <klocale.h>
 #include <kmessagebox.h>
 
 #include <qmessagebox.h>
 #include <qvariant.h>
 
+#include "InstallWindow.h"
+#include "DependencyDialog.h"
 
 InstallWindow::InstallWindow(UpdaterCore *_core, QWidget *parent) : 
 	QWidget(parent,0,Qt::WDestructiveClose) {
@@ -69,6 +70,7 @@ void InstallWindow::gotDepInfo(QValueList<Package> installs,
 							   QValueList<Package> removals) {
 	QString text;
 	QValueList<Package>::iterator iter;
+	DependencyDialog diag;
 	
 	text = i18n("The following packages most also be installed/updated:\n");
 	for (iter = installs.begin(); iter != installs.end(); iter++) {
@@ -83,8 +85,9 @@ void InstallWindow::gotDepInfo(QValueList<Package> installs,
 		text += (*iter).name;
 		text += " (R)\n";
 	}
-	if (QMessageBox::question(this, i18n("Install Other Packages?"), text,
-		QMessageBox::Ok | QMessageBox::Default, QMessageBox::Cancel | QMessageBox::Cancel) == QMessageBox::Ok) {
+	diag.setTitle(i18n("Other Packages..."));
+	diag.setText(text);
+	if (diag.exec() == QDialog::Accepted) {
 		connect(core, SIGNAL(progress(Progress)), this, SLOT(progress(Progress)));
 		connect(core, SIGNAL(transactionFinished(int)), this, SLOT(finished(int)));	
 		core->runTransaction();
