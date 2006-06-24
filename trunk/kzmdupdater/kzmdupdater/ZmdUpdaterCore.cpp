@@ -429,8 +429,8 @@ void ZmdUpdaterCore::timerSlot() {
 
 void ZmdUpdaterCore::timerData(const QValueList<QVariant>& data, const QVariant &t) {
 
-	if (data.front().canCast(QVariant::List) == true) {
-		QMap<QString, QVariant> map = data.front().toList().front().toMap();
+	if (data.front().canCast(QVariant::Map) == true) {
+		QMap<QString, QVariant> map = data.front().toMap();
 		Progress status;
 		status.percent = map["percent"].toDouble();
 		status.expectedTime = map["expected_time"].toInt();
