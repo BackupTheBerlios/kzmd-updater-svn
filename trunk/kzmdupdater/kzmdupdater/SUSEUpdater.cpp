@@ -169,7 +169,7 @@ void SUSEUpdater::checkUpdates() {
 	connect(core, SIGNAL(catalogListing(QValueList<Catalog>)), this, SLOT(gotCatalogListing(QValueList<Catalog>)));
 	connect(core, SIGNAL(updateListing(QValueList<Package>)), this, SLOT(gotUpdateListing(QValueList<Package>)));
 	connect(core, SIGNAL(patchListing(QValueList<Patch>)), this, SLOT(gotPatchListing(QValueList<Patch>)));
-
+	updateList->clear();
 	core->getCatalogs(); //this will return to gotCatalogs
 }
 
@@ -184,8 +184,6 @@ void SUSEUpdater::slotExit() {
 
 void SUSEUpdater::gotCatalogListing(QValueList<Catalog> catalogs) {
 	QValueList<Catalog>::iterator iter;
-
-	updateList->clear();
 
 	if (catalogs.size() <= 0)
 		return;
@@ -218,6 +216,7 @@ void SUSEUpdater::gotUpdateListing(QValueList<Package> packageList) {
 		newItem->setText(COLUMN_CATALOG, (*iter).catalog);
 	}
 	updateList->setSelected(updateList->firstChild(), true);
+	disconnect(core, SIGNAL(updateListing(QValueList<Package>)), this, SLOT(gotUpdateListing(QValueList<Package>)));
 
 }
 
@@ -243,7 +242,7 @@ void SUSEUpdater::gotPatchListing(QValueList<Patch> patchList) {
 		newItem->setText(COLUMN_CATALOG, (*iter).catalog);	
 	}
 	updateList->setSelected(updateList->firstChild(), true);
-
+	disconnect(core, SIGNAL(patchListing(QValueList<Patch>)), this, SLOT(gotpatchListing(QValueList<Patch>)));
 }
 
 /*
