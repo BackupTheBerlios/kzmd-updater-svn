@@ -449,7 +449,6 @@ void ZmdUpdaterCore::timerData(const QValueList<QVariant>& data, const QVariant 
 		status.name = map["name"].toString();
 #ifdef DEBUG
 		cout << "Timer data drop: " << status.percent << endl;
-		cout << "Name: " << map["message"].toList().front().toString() << endl;
 #endif
 		emit(progress(status));
 		if (map["status"].toInt() > 1) {
