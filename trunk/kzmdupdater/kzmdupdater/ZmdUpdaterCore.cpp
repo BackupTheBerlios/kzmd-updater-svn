@@ -348,20 +348,23 @@ void ZmdUpdaterCore::transactData(const QValueList<QVariant>& data, const QVaria
 		list = map["installs"].toList();
 		for (QValueList<QVariant>::iterator listIter = list.begin();
 			 listIter != list.end(); listIter++) {
-
-			packagesToInstall.append(*listIter);
+			//In all these cases, we get a struct (QMAP) with an array explaining
+			//the reason for including a package and then the package itself
+			//we only want the package
+			packagesToInstall.append(((*listIter).toMap())["resolveable"]);
 		}
 		list = map["upgrades"].toList();
 		for (QValueList<QVariant>::iterator listIter = list.begin();
 			 listIter != list.end(); listIter++) {
 
-			packagesToUpdate.append(*listIter);
+			packagesToUpdate.append(((*listIter).toMap())["resolveable"]);
+			
 		}
 		list = map["removals"].toList();
 		for (QValueList<QVariant>::iterator listIter = list.begin();
 			 listIter != list.end(); listIter++) {
 
-			packagesToRemove.append(*listIter);
+			packagesToRemove.append(((*listIter).toMap())["resolveable"]);
 		}
 
 		argList.append(packagesToInstall);
