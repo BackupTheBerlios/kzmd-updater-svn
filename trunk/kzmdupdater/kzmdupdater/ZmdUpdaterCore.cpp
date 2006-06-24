@@ -406,7 +406,7 @@ void ZmdUpdaterCore::transactData(const QValueList<QVariant>& data, const QVaria
 	} else { //or else we got two IDs for transact
 		//right now are are ignoring the downloading part
 		cout << "starting poll" << endl;
-		ZMD_BLOCK(data.last().toString());
+		ZMD_BLOCK(data.front().toList().last().toString());
 		timer->start(CHECK_INTERVAL,false);
 	}
 }
