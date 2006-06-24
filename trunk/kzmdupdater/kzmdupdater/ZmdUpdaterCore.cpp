@@ -329,29 +329,30 @@ void ZmdUpdaterCore::transactData(const QValueList<QVariant>& data, const QVaria
 	static bool verification = true;
 	QValueList<QVariant> argList;
 
-	// Is the first member of the arg list a list? If so, we just got dep info
-	if ((data.front()).canCast(QVariant::List) == true) {
+	// Is the first member of the arg list a map? If so, we just got verification/dep info
+	if ((data.front()).canCast(QVariant::Map) == true) {
+
+		QMap<QString,QVariant> map;
 		QValueList<QVariant> list;
-		
-		for (QValueList<QVariant>::const_iterator iter = data.begin(); iter != data.end();
-			 iter++) {
 
-			list = (*iter).toList().front().toList();
-			QValueList<QVariant>::iterator listIter = list.begin();
+		map = data.front().toMap();
+		list = map["installs"].toList();
+		for (QValueList<QVariant>::iterator listIter = list.begin();
+			 listIter != list.end(); listIter++) {
 
-			for (int count = 0; listIter != list.end(); listIter++, count++) {
-				switch(count) {
-					case 0:
-						packagesToInstall.append(*listIter);
-						break;
-					case 1:
-						packagesToUpdate.append(*listIter);
-						break;
-					case 2:
-						packagesToRemove.append(*listIter);
-						break;
-				}
-			}
+			packagesToInstall.append(*listIter);
+		}
+		list = map["upgrades"].toList();
+		for (QValueList<QVariant>::iterator listIter = list.begin();
+			 listIter != list.end(); listIter++) {
+
+			packagesToUpdate.append(*listIter);
+		}
+		list = map["removals"].toList();
+		for (QValueList<QVariant>::iterator listIter = list.begin();
+			 listIter != list.end(); listIter++) {
+
+			packagesToRemove.append(*listIter);
 		}
 
 		argList.append(packagesToInstall);
