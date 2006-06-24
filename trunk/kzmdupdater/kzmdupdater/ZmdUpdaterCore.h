@@ -78,7 +78,7 @@ class ZmdUpdaterCore : public UpdaterCore {
 		void timerData(const QValueList<QVariant>&, const QVariant&);
 
 	private:
-		QValueList<Package> mapListToPackageList(const QValueList<QVariant>);
+		QValueList<Package> mapListToPackageList(QValueList<QVariant>);
 		//These really need to be stored somewhere else. Kwallet?
 		QString username;
 		QString password;

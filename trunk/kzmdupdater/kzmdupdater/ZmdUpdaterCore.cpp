@@ -235,17 +235,15 @@ void ZmdUpdaterCore::getUpdates(Catalog cat) {
 void ZmdUpdaterCore::updateData(const QValueList<QVariant>& data, const QVariant&t) {
 	QValueList<Package> packageList;
 	
-	packageList = mapListToPackageList(data);
+	packageList = mapListToPackageList(data.front().toList());
 	emit(updateListing(packageList));
 }
 
-QValueList<Package> ZmdUpdaterCore::mapListToPackageList(const QValueList<QVariant> data) {
-	QValueList<QVariant> list;
-	list = (data.front().toList());
+QValueList<Package> ZmdUpdaterCore::mapListToPackageList(QValueList<QVariant> data) {
 	QValueList<QVariant>::iterator iter;
 	QValueList<Package> packageList;
 
-	for (iter = list.begin(); iter != list.end(); iter++) {
+	for (iter = data.begin(); iter != data.end(); iter++) {
 		QMap<QString, QVariant> map = (*iter).toMap();
 		Package pack;
 		pack.id = map["id"].toString();
