@@ -388,6 +388,8 @@ void ZmdUpdaterCore::transactData(const QValueList<QVariant>& data, const QVaria
 
 			cout << "Running transaction" << endl;
 
+			argList.append(0); //Run it, no dry run
+
 			server->call("zmd.packsys.transact", argList, 
 			this, SLOT(transactData(const QValueList<QVariant>&, const QVariant&)),
 			this, SLOT(faultData(int, const QString&, const QVariant&)));
