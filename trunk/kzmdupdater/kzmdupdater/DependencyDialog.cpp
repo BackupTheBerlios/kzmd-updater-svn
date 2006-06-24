@@ -32,8 +32,10 @@ void DependencyDialog::initGUI() {
 	label = new QLabel(this);
 
 	mainLayout->addWidget(label);
+	mainLayout->setMargin(10);
+	mainLayout->setSpacing(10);
 
-	buttonLayout = new QHBoxLayout(this);
+	buttonLayout = new QHBoxLayout(mainLayout);
 	buttonLayout->addWidget(okButton,0,Qt::AlignRight);
 	buttonLayout->addWidget(cancelButton,0,Qt::AlignLeft);
 	connect(okButton, SIGNAL(clicked()), this, SLOT(accept()));
