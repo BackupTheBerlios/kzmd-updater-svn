@@ -82,7 +82,7 @@ void InstallWindow::gotDepInfo(QValueList<Package> installs,
 		text += (*iter).name;
 		text += " (R)\n";
 	}
-	if (KMessageBox::questionYesNo(this, text, i18n("Install Other Packages?")) == 0) {
+	if (KMessageBox::questionYesNo(this, text, i18n("Install Other Packages?")) == KMessageBox::Yes) {
 		connect(core, SIGNAL(progress(Progress)), this, SLOT(progress(Progress)));
 		connect(core, SIGNAL(transactionFinished(int)), this, SLOT(finished(int)));	
 		core->runTransaction();

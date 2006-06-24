@@ -165,12 +165,14 @@ SUSEUpdater::~SUSEUpdater() {
 }
 
 void SUSEUpdater::checkUpdates() {
+
+	updateList->clear();
+
 	connect(core, SIGNAL(catalogListing(QValueList<Catalog>)), this, SLOT(gotCatalogListing(QValueList<Catalog>)));
 	connect(core, SIGNAL(updateListing(QValueList<Package>)), this, SLOT(gotUpdateListing(QValueList<Package>)));
 	connect(core, SIGNAL(patchListing(QValueList<Patch>)), this, SLOT(gotPatchListing(QValueList<Patch>)));
 
 	core->getCatalogs(); //this will return to gotCatalogs
-	updateList->clear();
 }
 
 
