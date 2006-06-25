@@ -162,12 +162,15 @@ void ConfigWindow::addedServer(QString server, int status) {
 
 void ConfigWindow::removeButtonClicked() {
 	Service serv;
+	ProgressDialog diag(false,this);
 
 	serv.name = serverList->currentItem()->text(CONFW_NAME);
 	serv.id = serverList->currentItem()->text(CONFW_ID);
 	serv.uri = serverList->currentItem()->text(CONFW_URI);
 	core->removeService(serv);
 	connect(core, SIGNAL(serviceRemoved(QString,int)), this, SLOT(removedServer(QString,int)));
+	diag.connectFinished(core, SIGNAL(serviceRemoved(QString,int)));
+	diag.exec();
 }
 
 void ConfigWindow::removedServer(QString server, int status) {
