@@ -65,15 +65,15 @@ void ProgressDialog::setDescription(QString text) {
 }
 
 void ProgressDialog::connectProgress(const QObject *object, const char *member) {
-	connect(object, member, this, SLOT(progress(int)));
+	connect(object, member, this, SLOT(progress(Progress)));
 }
 
 void ProgressDialog::connectFinished(const QObject *object, const char *member) {
 	connect(object, member, this, SLOT(finished(QString,int)));
 }
 
-void ProgressDialog::progress(int prog) {
-	progressBar->advance(prog);
+void ProgressDialog::progress(Progress prog) {
+	progressBar->advance((int)prog.percent);
 }
 
 void ProgressDialog::finished(QString name, int status) {

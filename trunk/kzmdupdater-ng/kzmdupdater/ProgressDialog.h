@@ -28,6 +28,8 @@
 #include <qlayout.h>
 #include <qstring.h>
 
+#include "ZmdUpdaterCore.h"
+
 /*
 
 	A "custom" progress dialog. It can either show a progress bar and respond
@@ -54,7 +56,7 @@ class ProgressDialog : public QDialog {
 
 	public slots:
 		
-		void progress(int);
+		void progress(Progress);
 		void finished(QString,int);
 
 	private:

@@ -75,15 +75,18 @@ void InstallWindow::gotDepInfo(QValueList<Package> installs,
 	text = i18n("The following packages most also be installed/updated:\n");
 	for (iter = installs.begin(); iter != installs.end(); iter++) {
 		text += (*iter).name;
-		text += " (I)\n";
+		text += "\n";
 	}
 	for (iter = updates.begin(); iter != updates.end(); iter++) {
 		text += (*iter).name;
-		text += " (U)\n";
+		text += "\n";
 	}
-	for (iter = removals.begin(); iter != removals.end(); iter++) {
-		text += (*iter).name;
-		text += " (R)\n";
+	if (removals.size() > 0) {
+		text += i18n("\nThe following packages must also be removed:\n");
+		for (iter = removals.begin(); iter != removals.end(); iter++) {
+			text += (*iter).name;
+			text += "\n";
+		}
 	}
 	diag.setTitle(i18n("Other Packages..."));
 	diag.setText(text);
