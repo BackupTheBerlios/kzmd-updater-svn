@@ -17,37 +17,16 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef _UPDATER_H_
-#define _UPDATER_H_
+#ifndef _CONSTANTS_H_
+#define _CONSTANTS_H_
 
-#include <qobject.h>
-#include <qlistview.h>
+#define PROGRAM_NAME "kzmdupdater"
+#define VERSION "0.0.1"
 
-#include "Constants.h"
+#define TIMER_INTERVAL	(1000*60*15) //1000 ms * 60 s * 5 min = 15 min
 
-//Used to set the applet state
-enum { 	APPLET_NO_UPDATES,
-		APPLET_UPDATES,
-		APPLET_CHECKING };
+#define TRAY_ICON_GREEN "suse_green.png"
+#define TRAY_ICON_RED	"suse_red.png"
 
-class Updater : public QObject {
-
-	Q_OBJECT
-
-	public:
-
-		Updater() : QObject() {}
-
-	signals:
-
-		void updateApplet(int);
-
-	protected slots:
-
-		virtual void configureUpdater() = 0;
-		virtual void startInstall() = 0;
-		virtual void populateUpdateList(QListView*) = 0;
-};
 
 #endif
-

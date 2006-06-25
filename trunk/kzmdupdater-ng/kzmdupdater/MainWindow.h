@@ -30,12 +30,9 @@
 #include <qtimer.h>
 
 #include "Updater.h"
+#include "Constants.h"
 #include "HeaderWidget.h"
 
-#define TIMER_INTERVAL	(1000*60*15) //1000 ms * 60 s * 5 min = 15 min
-
-#define TRAY_ICON_GREEN "suse_green.png"
-#define TRAY_ICON_RED	"suse_red.png"
 
 
 //Define the columns of the update list. These must be set

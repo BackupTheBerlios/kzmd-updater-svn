@@ -22,12 +22,11 @@
 #include <kdebug.h>
 
 #include "UpdaterApplication.h"
-
-#define VERSION "0.0.1"
+#include "Constants.h"
 
 int main(int argc, char **argv) {
 
-	KAboutData about("kzmdupdater", "kzmdupdater", VERSION, "SUSE Updater");
+	KAboutData about(PROGRAM_NAME, PROGRAM_NAME, VERSION, "SUSE Updater");
 	KCmdLineArgs::init(argc, argv, &about);
 	KUniqueApplication::addCmdLineOptions();
 
