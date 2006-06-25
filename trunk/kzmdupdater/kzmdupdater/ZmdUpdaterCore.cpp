@@ -246,6 +246,10 @@ QValueList<Package> ZmdUpdaterCore::mapListToPackageList(QValueList<QVariant> da
 	for (iter = data.begin(); iter != data.end(); iter++) {
 		QMap<QString, QVariant> map = (*iter).toMap();
 		Package pack;
+
+		if (map["id"].toString() == "") //bad package, try again
+			continue;
+
 		pack.id = map["id"].toString();
 		pack.name = map["name"].toString();
 		pack.version = map["version"].toString();
@@ -421,7 +425,12 @@ void ZmdUpdaterCore::transactData(const QValueList<QVariant>& data, const QVaria
 }
 
 void ZmdUpdaterCore::cancelTransaction() {
-
+	//Currently just clear the package lists and stop the poll
+	packagesToInstall.clear();
+	packagesToUpdate.clear();
+	packagesToRemove.clear();
+	timer->stop();
+	ZMD_CLEAR;
 }
 
 /********************************************************************
@@ -454,7 +463,11 @@ void ZmdUpdaterCore::timerData(const QValueList<QVariant>& data, const QVariant 
 			timer->stop();
 			
 			if (tempServiceName != "") {
-				emit(serviceAdded(tempServiceName, ERROR_NONE));
+				if (map["status"].toInt() == 4)
+					emit(serviceAdded(tempServiceName, ERROR_INVALID));
+				else 
+					emit(serviceAdded(tempServiceName, ERROR_NONE));
+
 				tempServiceName = "";
 			} else {
 				emit(transactionFinished(ERROR_NONE));
