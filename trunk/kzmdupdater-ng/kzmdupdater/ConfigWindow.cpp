@@ -82,6 +82,7 @@ void ConfigWindow::initGUI() {
 }
 
 void ConfigWindow::initList() {
+	serverList->clear();
 	core->getServices();
 	connect(core, SIGNAL(serviceListing(QValueList<Service>)), this, SLOT(gotServiceList(QValueList<Service>)));
 	connect(core, SIGNAL(catalogListing(QValueList<Catalog>)), this, SLOT(gotCatalogList(QValueList<Catalog>)));

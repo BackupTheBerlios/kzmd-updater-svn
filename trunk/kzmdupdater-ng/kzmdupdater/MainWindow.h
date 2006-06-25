@@ -67,10 +67,10 @@ class MainWindow : public QWidget {
 	public slots:
 
 		void appletState(int);
+		void checkUpdates();
 
 	private slots:
 
-		void checkUpdates();
 		void slotExit();
 		void slotPackageSelected(QListViewItem *packageSelected);
 		void configButtonClicked();

@@ -20,6 +20,7 @@
 #include "UpdaterApplication.h"
 
 UpdaterApplication::UpdaterApplication() : KUniqueApplication(true,true,false) {
+
 	main = new MainWindow();
 	setMainWidget(main);
 	//We need to fetch this option from a config file later on
@@ -29,6 +30,8 @@ UpdaterApplication::UpdaterApplication() : KUniqueApplication(true,true,false) {
 	connect(main, SIGNAL(startInstall()), updater, SLOT(startInstall()));
 	connect(main, SIGNAL(configureUpdater()), updater, SLOT(configureUpdater()));
 	connect(main, SIGNAL(populateUpdateList(QListView*)), updater, SLOT(populateUpdateList(QListView*)));
+	main->checkUpdates();
+
 }
 
 UpdaterApplication::~UpdaterApplication() {

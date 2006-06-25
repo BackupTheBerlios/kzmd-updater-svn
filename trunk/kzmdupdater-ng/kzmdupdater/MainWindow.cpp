@@ -41,7 +41,6 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent) {
 	timer->start(TIMER_INTERVAL,false);
 	initGUI();
 	initMenu();
-	checkUpdates();
 }
 
 //Build GUI, setup system tray and hide GUI initially.
