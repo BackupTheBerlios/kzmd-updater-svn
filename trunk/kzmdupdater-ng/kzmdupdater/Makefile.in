@@ -403,9 +403,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 #>- 	      exit 1;; \
 #>- 	  esac; \
 #>- 	done; \
-#>- 	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign  kzmdupdater/Makefile'; \
+#>- 	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  kzmdupdater/Makefile'; \
 #>- 	cd $(top_srcdir) && \
-#>- 	  $(AUTOMAKE) --foreign  kzmdupdater/Makefile
+#>- 	  $(AUTOMAKE) --gnu  kzmdupdater/Makefile
 #>+ 12
 	@for dep in $?; do \
 	  case '$(am__configure_deps)' in \
@@ -415,9 +415,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign  kzmdupdater/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  kzmdupdater/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --foreign  kzmdupdater/Makefile
+	  $(AUTOMAKE) --gnu  kzmdupdater/Makefile
 	cd $(top_srcdir) && perl admin/am_edit kzmdupdater/Makefile.in
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
@@ -799,7 +799,7 @@ clean-metasources:
 	-rm -f  ServerDialog.moc.cpp InstallWindow.moc.cpp ProgressDialog.moc.cpp DependencyDialog.moc.cpp ZmdUpdater.moc.cpp ZmdUpdaterCore.moc.cpp Updater.moc.cpp xmlrpciface.moc.cpp MainWindow.moc.cpp HeaderWidget.moc.cpp ConfigWindow.moc.cpp
 
 #>+ 2
-KDE_DIST=kzmdupdater.desktop Makefile.in kzmdupdater Makefile.am 
+KDE_DIST=kzmdupdater.desktop Makefile.in Makefile.am 
 
 #>+ 2
 docs-am:
@@ -814,9 +814,9 @@ force-reedit:
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign  kzmdupdater/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  kzmdupdater/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --foreign  kzmdupdater/Makefile
+	  $(AUTOMAKE) --gnu  kzmdupdater/Makefile
 	cd $(top_srcdir) && perl admin/am_edit kzmdupdater/Makefile.in
 
 

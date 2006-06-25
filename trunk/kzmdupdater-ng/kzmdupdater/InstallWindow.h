@@ -51,6 +51,7 @@ class InstallWindow : public QWidget {
 		//Core Signals
 
 		void progress(Progress);
+		void download(Progress);
 		void finished(int);
 		void gotDepInfo(QValueList<Package>, QValueList<Package>, QValueList<Package>);
 

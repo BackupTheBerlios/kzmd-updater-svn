@@ -103,6 +103,9 @@ class ZmdUpdaterCore : public QObject {
 		**/
 		void progress(Progress);
 
+		//Special progress signal for the download
+		void downloadProgress(Progress);
+
 	private slots:
 
 		void catalogData(const QValueList<QVariant>&, const QVariant&);
@@ -126,6 +129,7 @@ class ZmdUpdaterCore : public QObject {
 		//Holds current pollID
 		// Right now we can only watch one thing
 		QString pollID;
+		QString downloadID; //special pollID just for the download
 
 		//Holds the name of the server we just added/removed
 		//I don't like this, but I am not sure at the moment
@@ -142,14 +146,14 @@ class Progress {
 
 	public:
 
-		Progress() : expectedTime(0), remainingTime(0), percent(0.0L), download(false) {}
+		Progress() : expectedTime(0), remainingTime(0), status(0), percent(0.0L) {}
 
 		QString name;
+		int status;
 		int expectedTime;
 		int remainingTime;
 		double percent;	
 		QValueList<QString> messages;
-		bool download; //true if this is a download
 };
 
 class Service {

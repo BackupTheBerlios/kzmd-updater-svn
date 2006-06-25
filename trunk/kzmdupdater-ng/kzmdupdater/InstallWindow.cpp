@@ -88,6 +88,7 @@ void InstallWindow::gotDepInfo(QValueList<Package> installs,
 	diag.setTitle(i18n("Other Packages..."));
 	diag.setText(text);
 	if (diag.exec() == QDialog::Accepted) {
+		connect(core, SIGNAL(download(Progress)), this, SLOT(downloadProgress(Progress)));
 		connect(core, SIGNAL(progress(Progress)), this, SLOT(progress(Progress)));
 		connect(core, SIGNAL(transactionFinished(int)), this, SLOT(finished(int)));	
 		core->runTransaction();
@@ -97,37 +98,41 @@ void InstallWindow::gotDepInfo(QValueList<Package> installs,
 	}
 }
 
-void InstallWindow::progress(Progress status) {
-	QString text;
-	static bool isDownload = false; //We will keep track of this to tell us
-									//if we are watching a download or not
-	static bool watchingPackage = false; 
+void InstallWindow::download(Progress status) {
+	static bool watchingPackage = false;
+	static bool alreadyDone = false;
 
-	if (isDownload) {
+	if (status.status > 0) {
 		progressBar->advance((int)status.percent);
-		if (watchingPackage == false) {
-			text = transactionList->text();
-			transactionList->setText(text + "\n" + status.name + " Is Downloading...");
+		if (watchingPackage == false && status.status == 1) {
+			transactionList->setText(transactionList->text() + "\n" + status.name + " Is Downloading...");
+			watchingPackage = true;
+			alreadyDone = false;
+		}
+		if (status.status == 2 && alreadyDone == false) {
+			transactionList->setText(transactionList->text() + "Done");
+			alreadyDone = true;
+		}
+	}
+}
+
+void InstallWindow::progress(Progress status) {
+	static bool watchingPackage = false; 
+	static bool alreadyDone = false;
+
+	if (status.status > 0) {
+	//if the transaction has started
+		progressBar->advance((int)status.percent);
+		if (watchingPackage == false && status.status == 1) {
+			//if we are not already watching a package and the transaction is running
+			transactionList->setText(transactionList->text() + "\n" + status.name + " Is Being Installed...");
 			watchingPackage = true;
 		}
-		if (status.percent >= 100) {
-			text =transactionList->text();
-			transactionList->setText(text + " Done.");
+		if (status.status ==2 && alreadyDone == false) {
+			//if the transaction is done and we have not already marked it done
+			transactionList->setText(transactionList->text() + " Done.");
 			watchingPackage = false;
-			isDownload = false;
-		}
-	} else {
-		progressBar->advance((int)status.percent);
-		if (watchingPackage == false) {
-			text = transactionList->text();
-			transactionList->setText(text + "\n" + status.name + " Is Being Installed...");
-			watchingPackage = true;
-		}
-		if (status.percent >= 99) {
-			text = transactionList->text();
-			transactionList->setText(text + " Done.");
-			watchingPackage = false;
-//			isDownload = true; //Next
+			alreadyDone = true;
 		}	
 	}
 }

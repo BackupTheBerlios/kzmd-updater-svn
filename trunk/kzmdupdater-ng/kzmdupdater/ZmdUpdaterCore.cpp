@@ -418,8 +418,8 @@ void ZmdUpdaterCore::transactData(const QValueList<QVariant>& data, const QVaria
 
 	} else { //or else we got two IDs for transact
 		//right now are are ignoring the downloading part
-		cout << "starting poll" << endl;
 		ZMD_BLOCK(data.front().toList().last().toString());
+		downloadID = data.front().toList().front().toString();
 		timer->start(CHECK_INTERVAL,false);
 	}
 }
@@ -443,6 +443,13 @@ void ZmdUpdaterCore::timerSlot() {
 	server->call("zmd.system.poll", pollID, 
 	this, SLOT(timerData(const QValueList<QVariant>&, const QVariant&)),
 	this, SLOT(faultData(int, const QString&, const QVariant&)));
+
+	if (downloadID.isEmpty() == false) {
+		server->call("zmd.system.poll", downloadID, 
+		this, SLOT(timerData(const QValueList<QVariant>&, const QVariant&)),
+		this, SLOT(faultData(int, const QString&, const QVariant&)));
+
+	}
 }
 
 void ZmdUpdaterCore::timerData(const QValueList<QVariant>& data, const QVariant &t) {
