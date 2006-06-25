@@ -177,6 +177,5 @@ void ConfigWindow::removedServer(QString server, int status) {
 	QListViewItem *item;
 
 	if (status == ERROR_NONE)
-		if ((item = serverList->findItem(server,CONFW_NAME)) != NULL)
-			delete item;
+		initList();
 }
