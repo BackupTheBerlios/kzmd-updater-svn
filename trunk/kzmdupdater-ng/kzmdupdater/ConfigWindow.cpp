@@ -167,9 +167,12 @@ void ConfigWindow::removeButtonClicked() {
 	serv.name = serverList->currentItem()->text(CONFW_NAME);
 	serv.id = serverList->currentItem()->text(CONFW_ID);
 	serv.uri = serverList->currentItem()->text(CONFW_URI);
-	core->removeService(serv);
-	connect(core, SIGNAL(serviceRemoved(QString,int)), this, SLOT(removedServer(QString,int)));
 	diag.connectFinished(core, SIGNAL(serviceRemoved(QString,int)));
+	diag.setTitle(i18n("Removing server..."));
+	diag.setDescription(i18n("We are removing the server you specified."));
+	connect(core, SIGNAL(serviceRemoved(QString,int)), this, SLOT(removedServer(QString,int)));
+
+	core->removeService(serv);
 	diag.exec();
 }
 
