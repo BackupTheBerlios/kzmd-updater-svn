@@ -53,7 +53,9 @@ void InstallWindow::initGUI() {
 	transactionList->setReadOnly(true);
 
 	abortButton->setMinimumHeight(30);
-	connect(abortButton, SIGNAL(clicked()), this, SLOT(close()));
+	connect(abortButton, SIGNAL(clicked()), this, SLOT(abortButtonClicked()));
+	connect(this, SIGNAL(close()), this, SLOT(abortButtonClicked()));
+
 
 	mainLayout->setMargin(10);
 	mainLayout->setSpacing(10);
@@ -63,6 +65,9 @@ void InstallWindow::initGUI() {
 }
 
 void InstallWindow::abortButtonClicked() {
+	core->cancelTransaction();
+	disconnect(this, SIGNAL(close()), this, SLOT(abortButtonClicked()));
+	close();
 }
 
 void InstallWindow::gotDepInfo(QValueList<Package> installs,

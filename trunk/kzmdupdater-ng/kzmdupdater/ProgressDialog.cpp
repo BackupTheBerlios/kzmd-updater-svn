@@ -27,6 +27,7 @@ ProgressDialog::ProgressDialog(bool progressGUI, QWidget *parent) : QDialog(pare
 	else
 		initTextGUI();
 	setModal(true);
+	connect(this, SIGNAL(close()), this, SLOT(closeEvent()));
 }
 
 ProgressDialog::~ProgressDialog() {
@@ -44,6 +45,9 @@ void ProgressDialog::initProgressGUI() {
 	mainLayout->setSpacing(10);
 	mainLayout->setMargin(10);
 	resize(300,100);
+}
+
+void ProgressDialog::closeEvent() {	
 }
 
 void ProgressDialog::initTextGUI() {
@@ -77,5 +81,6 @@ void ProgressDialog::progress(Progress prog) {
 }
 
 void ProgressDialog::finished(QString name, int status) {
+	disconnect(this, SIGNAL(close()), this, SLOT(closeEvent()));
 	close();
 }

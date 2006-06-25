@@ -58,6 +58,7 @@ class ProgressDialog : public QDialog {
 		
 		void progress(Progress);
 		void finished(QString,int);
+		void closeEvent();
 
 	private:
 
