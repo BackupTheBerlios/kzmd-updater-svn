@@ -1,0 +1,7 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=KZMD-Updater Applet
+Exec=kzmdupdater %i %m -caption "%c"
+Type=Application
+Terminal=0
+GenericName=SUSE Updater Applet
