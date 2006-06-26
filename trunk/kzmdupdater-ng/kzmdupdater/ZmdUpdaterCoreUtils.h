@@ -28,7 +28,7 @@ class Progress {
 
 		Progress() : expectedTime(-1), remainingTime(-1), status(-1), percent(-1.0L) {}
 
-		Progress& operator=(const QMap<QString,QVariant> &map) {
+		void fromMap(const QMap<QString,QVariant> &map) {
 			QValueList<QVariant>::const_iterator iter;
 
 			name = map["name"].toString();
@@ -41,7 +41,6 @@ class Progress {
 				 iter++) {
 				messages.append((*iter).toString());
 			}
-			return *this;
 		}
 
 		QString name;
@@ -59,13 +58,12 @@ class Service {
 		Service() : activated(3) {}
 
 
-		Service& operator=(const QMap<QString,QVariant> &map) {
+		void fromMap(const QMap<QString,QVariant> &map) {
 			name = map["name"].toString();
 			id = map["id"].toString();
 			uri = map["uri"].toString();
 			type = map["type"].toString();
 			activated = map["active"].toInt();
-			return *this;
 		}
 
 		QMap<QString, QVariant> toMap() {
@@ -97,13 +95,12 @@ class Catalog {
 
 		Catalog() : subscribed(3) {}
 
-		Catalog& operator=(const QMap<QString,QVariant> &map) {
+		void fromMap(const QMap<QString,QVariant> &map) {
 			name = map["name"].toString();
 			id = map["id"].toString();
 			displayName = map["display_name"].toString();
 			subscribed = map["subscribed"].toBool();
 			service = map["service"].toString();
-			return *this;
 		}
 
 		QMap<QString, QVariant> toMap() {
@@ -137,14 +134,13 @@ class Package {
 
 		Package() : installed(3) {}
 
-		Package& operator=(const QMap<QString,QVariant> &map) {
+		void fromMap(const QMap<QString,QVariant> &map) {
 			name = map["name"].toString();
 			id = map["id"].toString();
 			version = map["version"].toString();
 			catalog = map["catalog"].toString();
 			description = map["summary"].toString();
 			installed = map["installed"].toBool();
-			return *this;
 		}
 
 		QMap<QString, QVariant> toMap() {
@@ -179,7 +175,7 @@ class Patch : public Package {
 
 		Patch() : Package() {}
 
-		Package& operator=(const QMap<QString,QVariant> &map) {
+		void fromMap(const QMap<QString,QVariant> &map) {
 			name = map["name"].toString();
 			id = map["id"].toString();
 			version = map["version"].toString();
@@ -187,7 +183,6 @@ class Patch : public Package {
 			description = map["summary"].toString();
 			installed = map["installed"].toBool();
 			category = map["category"].toString();
-			return *this;
 		}
 
 		QString category;

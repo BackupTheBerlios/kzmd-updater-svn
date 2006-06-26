@@ -76,10 +76,7 @@ void ZmdUpdaterCore::addService(Service serv) {
 	IS_ZMD_BUSY;
 
 	QValueList<QVariant> data;
-	QMap<QString, QVariant> map;
-	map["name"] = QVariant(serv.name);
-	map["type"] = QVariant(serv.type);
-	map["uri"] = QVariant(serv.uri);
+	QMap<QString,QVariant> map = serv.toMap();
 	data.append(QVariant(map));
 	tempServiceName = serv.name;
 
@@ -116,11 +113,7 @@ void ZmdUpdaterCore::serviceData(const QValueList<QVariant>& data, const QVarian
 		for (iter = list.begin(); iter != list.end(); iter++) {
 			QMap<QString, QVariant> map = (*iter).toMap();
 			Service serv;
-			serv.name = map["name"].toString();
-			serv.id = map["id"].toString();
-			serv.uri = map["uri"].toString();
-			serv.type = map["type"].toString();
-			serv.activated = map["active"].toString();
+			serv.fromMap(map);
 			serviceList.append(serv);
 #ifdef DEBUG
 			cout << "Service drop: " << serv.name << endl;
@@ -195,11 +188,7 @@ void ZmdUpdaterCore::catalogData(const QValueList<QVariant>& data, const QVarian
 		for (iter = list.begin(); iter != list.end(); iter++) {
 			QMap<QString, QVariant> map = (*iter).toMap();
 			Catalog cat;
-			cat.id = map["id"].toString();
-			cat.name = map["name"].toString();
-			cat.displayName = map["display_name"].toString();
-			cat.service = map["service"].toString();
-			cat.subscribed = map["subscribed"].toBool();
+			cat.fromMap(map);
 			catalogList.append(cat);
 #ifdef DEBUG
 			cout << "Catalog Drop name: " << cat.name << endl;
@@ -250,12 +239,7 @@ QValueList<Package> ZmdUpdaterCore::mapListToPackageList(QValueList<QVariant> da
 		if (map["id"].toString() == "") //bad package, try again
 			continue;
 
-		pack.id = map["id"].toString();
-		pack.name = map["name"].toString();
-		pack.version = map["version"].toString();
-		pack.catalog = map["catalog"].toString();
-		pack.description = map["summary"].toString();
-		pack.installed = map["installed"].toBool();
+		pack.fromMap(map);
 		packageList.append(pack);
 	}
 	return packageList;
@@ -270,13 +254,7 @@ void ZmdUpdaterCore::patchData(const QValueList<QVariant>& data, const QVariant&
 	for (iter = list.begin(); iter != list.end(); iter++) {
 		QMap<QString, QVariant> map = (*iter).toMap();
 		Patch patch;
-		patch.id = map["id"].toString();
-		patch.name = map["name"].toString();
-		patch.version = map["version"].toString();
-		patch.catalog = map["catalog"].toString();
-		patch.description = map["summary"].toString();
-		patch.installed = map["installed"].toBool();
-		patch.category = map["category"].toString();
+		patch.fromMap(map);
 		patchList.append(patch);
 #ifdef DEBUG
 		cout << "Patch drop: " << patch.name << endl;
@@ -301,31 +279,19 @@ void ZmdUpdaterCore::startTransaction(QValueList<Package> installList,
 	for (QValueList<Package>::iterator iter = installList.begin();
 		 iter != installList.end(); iter++) {
 		 QMap<QString, QVariant> map;
-		 map["id"] = (*iter).id;
-		 map["name"] = (*iter).name;
-		 map["version"] = (*iter).version;
-		 map["catalog"] = (*iter).catalog;
-		 map["installed"] = (*iter).installed;
+		 map = (*iter).toMap();
 		 packagesToInstall.append(map);
 	}
 	for (QValueList<Package>::iterator iter = updateList.begin();
 		 iter != updateList.end(); iter++) {
 		 QMap<QString, QVariant> map;
-		 map["id"] = (*iter).id;
-		 map["name"] = (*iter).name;		 
-		 map["version"] = (*iter).version;
-		 map["catalog"] = (*iter).catalog;
-		 map["installed"] = (*iter).installed;
+		 map = (*iter).toMap();
 		 packagesToUpdate.append(map);
 	}
 	for (QValueList<Package>::iterator iter = removeList.begin();
 		 iter != removeList.end(); iter++) {
 		 QMap<QString, QVariant> map;
-		 map["id"] = (*iter).id;
-		 map["name"] = (*iter).name;		
-		 map["version"] = (*iter).version;
-		 map["catalog"] = (*iter).catalog;
-		 map["installed"] = (*iter).installed;
+		 map = (*iter).toMap();
 		 packagesToRemove.append(map);
 	}
 
@@ -457,10 +423,7 @@ void ZmdUpdaterCore::timerData(const QValueList<QVariant>& data, const QVariant 
 	if (data.front().canCast(QVariant::Map) == true) {
 		QMap<QString, QVariant> map = data.front().toMap();
 		Progress status;
-		status.percent = map["percent"].toDouble();
-		status.expectedTime = map["expected_time"].toInt();
-		status.remainingTime = map["remaning_time"].toInt();
-		status.name = map["name"].toString();
+		status.fromMap(map);
 #ifdef DEBUG
 		cout << "Timer data drop: " << status.percent << endl;
 #endif
