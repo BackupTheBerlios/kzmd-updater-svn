@@ -33,6 +33,9 @@ ZmdUpdater::ZmdUpdater() : Updater() {
 
 	core = new ZmdUpdaterCore(this);
 	authorizeCore();
+	connect(core, SIGNAL(updateListing(QValueList<Package>)), this, SLOT(gotUpdateListing(QValueList<Package>)));
+	connect(core, SIGNAL(patchListing(QValueList<Patch>)), this, SLOT(gotPatchListing(QValueList<Patch>)));
+
 }
 
 void ZmdUpdater::populateUpdateList(QListView *updateList) {
@@ -40,8 +43,6 @@ void ZmdUpdater::populateUpdateList(QListView *updateList) {
 	tempList = updateList;
 
 	connect(core, SIGNAL(catalogListing(QValueList<Catalog>)), this, SLOT(gotCatalogListing(QValueList<Catalog>)));
-	connect(core, SIGNAL(updateListing(QValueList<Package>)), this, SLOT(gotUpdateListing(QValueList<Package>)));
-	connect(core, SIGNAL(patchListing(QValueList<Patch>)), this, SLOT(gotPatchListing(QValueList<Patch>)));
 	core->getCatalogs(); 
 
 }
@@ -120,7 +121,6 @@ void ZmdUpdater::gotUpdateListing(QValueList<Package> packageList) {
 		newItem->setText(COLUMN_CATALOG, (*iter).catalog);
 	}
 	tempList->setSelected(tempList->firstChild(), true);
-	disconnect(core, SIGNAL(updateListing(QValueList<Package>)), this, SLOT(gotUpdateListing(QValueList<Package>)));
 
 }
 
@@ -146,7 +146,6 @@ void ZmdUpdater::gotPatchListing(QValueList<Patch> patchList) {
 		newItem->setText(COLUMN_CATALOG, (*iter).catalog);	
 	}
 	tempList->setSelected(tempList->firstChild(), true);
-	disconnect(core, SIGNAL(patchListing(QValueList<Patch>)), this, SLOT(gotpatchListing(QValueList<Patch>)));
 }
 
 void ZmdUpdater::authorizeCore() {

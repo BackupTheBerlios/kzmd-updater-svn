@@ -236,8 +236,8 @@ QValueList<Package> ZmdUpdaterCore::mapListToPackageList(QValueList<QVariant> da
 		QMap<QString, QVariant> map = (*iter).toMap();
 		Package pack;
 
-		if (map["id"].toString() == "") //bad package, try again
-			continue;
+	//	if (map["id"].toString() == "") //bad package, try again
+	//		continue;
 
 		pack.fromMap(map);
 		packageList.append(pack);
