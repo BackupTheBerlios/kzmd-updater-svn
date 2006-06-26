@@ -76,8 +76,6 @@ class Service {
 				map["uri"] = uri;
 			if (type != "")
 				map["type"] = type;
-			if (activated != 3)
-				map["active"] = activated;
 			return map;
 		}
 
