@@ -447,7 +447,7 @@ void ZmdUpdaterCore::timerSlot() {
 	if (downloadID.isEmpty() == false) {
 		server->call("zmd.system.poll", downloadID, 
 		this, SLOT(timerData(const QValueList<QVariant>&, const QVariant&)),
-		this, SLOT(faultData(int, const QString&, const QVariant&)));
+		this, SLOT(faultData(int, const QString&, const QVariant&))); 
 
 	}
 }
@@ -464,6 +464,7 @@ void ZmdUpdaterCore::timerData(const QValueList<QVariant>& data, const QVariant 
 #ifdef DEBUG
 		cout << "Timer data drop: " << status.percent << endl;
 #endif
+		//test if download here NNN
 		emit(progress(status));
 		if (map["status"].toInt() > 1) {
 			ZMD_CLEAR;

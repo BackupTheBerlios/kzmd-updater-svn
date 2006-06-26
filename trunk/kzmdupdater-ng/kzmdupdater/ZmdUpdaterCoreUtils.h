@@ -26,7 +26,23 @@ class Progress {
 
 	public:
 
-		Progress() : expectedTime(0), remainingTime(0), status(0), percent(0.0L) {}
+		Progress() : expectedTime(-1), remainingTime(-1), status(-1), percent(-1.0L) {}
+
+		Progress& operator=(const QMap<QString,QVariant> &map) {
+			QValueList<QVariant>::const_iterator iter;
+
+			name = map["name"].toString();
+			status = map["status"].toInt();
+			expectedTime = map["expected_time"].toInt();
+			remainingTime = map["remaining_time"].toInt();
+			percent = map["percent"].toDouble();
+
+			for (iter = map["messages"].toList().begin(); iter != map["messages"].toList().end();
+				 iter++) {
+				messages.append((*iter).toString());
+			}
+			return *this;
+		}
 
 		QString name;
 		int status;
@@ -40,7 +56,32 @@ class Service {
 
 	public:
 
-		Service() : activated(false) {}
+		Service() : activated(3) {}
+
+
+		Service& operator=(const QMap<QString,QVariant> &map) {
+			name = map["name"].toString();
+			id = map["id"].toString();
+			uri = map["uri"].toString();
+			type = map["type"].toString();
+			activated = map["active"].toInt();
+			return *this;
+		}
+
+		QMap<QString, QVariant> toMap() {
+			QMap<QString,QVariant> map;
+			if (name != "")
+				map["name"] = name;
+			if (id != "")
+				map["id"] = id;
+			if (uri != "")
+				map["uri"] = uri;
+			if (type != "")
+				map["type"] = type;
+			if (activated != 3)
+				map["active"] = activated;
+			return map;
+		}
 
 		QString name;
 		QString id;
@@ -54,7 +95,29 @@ class Catalog {
 
 	public:
 
-		Catalog() : subscribed(false) {}
+		Catalog() : subscribed(3) {}
+
+		Catalog& operator=(const QMap<QString,QVariant> &map) {
+			name = map["name"].toString();
+			id = map["id"].toString();
+			displayName = map["display_name"].toString();
+			subscribed = map["subscribed"].toBool();
+			service = map["service"].toString();
+			return *this;
+		}
+
+		QMap<QString, QVariant> toMap() {
+			QMap<QString,QVariant> map;
+			if (name != "")
+				map["name"] = name;
+			if (id != "")
+				map["id"] = id;
+			if (displayName != "")
+				map["display_name"] = displayName;
+			if (subscribed != 3)
+				map["subscribed"] = subscribed;
+			return map;
+		}
 
 		QString name;
 		QString id;
@@ -86,10 +149,12 @@ class Package {
 
 		QMap<QString, QVariant> toMap() {
 			QMap<QString,QVariant> map;
-			map["name"] = name;
-			map["id"] = id;
+			if (name != "")
+				map["name"] = name;
+			if (id != "")
+				map["id"] = id;
 			if (version != "")
-				map["version"] =  version;
+				map["version"] = version;
 			if (catalog != "")
 				map["catalog"] = catalog;
 			if (description != "")
@@ -113,6 +178,17 @@ class Patch : public Package {
 	public:
 
 		Patch() : Package() {}
+
+		Package& operator=(const QMap<QString,QVariant> &map) {
+			name = map["name"].toString();
+			id = map["id"].toString();
+			version = map["version"].toString();
+			catalog = map["catalog"].toString();
+			description = map["summary"].toString();
+			installed = map["installed"].toBool();
+			category = map["category"].toString();
+			return *this;
+		}
 
 		QString category;
 };

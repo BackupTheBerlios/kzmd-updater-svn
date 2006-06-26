@@ -160,19 +160,22 @@ void ZmdConfigWindow::addedServer(QString server, int status) {
 }
 
 void ZmdConfigWindow::removeButtonClicked() {
-	Service serv;
-	ZmdProgressDialog diag(false,this);
 
-	serv.name = serverList->currentItem()->text(CONFW_NAME);
-	serv.id = serverList->currentItem()->text(CONFW_ID);
-	serv.uri = serverList->currentItem()->text(CONFW_URI);
-	diag.connectFinished(core, SIGNAL(serviceRemoved(QString,int)));
-	diag.setTitle(i18n("Removing server..."));
-	diag.setDescription(i18n("We are removing the server you specified."));
-	connect(core, SIGNAL(serviceRemoved(QString,int)), this, SLOT(removedServer(QString,int)));
+	if (serverList->currentItem()->parent() != NULL) {
+		Service serv;
+		ZmdProgressDialog diag(false,this);
 
-	core->removeService(serv);
-	diag.exec();
+		serv.name = serverList->currentItem()->text(CONFW_NAME);
+		serv.id = serverList->currentItem()->text(CONFW_ID);
+		serv.uri = serverList->currentItem()->text(CONFW_URI);
+		diag.connectFinished(core, SIGNAL(serviceRemoved(QString,int)));
+		diag.setTitle(i18n("Removing server..."));
+		diag.setDescription(i18n("We are removing the server you specified."));
+		connect(core, SIGNAL(serviceRemoved(QString,int)), this, SLOT(removedServer(QString,int)));
+
+		core->removeService(serv);
+		diag.exec();
+	}
 }
 
 void ZmdConfigWindow::removedServer(QString server, int status) {
