@@ -26,10 +26,7 @@
 #include "ZmdProgressDialog.h"
 #include "ZmdCatalogListItem.h"
 
-using namespace std;
-
-ZmdConfigWindow::ZmdConfigWindow(ZmdUpdaterCore *_core, QWidget *parent) : 
-	QWidget(parent,0,Qt::WDestructiveClose) {
+ZmdConfigWindow::ZmdConfigWindow(ZmdUpdaterCore *_core, QWidget *parent) : QWidget(parent,0,Qt::WDestructiveClose) {
 	core = _core;
 
 	initGUI();
@@ -51,9 +48,13 @@ void ZmdConfigWindow::initGUI() {
 	serverList->addColumn(i18n("Services/Catalogs"), 400);
 	serverList->setTreeStepSize(30);
 	serverList->setRootIsDecorated(true);
-	serverList->addColumn("URI", 0); // Hidden column to hold uri for searching
-	serverList->addColumn("ID", 0);
-	serverList->addColumn("Subscribed", 0); //Yet another hidden column, for catalogs this time
+
+	/*
+		Hidden Columns - We use these to store info about the services/catalogs
+	*/
+	serverList->addColumn("URI", 0); // Holds catalog and service URI
+	serverList->addColumn("ID", 0); //Holds catalog and service ID
+	serverList->addColumn("Subscribed", 0); //Holds subscription status for catalogs
 
 	header->setDescription(i18n("<b>Add/Remove Package Servers:</b><br> You may add or remove update servers below or change your software catalog subscriptions.<br> <u>Make whatever changes you wish and press accept.</u>"));
 
@@ -82,10 +83,15 @@ void ZmdConfigWindow::initGUI() {
 }
 
 void ZmdConfigWindow::initList() {
+	//Clear the list and re-populate it
 	serverList->clear();
+
+	//Connect the signals and call the backend
+	connect(core, SIGNAL(serviceListing(QValueList<Service>)), this, 
+	SLOT(gotServiceList(QValueList<Service>)));
+	connect(core, SIGNAL(catalogListing(QValueList<Catalog>)), this, 
+	SLOT(gotCatalogList(QValueList<Catalog>)));
 	core->getServices();
-	connect(core, SIGNAL(serviceListing(QValueList<Service>)), this, SLOT(gotServiceList(QValueList<Service>)));
-	connect(core, SIGNAL(catalogListing(QValueList<Catalog>)), this, SLOT(gotCatalogList(QValueList<Catalog>)));
 
 }
 
@@ -98,7 +104,9 @@ void ZmdConfigWindow::gotServiceList(QValueList<Service> servers) {
 		item->setText(CONFW_URI,(*iter).uri);
 		item->setText(CONFW_ID,(*iter).id);
 	}
+	//Disconnect this signal. If this doesn't happen we will connect it again on each iteration and end up adding many copies of each service to the list
 	disconnect(core, SIGNAL(serviceListing(QValueList<Service>)), this, SLOT(gotServiceList(QValueList<Service>)));
+
 	if (servers.size() > 0)
 		core->getCatalogs();
 }
@@ -120,6 +128,7 @@ void ZmdConfigWindow::gotCatalogList(QValueList<Catalog> catalogs) {
 			parentItem->setOpen(true);
 		}
 	}
+	//Disconnect this signal. If this doesn't happen, the same thing as with services happens
 	disconnect(core, SIGNAL(catalogListing(QValueList<Catalog>)), this, 
 				SLOT(gotCatalogList(QValueList<Catalog>)));
 }
@@ -132,25 +141,35 @@ void ZmdConfigWindow::addButtonClicked() {
 
 	diag.exec();
 	list = diag.getServerInfo();
-	if (list.front() != "" && list.back() != "") {
+	//make sure the name, type and uri are not blank
+	if (list[0] != "" && list[1] != "" && list[2] != "") { 		
 		Service newServ;
 		newServ.name = list[0];
 		newServ.uri = list[1];
 		newServ.type = list[2];
-		core->addService(newServ);
-		connect(core, SIGNAL(serviceAdded(QString,int)), this, SLOT(addedServer(QString,int)));
 
+		//Connect the signal and start the adding of a service
+		connect(core, SIGNAL(serviceAdded(QString,int)), this, SLOT(addedServer(QString,int)));
+		core->addService(newServ);
+	
+		//Tell the user what is going on, this takes a long long time
 		prog.setTitle(i18n("Adding server.."));
 		prog.setDescription(i18n("We are adding a server to the updater, this may take some time. \nPlease be patient"));
-		prog.connectProgress(core, SIGNAL(progress(Progress)));
-		prog.connectFinished(core, SIGNAL(serviceAdded(QString,int)));
-		prog.exec();
 
+		//Connect the progress dialog signals
+		connect(core, SIGNAL(progress(Progress)), &prog, SLOT(progress(Progress)));
+		connect(core, SIGNAL(serviceAdded(QString,int)), &prog, SLOT(finished(QString,int)));
+		connect(core, SIGNAL(generalFault(QString)), &prog, SLOT(fault(QString)));
+		prog.exec();
+	} else {
+		//We don't say you need to have a type, because the groupbox takes care of that
+		KMessageBox::error(this, i18n("You need to specify a name and URL to add a server"));
 	}
 
 }
 
 void ZmdConfigWindow::addedServer(QString server, int status) {
+	//Got a server added, we disconnect and re-init the list or show error
 	disconnect(core, SIGNAL(serviceAdded(QString,int)), this, SLOT(addedServer(QString,int)));
 	if (status != ERROR_INVALID) {
 		initList();
@@ -167,9 +186,12 @@ void ZmdConfigWindow::removeButtonClicked() {
 		serv.name = serverList->currentItem()->text(CONFW_NAME);
 		serv.id = serverList->currentItem()->text(CONFW_ID);
 		serv.uri = serverList->currentItem()->text(CONFW_URI);
-		connect(core, SIGNAL(generalFault(QString)), this, SLOT(removeServerFault(QString)));
 
+		connect(core, SIGNAL(generalFault(QString)), this, SLOT(removeServerFault(QString)));
 		core->removeService(serv);
+		//Re-init the list after removal, we get no return from the removal
+		KMessageBox::information(this, i18n("Service Removed")); 
+		initList();
 	}
 }
 

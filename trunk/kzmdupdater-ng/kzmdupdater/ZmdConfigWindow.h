@@ -48,7 +48,6 @@ class ZmdConfigWindow : public QWidget {
 		void addButtonClicked();
 		void removeButtonClicked();
 
-
 		//Core Signals
 
 		void gotServiceList(QValueList<Service>);
@@ -56,21 +55,18 @@ class ZmdConfigWindow : public QWidget {
 		void addedServer(QString server, int);
 		void removeServerFault(QString);
 
-
 	private:
 
 		void initGUI();
 		void initList();
 
 		QVBoxLayout	*mainLayout;
-
+		QHBoxLayout *buttonLayout;
 		HeaderWidget *header;
 		QListView *serverList;
 		KPushButton *addButton;
 		KPushButton *removeButton;
 		KPushButton *closeButton;
-
-		QHBoxLayout *buttonLayout;
 
 		ZmdUpdaterCore *core;
 };

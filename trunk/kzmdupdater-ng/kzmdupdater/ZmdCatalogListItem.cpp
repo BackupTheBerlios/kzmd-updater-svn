@@ -22,6 +22,7 @@
 
 ZmdCatalogListItem::ZmdCatalogListItem(QListViewItem *parent, const QString &text, ZmdUpdaterCore *_core) : QCheckListItem(parent, text, QCheckListItem::CheckBoxController), core(_core) {
 
+	//Make sure this isn't a tristate
 	setTristate(false);
 }
 
@@ -34,8 +35,8 @@ void ZmdCatalogListItem::stateChange(bool state) {
 	if (cat.id == "")
 		return;
 
+	//Deal with tristate, even when we disable this
 	switch (this->state()) {
-		
 		case QCheckListItem::Off:
 		case QCheckListItem::NoChange:
 			setOn(false);

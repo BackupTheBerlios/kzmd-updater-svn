@@ -18,8 +18,9 @@
 */
 
 
-#include "ZmdServerDialog.h"
 #include <qradiobutton.h>
+
+#include "ZmdServerDialog.h"
 
 enum { TYPE_ZYPP=0, TYPE_YUM, TYPE_ZEN };
 
@@ -89,7 +90,6 @@ void ZmdServerDialog::initGUI() {
 	connect(cancelButton, SIGNAL(clicked()), this, SLOT(cancelButtonClicked()));
 
 	layout->setMargin(20);
-//	resize(400,100);
 	setCaption(i18n("Add Server"));
 	show();
 }

@@ -51,16 +51,21 @@ class ZmdProgressDialog : public QDialog {
 
 		void setTitle(QString);
 		void setDescription(QString);
-		void connectProgress(const QObject *object, const char *member);
-		void connectFinished(const QObject *object, const char *member);
 
 	public slots:
-		
+	
+		//Controls the progress bar
 		void progress(Progress);
+
+		//Closes the window
 		void finished(QString,int);
+
+		//Closes the window on a general fault
+		void fault(QString);
 
 	private slots:
 
+		//Keep this window up while the transaction continues
 		void closeEvent(QCloseEvent *e);
 
 	private:

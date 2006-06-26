@@ -66,5 +66,5 @@ class ZmdServerDialog : public QDialog {
 		QString name;
 };
 
-
 #endif
+

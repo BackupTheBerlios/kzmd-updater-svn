@@ -21,6 +21,7 @@
 #define _ZMD_CATALOG_LIST_ITEM_H_
 
 #include <qlistview.h>
+
 #include "ZmdUpdaterCore.h"
 
 class ZmdCatalogListItem : public QCheckListItem {
@@ -34,7 +35,7 @@ class ZmdCatalogListItem : public QCheckListItem {
 		void stateChange(bool);
 
 		ZmdUpdaterCore *core;
-
 };
 
 #endif
+

@@ -92,7 +92,7 @@ void GeneralConfigWindow::okButtonClicked() {
 
 	config->setGroup("General");
 
-	switch (backendGroup->id(backendGroup->selected())) {
+	switch (backendGroup->selectedId()) {
 	case GCONFIG_ZMD:
 		backend = BACKEND_ZMD;
 		break;

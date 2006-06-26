@@ -19,7 +19,6 @@
 
 #include "ZmdProgressDialog.h"
 
-
 ZmdProgressDialog::ZmdProgressDialog(bool progressGUI, QWidget *parent) : QDialog(parent) {
 
 	if (progressGUI)
@@ -27,18 +26,18 @@ ZmdProgressDialog::ZmdProgressDialog(bool progressGUI, QWidget *parent) : QDialo
 	else
 		initTextGUI();
 	setModal(true);
+
+	//Don't close on closeEvent
 	reallyDone = false;
 }
 
 ZmdProgressDialog::~ZmdProgressDialog() {
-
 }
 
 void ZmdProgressDialog::initProgressGUI() {
 	mainLayout = new QVBoxLayout(this);
 	progressBar = new KProgress(this);
 	description = new QLabel(this);
-
 
 	mainLayout->addWidget(description,0,0);
 	mainLayout->addWidget(progressBar,0,0);
@@ -58,7 +57,6 @@ void ZmdProgressDialog::initTextGUI() {
 	mainLayout = new QVBoxLayout(this);
 	description = new QLabel(this);
 
-
 	mainLayout->addWidget(description,0,0);
 	mainLayout->setMargin(10);
 	resize(200,100);
@@ -72,14 +70,6 @@ void ZmdProgressDialog::setDescription(QString text) {
 	description->setText(text);
 }
 
-void ZmdProgressDialog::connectProgress(const QObject *object, const char *member) {
-	connect(object, member, this, SLOT(progress(Progress)));
-}
-
-void ZmdProgressDialog::connectFinished(const QObject *object, const char *member) {
-	connect(object, member, this, SLOT(finished(QString,int)));
-}
-
 void ZmdProgressDialog::progress(Progress prog) {
 	progressBar->advance((int)prog.percent);
 }
@@ -88,3 +78,9 @@ void ZmdProgressDialog::finished(QString name, int status) {
 	reallyDone = true;
 	close();
 }
+
+void ZmdProgressDialog::fault(QString message) {
+	reallyDone = true;
+	close();
+}
+
