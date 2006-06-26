@@ -170,7 +170,7 @@ class Service {
 	
 };
 
-struct Catalog {
+class Catalog {
 
 	public:
 
@@ -188,23 +188,21 @@ struct Catalog {
 	This is the "base" class. It can represent either a package 
 	or a patch for the backend
 */
-struct Package {
+class Package {
 	
 	public:
 
 		Package() : installed(false) {}
 
-		//********
-		QString name; //These are the only two that actually matter to anything but the UI
+		QString name;
 		QString id;
-		//********
 		QString version;
 		QString catalog;
 		QString description;
 		bool installed;	
 };
 
-struct Patch : public Package {
+class Patch : public Package {
 
 	public:
 
