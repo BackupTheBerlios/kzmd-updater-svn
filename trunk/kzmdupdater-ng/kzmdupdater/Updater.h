@@ -30,6 +30,14 @@ enum { 	APPLET_NO_UPDATES,
 		APPLET_UPDATES,
 		APPLET_CHECKING };
 
+/**
+
+	This is the base class for all updater backends. 
+	If a backend class conforms to this, it will work
+
+**/
+
+
 class Updater : public QObject {
 
 	Q_OBJECT
@@ -40,12 +48,32 @@ class Updater : public QObject {
 
 	signals:
 
+		/** This is a signal sent to the MainWindow class. It updates the applet
+			to the specified state.
+		**/
 		void updateApplet(int);
 
 	protected slots:
 
+		/**
+			When signaled, this slot should run whatever configuration utility this updater 
+			uses. However, this is marked as Add/Remove Servers in the GUI, so it should at least
+			be able to do that.
+		**/
 		virtual void configureUpdater() = 0;
+
+		/**
+			When signaled, this slot should run the installation routine for the updater. It
+			is important to note that you get the package list from the QListView you will _ALWAYS_
+			be given in the "populateUpdateList" slot. This pointer should  be saved for later use in 
+			this slot (so you can fetch the package list).
+		**/
 		virtual void startInstall() = 0;
+
+		/**
+			When signaled, this slot should fetch a list of current updates available and add them
+			to the listview specified. 
+		**/
 		virtual void populateUpdateList(QListView*) = 0;
 };
 

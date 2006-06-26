@@ -25,6 +25,8 @@
 #include "Updater.h"
 #include "ZmdUpdaterCore.h"
 
+//This is where the secret and deviceid files are stored
+//These hold the username and password for zmd
 #define ZMD_CONFIG_PATH "/etc/zmd"
 
 class ZmdUpdater : public Updater {
@@ -51,10 +53,13 @@ class ZmdUpdater : public Updater {
 
 		void authorizeCore();
 
+		//We hold the QListView passed in "populateUpdateList" here
 		QListView *tempList;
 
+		//The core updater functionality
 		ZmdUpdaterCore *core;
 
 };
 
 #endif
+

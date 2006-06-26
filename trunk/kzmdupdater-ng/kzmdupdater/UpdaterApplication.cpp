@@ -25,7 +25,6 @@
 
 UpdaterApplication::UpdaterApplication() : KUniqueApplication(true,true,false) {
 
-
 	KConfig *config = kapp->config();
 	config->setGroup("General");
 	int interval;

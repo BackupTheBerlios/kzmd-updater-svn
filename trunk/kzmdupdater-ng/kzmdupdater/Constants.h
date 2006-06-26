@@ -23,12 +23,12 @@
 #define PROGRAM_NAME "kzmdupdater"
 #define VERSION "0.0.1"
 
-#define TIMER_INTERVAL	(1000*60*15) //1000 ms * 60 s * 5 min = 15 min
-
 #define TRAY_ICON_GREEN "suse_green.png"
 #define TRAY_ICON_RED	"suse_red.png"
 
+//Enum to represent the various backends installed. New backends added here
 enum { BACKEND_ZMD, BACKEND_ZYPP, BACKEND_SMART };
 
 
 #endif
+

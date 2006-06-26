@@ -28,17 +28,16 @@
 #include "ZmdInstallWindow.h"
 #include "ZmdConfigWindow.h"
 
-#include <iostream>
-using namespace std;
-
 ZmdUpdater::ZmdUpdater() : Updater() {
 
+	//Init and auth the core
 	core = new ZmdUpdaterCore(this);
 	authorizeCore();
+
+	//Connect core signals
 	connect(core, SIGNAL(updateListing(QValueList<Package>)), this, SLOT(gotUpdateListing(QValueList<Package>)));
 	connect(core, SIGNAL(patchListing(QValueList<Patch>)), this, SLOT(gotPatchListing(QValueList<Patch>)));
 	connect(core, SIGNAL(packageInfo(Package)), this, SLOT(gotPackageInfo(Package)));
-
 }
 
 void ZmdUpdater::populateUpdateList(QListView *updateList) {
@@ -47,7 +46,6 @@ void ZmdUpdater::populateUpdateList(QListView *updateList) {
 
 	connect(core, SIGNAL(catalogListing(QValueList<Catalog>)), this, SLOT(gotCatalogListing(QValueList<Catalog>)));
 	core->getCatalogs(); 
-
 }
 
 void ZmdUpdater::startInstall() {
@@ -192,3 +190,4 @@ void ZmdUpdater::authorizeCore() {
 	}
 
 }
+
