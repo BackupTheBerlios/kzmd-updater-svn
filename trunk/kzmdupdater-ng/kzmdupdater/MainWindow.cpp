@@ -17,8 +17,6 @@
    Boston, MA 02110-1301, USA.
 */
 
-
-
 #include <kiconloader.h>
 #include <klocale.h>
 #include <kprocess.h>
@@ -38,11 +36,12 @@ MainWindow::MainWindow(int interval, QWidget *parent) : QWidget(parent) {
 	applet->setScaledContents(true);
 	applet->show();
 	connect(applet, SIGNAL(quitSelected()), this, SLOT(slotExit()));
+
 	timer = new QTimer(this);
 	timerInterval = interval;
-
 	connect(timer, SIGNAL(timeout()), this, SLOT(checkUpdates()));
 	timer->start(timerInterval,false);
+
 	initGUI();
 	initMenu();
 }
@@ -83,10 +82,14 @@ void MainWindow::initGUI() {
 	updateList->addColumn(i18n("Old Version"));
 	updateList->addColumn(i18n("New Version"));
 	updateList->addColumn(i18n("Size"));
+
+	/*
+		Hidden Columns, we use these to store data about the packages/patches
+	*/
 	updateList->addColumn("ID", 0); // This is a hidden column to hold the ID of the patch/package
-	updateList->addColumn("Description", 0); //Another Hidden Column
-	updateList->addColumn("Installed?", 0);
-	updateList->addColumn("Catalog", 0);
+	updateList->addColumn("Description", 0); // The Package/Patch description
+	updateList->addColumn("Installed?", 0); // Is it installed? (Is it an update)
+	updateList->addColumn("Catalog", 0); //Obvious
 
 	connect(updateList, SIGNAL(selectionChanged(QListViewItem*)), this, SLOT(slotPackageSelected(QListViewItem*)));
 
@@ -99,6 +102,7 @@ void MainWindow::initGUI() {
 	return;
 }
 
+//Make the main window hide, not quit
 void MainWindow::closeEvent(QCloseEvent *e) {
 	hide();
 }
@@ -112,8 +116,7 @@ void MainWindow::initMenu() {
 void MainWindow::appletState(int state) {
 
 	switch (state) {
-
-		case APPLET_CHECKING:
+		case APPLET_CHECKING: //We do not have a special icon for checking updates
 		case APPLET_NO_UPDATES:
 			applet->setPixmap(UserIcon(TRAY_ICON_GREEN));
 			break;
@@ -121,10 +124,10 @@ void MainWindow::appletState(int state) {
 			applet->setPixmap(UserIcon(TRAY_ICON_RED));
 			break;
 	}
-
 }
 
 void MainWindow::serverButtonClicked() {
+	//Fire the configure signal to the backend
 	emit(configureUpdater());
 }
 
@@ -134,11 +137,13 @@ void MainWindow::configButtonClicked() {
 }
 
 void MainWindow::installButtonClicked() {
+	//Fire the  install signal to the backend and hide ourselves
 	emit(startInstall());
 	hide();
 }
 
 void MainWindow::checkUpdates() {
+	//Clear the list and fire the update signal to the backend
 	updateList->clear();
 	emit(populateUpdateList(updateList)); 
 }
@@ -147,6 +152,7 @@ void MainWindow::slotPackageSelected(QListViewItem *packageSelected) {
 	packageDescription->setText(((QCheckListItem*)packageSelected)->text(COLUMN_DESC));
 }
 
+//This is where we actually close, called from the system tray
 void MainWindow::slotExit() {
 	kapp->quit();
 }

@@ -18,8 +18,8 @@
 */
 
 
-#ifndef _SUSE_UPDATER_
-#define _SUSE_UPDATER_
+#ifndef _MAIN_WINDOW_H_
+#define _MAIN_WINDOW_H_
 
 #include <ksystemtray.h>
 #include <ktextedit.h>
@@ -32,8 +32,6 @@
 #include "Updater.h"
 #include "Constants.h"
 #include "HeaderWidget.h"
-
-
 
 //Define the columns of the update list. These must be set
 
@@ -97,3 +95,4 @@ class MainWindow : public QWidget {
 };
 
 #endif
+
