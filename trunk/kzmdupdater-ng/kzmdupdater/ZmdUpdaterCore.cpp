@@ -425,14 +425,15 @@ void ZmdUpdaterCore::timerData(const QValueList<QVariant>& data, const QVariant 
 		QMap<QString, QVariant> map = data.front().toMap();
 		Progress status;
 		status.fromMap(map);
-
+#ifdef DEBUG
 		cout << "Status: " << status.status << endl;
 		cout << "Name: " << status.name << endl;
-
+		cout << "Percent: " << status.percent << endl;
+#endif
 		//test if download here NNN
 		if (status.name == "Downloading Packages") {
 			emit(downloadProgress(status)); 
-			if (map["status"].toInt() > 1) {
+			if (map["percent"].toDouble() > 99) {
 				downloadID = "";
 			}
 		} else {
