@@ -126,6 +126,7 @@ void MainWindow::installButtonClicked() {
 }
 
 void MainWindow::checkUpdates() {
+	updateList->clear();
 	emit(populateUpdateList(updateList)); 
 }
 
