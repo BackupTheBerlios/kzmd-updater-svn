@@ -19,12 +19,16 @@
 
 #include "UpdaterApplication.h"
 
+#define ZMD
+
 UpdaterApplication::UpdaterApplication() : KUniqueApplication(true,true,false) {
 
 	main = new MainWindow();
 	setMainWidget(main);
 	//We need to fetch this option from a config file later on
+#ifdef ZMD
 	updater = new ZmdUpdater();
+#endif
 
 	connect(updater, SIGNAL(updateApplet(int)), main, SLOT(appletState(int)));
 	connect(main, SIGNAL(startInstall()), updater, SLOT(startInstall()));

@@ -90,6 +90,7 @@ void MainWindow::initGUI() {
 	mainBox->setMargin(10);
 	resize(400,500);
 	setIcon(UserIcon(TRAY_ICON_GREEN));
+	setCaption(i18n("Available Updates"));
 	hide();
 	return;
 }
@@ -97,7 +98,7 @@ void MainWindow::initGUI() {
 void MainWindow::initMenu() {
 	KPopupMenu *menu = applet->contextMenu();
 //	menu->insertItem(i18n("About"), this, SLOT(configButtonClicked()),0,-1,1);
-	menu->insertItem(i18n("Configure"), this, SLOT(configButtonClicked()),0,-1,1);
+	menu->insertItem(i18n("Add/Remove Servers"), this, SLOT(configButtonClicked()),0,-1,1);
 }
 
 void MainWindow::appletState(int state) {
