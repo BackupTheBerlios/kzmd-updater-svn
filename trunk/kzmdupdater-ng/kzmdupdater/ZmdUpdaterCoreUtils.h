@@ -20,6 +20,8 @@
 #ifndef _ZMD_UPDATER_CORE_UTILS_H_
 #define _ZMD_UPDATER_CORE_UTILS_H_
 
+#include <qmap.h>
+
 class Progress {
 
 	public:
@@ -70,7 +72,33 @@ class Package {
 	
 	public:
 
-		Package() : installed(false) {}
+		Package() : installed(3) {}
+
+		Package& operator=(const QMap<QString,QVariant> &map) {
+			name = map["name"].toString();
+			id = map["id"].toString();
+			version = map["version"].toString();
+			catalog = map["catalog"].toString();
+			description = map["summary"].toString();
+			installed = map["installed"].toBool();
+			return *this;
+		}
+
+		QMap<QString, QVariant> toMap() {
+			QMap<QString,QVariant> map;
+			map["name"] = name;
+			map["id"] = id;
+			if (version != "")
+				map["version"] =  version;
+			if (catalog != "")
+				map["catalog"] = catalog;
+			if (description != "")
+				map["summary"] = description;
+			if (installed != 3)
+				map["installed"] = installed;
+			return map;
+		}
+
 
 		QString name;
 		QString id;
