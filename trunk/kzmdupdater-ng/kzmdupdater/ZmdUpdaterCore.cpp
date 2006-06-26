@@ -430,29 +430,30 @@ void ZmdUpdaterCore::timerData(const QValueList<QVariant>& data, const QVariant 
 		//test if download here NNN
 		if (status.name == "Downloading Packages") {
 			emit(downloadProgress(status)); 
+			if (map["status"].toInt() > 1) {
+				downloadID = "";
+			}
 		} else {
 			emit(progress(status));
-		}
+			if (downloadID.isEmpty() && map["status"].toInt() > 1) {
+				ZMD_CLEAR;
+				timer->stop();
+				
+				if (tempServiceName != "") {
+					if (map["status"].toInt() == 4)
+						emit(serviceAdded(tempServiceName, ERROR_INVALID));
+					else 
+						emit(serviceAdded(tempServiceName, ERROR_NONE));
 
+					tempServiceName = "";
+				} else {
+					emit(transactionFinished(ERROR_NONE));
+				}
 
-		if (downloadID.isEmpty() && map["status"].toInt() > 1) {
-			ZMD_CLEAR;
-			timer->stop();
-			
-			if (tempServiceName != "") {
-				if (map["status"].toInt() == 4)
-					emit(serviceAdded(tempServiceName, ERROR_INVALID));
-				else 
-					emit(serviceAdded(tempServiceName, ERROR_NONE));
-
-				tempServiceName = "";
-			} else {
-				emit(transactionFinished(ERROR_NONE));
 			}
-		} else if (map["id"].toString() == downloadID && map["status"].toInt() > 1) {
-			downloadID = "";
 		}
 	}
+
 }
 
 /********************************************************************
