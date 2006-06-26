@@ -54,7 +54,6 @@ void ZmdInstallWindow::initGUI() {
 
 	abortButton->setMinimumHeight(30);
 	connect(abortButton, SIGNAL(clicked()), this, SLOT(abortButtonClicked()));
-	connect(this, SIGNAL(close()), this, SLOT(abortButtonClicked()));
 
 
 	mainLayout->setMargin(10);
@@ -66,7 +65,6 @@ void ZmdInstallWindow::initGUI() {
 
 void ZmdInstallWindow::abortButtonClicked() {
 	core->cancelTransaction();
-	disconnect(this, SIGNAL(close()), this, SLOT(abortButtonClicked()));
 	close();
 }
 
@@ -77,7 +75,7 @@ void ZmdInstallWindow::gotDepInfo(QValueList<Package> installs,
 	QValueList<Package>::iterator iter;
 	ZmdDependencyDialog diag;
 	
-	text = i18n("The following packages most also be installed/updated:\n");
+	text = i18n("The following packages will be installed/updated:\n");
 	for (iter = installs.begin(); iter != installs.end(); iter++) {
 		text += (*iter).name;
 		text += "\n";

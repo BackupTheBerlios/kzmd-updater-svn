@@ -41,7 +41,7 @@ enum {
 
 #define IS_ZMD_BUSY if (!pollID.isEmpty()) return
 #define ZMD_BLOCK(ID) (pollID = (ID))
-#define ZMD_CLEAR (pollID = "")
+#define ZMD_CLEAR (pollID = downloadID = "")
 
 class ZmdUpdaterCore : public QObject {
 

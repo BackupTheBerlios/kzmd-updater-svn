@@ -236,8 +236,8 @@ QValueList<Package> ZmdUpdaterCore::mapListToPackageList(QValueList<QVariant> da
 		QMap<QString, QVariant> map = (*iter).toMap();
 		Package pack;
 
-	//	if (map["id"].toString() == "") //bad package, try again
-	//		continue;
+		if (map["id"].toString() == "") //bad package, try again
+			continue;
 
 		pack.fromMap(map);
 		packageList.append(pack);
@@ -428,7 +428,12 @@ void ZmdUpdaterCore::timerData(const QValueList<QVariant>& data, const QVariant 
 		cout << "Timer data drop: " << status.percent << endl;
 #endif
 		//test if download here NNN
-		emit(progress(status));
+		if (status.name == "Downloading Packages") {
+			emit(downloadProgress(status)); 
+		} else {
+			emit(progress(status));
+		}
+
 		if (map["status"].toInt() > 1) {
 			ZMD_CLEAR;
 			timer->stop();
