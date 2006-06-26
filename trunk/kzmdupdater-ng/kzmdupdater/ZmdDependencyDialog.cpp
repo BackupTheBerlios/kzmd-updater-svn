@@ -17,14 +17,14 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include "DependencyDialog.h"
+#include "ZmdDependencyDialog.h"
 
-DependencyDialog::DependencyDialog(QWidget *parent) : QDialog(parent) {
+ZmdDependencyDialog::ZmdDependencyDialog(QWidget *parent) : QDialog(parent) {
 
 	initGUI();
 }
 
-void DependencyDialog::initGUI() {
+void ZmdDependencyDialog::initGUI() {
 
 	mainLayout = new QVBoxLayout(this);
 	okButton = new KPushButton(i18n("Ok"), this);
@@ -42,10 +42,10 @@ void DependencyDialog::initGUI() {
 	connect(cancelButton, SIGNAL(clicked()), this, SLOT(reject()));
 }
 
-void DependencyDialog::setTitle(QString text) {
+void ZmdDependencyDialog::setTitle(QString text) {
 	setCaption(text);
 }
 
-void DependencyDialog::setText(QString text) {
+void ZmdDependencyDialog::setText(QString text) {
 	label->setText(text);
 }

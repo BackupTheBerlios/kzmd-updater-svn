@@ -17,15 +17,15 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include "CatalogListItem.h"
-#include "ConfigWindow.h" 
+#include "ZmdCatalogListItem.h"
+#include "ZmdConfigWindow.h" 
 
-CatalogListItem::CatalogListItem(QListViewItem *parent, const QString &text, ZmdUpdaterCore *_core) : QCheckListItem(parent, text, QCheckListItem::CheckBoxController), core(_core) {
+ZmdCatalogListItem::ZmdCatalogListItem(QListViewItem *parent, const QString &text, ZmdUpdaterCore *_core) : QCheckListItem(parent, text, QCheckListItem::CheckBoxController), core(_core) {
 
 	setTristate(false);
 }
 
-void CatalogListItem::stateChange(bool state) {
+void ZmdCatalogListItem::stateChange(bool state) {
 	Catalog cat;
 
 	cat.name = text(CONFW_NAME);

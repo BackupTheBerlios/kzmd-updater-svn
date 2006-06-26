@@ -18,8 +18,8 @@
 */
 
 
-#ifndef _SERVER_DIALOG_H_
-#define _SERVER_DIALOG_H_
+#ifndef _ZMD_SERVER_DIALOG_H_
+#define _ZMD_SERVER_DIALOG_H_
 
 #include <klocale.h>
 #include <klineedit.h>
@@ -32,14 +32,14 @@
 #include <qhbuttongroup.h>
 
 
-class ServerDialog : public QDialog {
+class ZmdServerDialog : public QDialog {
 
 	Q_OBJECT
 
 	public:
 
-		ServerDialog(QWidget *parent=0);
-		~ServerDialog();
+		ZmdServerDialog(QWidget *parent=0);
+		~ZmdServerDialog();
 
 		QValueList<QString> getServerInfo();
 

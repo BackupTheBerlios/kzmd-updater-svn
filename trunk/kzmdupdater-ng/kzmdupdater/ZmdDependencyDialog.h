@@ -17,8 +17,8 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef _DEPENDENCY_DIALOG_H_
-#define _DEPENDENCY_DIALOG_H_
+#ifndef _ZMD_DEPENDENCY_DIALOG_H_
+#define _ZMD_DEPENDENCY_DIALOG_H_
 
 #include <klocale.h>
 #include <kpushbutton.h>
@@ -27,13 +27,13 @@
 #include <qlabel.h>
 #include <qlayout.h>
 
-class DependencyDialog : public QDialog {
+class ZmdDependencyDialog : public QDialog {
 
 	Q_OBJECT
 
 	public:
 
-		DependencyDialog(QWidget *parent=0);
+		ZmdDependencyDialog(QWidget *parent=0);
 		
 		void setTitle(QString);
 		void setText(QString);

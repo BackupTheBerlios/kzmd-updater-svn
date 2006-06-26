@@ -21,14 +21,14 @@
 #include <kmessagebox.h>
 #include <iostream>
 
-#include "ConfigWindow.h"
-#include "ServerDialog.h"
-#include "ProgressDialog.h"
-#include "CatalogListItem.h"
+#include "ZmdConfigWindow.h"
+#include "ZmdServerDialog.h"
+#include "ZmdProgressDialog.h"
+#include "ZmdCatalogListItem.h"
 
 using namespace std;
 
-ConfigWindow::ConfigWindow(ZmdUpdaterCore *_core, QWidget *parent) : 
+ZmdConfigWindow::ZmdConfigWindow(ZmdUpdaterCore *_core, QWidget *parent) : 
 	QWidget(parent,0,Qt::WDestructiveClose) {
 	core = _core;
 
@@ -36,10 +36,10 @@ ConfigWindow::ConfigWindow(ZmdUpdaterCore *_core, QWidget *parent) :
 	initList();
 }
 
-ConfigWindow::~ConfigWindow() {
+ZmdConfigWindow::~ZmdConfigWindow() {
 }
 
-void ConfigWindow::initGUI() {
+void ZmdConfigWindow::initGUI() {
 
 	mainLayout = new QVBoxLayout(this);
 	header = new HeaderWidget(this);
@@ -81,7 +81,7 @@ void ConfigWindow::initGUI() {
 	resize(250,400);
 }
 
-void ConfigWindow::initList() {
+void ZmdConfigWindow::initList() {
 	serverList->clear();
 	core->getServices();
 	connect(core, SIGNAL(serviceListing(QValueList<Service>)), this, SLOT(gotServiceList(QValueList<Service>)));
@@ -89,7 +89,7 @@ void ConfigWindow::initList() {
 
 }
 
-void ConfigWindow::gotServiceList(QValueList<Service> servers) {
+void ZmdConfigWindow::gotServiceList(QValueList<Service> servers) {
 	QValueList<Service>::iterator iter;
 	QListViewItem *item;
 
@@ -103,9 +103,9 @@ void ConfigWindow::gotServiceList(QValueList<Service> servers) {
 		core->getCatalogs();
 }
 
-void ConfigWindow::gotCatalogList(QValueList<Catalog> catalogs) {
+void ZmdConfigWindow::gotCatalogList(QValueList<Catalog> catalogs) {
 	QValueList<Catalog>::iterator iter;
-	CatalogListItem *item;
+	ZmdCatalogListItem *item;
 	QListViewItem *parentItem;
 
 	for (iter = catalogs.begin(); iter != catalogs.end(); iter++) {
@@ -114,7 +114,7 @@ void ConfigWindow::gotCatalogList(QValueList<Catalog> catalogs) {
 			KMessageBox::error(this, "You have a catalog that has no service attached to it. This is is strange and you may want to look into it");
 			continue;
 		} else {
-			item = new CatalogListItem(parentItem, (*iter).name, core);
+			item = new ZmdCatalogListItem(parentItem, (*iter).name, core);
 			item->setOn((*iter).subscribed);
 			item->setText(CONFW_ID, (*iter).id);
 			parentItem->setOpen(true);
@@ -124,11 +124,11 @@ void ConfigWindow::gotCatalogList(QValueList<Catalog> catalogs) {
 				SLOT(gotCatalogList(QValueList<Catalog>)));
 }
 
-void ConfigWindow::addButtonClicked() {
+void ZmdConfigWindow::addButtonClicked() {
 
 	QValueList<QString> list;
-	ServerDialog diag;
-	ProgressDialog prog(true,this);
+	ZmdServerDialog diag;
+	ZmdProgressDialog prog(true,this);
 
 	diag.exec();
 	list = diag.getServerInfo();
@@ -150,19 +150,18 @@ void ConfigWindow::addButtonClicked() {
 
 }
 
-void ConfigWindow::addedServer(QString server, int status) {
+void ZmdConfigWindow::addedServer(QString server, int status) {
+	disconnect(core, SIGNAL(serviceAdded(QString,int)), this, SLOT(addedServer(QString,int)));
 	if (status != ERROR_INVALID) {
 		initList();
 	} else {
 		KMessageBox::error(this, i18n("Sorry, the server information you entered was invalid."));
 	}
-	disconnect(core, SIGNAL(serviceAdded(QString,int)), this, SLOT(addedServer(QString,int)));
-
 }
 
-void ConfigWindow::removeButtonClicked() {
+void ZmdConfigWindow::removeButtonClicked() {
 	Service serv;
-	ProgressDialog diag(false,this);
+	ZmdProgressDialog diag(false,this);
 
 	serv.name = serverList->currentItem()->text(CONFW_NAME);
 	serv.id = serverList->currentItem()->text(CONFW_ID);
@@ -176,7 +175,7 @@ void ConfigWindow::removeButtonClicked() {
 	diag.exec();
 }
 
-void ConfigWindow::removedServer(QString server, int status) {
+void ZmdConfigWindow::removedServer(QString server, int status) {
 	QListViewItem *item;
 
 	if (status == ERROR_NONE)

@@ -17,8 +17,8 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef _INSTALL_WINDOW_
-#define _INSTALL_WINDOW_
+#ifndef _ZMD_INSTALL_WINDOW_
+#define _ZMD_INSTALL_WINDOW_
 
 #include <kprogress.h>
 #include <kpushbutton.h>
@@ -32,14 +32,14 @@
 #include "HeaderWidget.h"
 #include "ZmdUpdaterCore.h"
 
-class InstallWindow : public QWidget {
+class ZmdInstallWindow : public QWidget {
 
 	Q_OBJECT
 
 	public:
 
-		InstallWindow(ZmdUpdaterCore *_core, QWidget *parent=0);
-		~InstallWindow();
+		ZmdInstallWindow(ZmdUpdaterCore *_core, QWidget *parent=0);
+		~ZmdInstallWindow();
 
 		void setPackageList(QValueList<Package> installs, QValueList<Package> updates, QValueList<Package> removals);
 		void startUpdate();

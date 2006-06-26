@@ -17,8 +17,8 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef _CONFIG_WINDOW_
-#define _CONFIG_WINDOW_
+#ifndef _ZMD_CONFIG_WINDOW_
+#define _ZMD_CONFIG_WINDOW_
 
 #include <kpushbutton.h>
 
@@ -33,14 +33,14 @@
 //Column IDs for the configure window
 enum { CONFW_NAME=0, CONFW_URI, CONFW_ID };
 
-class ConfigWindow : public QWidget {
+class ZmdConfigWindow : public QWidget {
 
 	Q_OBJECT
 
 	public:
 
-		ConfigWindow(ZmdUpdaterCore *_core, QWidget *parent=0);
-		~ConfigWindow();
+		ZmdConfigWindow(ZmdUpdaterCore *_core, QWidget *parent=0);
+		~ZmdConfigWindow();
 
 
 	private slots:

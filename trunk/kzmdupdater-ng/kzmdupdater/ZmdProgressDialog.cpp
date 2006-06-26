@@ -17,10 +17,10 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include "ProgressDialog.h"
+#include "ZmdProgressDialog.h"
 
 
-ProgressDialog::ProgressDialog(bool progressGUI, QWidget *parent) : QDialog(parent) {
+ZmdProgressDialog::ZmdProgressDialog(bool progressGUI, QWidget *parent) : QDialog(parent) {
 
 	if (progressGUI)
 		initProgressGUI();
@@ -30,11 +30,11 @@ ProgressDialog::ProgressDialog(bool progressGUI, QWidget *parent) : QDialog(pare
 	connect(this, SIGNAL(close()), this, SLOT(closeEvent()));
 }
 
-ProgressDialog::~ProgressDialog() {
+ZmdProgressDialog::~ZmdProgressDialog() {
 
 }
 
-void ProgressDialog::initProgressGUI() {
+void ZmdProgressDialog::initProgressGUI() {
 	mainLayout = new QVBoxLayout(this);
 	progressBar = new KProgress(this);
 	description = new QLabel(this);
@@ -47,10 +47,10 @@ void ProgressDialog::initProgressGUI() {
 	resize(300,100);
 }
 
-void ProgressDialog::closeEvent() {	
+void ZmdProgressDialog::closeEvent() {	
 }
 
-void ProgressDialog::initTextGUI() {
+void ZmdProgressDialog::initTextGUI() {
 	mainLayout = new QVBoxLayout(this);
 	description = new QLabel(this);
 
@@ -60,27 +60,27 @@ void ProgressDialog::initTextGUI() {
 	resize(200,100);
 }
 
-void ProgressDialog::setTitle(QString title) {
+void ZmdProgressDialog::setTitle(QString title) {
 	setCaption(title);
 }
 
-void ProgressDialog::setDescription(QString text) {
+void ZmdProgressDialog::setDescription(QString text) {
 	description->setText(text);
 }
 
-void ProgressDialog::connectProgress(const QObject *object, const char *member) {
+void ZmdProgressDialog::connectProgress(const QObject *object, const char *member) {
 	connect(object, member, this, SLOT(progress(Progress)));
 }
 
-void ProgressDialog::connectFinished(const QObject *object, const char *member) {
+void ZmdProgressDialog::connectFinished(const QObject *object, const char *member) {
 	connect(object, member, this, SLOT(finished(QString,int)));
 }
 
-void ProgressDialog::progress(Progress prog) {
+void ZmdProgressDialog::progress(Progress prog) {
 	progressBar->advance((int)prog.percent);
 }
 
-void ProgressDialog::finished(QString name, int status) {
+void ZmdProgressDialog::finished(QString name, int status) {
 	disconnect(this, SIGNAL(close()), this, SLOT(closeEvent()));
 	close();
 }

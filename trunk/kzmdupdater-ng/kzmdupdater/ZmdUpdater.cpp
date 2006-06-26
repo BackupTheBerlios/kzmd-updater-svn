@@ -23,8 +23,8 @@
 
 #include "ZmdUpdater.h"
 #include "MainWindow.h"
-#include "InstallWindow.h"
-#include "ConfigWindow.h"
+#include "ZmdInstallWindow.h"
+#include "ZmdConfigWindow.h"
 
 #include <iostream>
 using namespace std;
@@ -49,7 +49,7 @@ void ZmdUpdater::populateUpdateList(QListView *updateList) {
 void ZmdUpdater::startInstall() {
 
 	if (tempList != NULL) {
-		InstallWindow *win = new InstallWindow(core);
+		ZmdInstallWindow *win = new ZmdInstallWindow(core);
 		QValueList<Package> upList;
 		QValueList<Package> instList;
 		QCheckListItem *item = (QCheckListItem*)(tempList->firstChild());
@@ -82,7 +82,7 @@ void ZmdUpdater::startInstall() {
 }
 
 void ZmdUpdater::configureUpdater() {
-	ConfigWindow *win = new ConfigWindow(core);
+	ZmdConfigWindow *win = new ZmdConfigWindow(core);
 	win->show();
 }
 

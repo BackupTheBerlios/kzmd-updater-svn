@@ -17,17 +17,17 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef _CATALOG_LIST_ITEM_H_
-#define _CATALOG_LIST_ITEM_H_
+#ifndef _ZMD_CATALOG_LIST_ITEM_H_
+#define _ZMD_CATALOG_LIST_ITEM_H_
 
 #include <qlistview.h>
 #include "ZmdUpdaterCore.h"
 
-class CatalogListItem : public QCheckListItem {
+class ZmdCatalogListItem : public QCheckListItem {
 
 	public:
 
-		CatalogListItem(QListViewItem *parent, const QString &, ZmdUpdaterCore *_core);
+		ZmdCatalogListItem(QListViewItem *parent, const QString &, ZmdUpdaterCore *_core);
 
 	private:
 

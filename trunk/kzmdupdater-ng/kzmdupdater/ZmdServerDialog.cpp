@@ -18,19 +18,19 @@
 */
 
 
-#include "ServerDialog.h"
+#include "ZmdServerDialog.h"
 #include <qradiobutton.h>
 
 enum { TYPE_ZYPP=0, TYPE_YUM, TYPE_ZEN };
 
-ServerDialog::ServerDialog(QWidget *parent) : QDialog(parent) {
+ZmdServerDialog::ZmdServerDialog(QWidget *parent) : QDialog(parent) {
 	initGUI();
 }
 
-ServerDialog::~ServerDialog() {
+ZmdServerDialog::~ZmdServerDialog() {
 }
 
-QValueList<QString> ServerDialog::getServerInfo() {
+QValueList<QString> ZmdServerDialog::getServerInfo() {
 	QValueList<QString> list;
 	list.append(name);
 	list.append(server);
@@ -48,7 +48,7 @@ QValueList<QString> ServerDialog::getServerInfo() {
 	return list;
 }
 
-void ServerDialog::initGUI() {
+void ZmdServerDialog::initGUI() {
 
 	layout = new QVBoxLayout(this);
 	nameLabel = new QLabel(i18n("Please enter server name below"), this);
@@ -94,13 +94,13 @@ void ServerDialog::initGUI() {
 	show();
 }
 
-void ServerDialog::addButtonClicked() {
+void ZmdServerDialog::addButtonClicked() {
 	name = nameEdit->text();
 	server = serverEdit->text();
 	close();
 }
 
-void ServerDialog::cancelButtonClicked() {
+void ZmdServerDialog::cancelButtonClicked() {
 	name = "";
 	server = "";
 	close();

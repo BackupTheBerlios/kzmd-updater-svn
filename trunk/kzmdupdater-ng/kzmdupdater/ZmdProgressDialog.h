@@ -17,8 +17,8 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef _PROGRESS_DIALOG_H_
-#define _PROGRESS_DIALOG_H_
+#ifndef _ZMD_PROGRESS_DIALOG_H_
+#define _ZMD_PROGRESS_DIALOG_H_
 
 #include <klocale.h>
 #include <kprogress.h>
@@ -39,15 +39,15 @@
 
 */
 
-class ProgressDialog : public QDialog {
+class ZmdProgressDialog : public QDialog {
 
 	Q_OBJECT
 
 	public:
 
 		//first argument true for a progress bar, false for text only.
-		ProgressDialog(bool progressGUI, QWidget *parent=0);
-		~ProgressDialog();
+		ZmdProgressDialog(bool progressGUI, QWidget *parent=0);
+		~ZmdProgressDialog();
 
 		void setTitle(QString);
 		void setDescription(QString);

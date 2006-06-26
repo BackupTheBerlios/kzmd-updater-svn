@@ -23,19 +23,19 @@
 #include <qmessagebox.h>
 #include <qvariant.h>
 
-#include "InstallWindow.h"
-#include "DependencyDialog.h"
+#include "ZmdInstallWindow.h"
+#include "ZmdDependencyDialog.h"
 
-InstallWindow::InstallWindow(ZmdUpdaterCore *_core, QWidget *parent) : 
+ZmdInstallWindow::ZmdInstallWindow(ZmdUpdaterCore *_core, QWidget *parent) : 
 	QWidget(parent,0,Qt::WDestructiveClose) {
 	core = _core;
 	initGUI();
 }
 
-InstallWindow::~InstallWindow() {
+ZmdInstallWindow::~ZmdInstallWindow() {
 }
 
-void InstallWindow::initGUI() {
+void ZmdInstallWindow::initGUI() {
 
 	header = new HeaderWidget(this);
 	transactionList = new KTextEdit(this);
@@ -64,18 +64,18 @@ void InstallWindow::initGUI() {
 
 }
 
-void InstallWindow::abortButtonClicked() {
+void ZmdInstallWindow::abortButtonClicked() {
 	core->cancelTransaction();
 	disconnect(this, SIGNAL(close()), this, SLOT(abortButtonClicked()));
 	close();
 }
 
-void InstallWindow::gotDepInfo(QValueList<Package> installs,
+void ZmdInstallWindow::gotDepInfo(QValueList<Package> installs,
 							   QValueList<Package> updates,
 							   QValueList<Package> removals) {
 	QString text;
 	QValueList<Package>::iterator iter;
-	DependencyDialog diag;
+	ZmdDependencyDialog diag;
 	
 	text = i18n("The following packages most also be installed/updated:\n");
 	for (iter = installs.begin(); iter != installs.end(); iter++) {
@@ -106,7 +106,7 @@ void InstallWindow::gotDepInfo(QValueList<Package> installs,
 	}
 }
 
-void InstallWindow::download(Progress status) {
+void ZmdInstallWindow::download(Progress status) {
 	static bool watchingPackage = false;
 	static bool alreadyDone = false;
 
@@ -124,7 +124,7 @@ void InstallWindow::download(Progress status) {
 	}
 }
 
-void InstallWindow::progress(Progress status) {
+void ZmdInstallWindow::progress(Progress status) {
 	static bool watchingPackage = false; 
 	static bool alreadyDone = false;
 
@@ -145,7 +145,7 @@ void InstallWindow::progress(Progress status) {
 	}
 }
 
-void InstallWindow::finished(int status) {
+void ZmdInstallWindow::finished(int status) {
 	if (status == ERROR_DEP_FAIL) {
 		KMessageBox::error(this, i18n("Sorry, we couldn't resolve the dependencies for this update."));
 		close();
@@ -155,7 +155,7 @@ void InstallWindow::finished(int status) {
 	}
 }
 
-void InstallWindow::setPackageList(QValueList<Package> installs, 
+void ZmdInstallWindow::setPackageList(QValueList<Package> installs, 
 								   QValueList<Package> updates,
 								   QValueList<Package> removals) {
 	installList = installs;
@@ -163,7 +163,7 @@ void InstallWindow::setPackageList(QValueList<Package> installs,
 	removeList = removals;
 }
 
-void InstallWindow::startUpdate() {
+void ZmdInstallWindow::startUpdate() {
 	core->startTransaction(installList, updateList, removeList);	
 	connect(core, SIGNAL(realPackages(QValueList<Package>, QValueList<Package>, 
 			QValueList<Package>)), this, SLOT(gotDepInfo(QValueList<Package>,
