@@ -72,6 +72,7 @@ class MainWindow : public QWidget {
 		void slotPackageSelected(QListViewItem *packageSelected);
 		void configButtonClicked();
 		void installButtonClicked();
+		void closeEvent(QCloseEvent *e);
 
 	private:
 

@@ -23,6 +23,7 @@
 #include <klocale.h>
 #include <kprocess.h>
 #include <kpopupmenu.h>
+#include <kapp.h>
 
 #include "MainWindow.h"
 #include "Updater.h"
@@ -35,6 +36,7 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent) {
 	applet->setPixmap(UserIcon(TRAY_ICON_GREEN));
 	applet->setScaledContents(true);
 	applet->show();
+	connect(applet, SIGNAL(quitSelected()), this, SLOT(slotExit()));
 	timer = new QTimer(this);
 
 	connect(timer, SIGNAL(timeout()), this, SLOT(checkUpdates()));
@@ -95,6 +97,10 @@ void MainWindow::initGUI() {
 	return;
 }
 
+void MainWindow::closeEvent(QCloseEvent *e) {
+	hide();
+}
+
 void MainWindow::initMenu() {
 	KPopupMenu *menu = applet->contextMenu();
 //	menu->insertItem(i18n("About"), this, SLOT(configButtonClicked()),0,-1,1);
@@ -135,6 +141,6 @@ void MainWindow::slotPackageSelected(QListViewItem *packageSelected) {
 }
 
 void MainWindow::slotExit() {
-	close();
+	kapp->quit();
 }
 
