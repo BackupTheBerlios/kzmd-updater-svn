@@ -24,6 +24,7 @@
 #include <qtimer.h>
 
 #include "xmlrpciface.h"
+#include "ZmdUpdaterCoreUtils.h"
 
 #define DEBUG
 enum {
@@ -34,13 +35,6 @@ enum {
 	ERROR_INVALID_TYPE,
 	ERROR_AUTH_REJECT
 };
-
-/* Data Types */
-class Progress;
-class Package;
-class Patch;
-class Service;
-class Catalog;
 
 #define SERVER_ADDY "http://127.0.0.1:2544/zmd/RPC2"
 #define CHECK_INTERVAL (1000)  //1 second
@@ -142,73 +136,5 @@ class ZmdUpdaterCore : public QObject {
 		QTimer *timer;
 };
 
-class Progress {
-
-	public:
-
-		Progress() : expectedTime(0), remainingTime(0), status(0), percent(0.0L) {}
-
-		QString name;
-		int status;
-		int expectedTime;
-		int remainingTime;
-		double percent;	
-		QValueList<QString> messages;
-};
-
-class Service {
-
-	public:
-
-		Service() : activated(false) {}
-
-		QString name;
-		QString id;
-		QString uri;
-		QString type;
-		bool activated;
-	
-};
-
-class Catalog {
-
-	public:
-
-		Catalog() : subscribed(false) {}
-
-		QString name;
-		QString id;
-		QString displayName;
-		QString service;
-		bool subscribed;
-};
-
-/*
-
-	This is the "base" class. It can represent either a package 
-	or a patch for the backend
-*/
-class Package {
-	
-	public:
-
-		Package() : installed(false) {}
-
-		QString name;
-		QString id;
-		QString version;
-		QString catalog;
-		QString description;
-		bool installed;	
-};
-
-class Patch : public Package {
-
-	public:
-
-		Patch() : Package() {}
-
-		QString category;
-};
 
 #endif
