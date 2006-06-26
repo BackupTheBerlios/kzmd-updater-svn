@@ -26,6 +26,9 @@
 #include "ZmdInstallWindow.h"
 #include "ZmdDependencyDialog.h"
 
+#include <iostream>
+using namespace std;
+
 ZmdInstallWindow::ZmdInstallWindow(ZmdUpdaterCore *_core, QWidget *parent) : 
 	QWidget(parent,0,Qt::WDestructiveClose) {
 	core = _core;
@@ -93,7 +96,7 @@ void ZmdInstallWindow::gotDepInfo(QValueList<Package> installs,
 	}
 	diag.setTitle(i18n("Other Packages..."));
 	diag.setText(text);
-	if (diag.exec() == QDialog::Accepted) {
+	if (diag.exec() == QDialog::Accepted) {	
 		connect(core, SIGNAL(download(Progress)), this, SLOT(downloadProgress(Progress)));
 		connect(core, SIGNAL(progress(Progress)), this, SLOT(progress(Progress)));
 		connect(core, SIGNAL(transactionFinished(int)), this, SLOT(finished(int)));	
@@ -108,10 +111,15 @@ void ZmdInstallWindow::download(Progress status) {
 	static bool watchingPackage = false;
 	static bool alreadyDone = false;
 
+	cout << "Download Progress" << endl;
+	cout << "Status: " << status.status << endl;
+	cout << "Name: " << status.name << endl;
+	cout << "Percent: " << status.percent << endl;
+
 	if (status.status > 0) {
 		progressBar->advance((int)status.percent);
 		if (watchingPackage == false && status.status == 1) {
-			transactionList->setText(transactionList->text() + "\n" + status.name + " Is Downloading...");
+			transactionList->setText(transactionList->text() + "\n" + "Packages Are Downloading...");
 			watchingPackage = true;
 			alreadyDone = false;
 		}
@@ -126,12 +134,17 @@ void ZmdInstallWindow::progress(Progress status) {
 	static bool watchingPackage = false; 
 	static bool alreadyDone = false;
 
+	cout << "Trans Progress" << endl;
+	cout << "Status: " << status.status << endl;
+	cout << "Name: " << status.name << endl;
+	cout << "Percent: " << status.percent << endl;
+
 	if (status.status > 0) {
 	//if the transaction has started
 		progressBar->advance((int)status.percent);
 		if (watchingPackage == false && status.status == 1) {
 			//if we are not already watching a package and the transaction is running
-			transactionList->setText(transactionList->text() + "\n" + status.name + " Is Being Installed...");
+			transactionList->setText(transactionList->text() + "\n" + "Packages Are Being Installed...");
 			watchingPackage = true;
 		}
 		if (status.status ==2 && alreadyDone == false) {

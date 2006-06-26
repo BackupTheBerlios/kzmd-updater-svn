@@ -406,15 +406,16 @@ void ZmdUpdaterCore::cancelTransaction() {
  ********************************************************************/
 
 void ZmdUpdaterCore::timerSlot() {
-	server->call("zmd.system.poll", pollID, 
-	this, SLOT(timerData(const QValueList<QVariant>&, const QVariant&)),
-	this, SLOT(faultData(int, const QString&, const QVariant&)));
 
-	if (downloadID.isEmpty() == false) {
+	if (downloadID != "") {
 		server->call("zmd.system.poll", downloadID, 
 		this, SLOT(timerData(const QValueList<QVariant>&, const QVariant&)),
 		this, SLOT(faultData(int, const QString&, const QVariant&))); 
 
+	} else {
+		server->call("zmd.system.poll", pollID, 
+		this, SLOT(timerData(const QValueList<QVariant>&, const QVariant&)),
+		this, SLOT(faultData(int, const QString&, const QVariant&)));
 	}
 }
 
@@ -424,9 +425,10 @@ void ZmdUpdaterCore::timerData(const QValueList<QVariant>& data, const QVariant 
 		QMap<QString, QVariant> map = data.front().toMap();
 		Progress status;
 		status.fromMap(map);
-#ifdef DEBUG
-		cout << "Timer data drop: " << status.percent << endl;
-#endif
+
+		cout << "Status: " << status.status << endl;
+		cout << "Name: " << status.name << endl;
+
 		//test if download here NNN
 		if (status.name == "Downloading Packages") {
 			emit(downloadProgress(status)); 
