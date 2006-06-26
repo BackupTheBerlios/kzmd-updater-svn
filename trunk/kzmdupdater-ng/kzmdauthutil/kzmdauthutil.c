@@ -18,6 +18,10 @@ int main(int argc, char **argv) {
 		printf("Please specify a path\n");
 		return -1;
 	}
+	if (getuid() != 0) {
+		printf("Must run as root\n");
+		return -1;
+	}
 
 	strncpy(path, argv[1], 1023);
 	strncat(path, "/deviceid", (1023-sizeof(path)));
