@@ -71,6 +71,9 @@ class ZmdProgressDialog : public QDialog {
 		QVBoxLayout *mainLayout;
 		KProgress *progressBar;
 		QLabel *description;
+
+		//Mark if we should really exit
+		bool reallyDone;
 };
 
 #endif

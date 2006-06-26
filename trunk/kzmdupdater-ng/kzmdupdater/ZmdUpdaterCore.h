@@ -66,6 +66,10 @@ class ZmdUpdaterCore : public QObject {
 		void getPatches(Catalog);
 		void getUpdates(Catalog);
 
+		void getInfo(QString packageName);
+	
+//Locks added here sometime soon
+
 		void startTransaction(QValueList<Package> installList, 
 							QValueList<Package> updateList,
 							QValueList<Package> removeList);
@@ -79,6 +83,7 @@ class ZmdUpdaterCore : public QObject {
 		void catalogListing(QValueList<Catalog>);
 		void patchListing(QValueList<Patch>);
 		void updateListing(QValueList<Package>);
+		void packageInfo(Package);
 
 		//Signal sent to the GUI
 		//to inform of packages required to resolve
@@ -90,7 +95,6 @@ class ZmdUpdaterCore : public QObject {
 		void transactionFinished(int flags);
 
 		void serviceAdded(QString serviceName, int flags);
-		void serviceRemoved(QString serviceName, int flags);
 
 		/**
 			General progress signal, reports progress on any on-going process.
@@ -100,6 +104,9 @@ class ZmdUpdaterCore : public QObject {
 		//Special progress signal for the download
 		void downloadProgress(Progress);
 
+		//General Fault Signal - For non-specific faults
+		void generalFault(QString faultMessage);
+
 	private slots:
 
 		void catalogData(const QValueList<QVariant>&, const QVariant&);
@@ -107,6 +114,8 @@ class ZmdUpdaterCore : public QObject {
 
 		void updateData(const QValueList<QVariant>&, const QVariant&);
 		void patchData(const QValueList<QVariant>&, const QVariant&);
+
+		void infoData(const QValueList<QVariant>&, const QVariant&);
 
 		void faultData(int, const QString&, const QVariant&);
 

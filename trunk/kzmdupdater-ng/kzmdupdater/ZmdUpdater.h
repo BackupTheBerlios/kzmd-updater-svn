@@ -44,6 +44,7 @@ class ZmdUpdater : public Updater {
 		void gotCatalogListing(QValueList<Catalog>);
 		void gotUpdateListing(QValueList<Package>);
 		void gotPatchListing(QValueList<Patch>);
+		void gotPackageInfo(Package);
 
 
 	private:

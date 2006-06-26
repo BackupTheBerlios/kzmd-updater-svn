@@ -17,8 +17,8 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef _ZMD_CONFIG_WINDOW_
-#define _ZMD_CONFIG_WINDOW_
+#ifndef _ZMD_CONFIG_WINDOW_H_
+#define _ZMD_CONFIG_WINDOW_H_
 
 #include <kpushbutton.h>
 
@@ -54,7 +54,7 @@ class ZmdConfigWindow : public QWidget {
 		void gotServiceList(QValueList<Service>);
 		void gotCatalogList(QValueList<Catalog>);
 		void addedServer(QString server, int);
-		void removedServer(QString server, int);
+		void removeServerFault(QString);
 
 
 	private:

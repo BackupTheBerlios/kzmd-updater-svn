@@ -17,18 +17,38 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include "UpdaterApplication.h"
+#include <kapp.h>
+#include <kconfig.h>
 
-#define ZMD
+#include "UpdaterApplication.h"
+#include "Constants.h"
 
 UpdaterApplication::UpdaterApplication() : KUniqueApplication(true,true,false) {
 
-	main = new MainWindow();
+
+	KConfig *config = kapp->config();
+	config->setGroup("General");
+	int interval;
+
+	switch (config->readEntry("Backend").toInt()) {
+
+		case BACKEND_ZMD:
+			updater = new ZmdUpdater();
+			break;
+		case BACKEND_ZYPP:
+		case BACKEND_SMART:
+
+		default:
+			updater = new ZmdUpdater();
+
+	}
+
+	if ((interval = config->readEntry("Interval").toInt()) <= 0) {
+		interval = 15; // set a reasonable default
+	}
+	interval = interval * 60 * 1000; // convert to ms
+	main = new MainWindow(interval);
 	setMainWidget(main);
-	//We need to fetch this option from a config file later on
-#ifdef ZMD
-	updater = new ZmdUpdater();
-#endif
 
 	connect(updater, SIGNAL(updateApplet(int)), main, SLOT(appletState(int)));
 	connect(main, SIGNAL(startInstall()), updater, SLOT(startInstall()));

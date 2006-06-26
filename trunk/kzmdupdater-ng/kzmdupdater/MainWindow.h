@@ -53,7 +53,7 @@ class MainWindow : public QWidget {
 
 	public:
 
-		MainWindow(QWidget *parent=0);
+		MainWindow(int interval, QWidget *parent=0);
 
 	signals:
 
@@ -71,6 +71,7 @@ class MainWindow : public QWidget {
 		void slotExit();
 		void slotPackageSelected(QListViewItem *packageSelected);
 		void configButtonClicked();
+		void serverButtonClicked();
 		void installButtonClicked();
 		void closeEvent(QCloseEvent *e);
 
@@ -91,6 +92,7 @@ class MainWindow : public QWidget {
 		QVBoxLayout *mainBox;
 		QHBoxLayout *buttonsLayout;
 		QTimer *timer;
+		int timerInterval;
 
 };
 

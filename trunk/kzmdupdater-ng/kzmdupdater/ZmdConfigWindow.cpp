@@ -163,24 +163,16 @@ void ZmdConfigWindow::removeButtonClicked() {
 
 	if (serverList->currentItem()->parent() == NULL) {
 		Service serv;
-		ZmdProgressDialog diag(false,this);
 
 		serv.name = serverList->currentItem()->text(CONFW_NAME);
 		serv.id = serverList->currentItem()->text(CONFW_ID);
 		serv.uri = serverList->currentItem()->text(CONFW_URI);
-		diag.connectFinished(core, SIGNAL(serviceRemoved(QString,int)));
-		diag.setTitle(i18n("Removing server..."));
-		diag.setDescription(i18n("We are removing the server you specified."));
-		connect(core, SIGNAL(serviceRemoved(QString,int)), this, SLOT(removedServer(QString,int)));
+		connect(core, SIGNAL(generalFault(QString)), this, SLOT(removeServerFault(QString)));
 
 		core->removeService(serv);
-		diag.exec();
 	}
 }
 
-void ZmdConfigWindow::removedServer(QString server, int status) {
-	QListViewItem *item;
-
-	if (status == ERROR_NONE)
-		initList();
+void ZmdConfigWindow::removeServerFault(QString message) {
+	KMessageBox::error(this, i18n("There was an error while removing the service:\n")+message);
 }

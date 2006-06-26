@@ -65,7 +65,7 @@ am_kzmdupdater_OBJECTS = main.$(OBJEXT) MainWindow.$(OBJEXT) \
 	xmlrpciface.$(OBJEXT) ZmdUpdaterCore.$(OBJEXT) \
 	ZmdProgressDialog.$(OBJEXT) ZmdCatalogListItem.$(OBJEXT) \
 	ZmdDependencyDialog.$(OBJEXT) ZmdUpdater.$(OBJEXT) \
-	UpdaterApplication.$(OBJEXT)
+	UpdaterApplication.$(OBJEXT) GeneralConfigWindow.$(OBJEXT)
 #>- kzmdupdater_OBJECTS = $(am_kzmdupdater_OBJECTS)
 #>+ 11
 kzmdupdater_final_OBJECTS = kzmdupdater.all_cpp.o 
@@ -75,8 +75,8 @@ kzmdupdater_nofinal_OBJECTS = main.$(OBJEXT) MainWindow.$(OBJEXT) \
 	xmlrpciface.$(OBJEXT) ZmdUpdaterCore.$(OBJEXT) \
 	ZmdProgressDialog.$(OBJEXT) ZmdCatalogListItem.$(OBJEXT) \
 	ZmdDependencyDialog.$(OBJEXT) ZmdUpdater.$(OBJEXT) \
-	UpdaterApplication.$(OBJEXT)\
-ZmdDependencyDialog.moc.o ZmdInstallWindow.moc.o ZmdConfigWindow.moc.o ZmdProgressDialog.moc.o ZmdUpdater.moc.o ZmdUpdaterCore.moc.o Updater.moc.o xmlrpciface.moc.o MainWindow.moc.o HeaderWidget.moc.o ZmdServerDialog.moc.o 
+	UpdaterApplication.$(OBJEXT) GeneralConfigWindow.$(OBJEXT)\
+ZmdDependencyDialog.moc.o ZmdInstallWindow.moc.o GeneralConfigWindow.moc.o ZmdConfigWindow.moc.o ZmdProgressDialog.moc.o ZmdUpdaterCore.moc.o ZmdUpdater.moc.o Updater.moc.o xmlrpciface.moc.o MainWindow.moc.o HeaderWidget.moc.o ZmdServerDialog.moc.o 
 @KDE_USE_FINAL_FALSE@kzmdupdater_OBJECTS = $(kzmdupdater_nofinal_OBJECTS)
 @KDE_USE_FINAL_TRUE@kzmdupdater_OBJECTS = $(kzmdupdater_final_OBJECTS)
 am__DEPENDENCIES_1 =
@@ -377,10 +377,10 @@ kzmdupdater_LDFLAGS = $(KDE_RPATH) $(all_libraries)
 kzmdupdater_LDADD = $(LIB_KFILE)
 
 # which sources should be compiled for kzmdupdater
-kzmdupdater_SOURCES = main.cpp  MainWindow.cpp HeaderWidget.cpp ZmdConfigWindow.cpp ZmdInstallWindow.cpp ZmdServerDialog.cpp xmlrpciface.cpp ZmdUpdaterCore.cpp ZmdProgressDialog.cpp ZmdCatalogListItem.cpp ZmdDependencyDialog.cpp ZmdUpdater.cpp UpdaterApplication.cpp
+kzmdupdater_SOURCES = main.cpp  MainWindow.cpp HeaderWidget.cpp ZmdConfigWindow.cpp ZmdInstallWindow.cpp ZmdServerDialog.cpp xmlrpciface.cpp ZmdUpdaterCore.cpp ZmdProgressDialog.cpp ZmdCatalogListItem.cpp ZmdDependencyDialog.cpp ZmdUpdater.cpp UpdaterApplication.cpp GeneralConfigWindow.cpp
 
 # these are the headers for your project that won't be installed
-noinst_HEADERS = MainWindow.h HeaderWidget.h ZmdConfigWindow.h ZmdInstallWindow.h ZmdServerDialog.h xmlrpciface.h ZmdUpdaterCore.h ZmdProgressDialog.h ZmdCatalogListItem.h ZmdDependencyDialog.h Updater.h ZmdUpdater.h UpdaterApplication.h
+noinst_HEADERS = MainWindow.h HeaderWidget.h ZmdConfigWindow.h ZmdInstallWindow.h ZmdServerDialog.h xmlrpciface.h ZmdUpdaterCore.h ZmdProgressDialog.h ZmdCatalogListItem.h ZmdDependencyDialog.h Updater.h ZmdUpdater.h UpdaterApplication.h GeneralConfigWindow.h
 
 # let automoc handle all of the meta source files (moc)
 #>- METASOURCES = AUTO
@@ -474,6 +474,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/GeneralConfigWindow.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/HeaderWidget.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/MainWindow.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/UpdaterApplication.Po@am__quote@
@@ -732,6 +733,13 @@ ZmdInstallWindow.moc.cpp: $(srcdir)/ZmdInstallWindow.h
 mocs: ZmdInstallWindow.moc.cpp
 
 #>+ 3
+GeneralConfigWindow.moc.cpp: $(srcdir)/GeneralConfigWindow.h
+	$(MOC) $(srcdir)/GeneralConfigWindow.h -o GeneralConfigWindow.moc.cpp
+
+#>+ 2
+mocs: GeneralConfigWindow.moc.cpp
+
+#>+ 3
 ZmdConfigWindow.moc.cpp: $(srcdir)/ZmdConfigWindow.h
 	$(MOC) $(srcdir)/ZmdConfigWindow.h -o ZmdConfigWindow.moc.cpp
 
@@ -746,18 +754,18 @@ ZmdProgressDialog.moc.cpp: $(srcdir)/ZmdProgressDialog.h
 mocs: ZmdProgressDialog.moc.cpp
 
 #>+ 3
-ZmdUpdater.moc.cpp: $(srcdir)/ZmdUpdater.h
-	$(MOC) $(srcdir)/ZmdUpdater.h -o ZmdUpdater.moc.cpp
-
-#>+ 2
-mocs: ZmdUpdater.moc.cpp
-
-#>+ 3
 ZmdUpdaterCore.moc.cpp: $(srcdir)/ZmdUpdaterCore.h
 	$(MOC) $(srcdir)/ZmdUpdaterCore.h -o ZmdUpdaterCore.moc.cpp
 
 #>+ 2
 mocs: ZmdUpdaterCore.moc.cpp
+
+#>+ 3
+ZmdUpdater.moc.cpp: $(srcdir)/ZmdUpdater.h
+	$(MOC) $(srcdir)/ZmdUpdater.h -o ZmdUpdater.moc.cpp
+
+#>+ 2
+mocs: ZmdUpdater.moc.cpp
 
 #>+ 3
 Updater.moc.cpp: $(srcdir)/Updater.h
@@ -796,10 +804,10 @@ mocs: ZmdServerDialog.moc.cpp
 
 #>+ 3
 clean-metasources:
-	-rm -f  ZmdDependencyDialog.moc.cpp ZmdInstallWindow.moc.cpp ZmdConfigWindow.moc.cpp ZmdProgressDialog.moc.cpp ZmdUpdater.moc.cpp ZmdUpdaterCore.moc.cpp Updater.moc.cpp xmlrpciface.moc.cpp MainWindow.moc.cpp HeaderWidget.moc.cpp ZmdServerDialog.moc.cpp
+	-rm -f  ZmdDependencyDialog.moc.cpp ZmdInstallWindow.moc.cpp GeneralConfigWindow.moc.cpp ZmdConfigWindow.moc.cpp ZmdProgressDialog.moc.cpp ZmdUpdaterCore.moc.cpp ZmdUpdater.moc.cpp Updater.moc.cpp xmlrpciface.moc.cpp MainWindow.moc.cpp HeaderWidget.moc.cpp ZmdServerDialog.moc.cpp
 
 #>+ 2
-KDE_DIST=kzmdupdater.desktop Makefile.in kzmdupdater Makefile.am Constants.h 
+KDE_DIST=Constants.h kzmdupdater.desktop Makefile.in ZmdUpdaterCoreUtils.h kzmdupdater Makefile.am 
 
 #>+ 2
 docs-am:
@@ -843,11 +851,11 @@ bcheck-am:
 
 
 #>+ 11
-kzmdupdater.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/main.cpp $(srcdir)/MainWindow.cpp $(srcdir)/HeaderWidget.cpp $(srcdir)/ZmdConfigWindow.cpp $(srcdir)/ZmdInstallWindow.cpp $(srcdir)/ZmdServerDialog.cpp $(srcdir)/xmlrpciface.cpp $(srcdir)/ZmdUpdaterCore.cpp $(srcdir)/ZmdProgressDialog.cpp $(srcdir)/ZmdCatalogListItem.cpp $(srcdir)/ZmdDependencyDialog.cpp $(srcdir)/ZmdUpdater.cpp $(srcdir)/UpdaterApplication.cpp ZmdDependencyDialog.moc.cpp ZmdConfigWindow.moc.cpp ZmdInstallWindow.moc.cpp ZmdProgressDialog.moc.cpp $(srcdir)/ZmdUpdater.moc.cpp $(srcdir)/ZmdUpdaterCore.moc.cpp $(srcdir)/Updater.moc.cpp $(srcdir)/xmlrpciface.moc.cpp $(srcdir)/MainWindow.moc.cpp $(srcdir)/HeaderWidget.moc.cpp ZmdServerDialog.moc.cpp 
+kzmdupdater.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/main.cpp $(srcdir)/MainWindow.cpp $(srcdir)/HeaderWidget.cpp $(srcdir)/ZmdConfigWindow.cpp $(srcdir)/ZmdInstallWindow.cpp $(srcdir)/ZmdServerDialog.cpp $(srcdir)/xmlrpciface.cpp $(srcdir)/ZmdUpdaterCore.cpp $(srcdir)/ZmdProgressDialog.cpp $(srcdir)/ZmdCatalogListItem.cpp $(srcdir)/ZmdDependencyDialog.cpp $(srcdir)/ZmdUpdater.cpp $(srcdir)/UpdaterApplication.cpp $(srcdir)/GeneralConfigWindow.cpp $(srcdir)/ZmdDependencyDialog.moc.cpp $(srcdir)/ZmdConfigWindow.moc.cpp GeneralConfigWindow.moc.cpp $(srcdir)/ZmdInstallWindow.moc.cpp $(srcdir)/ZmdProgressDialog.moc.cpp $(srcdir)/ZmdUpdaterCore.moc.cpp $(srcdir)/ZmdUpdater.moc.cpp $(srcdir)/Updater.moc.cpp $(srcdir)/xmlrpciface.moc.cpp $(srcdir)/MainWindow.moc.cpp $(srcdir)/HeaderWidget.moc.cpp $(srcdir)/ZmdServerDialog.moc.cpp 
 	@echo 'creating kzmdupdater.all_cpp.cpp ...'; \
 	rm -f kzmdupdater.all_cpp.files kzmdupdater.all_cpp.final; \
 	echo "#define KDE_USE_FINAL 1" >> kzmdupdater.all_cpp.final; \
-	for file in main.cpp MainWindow.cpp HeaderWidget.cpp ZmdConfigWindow.cpp ZmdInstallWindow.cpp ZmdServerDialog.cpp xmlrpciface.cpp ZmdUpdaterCore.cpp ZmdProgressDialog.cpp ZmdCatalogListItem.cpp ZmdDependencyDialog.cpp ZmdUpdater.cpp UpdaterApplication.cpp ZmdDependencyDialog.moc.cpp ZmdConfigWindow.moc.cpp ZmdInstallWindow.moc.cpp ZmdProgressDialog.moc.cpp ZmdUpdater.moc.cpp ZmdUpdaterCore.moc.cpp Updater.moc.cpp xmlrpciface.moc.cpp MainWindow.moc.cpp HeaderWidget.moc.cpp ZmdServerDialog.moc.cpp ; do \
+	for file in main.cpp MainWindow.cpp HeaderWidget.cpp ZmdConfigWindow.cpp ZmdInstallWindow.cpp ZmdServerDialog.cpp xmlrpciface.cpp ZmdUpdaterCore.cpp ZmdProgressDialog.cpp ZmdCatalogListItem.cpp ZmdDependencyDialog.cpp ZmdUpdater.cpp UpdaterApplication.cpp GeneralConfigWindow.cpp ZmdDependencyDialog.moc.cpp ZmdConfigWindow.moc.cpp GeneralConfigWindow.moc.cpp ZmdInstallWindow.moc.cpp ZmdProgressDialog.moc.cpp ZmdUpdaterCore.moc.cpp ZmdUpdater.moc.cpp Updater.moc.cpp xmlrpciface.moc.cpp MainWindow.moc.cpp HeaderWidget.moc.cpp ZmdServerDialog.moc.cpp ; do \
 	  echo "#include \"$$file\"" >> kzmdupdater.all_cpp.files; \
 	  test ! -f $(srcdir)/$$file || egrep '^#pragma +implementation' $(srcdir)/$$file >> kzmdupdater.all_cpp.final; \
 	done; \

@@ -26,10 +26,11 @@
 #include <kapp.h>
 
 #include "MainWindow.h"
+#include "GeneralConfigWindow.h"
 #include "Updater.h"
 
 
-MainWindow::MainWindow(QWidget *parent) : QWidget(parent) {
+MainWindow::MainWindow(int interval, QWidget *parent) : QWidget(parent) {
 
 	KIconLoader iconLoader(PROGRAM_NAME);
 	applet = new KSystemTray(this);
@@ -38,9 +39,10 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent) {
 	applet->show();
 	connect(applet, SIGNAL(quitSelected()), this, SLOT(slotExit()));
 	timer = new QTimer(this);
+	timerInterval = interval;
 
 	connect(timer, SIGNAL(timeout()), this, SLOT(checkUpdates()));
-	timer->start(TIMER_INTERVAL,false);
+	timer->start(timerInterval,false);
 	initGUI();
 	initMenu();
 }
@@ -103,8 +105,8 @@ void MainWindow::closeEvent(QCloseEvent *e) {
 
 void MainWindow::initMenu() {
 	KPopupMenu *menu = applet->contextMenu();
-//	menu->insertItem(i18n("About"), this, SLOT(configButtonClicked()),0,-1,1);
-	menu->insertItem(i18n("Add/Remove Servers"), this, SLOT(configButtonClicked()),0,-1,1);
+	menu->insertItem(i18n("Configure Updater"), this, SLOT(configButtonClicked()),0,-1,1);
+	menu->insertItem(i18n("Add/Remove Servers"), this, SLOT(serverButtonClicked()),0,-1,1);
 }
 
 void MainWindow::appletState(int state) {
@@ -122,8 +124,13 @@ void MainWindow::appletState(int state) {
 
 }
 
-void MainWindow::configButtonClicked() {
+void MainWindow::serverButtonClicked() {
 	emit(configureUpdater());
+}
+
+void MainWindow::configButtonClicked() {
+	GeneralConfigWindow *win = new GeneralConfigWindow();
+	win->show();
 }
 
 void MainWindow::installButtonClicked() {

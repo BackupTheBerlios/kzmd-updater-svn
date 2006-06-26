@@ -88,8 +88,6 @@ void ZmdUpdaterCore::addService(Service serv) {
 void ZmdUpdaterCore::removeService(Service serv) {
 	IS_ZMD_BUSY;
 
-	tempServiceName = serv.name;
-
 	server->call("zmd.system.service_remove", serv.id,
 	this, SLOT(serviceData(const QValueList<QVariant>&, const QVariant&)), 
 	this, SLOT(faultData(int, const QString&, const QVariant&)));
@@ -120,14 +118,7 @@ void ZmdUpdaterCore::serviceData(const QValueList<QVariant>& data, const QVarian
 #endif
 		}
 		emit(serviceListing(serviceList));
-	} else {
-		//we just got the return from a service removal
-#ifdef DEBUG
-		cout << "Just Removed Service: " << tempServiceName << endl;
-#endif
-		emit(serviceRemoved(tempServiceName,ERROR_NONE));
-		tempServiceName = "";
-	}
+	} 
 }
 
 /********************************************************************
@@ -263,6 +254,54 @@ void ZmdUpdaterCore::patchData(const QValueList<QVariant>& data, const QVariant&
 	emit(patchListing(patchList));
 
 }
+/********************************************************************
+ *
+ *                     Get Package Info
+ *
+ ********************************************************************/
+
+void ZmdUpdaterCore::getInfo(QString packageName) {
+
+	QValueList<QVariant> wrapper;
+	QValueList<QVariant> args;
+
+	args.append("Name");
+	args.append("Is");
+	args.append(packageName);
+
+	wrapper.append(args);
+
+	server->call("zmd.packsys.query", wrapper, 
+	this, SLOT(infoData(const QValueList<QVariant>&, const QVariant&)),
+	this, SLOT(faultData(int, const QString&, const QVariant&)));
+
+
+}
+
+void ZmdUpdaterCore::infoData(const QValueList<QVariant>& data, const QVariant& t) {
+
+	QValueList<QVariant>::const_iterator iter;
+
+	for (iter = (data.front().toList().begin()); iter != (data.front().toList().end()); iter++) {
+
+		QMap<QString, QVariant> map;
+		map = (*iter).toMap();
+
+#ifdef DEBUG
+		cout << "Info Recieved: " << endl;
+		cout << "Name: " << map["name"].toString() << endl;
+#endif
+
+	if (map["isInstalled"].toBool() == true) {
+			Package pack;
+			pack.fromMap(map);
+			emit(packageInfo(pack));
+			return;
+		}
+	}
+}
+
+
 
 /********************************************************************
  *
@@ -470,7 +509,13 @@ void ZmdUpdaterCore::faultData(int code, const QString& message, const QVariant&
 
 		case 0:
 			//Service already exists -- this was experimentally found, might change
-			emit(serviceAdded(tempServiceName, ERROR_INVALID));
+			//Thread fault
+			if (pollID != "") {
+				emit(serviceAdded(tempServiceName, ERROR_INVALID));
+			} else {
+				//this usually happens during a service removal
+				emit(generalFault(message));
+			}
 			tempServiceName = "";
 			break;
 		case -603:
@@ -501,6 +546,7 @@ void ZmdUpdaterCore::faultData(int code, const QString& message, const QVariant&
 		default:
 			//Things we do not handle
 			cout << "ERROR: Something really strange just happened -- " << message << endl;
+			emit(generalFault(message));
 			break;
 	}
 	ZMD_CLEAR;

@@ -37,6 +37,7 @@ ZmdUpdater::ZmdUpdater() : Updater() {
 	authorizeCore();
 	connect(core, SIGNAL(updateListing(QValueList<Package>)), this, SLOT(gotUpdateListing(QValueList<Package>)));
 	connect(core, SIGNAL(patchListing(QValueList<Patch>)), this, SLOT(gotPatchListing(QValueList<Patch>)));
+	connect(core, SIGNAL(packageInfo(Package)), this, SLOT(gotPackageInfo(Package)));
 
 }
 
@@ -121,9 +122,20 @@ void ZmdUpdater::gotUpdateListing(QValueList<Package> packageList) {
 		newItem->setText(COLUMN_DESC, (*iter).description);
 		newItem->setText(COLUMN_INSTALLED, ((*iter).installed == true) ? "Yes" : "No");
 		newItem->setText(COLUMN_CATALOG, (*iter).catalog);
+
+		core->getInfo((*iter).name);
 	}
 	tempList->setSelected(tempList->firstChild(), true);
 
+}
+
+void ZmdUpdater::gotPackageInfo(Package pack) {
+	QListViewItem *item;
+
+	item = tempList->findItem(pack.name, COLUMN_NAME);
+	if (item != NULL) {
+		item->setText(COLUMN_OLD_VERSION, pack.version);
+	}
 }
 
 void ZmdUpdater::gotPatchListing(QValueList<Patch> patchList) {

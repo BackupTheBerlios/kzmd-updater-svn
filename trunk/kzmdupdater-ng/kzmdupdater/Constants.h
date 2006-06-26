@@ -28,5 +28,7 @@
 #define TRAY_ICON_GREEN "suse_green.png"
 #define TRAY_ICON_RED	"suse_red.png"
 
+enum { BACKEND_ZMD, BACKEND_ZYPP, BACKEND_SMART };
+
 
 #endif

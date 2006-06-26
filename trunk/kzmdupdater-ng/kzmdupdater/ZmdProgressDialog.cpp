@@ -27,6 +27,7 @@ ZmdProgressDialog::ZmdProgressDialog(bool progressGUI, QWidget *parent) : QDialo
 	else
 		initTextGUI();
 	setModal(true);
+	reallyDone = false;
 }
 
 ZmdProgressDialog::~ZmdProgressDialog() {
@@ -47,7 +48,10 @@ void ZmdProgressDialog::initProgressGUI() {
 }
 
 void ZmdProgressDialog::closeEvent(QCloseEvent *e) {	
-	e->ignore();
+	if (reallyDone)
+		e->accept();
+	else
+		e->ignore();
 }
 
 void ZmdProgressDialog::initTextGUI() {
@@ -81,6 +85,6 @@ void ZmdProgressDialog::progress(Progress prog) {
 }
 
 void ZmdProgressDialog::finished(QString name, int status) {
-	disconnect(this, SIGNAL(close()), this, SLOT(closeEvent()));
+	reallyDone = true;
 	close();
 }
