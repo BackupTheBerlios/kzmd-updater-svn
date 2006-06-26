@@ -434,7 +434,8 @@ void ZmdUpdaterCore::timerData(const QValueList<QVariant>& data, const QVariant 
 			emit(progress(status));
 		}
 
-		if (map["status"].toInt() > 1) {
+
+		if (downloadID.isEmpty() && map["status"].toInt() > 1) {
 			ZMD_CLEAR;
 			timer->stop();
 			
@@ -448,6 +449,8 @@ void ZmdUpdaterCore::timerData(const QValueList<QVariant>& data, const QVariant 
 			} else {
 				emit(transactionFinished(ERROR_NONE));
 			}
+		} else if (map["id"].toString() == downloadID && map["status"].toInt() > 1) {
+			downloadID = "";
 		}
 	}
 }
