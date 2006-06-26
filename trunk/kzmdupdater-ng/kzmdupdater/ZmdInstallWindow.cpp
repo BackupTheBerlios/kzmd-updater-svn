@@ -97,7 +97,7 @@ void ZmdInstallWindow::gotDepInfo(QValueList<Package> installs,
 	diag.setTitle(i18n("Other Packages..."));
 	diag.setText(text);
 	if (diag.exec() == QDialog::Accepted) {	
-		connect(core, SIGNAL(download(Progress)), this, SLOT(downloadProgress(Progress)));
+		connect(core, SIGNAL(downloadProgress(Progress)), this, SLOT(download(Progress)));
 		connect(core, SIGNAL(progress(Progress)), this, SLOT(progress(Progress)));
 		connect(core, SIGNAL(transactionFinished(int)), this, SLOT(finished(int)));	
 		core->runTransaction();
