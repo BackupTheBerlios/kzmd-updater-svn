@@ -18,6 +18,8 @@
 */
 
 #include <kprocess.h>
+#include <kdebug.h>
+
 #include <stdio.h>
 #include <string.h>
 
@@ -157,8 +159,10 @@ void ZmdUpdater::authorizeCore() {
 
 	proc << "kdesu";
 	proc << QString("kzmdauthutil ") + QString(ZMD_CONFIG_PATH);
-	if (proc.start() == false)
-		cout << "ERROR: Could not start the kzmdauthutil" << endl;
+	if (proc.start() == false) {
+		kdError() << "Could not start authutil" << endl;
+		authorizeCore();
+	}
 
 	if ( (fd = fopen("/var/tmp/kzmd-auth", "r")) != NULL) {
 		

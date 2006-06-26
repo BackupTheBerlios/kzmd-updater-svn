@@ -58,7 +58,10 @@ class ZmdProgressDialog : public QDialog {
 		
 		void progress(Progress);
 		void finished(QString,int);
-		void closeEvent();
+
+	private slots:
+
+		void closeEvent(QCloseEvent *e);
 
 	private:
 

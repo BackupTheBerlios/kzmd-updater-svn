@@ -161,7 +161,7 @@ void ZmdConfigWindow::addedServer(QString server, int status) {
 
 void ZmdConfigWindow::removeButtonClicked() {
 
-	if (serverList->currentItem()->parent() != NULL) {
+	if (serverList->currentItem()->parent() == NULL) {
 		Service serv;
 		ZmdProgressDialog diag(false,this);
 
