@@ -813,7 +813,7 @@ clean-metasources:
 	-rm -f  ZmdDependencyDialog.moc.cpp ZmdInstallWindow.moc.cpp GeneralConfigWindow.moc.cpp ZmdConfigWindow.moc.cpp ZmdProgressDialog.moc.cpp ZmdUpdaterCore.moc.cpp ZmdUpdater.moc.cpp Updater.moc.cpp xmlrpciface.moc.cpp MainWindow.moc.cpp HeaderWidget.moc.cpp ZmdServerDialog.moc.cpp
 
 #>+ 2
-KDE_DIST=hi48-app-suseupdater.png hi16-app-suseupdater.png hi32-app-suseupdater.png hi128-app-suseupdater.png Constants.h kzmdupdater.desktop SUSEUpdater Makefile.in ZmdUpdaterCoreUtils.h hi64-app-suseupdater.png Makefile.am 
+KDE_DIST=hi48-app-suseupdater.png suseupdater.spec hi16-app-suseupdater.png hi32-app-suseupdater.png hi128-app-suseupdater.png Constants.h kzmdupdater.desktop SUSEUpdater Makefile.in ZmdUpdaterCoreUtils.h hi64-app-suseupdater.png Makefile.am 
 
 #>+ 2
 docs-am:

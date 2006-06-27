@@ -27,6 +27,8 @@
 #include "ZmdUpdaterCoreUtils.h"
 
 #define DEBUG
+
+/* Our error codes, there probably should be more of these, but not now */
 enum {
 
 	ERROR_NONE = 0,
@@ -36,9 +38,13 @@ enum {
 	ERROR_AUTH_REJECT
 };
 
+/* The TCP address of the local zmd server */
 #define SERVER_ADDY "http://127.0.0.1:2544/zmd/RPC2"
+
+//We poll the server ever 1 second on transactions
 #define CHECK_INTERVAL (1000)  //1 second
 
+//Some small macros to ensure two operations do not happen at the same time
 #define IS_ZMD_BUSY if (!pollID.isEmpty()) return
 #define ZMD_BLOCK(ID) (pollID = (ID))
 #define ZMD_CLEAR (pollID = downloadID = "")

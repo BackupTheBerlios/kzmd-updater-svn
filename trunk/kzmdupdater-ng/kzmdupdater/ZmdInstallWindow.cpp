@@ -118,7 +118,7 @@ void ZmdInstallWindow::download(Progress status) {
 
 	if (status.status > 0) {
 		progressBar->advance((int)status.percent);
-		if (watchingPackage == false && status.status == 1) {
+		if (watchingPackage == false && status.status >= 1) {
 			transactionList->setText(transactionList->text() + "\n" + "Packages Are Downloading...");
 			watchingPackage = true;
 			alreadyDone = false;
