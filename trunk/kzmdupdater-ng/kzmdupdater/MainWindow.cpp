@@ -81,7 +81,6 @@ void MainWindow::initGUI() {
 	updateList->addColumn(i18n("Name"));
 	updateList->addColumn(i18n("Old Version"));
 	updateList->addColumn(i18n("New Version"));
-	updateList->addColumn(i18n("Size"));
 
 	/*
 		Hidden Columns, we use these to store data about the packages/patches
@@ -89,6 +88,7 @@ void MainWindow::initGUI() {
 	updateList->addColumn("ID", 0); // This is a hidden column to hold the ID of the patch/package
 	updateList->addColumn("Description", 0); // The Package/Patch description
 	updateList->addColumn("Installed?", 0); // Is it installed? (Is it an update)
+	updateList->addColumn(i18n("Size"), 0); //This is hidden for the moment, but it shouldn't be
 	updateList->addColumn("Catalog", 0); //Obvious
 
 	connect(updateList, SIGNAL(selectionChanged(QListViewItem*)), this, SLOT(slotPackageSelected(QListViewItem*)));

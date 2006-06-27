@@ -274,8 +274,6 @@ void ZmdUpdaterCore::getInfo(QString packageName) {
 	server->call("zmd.packsys.query", wrapper, 
 	this, SLOT(infoData(const QValueList<QVariant>&, const QVariant&)),
 	this, SLOT(faultData(int, const QString&, const QVariant&)));
-
-
 }
 
 void ZmdUpdaterCore::infoData(const QValueList<QVariant>& data, const QVariant& t) {
@@ -283,16 +281,10 @@ void ZmdUpdaterCore::infoData(const QValueList<QVariant>& data, const QVariant& 
 	QValueList<QVariant>::const_iterator iter;
 
 	for (iter = (data.front().toList().begin()); iter != (data.front().toList().end()); iter++) {
+		Package pack;
+		pack.fromMap((*iter).toMap());
 
-		QMap<QString, QVariant> map;
-		map = (*iter).toMap();
-
-	if (map["IsInstalled"].toBool() == true) {
-			Package pack;
-			pack.fromMap(map);
-			emit(packageInfo(pack));
-			return;
-		}
+		emit(packageInfo(pack));
 	}
 }
 
