@@ -287,7 +287,6 @@ void ZmdUpdaterCore::infoData(const QValueList<QVariant>& data, const QVariant& 
 		QMap<QString, QVariant> map;
 		map = (*iter).toMap();
 
-
 	if (map["IsInstalled"].toBool() == true) {
 			Package pack;
 			pack.fromMap(map);
