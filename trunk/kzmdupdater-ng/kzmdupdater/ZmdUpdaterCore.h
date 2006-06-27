@@ -84,6 +84,7 @@ class ZmdUpdaterCore : public QObject {
 		void catalogListing(QValueList<Catalog>);
 		void patchListing(QValueList<Patch>);
 		void updateListing(QValueList<Package>);
+
 		void packageInfo(Package);
 		void packageDetails(PackageDetails);
 
@@ -140,6 +141,8 @@ class ZmdUpdaterCore : public QObject {
 		//Also may hold package IDs...just a temp variable
 		//I don't like this, but I am not sure at the moment
 		QString temp;
+
+		//Obvious, we cannot save these from signal to signal, so we store them here
 		QValueList<QVariant> packagesToInstall;
 		QValueList<QVariant> packagesToUpdate;
 		QValueList<QVariant> packagesToRemove;

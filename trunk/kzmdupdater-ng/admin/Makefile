@@ -17,9 +17,9 @@
 srcdir = .
 top_srcdir = ..
 VPATH = .
-pkgdatadir = $(datadir)/kzmdupdater
-pkglibdir = $(libdir)/kzmdupdater
-pkgincludedir = $(includedir)/kzmdupdater
+pkgdatadir = $(datadir)/kzmdupdater-ng
+pkglibdir = $(libdir)/kzmdupdater-ng
+pkgincludedir = $(includedir)/kzmdupdater-ng
 top_builddir = ..
 am__cd = CDPATH="$${ZSH_VERSION+.}$(PATH_SEPARATOR)" && cd
 INSTALL = /usr/bin/install -c -p
@@ -54,16 +54,16 @@ DIST_SOURCES =
 #>- DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 #>+ 1
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST) $(KDE_DIST)
-ACLOCAL = ${SHELL} /home/raven/src/trunk/kzmdupdater-ng/admin/missing --run aclocal-1.9
+ACLOCAL = ${SHELL} /home/raven/src/kzmdupdater-ng/admin/missing --run aclocal-1.9
 AMDEP_FALSE = #
 AMDEP_TRUE = 
-AMTAR = ${SHELL} /home/raven/src/trunk/kzmdupdater-ng/admin/missing --run tar
+AMTAR = ${SHELL} /home/raven/src/kzmdupdater-ng/admin/missing --run tar
 AR = ar
 ARTSCCONFIG = /opt/kde3/bin/artsc-config
 AUTOCONF = $(SHELL) $(top_srcdir)/admin/cvs.sh configure || touch configure
 AUTODIRS = 
-AUTOHEADER = ${SHELL} /home/raven/src/trunk/kzmdupdater-ng/admin/missing --run autoheader
-AUTOMAKE = ${SHELL} /home/raven/src/trunk/kzmdupdater-ng/admin/missing --run automake-1.9
+AUTOHEADER = ${SHELL} /home/raven/src/kzmdupdater-ng/admin/missing --run autoheader
+AUTOMAKE = ${SHELL} /home/raven/src/kzmdupdater-ng/admin/missing --run automake-1.9
 AWK = gawk
 CC = gcc
 CCDEPMODE = depmode=gcc3
@@ -166,7 +166,7 @@ LIB_XEXT = -lXext
 LIB_XRENDER = 
 LN_S = ln -s
 LTLIBOBJS = 
-MAKEINFO = ${SHELL} /home/raven/src/trunk/kzmdupdater-ng/admin/missing --run makeinfo
+MAKEINFO = ${SHELL} /home/raven/src/kzmdupdater-ng/admin/missing --run makeinfo
 MAKEKDEWIDGETS = /opt/kde3/bin/makekdewidgets
 MCOPIDL = /opt/kde3/bin/mcopidl
 MEINPROC = /opt/kde3/bin/meinproc
@@ -175,7 +175,7 @@ MSGFMT = /usr/bin/msgfmt
 NOOPT_CFLAGS = -O0
 NOOPT_CXXFLAGS = -O0
 OBJEXT = o
-PACKAGE = kzmdupdater
+PACKAGE = kzmdupdater-ng
 PACKAGE_BUGREPORT = 
 PACKAGE_NAME = 
 PACKAGE_STRING = 
@@ -247,7 +247,7 @@ include_x11_FALSE = #
 include_x11_TRUE = 
 includedir = ${prefix}/include
 infodir = ${prefix}/info
-install_sh = /home/raven/src/trunk/kzmdupdater-ng/admin/install-sh
+install_sh = /home/raven/src/kzmdupdater-ng/admin/install-sh
 kde_appsdir = ${datadir}/applnk
 kde_bindir = ${exec_prefix}/bin
 kde_confdir = ${datadir}/config
@@ -316,9 +316,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 #>- 	      exit 1;; \
 #>- 	  esac; \
 #>- 	done; \
-#>- 	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign  admin/Makefile'; \
+#>- 	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  admin/Makefile'; \
 #>- 	cd $(top_srcdir) && \
-#>- 	  $(AUTOMAKE) --foreign  admin/Makefile
+#>- 	  $(AUTOMAKE) --gnu  admin/Makefile
 #>+ 12
 	@for dep in $?; do \
 	  case '$(am__configure_deps)' in \
@@ -328,9 +328,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign  admin/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  admin/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --foreign  admin/Makefile
+	  $(AUTOMAKE) --gnu  admin/Makefile
 	cd $(top_srcdir) && perl admin/am_edit admin/Makefile.in
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
@@ -513,9 +513,9 @@ force-reedit:
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign  admin/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  admin/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --foreign  admin/Makefile
+	  $(AUTOMAKE) --gnu  admin/Makefile
 	cd $(top_srcdir) && perl admin/am_edit admin/Makefile.in
 
 

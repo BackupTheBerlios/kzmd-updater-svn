@@ -632,7 +632,7 @@ uninstall-am: uninstall-binPROGRAMS uninstall-info-am
 .NOEXPORT:
 
 #>+ 2
-KDE_DIST=Makefile.in Makefile.am 
+KDE_DIST=Makefile.in Makefile.am kzmdauthutil 
 
 #>+ 2
 docs-am:

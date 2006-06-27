@@ -17,10 +17,9 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include "ZmdUpdaterCore.h"
+#include <kdebug.h>
 
-#include <iostream>
-using namespace std;
+#include "ZmdUpdaterCore.h"
 
 /********************************************************************
  *
@@ -113,9 +112,6 @@ void ZmdUpdaterCore::serviceData(const QValueList<QVariant>& data, const QVarian
 			Service serv;
 			serv.fromMap(map);
 			serviceList.append(serv);
-#ifdef DEBUG
-			cout << "Service drop: " << serv.name << endl;
-#endif
 		}
 		emit(serviceListing(serviceList));
 	} 
@@ -182,8 +178,8 @@ void ZmdUpdaterCore::catalogData(const QValueList<QVariant>& data, const QVarian
 			cat.fromMap(map);
 			catalogList.append(cat);
 #ifdef DEBUG
-			cout << "Catalog Drop name: " << cat.name << endl;
-			cout << "Catalog service: " << cat.service << endl;
+			kdWarning() << "Catalog Drop name: " << cat.name << endl;
+			kdWarning() << "Catalog service: " << cat.service << endl;
 #endif
 		}
 		emit(catalogListing(catalogList));
@@ -248,7 +244,7 @@ void ZmdUpdaterCore::patchData(const QValueList<QVariant>& data, const QVariant&
 		patch.fromMap(map);
 		patchList.append(patch);
 #ifdef DEBUG
-		cout << "Patch drop: " << patch.name << endl;
+		kdWarning() << "Patch drop: " << patch.name << endl;
 #endif
 	}
 	emit(patchListing(patchList));
@@ -349,7 +345,7 @@ void ZmdUpdaterCore::startTransaction(QValueList<Package> installList,
 	}
 
 #ifdef DEBUG
-	cout << "Asking for dep verification" << endl;
+	kdWarning() << "Asking for dep verification" << endl;
 #endif
 	server->call("zmd.packsys.verify", QValueList<QVariant>(), 
 	this, SLOT(transactData(const QValueList<QVariant>&, const QVariant&)),
@@ -361,8 +357,6 @@ void ZmdUpdaterCore::runTransaction() {
 	QValueList<QVariant> argList;
 
 
-	cout << "Running transaction" << endl;
-	
 	argList.append(packagesToInstall);
 	argList.append(packagesToUpdate);
 	argList.append(packagesToRemove);
@@ -414,7 +408,6 @@ void ZmdUpdaterCore::transactData(const QValueList<QVariant>& data, const QVaria
 		argList.append(packagesToRemove);
 
 		if (verification) { //If this is true, the info we just got is verification info 
-			cout << "Asking for dep resolve" << endl;
 
 			server->call("zmd.packsys.resolve_dependencies", argList, 
 			this, SLOT(transactData(const QValueList<QVariant>&, const QVariant&)),
@@ -479,9 +472,9 @@ void ZmdUpdaterCore::timerData(const QValueList<QVariant>& data, const QVariant 
 		Progress status;
 		status.fromMap(map);
 #ifdef DEBUG
-		cout << "Status: " << status.status << endl;
-		cout << "Name: " << status.name << endl;
-		cout << "Percent: " << status.percent << endl;
+		kdWarning() << "Status: " << status.status << endl;
+		kdWarning() << "Name: " << status.name << endl;
+		kdWarning() << "Percent: " << status.percent << endl;
 #endif
 		//test if download here NNN
 		if (status.name == "Downloading Packages") {
@@ -559,14 +552,13 @@ void ZmdUpdaterCore::faultData(int code, const QString& message, const QVariant&
 			break;
 		default:
 			//Things we do not handle
-			cout << "ERROR: Something really strange just happened -- " << message << endl;
 			emit(generalFault(message));
 			break;
 	}
 	ZMD_CLEAR;
 	timer->stop();
 #ifdef DEBUG
-	cout << "Fault: " << message << endl;
-	cout << "Fault Code: " << code << endl;
+	kdError() << "Fault: " << message << endl;
+	kdError() << "Fault Code: " << code << endl;
 #endif
 }

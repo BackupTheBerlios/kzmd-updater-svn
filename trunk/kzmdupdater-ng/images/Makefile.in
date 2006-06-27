@@ -326,9 +326,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 #>- 	      exit 1;; \
 #>- 	  esac; \
 #>- 	done; \
-#>- 	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign  images/Makefile'; \
+#>- 	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  images/Makefile'; \
 #>- 	cd $(top_srcdir) && \
-#>- 	  $(AUTOMAKE) --foreign  images/Makefile
+#>- 	  $(AUTOMAKE) --gnu  images/Makefile
 #>+ 12
 	@for dep in $?; do \
 	  case '$(am__configure_deps)' in \
@@ -338,9 +338,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign  images/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  images/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --foreign  images/Makefile
+	  $(AUTOMAKE) --gnu  images/Makefile
 	cd $(top_srcdir) && perl admin/am_edit images/Makefile.in
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
@@ -517,7 +517,7 @@ uninstall-am: uninstall-images_dataDATA uninstall-info-am
 .NOEXPORT:
 
 #>+ 2
-KDE_DIST=Makefile.in suse_red.png trayicon-green.png suse_logo.png opensuse.png suse_green.png Makefile.am 
+KDE_DIST=trayicon-red.png Makefile.in suse_red.png trayicon-green.png suse_logo.png opensuse.png suse_green.png Makefile.am 
 
 #>+ 2
 docs-am:
@@ -532,9 +532,9 @@ force-reedit:
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign  images/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  images/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --foreign  images/Makefile
+	  $(AUTOMAKE) --gnu  images/Makefile
 	cd $(top_srcdir) && perl admin/am_edit images/Makefile.in
 
 
