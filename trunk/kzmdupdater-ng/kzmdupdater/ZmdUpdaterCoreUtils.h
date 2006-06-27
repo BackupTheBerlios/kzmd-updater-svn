@@ -186,5 +186,27 @@ class Patch : public Package {
 		QString category;
 };
 
+class PackageDetails {
+
+	public:
+
+		PackageDetails() : installOnly(0), installSize(0) {}
+
+		void fromMap(const QMap<QString, QVariant> &map) {
+			summary = map["summary"].toString();
+			description = map["description"].toString();
+			vendor = map["vendor"].toString();
+			installOnly = map["install_only"].toBool();
+			installSize = map["install_size"].toInt();
+		}
+
+		QString id;
+		QString summary;
+		QString description;
+		QString vendor;
+		bool installOnly;
+		int installSize;
+};
+
 
 #endif

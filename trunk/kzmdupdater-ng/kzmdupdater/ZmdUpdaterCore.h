@@ -67,6 +67,7 @@ class ZmdUpdaterCore : public QObject {
 		void getUpdates(Catalog);
 
 		void getInfo(QString packageName);
+		void getDetails(Package);
 	
 //Locks added here sometime soon
 
@@ -84,6 +85,7 @@ class ZmdUpdaterCore : public QObject {
 		void patchListing(QValueList<Patch>);
 		void updateListing(QValueList<Package>);
 		void packageInfo(Package);
+		void packageDetails(PackageDetails);
 
 		//Signal sent to the GUI
 		//to inform of packages required to resolve
@@ -135,8 +137,9 @@ class ZmdUpdaterCore : public QObject {
 		QString downloadID; //special pollID just for the download
 
 		//Holds the name of the server we just added/removed
+		//Also may hold package IDs...just a temp variable
 		//I don't like this, but I am not sure at the moment
-		QString tempServiceName;
+		QString temp;
 		QValueList<QVariant> packagesToInstall;
 		QValueList<QVariant> packagesToUpdate;
 		QValueList<QVariant> packagesToRemove;

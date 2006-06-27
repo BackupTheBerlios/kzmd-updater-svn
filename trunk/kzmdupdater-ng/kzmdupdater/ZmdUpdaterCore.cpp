@@ -78,7 +78,7 @@ void ZmdUpdaterCore::addService(Service serv) {
 	QValueList<QVariant> data;
 	QMap<QString,QVariant> map = serv.toMap();
 	data.append(QVariant(map));
-	tempServiceName = serv.name;
+	temp = serv.name;
 
 	server->call("zmd.system.service_add", data,
 	this, SLOT(serviceData(const QValueList<QVariant>&, const QVariant&)), 
@@ -256,7 +256,7 @@ void ZmdUpdaterCore::patchData(const QValueList<QVariant>& data, const QVariant&
 }
 /********************************************************************
  *
- *                     Get Package Info
+ *                     Get Package Info/Details
  *
  ********************************************************************/
 
@@ -276,15 +276,42 @@ void ZmdUpdaterCore::getInfo(QString packageName) {
 	this, SLOT(faultData(int, const QString&, const QVariant&)));
 }
 
+void ZmdUpdaterCore::getDetails(Package pack) {
+	QMap<QString, QVariant> map;
+	QValueList<QVariant> args;
+
+	map = pack.toMap();
+	args.append(map);
+
+	//We need an id in packageDetails, but it does not return it
+	temp = pack.id;
+
+
+	server->call("zmd.packsys.package_details", args, 
+	this, SLOT(infoData(const QValueList<QVariant>&, const QVariant&)),
+	this, SLOT(faultData(int, const QString&, const QVariant&)));
+
+}
+
 void ZmdUpdaterCore::infoData(const QValueList<QVariant>& data, const QVariant& t) {
 
-	QValueList<QVariant>::const_iterator iter;
+	if (data.front().canCast(QVariant::List) == true) {
 
-	for (iter = (data.front().toList().begin()); iter != (data.front().toList().end()); iter++) {
-		Package pack;
-		pack.fromMap((*iter).toMap());
+		QValueList<QVariant>::const_iterator iter;
 
-		emit(packageInfo(pack));
+		for (iter = (data.front().toList().begin()); iter != (data.front().toList().end()); iter++) {
+			Package pack;
+			pack.fromMap((*iter).toMap());
+
+			emit(packageInfo(pack));
+		}
+	} else {
+		PackageDetails packDet;
+
+		packDet.fromMap(data.front().toMap());
+		packDet.id = temp;
+		temp = "";
+		emit(packageDetails(packDet));
 	}
 }
 
@@ -468,13 +495,13 @@ void ZmdUpdaterCore::timerData(const QValueList<QVariant>& data, const QVariant 
 				ZMD_CLEAR;
 				timer->stop();
 				
-				if (tempServiceName != "") {
+				if (temp != "") {
 					if (map["status"].toInt() == 4)
-						emit(serviceAdded(tempServiceName, ERROR_INVALID));
+						emit(serviceAdded(temp, ERROR_INVALID));
 					else 
-						emit(serviceAdded(tempServiceName, ERROR_NONE));
+						emit(serviceAdded(temp, ERROR_NONE));
 
-					tempServiceName = "";
+					temp = "";
 				} else {
 					emit(transactionFinished(ERROR_NONE));
 				}
@@ -498,12 +525,12 @@ void ZmdUpdaterCore::faultData(int code, const QString& message, const QVariant&
 			//Service already exists -- this was experimentally found, might change
 			//Thread fault
 			if (pollID != "") {
-				emit(serviceAdded(tempServiceName, ERROR_INVALID));
+				emit(serviceAdded(temp, ERROR_INVALID));
 			} else {
 				//this usually happens during a service removal
 				emit(generalFault(message));
 			}
-			tempServiceName = "";
+			temp = "";
 			break;
 		case -603:
 			//Dep Failure
@@ -522,13 +549,13 @@ void ZmdUpdaterCore::faultData(int code, const QString& message, const QVariant&
 			break;
 		case -617:
 			//Invalid service specified
-			emit(serviceAdded(tempServiceName, ERROR_INVALID));
-			tempServiceName = "";
+			emit(serviceAdded(temp, ERROR_INVALID));
+			temp = "";
 			break;
 		case -619: 
 			//Invalid service type specified
-			emit(serviceAdded(tempServiceName, ERROR_INVALID_TYPE));
-			tempServiceName = "";
+			emit(serviceAdded(temp, ERROR_INVALID_TYPE));
+			temp = "";
 			break;
 		default:
 			//Things we do not handle

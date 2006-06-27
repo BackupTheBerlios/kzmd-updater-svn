@@ -38,6 +38,7 @@ ZmdUpdater::ZmdUpdater() : Updater() {
 	connect(core, SIGNAL(updateListing(QValueList<Package>)), this, SLOT(gotUpdateListing(QValueList<Package>)));
 	connect(core, SIGNAL(patchListing(QValueList<Patch>)), this, SLOT(gotPatchListing(QValueList<Patch>)));
 	connect(core, SIGNAL(packageInfo(Package)), this, SLOT(gotPackageInfo(Package)));
+	connect(core, SIGNAL(packageDetails(PackageDetails)), this, SLOT(gotPackageDetails(PackageDetails)));
 }
 
 void ZmdUpdater::populateUpdateList(QListView *updateList) {
@@ -124,9 +125,9 @@ void ZmdUpdater::gotUpdateListing(QValueList<Package> packageList) {
 		newItem->setText(COLUMN_CATALOG, (*iter).catalog);
 
 		core->getInfo((*iter).name);
+		core->getDetails((*iter));
 	}
 	tempList->setSelected(tempList->firstChild(), true);
-
 }
 
 void ZmdUpdater::gotPackageInfo(Package pack) {
@@ -138,6 +139,21 @@ void ZmdUpdater::gotPackageInfo(Package pack) {
 	item = tempList->findItem(pack.name, COLUMN_NAME);
 	if (item != NULL) {
 		item->setText(COLUMN_OLD_VERSION,pack.version);
+	}
+}		
+
+void ZmdUpdater::gotPackageDetails(PackageDetails details) {
+	QListViewItem *item;
+
+	item = tempList->findItem(details.id, COLUMN_ID);
+	if (item != NULL) {
+		item->setText(COLUMN_DESC, details.description);
+	
+		if (item == tempList->selectedItem()) {
+			//force a refresh of the package description
+			tempList->setSelected(item, false);
+			tempList->setSelected(item, true);
+		}
 	}
 }
 
