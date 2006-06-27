@@ -266,7 +266,7 @@ void ZmdUpdaterCore::getInfo(QString packageName) {
 	QValueList<QVariant> args;
 
 	args.append("Name");
-	args.append("Is");
+	args.append("is");
 	args.append(packageName);
 
 	wrapper.append(args);
@@ -287,14 +287,15 @@ void ZmdUpdaterCore::infoData(const QValueList<QVariant>& data, const QVariant& 
 		QMap<QString, QVariant> map;
 		map = (*iter).toMap();
 
+
+	if (map["isInstalled"].toBool() == true) {
+			Package pack;
+			pack.fromMap(map);
 #ifdef DEBUG
 		cout << "Info Recieved: " << endl;
 		cout << "Name: " << map["name"].toString() << endl;
 #endif
 
-	if (map["isInstalled"].toBool() == true) {
-			Package pack;
-			pack.fromMap(map);
 			emit(packageInfo(pack));
 			return;
 		}

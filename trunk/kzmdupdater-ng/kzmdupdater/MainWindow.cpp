@@ -53,7 +53,7 @@ void MainWindow::initGUI() {
 	header = new HeaderWidget(this);
 	updateList = new QListView(this);
 	packageDescription = new KTextEdit(this);
-	configureButton = new QPushButton(i18n("Configure Updater"),this);
+	configureButton = new QPushButton(i18n("Add/Remove Servers"),this);
 	cancelButton = new QPushButton(i18n("Cancel"),this);
 	installButton = new QPushButton(i18n("Install"),this);
 	
@@ -71,7 +71,7 @@ void MainWindow::initGUI() {
 	buttonsLayout->addWidget(cancelButton,false, Qt::AlignRight);
 	buttonsLayout->addWidget(installButton,false, Qt::AlignRight);
 
-	connect(configureButton, SIGNAL(clicked()), this, SLOT(configButtonClicked()));
+	connect(configureButton, SIGNAL(clicked()), this, SLOT(serverButtonClicked()));
 	connect(installButton, SIGNAL(clicked()), this, SLOT(installButtonClicked()));
 	connect(cancelButton, SIGNAL(clicked()), this, SLOT(hide()));
 
@@ -145,6 +145,7 @@ void MainWindow::installButtonClicked() {
 void MainWindow::checkUpdates() {
 	//Clear the list and fire the update signal to the backend
 	updateList->clear();
+	packageDescription->setText("");
 	emit(populateUpdateList(updateList)); 
 }
 
