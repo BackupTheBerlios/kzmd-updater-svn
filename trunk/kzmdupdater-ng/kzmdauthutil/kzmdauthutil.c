@@ -31,11 +31,7 @@ int main(int argc, char **argv) {
 		return -1;
 	}
 
-	if ((mkfifo("/var/tmp/kzmd-auth", 0666) < 0) && errno != EEXIST) {
-		printf("Error creating the named pipe\n");
-		return -1;
-	}
-		
+	mkfifo("/var/tmp/kzmd-auth", 0666);
 
 	if ( (fifo = fopen("/var/tmp/kzmd-auth", "w")) == NULL) {
 		printf("Cannot open the fifo\n");
