@@ -72,6 +72,12 @@ class ZmdInstallWindow : public QWidget {
 		QValueList<Package>	installList;
 		QValueList<Package>	updateList;
 		QValueList<Package>	removeList;
+
+		//temp variables for the two progress functions
+		bool watchingDownload;
+		bool downloadDone;
+		bool watchingPackage;
+		bool packageDone;
 };
 
 

@@ -33,6 +33,10 @@ ZmdInstallWindow::ZmdInstallWindow(ZmdUpdaterCore *_core, QWidget *parent) :
 	QWidget(parent,0,Qt::WDestructiveClose) {
 	core = _core;
 	initGUI();
+	watchingDownload = false;
+	watchingPackage = false;
+	downloadDone = false;
+	packageDone = false;
 }
 
 ZmdInstallWindow::~ZmdInstallWindow() {
@@ -108,8 +112,6 @@ void ZmdInstallWindow::gotDepInfo(QValueList<Package> installs,
 }
 
 void ZmdInstallWindow::download(Progress status) {
-	static bool watchingPackage = false;
-	static bool alreadyDone = false;
 
 	cout << "Download Progress" << endl;
 	cout << "Status: " << status.status << endl;
@@ -118,21 +120,19 @@ void ZmdInstallWindow::download(Progress status) {
 
 	if (status.status > 0) {
 		progressBar->advance((int)status.percent);
-		if (watchingPackage == false && status.status >= 1) {
+		if (watchingDownload == false && status.status >= 1) {
 			transactionList->setText(transactionList->text() + "\n" + "Packages Are Downloading...");
-			watchingPackage = true;
-			alreadyDone = false;
+			watchingDownload = true;
+			downloadDone = false;
 		}
-		if (status.status == 2 && alreadyDone == false) {
+		if (status.status == 2 && downloadDone == false) {
 			transactionList->setText(transactionList->text() + "Done");
-			alreadyDone = true;
+			downloadDone = true;
 		}
 	}
 }
 
 void ZmdInstallWindow::progress(Progress status) {
-	static bool watchingPackage = false; 
-	static bool alreadyDone = false;
 
 	cout << "Trans Progress" << endl;
 	cout << "Status: " << status.status << endl;
@@ -147,11 +147,11 @@ void ZmdInstallWindow::progress(Progress status) {
 			transactionList->setText(transactionList->text() + "\n" + "Packages Are Being Installed...");
 			watchingPackage = true;
 		}
-		if (status.status ==2 && alreadyDone == false) {
+		if (status.status ==2 && packageDone == false) {
 			//if the transaction is done and we have not already marked it done
 			transactionList->setText(transactionList->text() + " Done.");
 			watchingPackage = false;
-			alreadyDone = true;
+			packageDone = true;
 		}	
 	} else if (status.status == 4) {
 		KMessageBox::error(this, status.messages.front());
