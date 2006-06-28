@@ -13,9 +13,9 @@ Provides:			SUSEUpdater
 Summary:			An Extensible Package Updater Applet For KDE
 URL:				https://developer.berlios.de/projects/kzmd-updater/
 Version:			0.0.1
-Release				1
+Release:			1
 Epoch:				1
-Source:				suseupdater-%{version}.tar.bz2
+Source:				suseupdater-%{version}.tar.gz
 Buildroot: %{_tmppath}/%{name}-%{version}-root
 
 %description
@@ -32,6 +32,7 @@ Authors:
 
 %build
 
+make -f Makefile.cvs
 ./configure --prefix=`kde-config --prefix`
 
 make

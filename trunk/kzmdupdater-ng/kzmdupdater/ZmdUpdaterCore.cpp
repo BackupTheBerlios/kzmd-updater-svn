@@ -195,6 +195,7 @@ void ZmdUpdaterCore::catalogData(const QValueList<QVariant>& data, const QVarian
 /* Package Handling (call and data slot) */
 void ZmdUpdaterCore::getPatches(Catalog cat) {
 	IS_ZMD_BUSY;
+
 	server->call("zmd.packsys.get_patches", cat.id, 
 	this, SLOT(patchData(const QValueList<QVariant>&, const QVariant&)),
 	this, SLOT(faultData(int, const QString&, const QVariant&)));
@@ -203,6 +204,7 @@ void ZmdUpdaterCore::getPatches(Catalog cat) {
 
 void ZmdUpdaterCore::getUpdates(Catalog cat) {
 	IS_ZMD_BUSY;
+
 	server->call("zmd.packsys.get_updates", cat.id, 
 	this, SLOT(updateData(const QValueList<QVariant>&, const QVariant&)),
 	this, SLOT(faultData(int, const QString&, const QVariant&)));
@@ -282,7 +284,6 @@ void ZmdUpdaterCore::getDetails(Package pack) {
 	//We need an id in packageDetails, but it does not return it
 	temp = pack.id;
 
-
 	server->call("zmd.packsys.package_details", args, 
 	this, SLOT(infoData(const QValueList<QVariant>&, const QVariant&)),
 	this, SLOT(faultData(int, const QString&, const QVariant&)));
@@ -291,10 +292,10 @@ void ZmdUpdaterCore::getDetails(Package pack) {
 
 void ZmdUpdaterCore::infoData(const QValueList<QVariant>& data, const QVariant& t) {
 
+	//We either get a List or a Map in this return. If its a list, then we just called getInfo
 	if (data.front().canCast(QVariant::List) == true) {
 
 		QValueList<QVariant>::const_iterator iter;
-
 		for (iter = (data.front().toList().begin()); iter != (data.front().toList().end()); iter++) {
 			Package pack;
 			pack.fromMap((*iter).toMap());
@@ -302,6 +303,7 @@ void ZmdUpdaterCore::infoData(const QValueList<QVariant>& data, const QVariant& 
 			emit(packageInfo(pack));
 		}
 	} else {
+	//And if its a map, we just called getDetails
 		PackageDetails packDet;
 
 		packDet.fromMap(data.front().toMap());
@@ -356,7 +358,6 @@ void ZmdUpdaterCore::runTransaction() {
 	
 	QValueList<QVariant> argList;
 
-
 	argList.append(packagesToInstall);
 	argList.append(packagesToUpdate);
 	argList.append(packagesToRemove);
@@ -365,6 +366,8 @@ void ZmdUpdaterCore::runTransaction() {
 	server->call("zmd.packsys.transact", argList, 
 	this, SLOT(transactData(const QValueList<QVariant>&, const QVariant&)),
 	this, SLOT(faultData(int, const QString&, const QVariant&)));
+
+	//Don't need these anymore
 	packagesToInstall.clear();
 	packagesToRemove.clear();
 	packagesToUpdate.clear();
@@ -412,7 +415,7 @@ void ZmdUpdaterCore::transactData(const QValueList<QVariant>& data, const QVaria
 			server->call("zmd.packsys.resolve_dependencies", argList, 
 			this, SLOT(transactData(const QValueList<QVariant>&, const QVariant&)),
 			this, SLOT(faultData(int, const QString&, const QVariant&))); 
-			verification = false; //next time true we do the transact
+			verification = false; //next time through we do the transact
 		} else {
 
 			QValueList<Package> installs;
@@ -429,9 +432,8 @@ void ZmdUpdaterCore::transactData(const QValueList<QVariant>& data, const QVaria
 
 
 	} else { //or else we got two IDs for transact
-		//right now are are ignoring the downloading part
-		ZMD_BLOCK(data.front().toList().last().toString());
-		downloadID = data.front().toList().front().toString();
+		ZMD_BLOCK(data.front().toList().last().toString()); // block on the transaction ID
+		downloadID = data.front().toList().front().toString(); //save the downloadID
 		timer->start(CHECK_INTERVAL,false);
 	}
 }
@@ -476,7 +478,6 @@ void ZmdUpdaterCore::timerData(const QValueList<QVariant>& data, const QVariant 
 		kdWarning() << "Name: " << status.name << endl;
 		kdWarning() << "Percent: " << status.percent << endl;
 #endif
-		//test if download here NNN
 		if (status.name == "Downloading Packages") {
 			emit(downloadProgress(status)); 
 			if (map["percent"].toDouble() > 99) {
@@ -489,20 +490,18 @@ void ZmdUpdaterCore::timerData(const QValueList<QVariant>& data, const QVariant 
 				timer->stop();
 				
 				if (temp != "") {
-					if (map["status"].toInt() == 4)
+					if (map["status"].toInt() == 4) {
 						emit(serviceAdded(temp, ERROR_INVALID));
-					else 
+					} else {
 						emit(serviceAdded(temp, ERROR_NONE));
-
+					}
 					temp = "";
 				} else {
 					emit(transactionFinished(ERROR_NONE));
 				}
-
 			}
 		}
 	}
-
 }
 
 /********************************************************************
