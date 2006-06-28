@@ -27,7 +27,6 @@ UpdaterApplication::UpdaterApplication() : KUniqueApplication(true,true,false) {
 
 	KConfig *config = kapp->config();
 	config->setGroup("General");
-	int interval;
 
 	switch (config->readEntry("Backend").toInt()) {
 
@@ -42,11 +41,7 @@ UpdaterApplication::UpdaterApplication() : KUniqueApplication(true,true,false) {
 
 	}
 
-	if ((interval = config->readEntry("Interval").toInt()) <= 0) {
-		interval = 15; // set a reasonable default
-	}
-	interval = interval * 60 * 1000; // convert to ms
-	main = new MainWindow(interval);
+	main = new MainWindow();
 	setMainWidget(main);
 
 	connect(updater, SIGNAL(updateApplet(int)), main, SLOT(appletState(int)));

@@ -48,7 +48,7 @@ void ZmdInstallWindow::initGUI() {
 	header = new HeaderWidget(this);
 	transactionList = new KTextEdit(this);
 	progressBar = new KProgress(100, this);
-	abortButton = new KPushButton(i18n("Abort Upgrade"), this);
+//	abortButton = new KPushButton(i18n("Abort Upgrade"), this); // we can't yet abort an upgrade
 	mainLayout = new QVBoxLayout(this);
 
 	header->setDescription("<b>Installing updates and patches:</b><br> Below is a description of the packages being installed.<br>");
@@ -56,12 +56,12 @@ void ZmdInstallWindow::initGUI() {
 	mainLayout->addWidget(header, false, 0);
 	mainLayout->addWidget(transactionList, false, 0);
 	mainLayout->addWidget(progressBar, false, 0);
-	mainLayout->addWidget(abortButton, false, Qt::AlignRight);
+//	mainLayout->addWidget(abortButton, false, Qt::AlignRight);
 
 	transactionList->setReadOnly(true);
 
-	abortButton->setMinimumHeight(30);
-	connect(abortButton, SIGNAL(clicked()), this, SLOT(abortButtonClicked()));
+//	abortButton->setMinimumHeight(30);
+//	connect(abortButton, SIGNAL(clicked()), this, SLOT(abortButtonClicked()));
 
 
 	mainLayout->setMargin(10);

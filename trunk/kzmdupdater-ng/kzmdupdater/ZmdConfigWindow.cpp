@@ -31,6 +31,7 @@ ZmdConfigWindow::ZmdConfigWindow(ZmdUpdaterCore *_core, QWidget *parent) : QWidg
 
 	initGUI();
 	initList();
+	connect(core, SIGNAL(generalFault(QString)), this, SLOT(serverFault(QString)));
 }
 
 ZmdConfigWindow::~ZmdConfigWindow() {
@@ -119,7 +120,7 @@ void ZmdConfigWindow::gotCatalogList(QValueList<Catalog> catalogs) {
 	for (iter = catalogs.begin(); iter != catalogs.end(); iter++) {
 		parentItem = serverList->findItem((*iter).service,CONFW_URI);
 		if (parentItem == NULL) {
-			KMessageBox::error(this, "You have a catalog that has no service attached to it. This is is strange and you may want to look into it");
+			KMessageBox::error(this, "Catalog " + (*iter).displayName + i18n("has no service attached to it. This is is strange and you may want to look into it"));
 			continue;
 		} else {
 			item = new ZmdCatalogListItem(parentItem, (*iter).name, core);
@@ -186,7 +187,6 @@ void ZmdConfigWindow::removeButtonClicked() {
 		serv.id = serverList->currentItem()->text(CONFW_ID);
 		serv.uri = serverList->currentItem()->text(CONFW_URI);
 
-		connect(core, SIGNAL(generalFault(QString)), this, SLOT(removeServerFault(QString)));
 		core->removeService(serv);
 		//Re-init the list after removal, we get no return from the removal
 		KMessageBox::information(this, i18n("Service Removed")); 
@@ -194,6 +194,6 @@ void ZmdConfigWindow::removeButtonClicked() {
 	}
 }
 
-void ZmdConfigWindow::removeServerFault(QString message) {
-	KMessageBox::error(this, i18n("There was an error while removing the service:\n")+message);
+void ZmdConfigWindow::serverFault(QString message) {
+	KMessageBox::error(this, message);
 }

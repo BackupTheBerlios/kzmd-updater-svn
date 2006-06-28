@@ -22,13 +22,14 @@
 #include <kprocess.h>
 #include <kpopupmenu.h>
 #include <kapp.h>
+#include <kconfig.h>
 
 #include "MainWindow.h"
 #include "GeneralConfigWindow.h"
 #include "Updater.h"
 
 
-MainWindow::MainWindow(int interval, QWidget *parent) : QWidget(parent) {
+MainWindow::MainWindow(QWidget *parent) : QWidget(parent) {
 
 	KIconLoader iconLoader(PROGRAM_NAME);
 	applet = new KSystemTray(this);
@@ -38,12 +39,26 @@ MainWindow::MainWindow(int interval, QWidget *parent) : QWidget(parent) {
 	connect(applet, SIGNAL(quitSelected()), this, SLOT(slotExit()));
 
 	timer = new QTimer(this);
-	timerInterval = interval;
+	readConfig();
 	connect(timer, SIGNAL(timeout()), this, SLOT(checkUpdates()));
 	timer->start(timerInterval,false);
 
 	initGUI();
 	initMenu();
+}
+
+// Read in the config, just the interval really as we cannot deal with the updater itself
+void MainWindow::readConfig() {
+	KConfig *config = kapp->config();
+	int interval;
+
+	config->setGroup("General");
+	if ((interval = config->readEntry("Interval").toInt()) <= 0) {
+		interval = 15; // set a reasonable default
+	}
+	interval = interval * 60 * 1000; // convert to ms
+	timerInterval = interval;
+	timer->changeInterval(timerInterval);
 }
 
 //Build GUI, setup system tray and hide GUI initially.
@@ -133,6 +148,7 @@ void MainWindow::serverButtonClicked() {
 
 void MainWindow::configButtonClicked() {
 	GeneralConfigWindow *win = new GeneralConfigWindow();
+	connect(win, SIGNAL(configChanged()), this, SLOT(readConfig()));
 	win->show();
 }
 

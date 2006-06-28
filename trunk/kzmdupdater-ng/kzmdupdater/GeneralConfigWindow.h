@@ -36,6 +36,10 @@ class GeneralConfigWindow : public QWidget {
 
 		GeneralConfigWindow();
 
+	signals:
+
+		void configChanged();
+
 	private slots:
 
 		void okButtonClicked();

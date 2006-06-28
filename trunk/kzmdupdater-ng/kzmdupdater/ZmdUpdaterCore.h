@@ -27,7 +27,7 @@
 #include "ZmdUpdaterCoreUtils.h"
 
 #define DEBUG
-#define _ABORT_SUPPORTED_
+//#define _ABORT_SUPPORTED_
 
 /* Our error codes, there probably should be more of these, but not now */
 enum {

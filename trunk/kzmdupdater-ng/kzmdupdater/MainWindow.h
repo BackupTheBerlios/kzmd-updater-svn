@@ -51,7 +51,7 @@ class MainWindow : public QWidget {
 
 	public:
 
-		MainWindow(int interval, QWidget *parent=0);
+		MainWindow(QWidget *parent=0);
 
 	signals:
 
@@ -63,6 +63,7 @@ class MainWindow : public QWidget {
 
 		void appletState(int);
 		void checkUpdates();
+		void readConfig();
 
 	private slots:
 
@@ -74,7 +75,7 @@ class MainWindow : public QWidget {
 		void closeEvent(QCloseEvent *e);
 
 	private:
-
+		
 		void initGUI();
 		void initMenu();
 

@@ -104,5 +104,6 @@ void GeneralConfigWindow::okButtonClicked() {
 
 	config->writeEntry("Backend", backend);
 	config->writeEntry("Interval", intervalSpin->value());
+	emit(configChanged());
 	close();
 }
