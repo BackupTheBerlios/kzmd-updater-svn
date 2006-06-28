@@ -159,7 +159,6 @@ void ZmdConfigWindow::addButtonClicked() {
 		//Connect the progress dialog signals
 		connect(core, SIGNAL(progress(Progress)), &prog, SLOT(progress(Progress)));
 		connect(core, SIGNAL(serviceAdded(QString,int)), &prog, SLOT(finished(QString,int)));
-		connect(core, SIGNAL(generalFault(QString)), &prog, SLOT(fault(QString)));
 		prog.exec();
 	} else {
 		//We don't say you need to have a type, because the groupbox takes care of that

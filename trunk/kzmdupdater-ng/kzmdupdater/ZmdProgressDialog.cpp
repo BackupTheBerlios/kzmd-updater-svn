@@ -79,8 +79,3 @@ void ZmdProgressDialog::finished(QString name, int status) {
 	close();
 }
 
-void ZmdProgressDialog::fault(QString message) {
-	reallyDone = true;
-	close();
-}
-

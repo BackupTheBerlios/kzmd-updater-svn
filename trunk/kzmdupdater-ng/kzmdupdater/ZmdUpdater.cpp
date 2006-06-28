@@ -98,7 +98,8 @@ void ZmdUpdater::gotCatalogListing(QValueList<Catalog> catalogs) {
 		return;
 
 	for (iter = catalogs.begin(); iter != catalogs.end(); iter++) {
-		core->getUpdates(*iter);
+		if ((*iter).service != "") //Don't check for updates in catalogs with no service
+			core->getUpdates(*iter);
 	}
 	disconnect(core, SIGNAL(catalogListing(QValueList<Catalog>)), this, SLOT(gotCatalogListing(QValueList<Catalog>)));
 }

@@ -445,6 +445,14 @@ void ZmdUpdaterCore::cancelTransaction() {
 	packagesToRemove.clear();
 	timer->stop();
 	ZMD_CLEAR;
+/*
+	server->call("zmd.system.abort_transaction", QValueList<QVariant>(), 
+	this, SLOT(abortData(const QValueList<QVariant>&, const QVariant&)),
+	this, SLOT(faultData(int, const QString&, const QVariant&))); 
+*/
+}
+
+void ZmdUpdaterCore::abortData(const QValueList<QVariant>& data, const QVariant& t) {
 }
 
 /********************************************************************

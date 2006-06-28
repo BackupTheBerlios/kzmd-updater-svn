@@ -132,6 +132,8 @@ class ZmdUpdaterCore : public QObject {
 		void timerSlot();
 		void timerData(const QValueList<QVariant>&, const QVariant&);
 
+		void abortData(const QValueList<QVariant>&, const QVariant&);
+
 	private:
 		QValueList<Package> mapListToPackageList(QValueList<QVariant>);
 		//These really need to be stored somewhere else. Kwallet?

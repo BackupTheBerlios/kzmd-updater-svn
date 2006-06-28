@@ -60,9 +60,6 @@ class ZmdProgressDialog : public QDialog {
 		//Closes the window
 		void finished(QString,int);
 
-		//Closes the window on a general fault
-		void fault(QString);
-
 	private slots:
 
 		//Keep this window up while the transaction continues
