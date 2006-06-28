@@ -485,6 +485,7 @@ void ZmdUpdaterCore::timerData(const QValueList<QVariant>& data, const QVariant 
 		kdWarning() << "Status: " << status.status << endl;
 		kdWarning() << "Name: " << status.name << endl;
 		kdWarning() << "Percent: " << status.percent << endl;
+		kdWarning() << "Message: " << status.messages.front() << endl;
 #endif
 		if (status.name == "Downloading Packages") {
 			emit(downloadProgress(status)); 
