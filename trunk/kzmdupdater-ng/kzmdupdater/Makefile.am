@@ -31,4 +31,4 @@ messages: rc.cpp
 
 # this is where the desktop file will go 
 desktopdir   = $(kde_appsdir)/Utilities
-desktop_DATA = kzmdupdater.desktop
+desktop_DATA = suseupdater.desktop
