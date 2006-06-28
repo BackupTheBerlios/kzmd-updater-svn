@@ -32,7 +32,6 @@ Authors:
 
 %build
 
-make -f Makefile.cvs
 ./configure --prefix=`kde-config --prefix`
 
 make
