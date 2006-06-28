@@ -22,7 +22,7 @@
 
 #include "ZmdServerDialog.h"
 
-enum { TYPE_ZYPP=0, TYPE_YUM, TYPE_ZEN };
+enum { TYPE_ZYPP=0, TYPE_YUM, TYPE_ZEN, TYPE_MOUNT };
 
 ZmdServerDialog::ZmdServerDialog(QWidget *parent) : QDialog(parent) {
 	initGUI();
@@ -45,6 +45,9 @@ QValueList<QString> ZmdServerDialog::getServerInfo() {
 		case TYPE_ZEN:
 			list.append("zenworks");
 			break;
+		case TYPE_MOUNT:
+			list.append("mount");
+			break;
 	}
 	return list;
 }
@@ -62,6 +65,7 @@ void ZmdServerDialog::initGUI() {
 	QRadioButton *zButton = new QRadioButton("ZYPP", typeGroup);
 	QRadioButton *yButton = new QRadioButton("YUM", typeGroup);
 	QRadioButton *aButton = new QRadioButton("ZENworks", typeGroup);
+	QRadioButton *mButton = new QRadioButton("Mount", typeGroup);
 
 	layout->addWidget(nameLabel,0,0);
 	layout->addWidget(nameEdit,0,0);
@@ -75,6 +79,7 @@ void ZmdServerDialog::initGUI() {
 	typeGroup->insert(zButton, TYPE_ZYPP);
 	typeGroup->insert(yButton, TYPE_YUM);
 	typeGroup->insert(aButton, TYPE_ZEN);
+	typeGroup->insert(mButton, TYPE_MOUNT);
 	typeGroup->setButton(TYPE_ZYPP);
 	typeGroup->setTitle(i18n("Server Type"));
 
