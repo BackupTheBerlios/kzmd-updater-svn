@@ -95,6 +95,10 @@ void ZmdUpdater::startInstall() {
 	}
 }
 
+void ZmdUpdater::startRefresh() {
+	emit(refreshList());
+}
+
 void ZmdUpdater::configureUpdater() {
 	ZmdConfigWindow *win = new ZmdConfigWindow(core);
 	win->show();

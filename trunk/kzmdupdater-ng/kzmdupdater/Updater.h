@@ -53,6 +53,12 @@ class Updater : public QObject {
 		**/
 		void updateApplet(int);
 
+		/** 
+			Send this signal to force an update list refresh. You should do this after an installation or
+			after a service is added to the updater
+		**/
+		void refreshList();
+
 	protected slots:
 
 		/**

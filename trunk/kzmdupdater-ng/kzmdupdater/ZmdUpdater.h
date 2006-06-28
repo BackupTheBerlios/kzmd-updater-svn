@@ -43,6 +43,8 @@ class ZmdUpdater : public Updater {
 		void startInstall();
 		void populateUpdateList(QListView*);
 
+		void startRefresh();
+
 		void gotCatalogListing(QValueList<Catalog>);
 		void gotServiceListing(QValueList<Service>);
 		void gotUpdateListing(QValueList<Package>);
