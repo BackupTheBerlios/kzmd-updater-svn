@@ -37,6 +37,7 @@ ZmdInstallWindow::ZmdInstallWindow(ZmdUpdaterCore *_core, QWidget *parent) :
 	watchingPackage = false;
 	downloadDone = false;
 	packageDone = false;
+	reallyDone = false;
 }
 
 ZmdInstallWindow::~ZmdInstallWindow() {
@@ -72,6 +73,7 @@ void ZmdInstallWindow::initGUI() {
 
 void ZmdInstallWindow::abortButtonClicked() {
 	core->cancelTransaction();
+	reallyDone = true;
 	close();
 }
 
@@ -107,6 +109,7 @@ void ZmdInstallWindow::gotDepInfo(QValueList<Package> installs,
 		core->runTransaction();
 	} else {
 		core->cancelTransaction();
+		reallyDone = true;
 		close();
 	}
 }
@@ -161,11 +164,11 @@ void ZmdInstallWindow::progress(Progress status) {
 void ZmdInstallWindow::finished(int status) {
 	if (status == ERROR_DEP_FAIL) {
 		KMessageBox::error(this, i18n("Sorry, we couldn't resolve the dependencies for this update."));
-		close();
 	} else {
 		transactionList->setText("Done!");
-		close();
 	}
+	reallyDone = true;
+	close();
 }
 
 void ZmdInstallWindow::setPackageList(QValueList<Package> installs, 
@@ -182,4 +185,11 @@ void ZmdInstallWindow::startUpdate() {
 			QValueList<Package>)), this, SLOT(gotDepInfo(QValueList<Package>,
 			QValueList<Package>, QValueList<Package>)));
 	transactionList->setText(i18n("Resolving Dependencies..."));
+}
+
+void ZmdInstallWindow::closeEvent(QCloseEvent *e) {
+	if (reallyDone)
+		e->accept();
+	else
+		e->ignore();
 }

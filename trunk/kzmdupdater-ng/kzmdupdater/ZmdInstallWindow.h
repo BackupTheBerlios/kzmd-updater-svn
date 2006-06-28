@@ -47,7 +47,7 @@ class ZmdInstallWindow : public QWidget {
 	private slots:
 
 		void abortButtonClicked();
-
+		void closeEvent(QCloseEvent*);
 		//Core Signals
 
 		void progress(Progress);
@@ -78,6 +78,9 @@ class ZmdInstallWindow : public QWidget {
 		bool downloadDone;
 		bool watchingPackage;
 		bool packageDone;
+
+		//variable to decide if we should really close the window
+		bool reallyDone;
 };
 
 
