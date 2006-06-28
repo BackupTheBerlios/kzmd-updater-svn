@@ -45,6 +45,15 @@ void ZmdUpdater::populateUpdateList(QListView *updateList) {
 
 	tempList = updateList;
 
+	connect(core, SIGNAL(serviceListing(QValueList<Service>)), this, SLOT(gotServiceListing(QValueList<Service>)));
+	core->getServices();
+
+}
+
+void ZmdUpdater::gotServiceListing(QValueList<Service> list) {
+
+	tempServiceList = list;
+	disconnect(core, SIGNAL(serviceListing(QValueList<Service>)), this, SLOT(gotServiceListing(QValueList<Service>)));
 	connect(core, SIGNAL(catalogListing(QValueList<Catalog>)), this, SLOT(gotCatalogListing(QValueList<Catalog>)));
 	core->getCatalogs(); 
 }
@@ -98,8 +107,16 @@ void ZmdUpdater::gotCatalogListing(QValueList<Catalog> catalogs) {
 		return;
 
 	for (iter = catalogs.begin(); iter != catalogs.end(); iter++) {
-		if ((*iter).service != "") //Don't check for updates in catalogs with no service
-			core->getUpdates(*iter);
+		QValueList<Service>::iterator serviceIter;
+
+		/* This is ugly and scales horrible, hope this bug is fixed in ZMD */
+		for (serviceIter = tempServiceList.begin(); 
+			serviceIter != tempServiceList.end(); serviceIter++) {
+			if ((*iter).service == (*serviceIter).uri) {
+				core->getUpdates(*iter);
+				break;
+			}
+		}
 	}
 	disconnect(core, SIGNAL(catalogListing(QValueList<Catalog>)), this, SLOT(gotCatalogListing(QValueList<Catalog>)));
 }

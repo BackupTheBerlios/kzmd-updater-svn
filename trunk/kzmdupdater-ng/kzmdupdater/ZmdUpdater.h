@@ -44,6 +44,7 @@ class ZmdUpdater : public Updater {
 		void populateUpdateList(QListView*);
 
 		void gotCatalogListing(QValueList<Catalog>);
+		void gotServiceListing(QValueList<Service>);
 		void gotUpdateListing(QValueList<Package>);
 		void gotPatchListing(QValueList<Patch>);
 		void gotPackageInfo(Package);
@@ -56,6 +57,9 @@ class ZmdUpdater : public Updater {
 
 		//We hold the QListView passed in "populateUpdateList" here
 		QListView *tempList;
+
+		//We have to keep a service list around right now to compare catalogs too, because there is a bug in ZMD that allows orphan catalogs
+		QValueList<Service> tempServiceList;
 
 		//The core updater functionality
 		ZmdUpdaterCore *core;
