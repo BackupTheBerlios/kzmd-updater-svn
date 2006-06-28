@@ -139,7 +139,7 @@ void ZmdInstallWindow::progress(Progress status) {
 	cout << "Name: " << status.name << endl;
 	cout << "Percent: " << status.percent << endl;
 
-	if (status.status > 0) {
+	if (status.status > 0 && status.status != 4) {
 	//if the transaction has started
 		progressBar->advance((int)status.percent);
 		if (watchingPackage == false && status.status == 1) {
@@ -153,6 +153,8 @@ void ZmdInstallWindow::progress(Progress status) {
 			watchingPackage = false;
 			alreadyDone = true;
 		}	
+	} else if (status.status == 4) {
+		KMessageBox::error(this, status.messages.front());
 	}
 }
 

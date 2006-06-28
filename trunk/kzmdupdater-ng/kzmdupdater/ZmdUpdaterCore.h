@@ -35,7 +35,8 @@ enum {
 	ERROR_DEP_FAIL,
 	ERROR_INVALID,
 	ERROR_INVALID_TYPE,
-	ERROR_AUTH_REJECT
+	ERROR_AUTH_REJECT,
+	ERROR_TRANS_FAIL
 };
 
 /* The TCP address of the local zmd server */

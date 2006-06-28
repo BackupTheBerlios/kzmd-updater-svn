@@ -499,14 +499,17 @@ void ZmdUpdaterCore::timerData(const QValueList<QVariant>& data, const QVariant 
 				timer->stop();
 				
 				if (temp != "") {
-					if (map["status"].toInt() == 4) {
+					if (status.status == 4) {
 						emit(serviceAdded(temp, ERROR_INVALID));
 					} else {
 						emit(serviceAdded(temp, ERROR_NONE));
 					}
 					temp = "";
 				} else {
-					emit(transactionFinished(ERROR_NONE));
+					if (status.status == 4)
+						emit(transactionFinished(ERROR_TRANS_FAIL));
+					else
+						emit(transactionFinished(ERROR_NONE));
 				}
 			}
 		}
