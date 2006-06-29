@@ -140,7 +140,9 @@ void ZmdConfigWindow::addButtonClicked() {
 	ZmdServerDialog diag;
 	ZmdProgressDialog prog(true,this);
 
-	diag.exec();
+	if (diag.exec() != QDialog::Accepted)
+		return;
+
 	list = diag.getServerInfo();
 	//make sure the name, type and uri are not blank
 	if (list[0] != "" && list[1] != "" && list[2] != "") { 		

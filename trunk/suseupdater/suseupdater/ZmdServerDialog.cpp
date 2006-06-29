@@ -102,11 +102,11 @@ void ZmdServerDialog::initGUI() {
 void ZmdServerDialog::addButtonClicked() {
 	name = nameEdit->text();
 	server = serverEdit->text();
-	close();
+	accept();
 }
 
 void ZmdServerDialog::cancelButtonClicked() {
 	name = "";
 	server = "";
-	close();
+	reject();
 }
