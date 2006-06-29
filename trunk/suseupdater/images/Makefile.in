@@ -311,7 +311,7 @@ xdg_appsdir = @xdg_appsdir@
 xdg_directorydir = @xdg_directorydir@
 xdg_menudir = @xdg_menudir@
 images_data_DATA = suse_green.png suse_red.png suse_logo.png
-images_datadir = $(kde_datadir)/kzmdupdater/pics
+images_datadir = $(kde_datadir)/suseupdater/pics
 #>- all: all-am
 #>+ 1
 all: docs-am  all-am
@@ -517,7 +517,7 @@ uninstall-am: uninstall-images_dataDATA uninstall-info-am
 .NOEXPORT:
 
 #>+ 2
-KDE_DIST=Makefile.in suse_red.png suse_logo.png suse_green.png Makefile.am 
+KDE_DIST=suse_red.png suse_green.png Makefile.am suse_logo.png Makefile.in 
 
 #>+ 2
 docs-am:
