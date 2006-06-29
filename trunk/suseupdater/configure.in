@@ -40,7 +40,7 @@ dnl Perform program name transformation
 AC_ARG_PROGRAM
 
 dnl Automake doc recommends to do this only here. (Janos)
-AM_INIT_AUTOMAKE(kzmdupdater-ng, "3.5.1") dnl searches for some needed programs
+AM_INIT_AUTOMAKE(suseupdater, "3.5.1") dnl searches for some needed programs
 
 KDE_SET_PREFIX
 
@@ -68,14 +68,14 @@ KDE_CREATE_SUBDIRSLIST
 AM_CONDITIONAL(admin_SUBDIR_included, test "x$admin_SUBDIR_included" = xyes)
 AM_CONDITIONAL(images_SUBDIR_included, test "x$images_SUBDIR_included" = xyes)
 AM_CONDITIONAL(kzmdauthutil_SUBDIR_included, test "x$kzmdauthutil_SUBDIR_included" = xyes)
-AM_CONDITIONAL(kzmdupdater_SUBDIR_included, test "x$kzmdupdater_SUBDIR_included" = xyes)
 AM_CONDITIONAL(po_SUBDIR_included, test "x$po_SUBDIR_included" = xyes)
+AM_CONDITIONAL(suseupdater_SUBDIR_included, test "x$suseupdater_SUBDIR_included" = xyes)
 AC_CONFIG_FILES([ Makefile ])
 AC_CONFIG_FILES([ admin/Makefile ])
 AC_CONFIG_FILES([ images/Makefile ])
 AC_CONFIG_FILES([ kzmdauthutil/Makefile ])
-AC_CONFIG_FILES([ kzmdupdater/Makefile ])
 AC_CONFIG_FILES([ po/Makefile ])
+AC_CONFIG_FILES([ suseupdater/Makefile ])
 AC_OUTPUT
 # Check if KDE_SET_PREFIX was called, and --prefix was passed to configure
 if test -n "$kde_libs_prefix" -a -n "$given_prefix"; then

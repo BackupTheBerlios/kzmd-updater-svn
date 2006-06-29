@@ -20,7 +20,7 @@
 #ifndef _CONSTANTS_H_
 #define _CONSTANTS_H_
 
-#define PROGRAM_NAME "kzmdupdater"
+#define PROGRAM_NAME "suseupdater"
 #define VERSION "0.0.1"
 
 #define TRAY_ICON_GREEN "suse_green.png"
