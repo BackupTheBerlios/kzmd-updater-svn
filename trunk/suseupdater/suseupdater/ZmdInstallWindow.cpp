@@ -122,6 +122,7 @@ void ZmdInstallWindow::download(Progress status) {
 	cout << "Percent: " << status.percent << endl;
 
 	if (status.status > 0) {
+		progressBar->advance(0);
 		progressBar->advance((int)status.percent);
 		if (watchingDownload == false && status.status >= 1) {
 			transactionList->setText(transactionList->text() + "\n" + "Packages Are Downloading...");
@@ -144,6 +145,7 @@ void ZmdInstallWindow::progress(Progress status) {
 
 	if (status.status > 0 && status.status != 4) {
 	//if the transaction has started
+		progressBar->advance(0);
 		progressBar->advance((int)status.percent);
 		if (watchingPackage == false && status.status == 1) {
 			//if we are not already watching a package and the transaction is running
