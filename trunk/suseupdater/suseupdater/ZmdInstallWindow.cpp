@@ -188,8 +188,10 @@ void ZmdInstallWindow::startUpdate() {
 }
 
 void ZmdInstallWindow::closeEvent(QCloseEvent *e) {
-	if (reallyDone)
+	if (reallyDone) {
+		emit(refreshUpdates());
 		e->accept();
-	else
+	} else {
 		e->ignore();
+	}
 }

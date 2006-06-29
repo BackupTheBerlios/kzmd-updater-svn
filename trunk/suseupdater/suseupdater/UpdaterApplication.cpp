@@ -56,3 +56,4 @@ UpdaterApplication::UpdaterApplication() : KUniqueApplication(true,true,false) {
 UpdaterApplication::~UpdaterApplication() {
 	delete main;
 }
+

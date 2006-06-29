@@ -23,6 +23,7 @@
 #include <kpopupmenu.h>
 #include <kapp.h>
 #include <kconfig.h>
+#include <kdebug.h>
 
 #include "MainWindow.h"
 #include "GeneralConfigWindow.h"

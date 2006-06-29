@@ -44,6 +44,11 @@ class ZmdInstallWindow : public QWidget {
 		void setPackageList(QValueList<Package> installs, QValueList<Package> updates, QValueList<Package> removals);
 		void startUpdate();
 
+	signals:
+
+		//We fire this to refresh the update list after we install some packages/patches
+		void refreshUpdates();
+
 	private slots:
 
 		void abortButtonClicked();

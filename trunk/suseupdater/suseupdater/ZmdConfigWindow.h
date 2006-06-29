@@ -42,6 +42,10 @@ class ZmdConfigWindow : public QWidget {
 		ZmdConfigWindow(ZmdUpdaterCore *_core, QWidget *parent=0);
 		~ZmdConfigWindow();
 
+	signals:
+
+		//We are going to fire this off after an add/remove to update the list
+		void refreshUpdates();
 
 	private slots:
 

@@ -175,6 +175,7 @@ void ZmdConfigWindow::addedServer(QString server, int status) {
 	disconnect(core, SIGNAL(serviceAdded(QString,int)), this, SLOT(addedServer(QString,int)));
 	if (status != ERROR_INVALID) {
 		initList();
+		emit(refreshUpdates());
 	} else {
 		KMessageBox::error(this, i18n("Sorry, the server information you entered was invalid."));
 	}
@@ -192,6 +193,7 @@ void ZmdConfigWindow::removeButtonClicked() {
 		core->removeService(serv);
 		//Re-init the list after removal, we get no return from the removal
 		KMessageBox::information(this, i18n("Service Removed")); 
+		emit(refreshUpdates());
 		initList();
 	}
 }

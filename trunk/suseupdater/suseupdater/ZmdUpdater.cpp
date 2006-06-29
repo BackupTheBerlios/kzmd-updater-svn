@@ -50,14 +50,6 @@ void ZmdUpdater::populateUpdateList(QListView *updateList) {
 
 }
 
-void ZmdUpdater::gotServiceListing(QValueList<Service> list) {
-
-	tempServiceList = list;
-	disconnect(core, SIGNAL(serviceListing(QValueList<Service>)), this, SLOT(gotServiceListing(QValueList<Service>)));
-	connect(core, SIGNAL(catalogListing(QValueList<Catalog>)), this, SLOT(gotCatalogListing(QValueList<Catalog>)));
-	core->getCatalogs(); 
-}
-
 void ZmdUpdater::startInstall() {
 
 	if (tempList != NULL) {
@@ -90,6 +82,7 @@ void ZmdUpdater::startInstall() {
 		if (instList.size() > 0 || upList.size() > 0) {
 			win->setPackageList(instList, upList, QValueList<Package>());
 			win->startUpdate();
+			connect(win, SIGNAL(refreshUpdates()), this, SLOT(startRefresh()));
 			win->show();
 		}
 	}
@@ -101,7 +94,29 @@ void ZmdUpdater::startRefresh() {
 
 void ZmdUpdater::configureUpdater() {
 	ZmdConfigWindow *win = new ZmdConfigWindow(core);
+	connect(win, SIGNAL(refreshUpdates()), this, SLOT(startRefresh()));
 	win->show();
+}
+
+
+/*
+
+	Information Recieving Methods
+
+		gotServiceListing
+		gotCatalogListing
+		gotUpdateListing
+		gotPatchListing
+		gotPackageDetails
+
+*/
+
+void ZmdUpdater::gotServiceListing(QValueList<Service> list) {
+
+	tempServiceList = list;
+	disconnect(core, SIGNAL(serviceListing(QValueList<Service>)), this, SLOT(gotServiceListing(QValueList<Service>)));
+	connect(core, SIGNAL(catalogListing(QValueList<Catalog>)), this, SLOT(gotCatalogListing(QValueList<Catalog>)));
+	core->getCatalogs(); 
 }
 
 void ZmdUpdater::gotCatalogListing(QValueList<Catalog> catalogs) {
@@ -111,7 +126,9 @@ void ZmdUpdater::gotCatalogListing(QValueList<Catalog> catalogs) {
 		return;
 
 	for (iter = catalogs.begin(); iter != catalogs.end(); iter++) {
-		core->getUpdates(*iter);
+		if ((*iter).subscribed) {
+			core->getUpdates(*iter);
+		}
 	}
 	disconnect(core, SIGNAL(catalogListing(QValueList<Catalog>)), this, SLOT(gotCatalogListing(QValueList<Catalog>)));
 }
@@ -193,6 +210,10 @@ void ZmdUpdater::gotPatchListing(QValueList<Patch> patchList) {
 	}
 	tempList->setSelected(tempList->firstChild(), true);
 }
+
+/*
+	Auths the core of the updater. This is a workaround.
+*/
 
 void ZmdUpdater::authorizeCore() {
 
