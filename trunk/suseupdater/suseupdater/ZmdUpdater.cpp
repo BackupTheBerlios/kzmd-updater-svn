@@ -111,16 +111,7 @@ void ZmdUpdater::gotCatalogListing(QValueList<Catalog> catalogs) {
 		return;
 
 	for (iter = catalogs.begin(); iter != catalogs.end(); iter++) {
-		QValueList<Service>::iterator serviceIter;
-
-		/* This is ugly and scales horrible, hope this bug is fixed in ZMD */
-		for (serviceIter = tempServiceList.begin(); 
-			serviceIter != tempServiceList.end(); serviceIter++) {
-			if ((*iter).service == (*serviceIter).uri) {
-				core->getUpdates(*iter);
-				break;
-			}
-		}
+		core->getUpdates(*iter);
 	}
 	disconnect(core, SIGNAL(catalogListing(QValueList<Catalog>)), this, SLOT(gotCatalogListing(QValueList<Catalog>)));
 }
