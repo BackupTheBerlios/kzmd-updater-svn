@@ -208,20 +208,19 @@ void ZmdUpdater::authorizeCore() {
 		authorizeCore();
 	}
 
-	if ( (fd = fopen("/var/tmp/kzmd-auth", "r")) != NULL) {
-		
-		fgets(buffer, 1023, fd);
-		buffer[strlen(buffer)-1] = '\0'; //get rid of newline
-		core->setUser(buffer);
-		printf("User: %s\n", buffer);
-		memset(buffer, '\0', 1024);
-		fgets(buffer, 1023, fd);
-		buffer[strlen(buffer)-1] = '\0'; // get rid of newline
-		printf("Pass: %s\n", buffer);
-		core->setPass(buffer);
-		memset(buffer, '\0', 1024);
-		fclose(fd);
-	}
+	while ( (fd = fopen("/var/tmp/kzmd-auth", "r")) == NULL)
+		sleep(10);
 
+	fgets(buffer, 1023, fd);
+	buffer[strlen(buffer)-1] = '\0'; //get rid of newline
+	core->setUser(buffer);
+	printf("User: %s\n", buffer);
+	memset(buffer, '\0', 1024);
+	fgets(buffer, 1023, fd);
+	buffer[strlen(buffer)-1] = '\0'; // get rid of newline
+	printf("Pass: %s\n", buffer);
+	core->setPass(buffer);
+	memset(buffer, '\0', 1024);
+	fclose(fd);
 }
 
