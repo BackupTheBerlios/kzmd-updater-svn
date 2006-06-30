@@ -527,14 +527,7 @@ void ZmdUpdaterCore::faultData(int code, const QString& message, const QVariant&
 	switch (code) {
 
 		case 0:
-			//Service already exists -- this was experimentally found, might change
-			//Thread fault
-			if (pollID != "") {
-				emit(serviceAdded(temp, ERROR_INVALID, message));
-			} else {
-				//this usually happens during a service removal
-				emit(generalFault(message));
-			}
+			emit(generalFault(message));
 			temp = "";
 			break;
 		case -603:
