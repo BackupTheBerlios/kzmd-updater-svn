@@ -103,9 +103,9 @@ class ZmdUpdaterCore : public QObject {
 						  QValueList<Package> removals,
 						  QValueList<Package> updates);
 	
-		void transactionFinished(int flags);
+		void transactionFinished(int flags, QString errorMessage);
 
-		void serviceAdded(QString serviceName, int flags);
+		void serviceAdded(QString serviceName, int flags, QString errorMessage);
 
 		/**
 			General progress signal, reports progress on any on-going process.

@@ -56,7 +56,7 @@ class ZmdConfigWindow : public QWidget {
 
 		void gotServiceList(QValueList<Service>);
 		void gotCatalogList(QValueList<Catalog>);
-		void addedServer(QString server, int);
+		void addedServer(QString, int, QString);
 		void serverFault(QString);
 
 	private:

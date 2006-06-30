@@ -58,7 +58,7 @@ class ZmdProgressDialog : public QDialog {
 		void progress(Progress);
 
 		//Closes the window
-		void finished(QString,int);
+		void finished(QString,int,QString);
 
 	private slots:
 

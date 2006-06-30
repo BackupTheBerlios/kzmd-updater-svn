@@ -106,7 +106,7 @@ void ZmdInstallWindow::gotDepInfo(QValueList<Package> installs,
 	if (diag.exec() == QDialog::Accepted) {	
 		connect(core, SIGNAL(downloadProgress(Progress)), this, SLOT(download(Progress)));
 		connect(core, SIGNAL(progress(Progress)), this, SLOT(progress(Progress)));
-		connect(core, SIGNAL(transactionFinished(int)), this, SLOT(finished(int)));	
+		connect(core, SIGNAL(transactionFinished(int,QString)), this, SLOT(finished(int,QString)));	
 		connect(core, SIGNAL(generalFault(QString)), this, SLOT(generalFault(QString)));
 		core->runTransaction();
 	} else {
@@ -163,9 +163,9 @@ void ZmdInstallWindow::progress(Progress status) {
 	}
 }
 
-void ZmdInstallWindow::finished(int status) {
+void ZmdInstallWindow::finished(int status, QString error) {
 	if (status == ERROR_DEP_FAIL) {
-		KMessageBox::error(this, i18n("Sorry, we couldn't resolve the dependencies for this update."));
+		KMessageBox::error(this, i18n("Sorry, we couldn't resolve the dependencies for this update:")+error);
 	} else {
 		transactionList->setText("Done!");
 	}

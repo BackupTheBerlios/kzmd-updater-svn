@@ -116,11 +116,15 @@ void ZmdConfigWindow::gotCatalogList(QValueList<Catalog> catalogs) {
 	QValueList<Catalog>::iterator iter;
 	ZmdCatalogListItem *item;
 	QListViewItem *parentItem;
+	bool alreadyShownOrphanWarning = false;
 
 	for (iter = catalogs.begin(); iter != catalogs.end(); iter++) {
 		parentItem = serverList->findItem((*iter).service,CONFW_URI);
 		if (parentItem == NULL) {
-			KMessageBox::error(this, "Catalog " + (*iter).displayName + i18n("has no service attached to it. This is is strange and you may want to look into it"));
+			if (alreadyShownOrphanWarning == false) {
+				KMessageBox::error(this, "Catalog " + (*iter).displayName + i18n(" has no service attached to it. This is is strange and you may want to look into it"));
+				alreadyShownOrphanWarning = true;
+			}
 			continue;
 		} else {
 			item = new ZmdCatalogListItem(parentItem, (*iter).name, core);
@@ -152,7 +156,7 @@ void ZmdConfigWindow::addButtonClicked() {
 		newServ.type = list[2];
 
 		//Connect the signal and start the adding of a service
-		connect(core, SIGNAL(serviceAdded(QString,int)), this, SLOT(addedServer(QString,int)));
+		connect(core, SIGNAL(serviceAdded(QString,int,QString)), this, SLOT(addedServer(QString,int,QString)));
 		core->addService(newServ);
 	
 		//Tell the user what is going on, this takes a long long time
@@ -161,7 +165,7 @@ void ZmdConfigWindow::addButtonClicked() {
 
 		//Connect the progress dialog signals
 		connect(core, SIGNAL(progress(Progress)), &prog, SLOT(progress(Progress)));
-		connect(core, SIGNAL(serviceAdded(QString,int)), &prog, SLOT(finished(QString,int)));
+		connect(core, SIGNAL(serviceAdded(QString,int,QString)), &prog, SLOT(finished(QString,int,QString)));
 		prog.exec();
 	} else {
 		//We don't say you need to have a type, because the groupbox takes care of that
@@ -170,14 +174,13 @@ void ZmdConfigWindow::addButtonClicked() {
 
 }
 
-void ZmdConfigWindow::addedServer(QString server, int status) {
+void ZmdConfigWindow::addedServer(QString server, int status, QString error) {
 	//Got a server added, we disconnect and re-init the list or show error
-	disconnect(core, SIGNAL(serviceAdded(QString,int)), this, SLOT(addedServer(QString,int)));
+	disconnect(core, SIGNAL(serviceAdded(QString,int,QString)), this, SLOT(addedServer(QString,int,QString)));
 	if (status != ERROR_INVALID) {
 		initList();
-		emit(refreshUpdates());
 	} else {
-		KMessageBox::error(this, i18n("Sorry, the server information you entered was invalid."));
+		KMessageBox::error(this, i18n("Sorry, the server information you entered was invalid:") + error);
 	}
 }
 
@@ -193,7 +196,6 @@ void ZmdConfigWindow::removeButtonClicked() {
 		core->removeService(serv);
 		//Re-init the list after removal, we get no return from the removal
 		KMessageBox::information(this, i18n("Service Removed")); 
-		emit(refreshUpdates());
 		initList();
 	}
 }

@@ -57,7 +57,7 @@ class ZmdInstallWindow : public QWidget {
 
 		void progress(Progress);
 		void download(Progress);
-		void finished(int);
+		void finished(int, QString);
 		void gotDepInfo(QValueList<Package>, QValueList<Package>, QValueList<Package>);
 		void generalFault(QString);
 

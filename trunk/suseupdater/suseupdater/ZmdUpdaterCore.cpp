@@ -501,16 +501,16 @@ void ZmdUpdaterCore::timerData(const QValueList<QVariant>& data, const QVariant 
 				
 				if (temp != "") {
 					if (status.status == 4) {
-						emit(serviceAdded(temp, ERROR_INVALID));
+						emit(serviceAdded(temp, ERROR_INVALID, status.messages.front()));
 					} else {
-						emit(serviceAdded(temp, ERROR_NONE));
+						emit(serviceAdded(temp, ERROR_NONE, QString()));
 					}
 					temp = "";
 				} else {
 					if (status.status == 4)
-						emit(transactionFinished(ERROR_TRANS_FAIL));
+						emit(transactionFinished(ERROR_TRANS_FAIL, status.messages.front()));
 					else
-						emit(transactionFinished(ERROR_NONE));
+						emit(transactionFinished(ERROR_NONE, QString()));
 				}
 			}
 		}
@@ -530,7 +530,7 @@ void ZmdUpdaterCore::faultData(int code, const QString& message, const QVariant&
 			//Service already exists -- this was experimentally found, might change
 			//Thread fault
 			if (pollID != "") {
-				emit(serviceAdded(temp, ERROR_INVALID));
+				emit(serviceAdded(temp, ERROR_INVALID, message));
 			} else {
 				//this usually happens during a service removal
 				emit(generalFault(message));
@@ -539,27 +539,27 @@ void ZmdUpdaterCore::faultData(int code, const QString& message, const QVariant&
 			break;
 		case -603:
 			//Dep Failure
-			emit(transactionFinished(ERROR_DEP_FAIL));
+			emit(transactionFinished(ERROR_DEP_FAIL, message));
 			break;
 		case -605:
 			//Invalid package specified
-			emit(transactionFinished(ERROR_INVALID));
+			emit(transactionFinished(ERROR_INVALID, message));
 			break;
 		case -606:
 			//Invalid catalog specified
 			break;
 		case -607:
 			//Invalid progress ID
-			emit(transactionFinished(ERROR_INVALID));
+			emit(transactionFinished(ERROR_INVALID, message));
 			break;
 		case -617:
 			//Invalid service specified
-			emit(serviceAdded(temp, ERROR_INVALID));
+			emit(serviceAdded(temp, ERROR_INVALID, message));
 			temp = "";
 			break;
 		case -619: 
 			//Invalid service type specified
-			emit(serviceAdded(temp, ERROR_INVALID_TYPE));
+			emit(serviceAdded(temp, ERROR_INVALID_TYPE, message));
 			temp = "";
 			break;
 		default:
