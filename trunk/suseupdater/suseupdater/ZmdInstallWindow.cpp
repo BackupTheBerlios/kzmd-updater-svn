@@ -175,8 +175,6 @@ void ZmdInstallWindow::finished(int status) {
 
 void ZmdInstallWindow::generalFault(QString message) {
 	KMessageBox::error(this, message);
-	reallyDone=true;
-	close();
 }
 
 void ZmdInstallWindow::setPackageList(QValueList<Package> installs, 
