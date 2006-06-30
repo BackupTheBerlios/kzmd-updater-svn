@@ -26,7 +26,7 @@ class Progress {
 
 	public:
 
-		Progress() : expectedTime(-1), remainingTime(-1), status(-1), percent(-1.0L) {}
+		Progress() : status(-1), expectedTime(-1), remainingTime(-1), percent(-1.0L) {}
 
 		void fromMap(const QMap<QString,QVariant> &map) {
 			QValueList<QVariant>::const_iterator iter;

@@ -102,10 +102,14 @@ class ZmdUpdaterCore : public QObject {
 		void realPackages(QValueList<Package> installs,
 						  QValueList<Package> removals,
 						  QValueList<Package> updates);
-	
+
+		//Signals that end transactions
 		void transactionFinished(int flags, QString errorMessage);
 
 		void serviceAdded(QString serviceName, int flags, QString errorMessage);
+
+		//General Fault Signal - For non-specific faults
+		void generalFault(QString faultMessage);
 
 		/**
 			General progress signal, reports progress on any on-going process.
@@ -115,8 +119,6 @@ class ZmdUpdaterCore : public QObject {
 		//Special progress signal for the download
 		void downloadProgress(Progress);
 
-		//General Fault Signal - For non-specific faults
-		void generalFault(QString faultMessage);
 
 	private slots:
 
