@@ -533,10 +533,14 @@ void ZmdUpdaterCore::faultData(int code, const QString& message, const QVariant&
 		case -603:
 			//Dep Failure
 			emit(transactionFinished(ERROR_DEP_FAIL, message));
+			ZMD_CLEAR;
+			timer->stop();
 			break;
 		case -605:
 			//Invalid package specified
 			emit(transactionFinished(ERROR_INVALID, message));
+			ZMD_CLEAR;
+			timer->stop();
 			break;
 		case -606:
 			//Invalid catalog specified
@@ -544,15 +548,21 @@ void ZmdUpdaterCore::faultData(int code, const QString& message, const QVariant&
 		case -607:
 			//Invalid progress ID
 			emit(transactionFinished(ERROR_INVALID, message));
+			ZMD_CLEAR;
+			timer->stop();
 			break;
 		case -617:
 			//Invalid service specified
 			emit(serviceAdded(temp, ERROR_INVALID, message));
+			ZMD_CLEAR;
+			timer->stop();
 			temp = "";
 			break;
 		case -619: 
 			//Invalid service type specified
 			emit(serviceAdded(temp, ERROR_INVALID_TYPE, message));
+			ZMD_CLEAR;
+			timer->stop();
 			temp = "";
 			break;
 		default:
@@ -560,8 +570,6 @@ void ZmdUpdaterCore::faultData(int code, const QString& message, const QVariant&
 			emit(generalFault(message));
 			break;
 	}
-	ZMD_CLEAR;
-	timer->stop();
 #ifdef DEBUG
 	kdError() << "Fault: " << message << endl;
 	kdError() << "Fault Code: " << code << endl;

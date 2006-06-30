@@ -29,6 +29,7 @@
 //Enum to represent the various backends installed. New backends added here
 enum { BACKEND_ZMD, BACKEND_ZYPP, BACKEND_SMART };
 
+//ZYPP and SMART don't actually exist at this point by the way...
 
 #endif
 
