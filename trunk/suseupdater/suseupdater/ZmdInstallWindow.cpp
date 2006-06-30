@@ -48,21 +48,22 @@ void ZmdInstallWindow::initGUI() {
 	header = new HeaderWidget(this);
 	transactionList = new KTextEdit(this);
 	progressBar = new KProgress(100, this);
-//	abortButton = new KPushButton(i18n("Abort Upgrade"), this); // we can't yet abort an upgrade
 	mainLayout = new QVBoxLayout(this);
 
 	header->setDescription("<b>Installing updates and patches:</b><br> Below is a description of the packages being installed.<br>");
 
+#ifdef _ABORT_SUPPORTED_
+	abortButton = new KPushButton(i18n("Abort Upgrade"), this); // we can't yet abort an upgrade
+	mainLayout->addWidget(abortButton, false, Qt::AlignRight);
+	abortButton->setMinimumHeight(30);
+	connect(abortButton, SIGNAL(clicked()), this, SLOT(abortButtonClicked()));
+#endif
+
 	mainLayout->addWidget(header, false, 0);
 	mainLayout->addWidget(transactionList, false, 0);
 	mainLayout->addWidget(progressBar, false, 0);
-//	mainLayout->addWidget(abortButton, false, Qt::AlignRight);
 
 	transactionList->setReadOnly(true);
-
-//	abortButton->setMinimumHeight(30);
-//	connect(abortButton, SIGNAL(clicked()), this, SLOT(abortButtonClicked()));
-
 
 	mainLayout->setMargin(10);
 	mainLayout->setSpacing(10);
@@ -106,6 +107,7 @@ void ZmdInstallWindow::gotDepInfo(QValueList<Package> installs,
 		connect(core, SIGNAL(downloadProgress(Progress)), this, SLOT(download(Progress)));
 		connect(core, SIGNAL(progress(Progress)), this, SLOT(progress(Progress)));
 		connect(core, SIGNAL(transactionFinished(int)), this, SLOT(finished(int)));	
+		connect(core, SIGNAL(generalFault(QString)), this, SLOT(generalFault(QString)));
 		core->runTransaction();
 	} else {
 		core->cancelTransaction();
@@ -168,6 +170,12 @@ void ZmdInstallWindow::finished(int status) {
 		transactionList->setText("Done!");
 	}
 	reallyDone = true;
+	close();
+}
+
+void ZmdInstallWindow::generalFault(QString message) {
+	KMessageBox::error(this, message);
+	reallyDone=true;
 	close();
 }
 

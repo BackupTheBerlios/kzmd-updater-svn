@@ -45,7 +45,7 @@ void GeneralConfigWindow::initGUI() {
 	cancelButton = new KPushButton(i18n("Cancel"), this);
 	okButton = new KPushButton(i18n("Okay"), this);
 
-	header->setDescription(i18n("<b>Configure The Updater:</b><br> Below you can select the updater you would  like to use and when we should check for updates<br><u>This program needs to be restarted before new settings can take affect</u>"));
+	header->setDescription(i18n("<b>Configure The Updater:</b><br> Below you can select the updater you would  like to use and when we should check for updates<br><u>After switching backends, this applet must be restarted</u>"));
 	mainLayout->addWidget(header, false, 0);
 
 	intervalSpin->setPrefix(i18n("Check For Updates Every "));

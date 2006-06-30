@@ -32,14 +32,30 @@ Authors:
 
 %build
 
-./configure --prefix=`kde-config --prefix`
+./configure --prefix=/opt/kde3
 
 make
 
 %install
 
-make install PREFIX=$RPM_BUILD_ROOT/usr
+make install prefix=$RPM_BUILD_ROOT
 
 %clean
 
 rm -rf $RPM_BUILD_ROOT
+
+%files
+%defattr(-,root,root)
+/bin/SUSEUpdater
+%dir /share/apps/suseupdater
+%dir /share/apps/suseupdater/pics
+/share/apps/suseupdater/pics/suse_logo.png
+/share/apps/suseupdater/pics/suse_green.png
+/share/apps/suseupdater/pics/suse_red.png
+/share/icons/hicolor/16x16/apps/suseupdater.png
+/share/icons/hicolor/32x32/apps/suseupdater.png
+/share/icons/hicolor/48x48/apps/suseupdater.png
+/share/icons/hicolor/64x64/apps/suseupdater.png
+/share/icons/hicolor/128x128/apps/suseupdater.png
+/share/applnk/Utilities/suseupdater.desktop
+/bin/kzmdauthutil

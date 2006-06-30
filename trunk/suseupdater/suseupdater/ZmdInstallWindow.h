@@ -59,7 +59,7 @@ class ZmdInstallWindow : public QWidget {
 		void download(Progress);
 		void finished(int);
 		void gotDepInfo(QValueList<Package>, QValueList<Package>, QValueList<Package>);
-
+		void generalFault(QString);
 
 	private:
 

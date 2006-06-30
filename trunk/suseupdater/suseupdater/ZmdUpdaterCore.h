@@ -47,7 +47,7 @@ enum {
 #define CHECK_INTERVAL (1000)  //1 second
 
 //Some small macros to ensure two operations do not happen at the same time
-#define IS_ZMD_BUSY if (!pollID.isEmpty()) return
+#define IS_ZMD_BUSY if (pollID.isEmpty() == false) return
 #define ZMD_BLOCK(ID) (pollID = (ID))
 #define ZMD_CLEAR (pollID = downloadID = "")
 

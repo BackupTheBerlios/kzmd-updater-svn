@@ -447,7 +447,7 @@ void ZmdUpdaterCore::cancelTransaction() {
 	ZMD_CLEAR;
 
 #ifdef _ABORT_SUPPORTED_
-	server->call("zmd.system.abort_transaction", QValueList<QVariant>(), 
+	server->call("zmd.packsys.abort_transaction", QValueList<QVariant>(), 
 	this, SLOT(abortData(const QValueList<QVariant>&, const QVariant&)),
 	this, SLOT(faultData(int, const QString&, const QVariant&))); 
 #endif
