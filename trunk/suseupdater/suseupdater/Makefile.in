@@ -722,9 +722,8 @@ messages: rc.cpp
 	$(XGETTEXT) *.cpp -o $(podir)/kzmdupdater.pot
 
 install-data-local:
-#>- 	$(INSTALL_DATA) $(srcdir)/suseupdater-start.desktop
-#>+ 1
-	$(INSTALL_DATA) $(DESTDIR)$(srcdir)/suseupdater-start.desktop
+	$(mkinstalldirs) $(DESTDIR)/$(prefix)/share/autostart
+	$(INSTALL_DATA) $(srcdir)/suseupdater-start.desktop \
 		$(DESTDIR)/$(prefix)/share/autostart/suseupdater.desktop
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
@@ -819,7 +818,7 @@ clean-metasources:
 	-rm -f  ZmdDependencyDialog.moc.cpp ZmdInstallWindow.moc.cpp GeneralConfigWindow.moc.cpp ZmdConfigWindow.moc.cpp ZmdProgressDialog.moc.cpp ZmdUpdaterCore.moc.cpp ZmdUpdater.moc.cpp Updater.moc.cpp xmlrpciface.moc.cpp MainWindow.moc.cpp HeaderWidget.moc.cpp ZmdServerDialog.moc.cpp
 
 #>+ 2
-KDE_DIST=desktop.autostart hi48-app-suseupdater.png suseupdater.spec hi16-app-suseupdater.png hi32-app-suseupdater.png suseupdater.desktop hi128-app-suseupdater.png suseupdater-start.desktop Constants.h SUSEUpdater Makefile.in ZmdUpdaterCoreUtils.h hi64-app-suseupdater.png tags Makefile.am 
+KDE_DIST=hi48-app-suseupdater.png suseupdater.spec hi16-app-suseupdater.png hi32-app-suseupdater.png suseupdater.desktop hi128-app-suseupdater.png suseupdater-start.desktop Constants.h SUSEUpdater Makefile.in ZmdUpdaterCoreUtils.h hi64-app-suseupdater.png tags Makefile.am 
 
 #>+ 2
 docs-am:

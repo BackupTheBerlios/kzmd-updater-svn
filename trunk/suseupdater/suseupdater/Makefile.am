@@ -34,5 +34,6 @@ desktopdir   = $(kde_appsdir)/Utilities
 desktop_DATA = suseupdater.desktop
 
 install-data-local:
-	$(INSTALL_DATA) $(srcdir)/suseupdater-start.desktop
+	$(mkinstalldirs) $(DESTDIR)/$(prefix)/share/autostart
+	$(INSTALL_DATA) $(srcdir)/suseupdater-start.desktop \
 		$(DESTDIR)/$(prefix)/share/autostart/suseupdater.desktop
