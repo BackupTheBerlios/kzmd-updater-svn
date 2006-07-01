@@ -6,12 +6,5 @@
 # of the other Makefile.am variables
 bin_PROGRAMS = kzmdauthutil
 
-# set the include path for X, qt and KDE
-#INCLUDES = $(all_includes)
-
-# the library search path. 
-#kzmdupdater_LDFLAGS = $(KDE_RPATH) $(all_libraries)
-
-# which sources should be compiled for kzmdupdater
-kzmdupdater_SOURCES = main.cpp 
+kzmdauthutil_SOURCES = kzmdauthutil.c
 
