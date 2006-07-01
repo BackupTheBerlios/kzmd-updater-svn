@@ -79,10 +79,14 @@ void ZmdInstallWindow::initGUI() {
 
 }
 
-void ZmdInstallWindow::abortButtonClicked() {
-	core->cancelTransaction();
+void ZmdInstallWindow::closeWindow() {
 	reallyDone = true;
 	close();
+}
+
+void ZmdInstallWindow::abortButtonClicked() {
+	core->cancelTransaction();
+	closeWindow();
 }
 
 void ZmdInstallWindow::gotDepInfo(QValueList<Package> installs,
@@ -114,8 +118,7 @@ void ZmdInstallWindow::gotDepInfo(QValueList<Package> installs,
 		core->runTransaction();
 	} else {
 		core->cancelTransaction();
-		reallyDone = true;
-		close();
+		closeWindow();
 	}
 }
 
@@ -161,6 +164,15 @@ void ZmdInstallWindow::progress(Progress status) {
 			watchingPackage = false;
 			packageDone = true;
 		}	
+	} else if (status.messages.front() == "Preparing..") {
+		progressBar->setValue((int)status.percent);
+		if (watchingPackage == false) {
+			transactionList->setText(transactionList->text() + "\nPreparing For Package Installation...");	
+			watchingPackage = true;
+		} else if (status.percent > 99) {
+			transactionList->setText(transactionList->text() + "Done");
+			watchingPackage = false;
+		}
 	} else if (status.status == 4) {
 		KMessageBox::error(this, status.messages.front());
 	}
@@ -172,8 +184,7 @@ void ZmdInstallWindow::finished(int status, QString error) {
 	} else {
 		transactionList->setText("Done!");
 	}
-	reallyDone = true;
-	close();
+	closeWindow();
 }
 
 void ZmdInstallWindow::generalFault(QString message) {

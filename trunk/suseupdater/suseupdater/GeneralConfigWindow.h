@@ -25,6 +25,7 @@
 #include <qlayout.h>
 #include <qvbuttongroup.h>
 #include <qspinbox.h>
+#include <qcheckbox.h>
 
 #include "HeaderWidget.h"
 
@@ -56,6 +57,7 @@ class GeneralConfigWindow : public QWidget {
 		QSpinBox *intervalSpin;
 		KPushButton *cancelButton;
 		KPushButton *okButton;
+		QCheckBox *autostartButton;
 		KConfig *config;
 };
 

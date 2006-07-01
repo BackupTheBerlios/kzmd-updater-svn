@@ -38,7 +38,7 @@ make
 
 %install
 
-make install prefix=$RPM_BUILD_ROOT
+make install prefix=$RPM_BUILD_ROOT/opt/kde3/
 
 %clean
 
@@ -46,16 +46,12 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root)
-/bin/SUSEUpdater
-%dir /share/apps/suseupdater
-%dir /share/apps/suseupdater/pics
-/share/apps/suseupdater/pics/suse_logo.png
-/share/apps/suseupdater/pics/suse_green.png
-/share/apps/suseupdater/pics/suse_red.png
-/share/icons/hicolor/16x16/apps/suseupdater.png
-/share/icons/hicolor/32x32/apps/suseupdater.png
-/share/icons/hicolor/48x48/apps/suseupdater.png
-/share/icons/hicolor/64x64/apps/suseupdater.png
-/share/icons/hicolor/128x128/apps/suseupdater.png
-/share/applnk/Utilities/suseupdater.desktop
-/bin/kzmdauthutil
+/opt/kde3/bin/SUSEUpdater
+/opt/kde3/share/apps/suseupdater
+/opt/kde3/share/icons/hicolor/16x16/apps/suseupdater.png
+/opt/kde3/share/icons/hicolor/32x32/apps/suseupdater.png
+/opt/kde3/share/icons/hicolor/48x48/apps/suseupdater.png
+/opt/kde3/share/icons/hicolor/64x64/apps/suseupdater.png
+/opt/kde3/share/icons/hicolor/128x128/apps/suseupdater.png
+/opt/kde3/share/applnk/Utilities/suseupdater.desktop
+/opt/kde3/bin/kzmdauthutil

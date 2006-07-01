@@ -64,6 +64,7 @@ class ZmdInstallWindow : public QWidget {
 	private:
 
 		void initGUI();
+		void closeWindow();
 
 		HeaderWidget *header;
 		KTextEdit *transactionList;

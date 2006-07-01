@@ -44,6 +44,7 @@ void GeneralConfigWindow::initGUI() {
 	backendGroup = new QVButtonGroup(i18n("Select Your Preferred Updater"), this);
 	cancelButton = new KPushButton(i18n("Cancel"), this);
 	okButton = new KPushButton(i18n("Okay"), this);
+	autostartButton = new QCheckBox(i18n("Automatically start updater on login"), this);
 
 	header->setDescription(i18n("<b>Configure The Updater:</b><br> Below you can select the updater you would  like to use and when we should check for updates<br><u>After switching backends, this applet must be restarted</u>"));
 	mainLayout->addWidget(header, false, 0);
@@ -52,6 +53,8 @@ void GeneralConfigWindow::initGUI() {
 	intervalSpin->setSuffix(i18n(" Minutes"));
 	intervalSpin->setMinValue(0);
 	mainLayout->addWidget(intervalSpin, false, 0);
+
+	mainLayout->addWidget(autostartButton, false, 0);
 
 	QRadioButton *zmdButton = new QRadioButton(i18n("ZMD Updater"), backendGroup);
 //	QRadioButton *zyppButton = new QRadioButton(i18n("ZYPP Updater"), backendGroup);
@@ -84,6 +87,19 @@ void GeneralConfigWindow::readConfig() {
 			backendGroup->setButton(GCONFIG_ZMD);
 			break;
 	}
+
+	switch(config->readEntry("Autostart").toInt()) {
+
+		case true:
+			autostartButton->setChecked(true);
+			break;
+		case false:
+			autostartButton->setChecked(false);
+			break;
+		default:
+			autostartButton->setChecked(false);
+			break;
+	}
 }
 
 void GeneralConfigWindow::okButtonClicked() {
@@ -104,6 +120,7 @@ void GeneralConfigWindow::okButtonClicked() {
 
 	config->writeEntry("Backend", backend);
 	config->writeEntry("Interval", intervalSpin->value());
+	config->writeEntry("Autostart", autostartButton->isChecked());
 	emit(configChanged());
 	close();
 }
