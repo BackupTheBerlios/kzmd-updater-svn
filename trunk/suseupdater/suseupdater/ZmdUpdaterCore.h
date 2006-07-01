@@ -60,30 +60,94 @@ class ZmdUpdaterCore : public QObject {
 		ZmdUpdaterCore(QObject *parent=0);
 		~ZmdUpdaterCore();
 
+		/**
+			User/Pass functions for the temp authorization
+		**/
 		void setUser(QString);
 		void setPass(QString);
-    
+   
+   		/**
+			Sends a request for the list of registered servers on ZMD
+			Data arrives via serviceListing signal.
+		**/
 		void getServices();
+
+		/**
+			Sends a request for an addition of the service specified. Type, URI and Name
+			required. Data arrives via serviceAdded.
+		**/
 		void addService(Service);
+
+		/**
+			Sends a request to delete the specified service. No data return, this is problematic.
+			I would love there to be a return, but there isn't. A general fault maybe fired from 
+			this.
+		**/
 		void removeService(Service);
 
+		/**
+			Send a request for the list of catalogs currently provided by the service on ZMD. 
+			Note, these are all the catalogs, not all the subscribed catalogs. Returns data via
+			catalogListing signal.
+		**/
 		void getCatalogs();
+
+		/**
+			Send a request to subscribe to the specified catalog. Catalog ID is required.
+			Has no return data.
+		**/
 		void subscribeCatalog(Catalog);
+
+		/**
+			Send a request to unsubscribe to the specified catalog. Catalog ID is required.
+			Has no return data.
+		**/
 		void unsubscribeCatalog(Catalog);
 
+		/**
+			Get the Patches available for a specified catalog. Catalog ID is required.
+			Data returns via patchListing.
+		**/
 		void getPatches(Catalog);
+
+		/**
+			Get the updates available for a specified catalog. Catalog ID is required.
+			Data returns via updateListing.
+		**/
 		void getUpdates(Catalog);
 
+		/**
+			Get the info for an installed package. Searches via package name.
+			Data returns iva packageInfo.
+		**/
 		void getInfo(QString packageName);
+
+		/**
+			Get the details for an installed package.
+			Returns via packageDetails.
+		**/
 		void getDetails(Package);
 	
 //Locks added here sometime soon
 
+		/**
+			Start a package transaction, sends requests for dep tree verification and 
+			dep resolution. Data returns via signal realPackages.
+		**/
 		void startTransaction(QValueList<Package> installList, 
 							QValueList<Package> updateList,
 							QValueList<Package> removeList);
+
+		/**
+			Actually run the transaction you have just started. startTransaction MUST
+			be run before runTransaction. Data returns via transactionFinished and progress
+			and downloadProgress.
+		**/
 		void runTransaction();
 
+		/**
+			Cancels the current transaction. Currently, only stops it in our backend, not in ZMD.
+		**/
 		void cancelTransaction();
 
 	signals:

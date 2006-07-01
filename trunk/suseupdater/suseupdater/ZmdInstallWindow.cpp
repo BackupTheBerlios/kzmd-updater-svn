@@ -33,11 +33,19 @@ ZmdInstallWindow::ZmdInstallWindow(ZmdUpdaterCore *_core, QWidget *parent) :
 	QWidget(parent,0,Qt::WDestructiveClose) {
 	core = _core;
 	initGUI();
+
+	//All of our many watch variables. God this is shit...
 	watchingDownload = false;
 	watchingPackage = false;
 	downloadDone = false;
 	packageDone = false;
 	reallyDone = false;
+
+	//connect our signals
+	connect(core, SIGNAL(downloadProgress(Progress)), this, SLOT(download(Progress)));
+	connect(core, SIGNAL(progress(Progress)), this, SLOT(progress(Progress)));
+	connect(core, SIGNAL(transactionFinished(int,QString)), this, SLOT(finished(int,QString)));	
+	connect(core, SIGNAL(generalFault(QString)), this, SLOT(generalFault(QString)));
 }
 
 ZmdInstallWindow::~ZmdInstallWindow() {
@@ -55,7 +63,6 @@ void ZmdInstallWindow::initGUI() {
 #ifdef _ABORT_SUPPORTED_
 	abortButton = new KPushButton(i18n("Abort Upgrade"), this); // we can't yet abort an upgrade
 	mainLayout->addWidget(abortButton, false, Qt::AlignRight);
-	abortButton->setMinimumHeight(30);
 	connect(abortButton, SIGNAL(clicked()), this, SLOT(abortButtonClicked()));
 #endif
 
@@ -104,10 +111,6 @@ void ZmdInstallWindow::gotDepInfo(QValueList<Package> installs,
 	diag.setTitle(i18n("Other Packages..."));
 	diag.setText(text);
 	if (diag.exec() == QDialog::Accepted) {	
-		connect(core, SIGNAL(downloadProgress(Progress)), this, SLOT(download(Progress)));
-		connect(core, SIGNAL(progress(Progress)), this, SLOT(progress(Progress)));
-		connect(core, SIGNAL(transactionFinished(int,QString)), this, SLOT(finished(int,QString)));	
-		connect(core, SIGNAL(generalFault(QString)), this, SLOT(generalFault(QString)));
 		core->runTransaction();
 	} else {
 		core->cancelTransaction();

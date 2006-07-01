@@ -88,8 +88,6 @@ void ZmdServerDialog::initGUI() {
 	buttonLayout->addSpacing(100);
 	buttonLayout->addWidget(addButton,0, Qt::AlignRight);
 	addButton->setDefault(true);
-	cancelButton->setMinimumHeight(30);
-	addButton->setMinimumHeight(30);
 
 	connect(addButton, SIGNAL(clicked()), this, SLOT(addButtonClicked()));
 	connect(cancelButton, SIGNAL(clicked()), this, SLOT(cancelButtonClicked()));

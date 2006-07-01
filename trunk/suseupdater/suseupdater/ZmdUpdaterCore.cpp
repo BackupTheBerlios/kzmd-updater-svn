@@ -528,13 +528,16 @@ void ZmdUpdaterCore::faultData(int code, const QString& message, const QVariant&
 
 		case 0:
 			emit(generalFault(message));
-			temp = "";
 			break;
 		case -603:
 			//Dep Failure
 			emit(transactionFinished(ERROR_DEP_FAIL, message));
 			ZMD_CLEAR;
 			timer->stop();
+			//clear out the package list after we get a dep failure. 
+			packagesToInstall.clear();
+			packagesToRemove.clear();
+			packagesToUpdate.clear();
 			break;
 		case -605:
 			//Invalid package specified
@@ -547,7 +550,12 @@ void ZmdUpdaterCore::faultData(int code, const QString& message, const QVariant&
 			break;
 		case -607:
 			//Invalid progress ID
-			emit(transactionFinished(ERROR_INVALID, message));
+			if (temp == "") {
+				emit(transactionFinished(ERROR_INVALID, message));
+			} else {
+				emit(serviceAdded(temp, ERROR_INVALID, message));
+				temp = "";
+			}
 			ZMD_CLEAR;
 			timer->stop();
 			break;

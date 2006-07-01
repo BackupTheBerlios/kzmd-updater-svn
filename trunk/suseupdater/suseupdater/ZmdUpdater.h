@@ -39,12 +39,14 @@ class ZmdUpdater : public Updater {
 
 	private slots:
 
+		//Slots implemented from Updater abstract class
 		void configureUpdater();
 		void startInstall();
 		void populateUpdateList(QListView*);
 
-		void startRefresh();
 
+		//Our own slots
+		void startRefresh();
 		void gotCatalogListing(QValueList<Catalog>);
 		void gotServiceListing(QValueList<Service>);
 		void gotUpdateListing(QValueList<Package>);

@@ -19,7 +19,7 @@
 
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <iostream>
+#include <kdebug.h>
 
 #include "ZmdConfigWindow.h"
 #include "ZmdServerDialog.h"
@@ -68,10 +68,6 @@ void ZmdConfigWindow::initGUI() {
 	buttonLayout->addSpacing(300);
 	buttonLayout->addWidget(removeButton, false, 0);
 
-	addButton->setMinimumHeight(30);
-	removeButton->setMinimumHeight(30);
-	closeButton->setMinimumHeight(30);
-
 	connect(closeButton, SIGNAL(clicked()), this, SLOT(close()));
 	connect(addButton, SIGNAL(clicked()), this, SLOT(addButtonClicked()));
 	connect(removeButton, SIGNAL(clicked()), this, SLOT(removeButtonClicked()));
@@ -90,8 +86,6 @@ void ZmdConfigWindow::initList() {
 	//Connect the signals and call the backend
 	connect(core, SIGNAL(serviceListing(QValueList<Service>)), this, 
 	SLOT(gotServiceList(QValueList<Service>)));
-	connect(core, SIGNAL(catalogListing(QValueList<Catalog>)), this, 
-	SLOT(gotCatalogList(QValueList<Catalog>)));
 	core->getServices();
 
 }
@@ -100,16 +94,25 @@ void ZmdConfigWindow::gotServiceList(QValueList<Service> servers) {
 	QValueList<Service>::iterator iter;
 	QListViewItem *item;
 
+	//Disconnect this signal. If this doesn't happen we will connect it again on each iteration and end up adding many copies of each service to the list
+	disconnect(core, SIGNAL(serviceListing(QValueList<Service>)), this, SLOT(gotServiceList(QValueList<Service>)));
+
+	if (serverList->childCount() > 0) {
+		kdWarning() << "ERROR: Trying to add servers to a list that already has them." << endl;
+		return;
+	}
+
 	for (iter = servers.begin(); iter != servers.end(); iter++) {
 		item = new QListViewItem(serverList, (*iter).name);
 		item->setText(CONFW_URI,(*iter).uri);
 		item->setText(CONFW_ID,(*iter).id);
 	}
-	//Disconnect this signal. If this doesn't happen we will connect it again on each iteration and end up adding many copies of each service to the list
-	disconnect(core, SIGNAL(serviceListing(QValueList<Service>)), this, SLOT(gotServiceList(QValueList<Service>)));
 
-	if (servers.size() > 0)
+	if (servers.size() > 0) {
+		connect(core, SIGNAL(catalogListing(QValueList<Catalog>)), this, 
+		SLOT(gotCatalogList(QValueList<Catalog>)));
 		core->getCatalogs();
+	}
 }
 
 void ZmdConfigWindow::gotCatalogList(QValueList<Catalog> catalogs) {
@@ -117,6 +120,15 @@ void ZmdConfigWindow::gotCatalogList(QValueList<Catalog> catalogs) {
 	ZmdCatalogListItem *item;
 	QListViewItem *parentItem;
 	bool alreadyShownOrphanWarning = false;
+
+	//Disconnect this signal. If this doesn't happen, the same thing as with services happens
+	disconnect(core, SIGNAL(catalogListing(QValueList<Catalog>)), this, 
+				SLOT(gotCatalogList(QValueList<Catalog>)));
+
+	if (serverList->firstChild()->childCount() > 0) {
+		kdWarning() << "ERROR: We are trying to add catalogs to a list that already has them" << endl;
+		return;
+	}
 
 	for (iter = catalogs.begin(); iter != catalogs.end(); iter++) {
 		parentItem = serverList->findItem((*iter).service,CONFW_URI);
@@ -133,9 +145,6 @@ void ZmdConfigWindow::gotCatalogList(QValueList<Catalog> catalogs) {
 			parentItem->setOpen(true);
 		}
 	}
-	//Disconnect this signal. If this doesn't happen, the same thing as with services happens
-	disconnect(core, SIGNAL(catalogListing(QValueList<Catalog>)), this, 
-				SLOT(gotCatalogList(QValueList<Catalog>)));
 }
 
 void ZmdConfigWindow::addButtonClicked() {
@@ -161,7 +170,7 @@ void ZmdConfigWindow::addButtonClicked() {
 	
 		//Tell the user what is going on, this takes a long long time
 		prog.setTitle(i18n("Adding server.."));
-		prog.setDescription(i18n("We are adding a server to the updater, this may take some time. \nPlease be patient"));
+		prog.setDescription(i18n("We are adding a server to the updater, this may take long time. \nPlease be patient"));
 
 		//Connect the progress dialog signals
 		connect(core, SIGNAL(progress(Progress)), &prog, SLOT(progress(Progress)));
@@ -180,7 +189,7 @@ void ZmdConfigWindow::addedServer(QString server, int status, QString error) {
 	if (status != ERROR_INVALID) {
 		initList();
 	} else {
-		KMessageBox::error(this, i18n("Sorry, the server information you entered was invalid:") + error);
+		KMessageBox::error(this, i18n("Sorry, the server could not be added: ") + error);
 	}
 }
 

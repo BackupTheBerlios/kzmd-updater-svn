@@ -59,6 +59,12 @@ class Updater : public QObject {
 		**/
 		void refreshList();
 
+		/**
+			Send this signal to disable the two selection buttons on the GUI. You do this if you
+			are not going to load the list with CheckListItems.
+		**/
+		void disableSelectButtons();
+
 	protected slots:
 
 		/**

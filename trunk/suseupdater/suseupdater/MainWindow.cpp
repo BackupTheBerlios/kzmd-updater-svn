@@ -69,27 +69,33 @@ void MainWindow::initGUI() {
 	header = new HeaderWidget(this);
 	updateList = new QListView(this);
 	packageDescription = new KTextEdit(this);
-	configureButton = new QPushButton(i18n("Add/Remove Servers"),this);
-	cancelButton = new QPushButton(i18n("Cancel"),this);
-	installButton = new QPushButton(i18n("Install"),this);
+	configureButton = new KPushButton(i18n("Add/Remove Servers"),this);
+	cancelButton = new KPushButton(i18n("Cancel"),this);
+	installButton = new KPushButton(i18n("Install"),this);
+	selectAllButton = new KPushButton(i18n("Select All"),this);
+	clearSelectionButton = new KPushButton(i18n("Clear Selection"), this);
 	
 	mainBox->addWidget(header,0,0);
 	mainBox->addWidget(updateList,0,0);
-	mainBox->addWidget(packageDescription,0,0);
+	
+	selectionButtonsLayout = new QHBoxLayout(mainBox);
+	selectionButtonsLayout->addWidget(selectAllButton, false, Qt::AlignLeft);
+	selectionButtonsLayout->addWidget(clearSelectionButton, false, Qt::AlignRight);
 
-	configureButton->setMinimumHeight(30);
-	cancelButton->setMinimumHeight(30);
-	installButton->setMinimumHeight(30);
+	mainBox->addWidget(packageDescription,0,0);
 
 	buttonsLayout = new QHBoxLayout(mainBox);
 	buttonsLayout->addWidget(configureButton,false, Qt::AlignLeft);
 	buttonsLayout->insertSpacing(1, 250);
 	buttonsLayout->addWidget(cancelButton,false, Qt::AlignRight);
+	buttonsLayout->addSpacing(10);
 	buttonsLayout->addWidget(installButton,false, Qt::AlignRight);
 
 	connect(configureButton, SIGNAL(clicked()), this, SLOT(serverButtonClicked()));
 	connect(installButton, SIGNAL(clicked()), this, SLOT(installButtonClicked()));
 	connect(cancelButton, SIGNAL(clicked()), this, SLOT(hide()));
+	connect(selectAllButton, SIGNAL(clicked()), this, SLOT(selectButtonClicked()));
+	connect(clearSelectionButton, SIGNAL(clicked()), this, SLOT(clearButtonClicked()));
 
 	header->setDescription(i18n("<b>Available Updates:</b><br> The following are software upgrades and patches to add features and fix bugs.<br> <u>Select those you would like and press install.</u>"));
 
@@ -157,6 +163,42 @@ void MainWindow::installButtonClicked() {
 	//Fire the  install signal to the backend and hide ourselves
 	emit(startInstall());
 	hide();
+}
+
+/*
+	NOTE: These two functions assume we pack the list with QCheckListItems.
+	If this is not the case, the Updater class needs to disable these buttons. 
+	You do this by emitting the "disableSelectButtons" signal. 
+*/
+void MainWindow::selectButtonClicked() {
+	QCheckListItem *item = (QCheckListItem*)updateList->firstChild();
+	
+	while (item != NULL) {
+		item->setState(QCheckListItem::On);
+		item = (QCheckListItem*)item->nextSibling();
+	}
+}
+
+void MainWindow::clearButtonClicked() {
+	QCheckListItem *item = (QCheckListItem*)updateList->firstChild();
+	
+	while (item != NULL) {
+		item->setState(QCheckListItem::Off);
+		item = (QCheckListItem*)item->nextSibling();
+	}
+}
+
+void MainWindow::disableSelectButtons() {
+	if (selectAllButton != NULL) {
+		selectionButtonsLayout->remove(selectAllButton);
+		selectionButtonsLayout->remove(clearSelectionButton);
+
+		delete selectAllButton;
+		delete clearSelectionButton;
+		delete selectionButtonsLayout;
+		selectAllButton = clearSelectionButton = NULL;
+		update();
+	}
 }
 
 void MainWindow::checkUpdates() {

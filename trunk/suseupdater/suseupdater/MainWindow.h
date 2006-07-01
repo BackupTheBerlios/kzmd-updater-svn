@@ -23,10 +23,10 @@
 
 #include <ksystemtray.h>
 #include <ktextedit.h>
+#include <kpushbutton.h>
 
 #include <qlistview.h>
 #include <qlabel.h>
-#include <qpushbutton.h>
 #include <qtimer.h>
 
 #include "Updater.h"
@@ -64,14 +64,19 @@ class MainWindow : public QWidget {
 		void appletState(int);
 		void checkUpdates();
 		void readConfig();
+		void disableSelectButtons();
 
 	private slots:
 
 		void slotExit();
 		void slotPackageSelected(QListViewItem *packageSelected);
+
 		void configButtonClicked();
 		void serverButtonClicked();
 		void installButtonClicked();
+		void selectButtonClicked();
+		void clearButtonClicked();
+
 		void closeEvent(QCloseEvent *e);
 
 	private:
@@ -84,11 +89,14 @@ class MainWindow : public QWidget {
 		KTextEdit *packageDescription;
 		HeaderWidget *header;
 
-		QPushButton *installButton;
-		QPushButton *cancelButton;
-		QPushButton *configureButton;
+		KPushButton *installButton;
+		KPushButton *cancelButton;
+		KPushButton *configureButton;
+		KPushButton *selectAllButton;
+		KPushButton *clearSelectionButton;
 
 		QVBoxLayout *mainBox;
+		QHBoxLayout *selectionButtonsLayout;
 		QHBoxLayout *buttonsLayout;
 		QTimer *timer;
 		int timerInterval;
