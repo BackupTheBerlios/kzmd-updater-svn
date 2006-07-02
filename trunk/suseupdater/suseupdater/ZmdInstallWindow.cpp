@@ -164,15 +164,6 @@ void ZmdInstallWindow::progress(Progress status) {
 			watchingPackage = false;
 			packageDone = true;
 		}	
-	} else if (status.messages.front() == "Preparing...") {
-		progressBar->setValue((int)status.percent);
-		if (watchingPackage == false) {
-			transactionList->setText(transactionList->text() + "\nPreparing For Package Installation...");	
-			watchingPackage = true;
-		} else if (status.percent > 99) {
-			transactionList->setText(transactionList->text() + "Done");
-			watchingPackage = false;
-		}
 	} else if (status.status == 4) {
 		KMessageBox::error(this, status.messages.front());
 	}
