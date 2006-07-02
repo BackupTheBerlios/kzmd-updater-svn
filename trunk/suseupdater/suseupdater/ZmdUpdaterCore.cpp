@@ -529,6 +529,10 @@ void ZmdUpdaterCore::faultData(int code, const QString& message, const QVariant&
 		case 0:
 			emit(generalFault(message));
 			break;
+		case 49:
+			//Timeout
+			//Don't say anything, sometimes we are just busy...
+			break;
 		case -603:
 			//Dep Failure
 			emit(transactionFinished(ERROR_DEP_FAIL, message));

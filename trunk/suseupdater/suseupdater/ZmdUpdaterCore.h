@@ -127,8 +127,21 @@ class ZmdUpdaterCore : public QObject {
 			Returns via packageDetails.
 		**/
 		void getDetails(Package);
-	
-//Locks added here sometime soon
+
+		/**
+			Lock package (hold back from being upgraded)
+		**/
+		//void lockPackage(Package);
+
+		/**
+			Remove a package lock
+		**/
+		//void unlockPackage(Package);
+
+		/**
+			Get lock info - returns a list of locked packages
+		**/
+		//void getLocks();
 
 		/**
 			Start a package transaction, sends requests for dep tree verification and 
