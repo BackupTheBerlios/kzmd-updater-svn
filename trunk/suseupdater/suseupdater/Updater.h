@@ -31,7 +31,6 @@ enum { 	APPLET_NO_UPDATES,
 		APPLET_CHECKING };
 
 /**
-
 	This is the base class for all updater backends. 
 	If a backend class conforms to this, it will work
 
@@ -66,7 +65,7 @@ class Updater : public QObject {
 		void disableSelectButtons();
 
 		/**
-			Fire this signal to delive the description of the currently selected update back
+			Fire this signal to deliver the description of the currently selected update back
 			to the main window.
 		**/
 		void returnDescription(QString);

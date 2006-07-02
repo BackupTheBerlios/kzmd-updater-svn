@@ -42,6 +42,12 @@ ZmdUpdater::ZmdUpdater() : Updater() {
 	connect(core, SIGNAL(packageDetails(PackageDetails)), this, SLOT(gotPackageDetails(PackageDetails)));
 }
 
+/*
+
+	Slots recieving signals from the mainwindow 
+
+*/
+
 void ZmdUpdater::populateUpdateList(QListView *updateList) {
 
 	tempList = updateList;
@@ -108,7 +114,7 @@ void ZmdUpdater::configureUpdater() {
 
 /*
 
-	Information Recieving Methods
+	Information Recieving Slots
 
 		gotServiceListing
 		gotCatalogListing
@@ -208,7 +214,9 @@ void ZmdUpdater::gotPatchListing(QValueList<Patch> patchList) {
 }
 
 /*
+
 	Auths the core of the updater. This is a workaround.
+
 */
 
 void ZmdUpdater::authorizeCore() {
