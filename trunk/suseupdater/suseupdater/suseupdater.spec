@@ -54,4 +54,5 @@ rm -rf $RPM_BUILD_ROOT
 /opt/kde3/share/icons/hicolor/64x64/apps/suseupdater.png
 /opt/kde3/share/icons/hicolor/128x128/apps/suseupdater.png
 /opt/kde3/share/applnk/Utilities/suseupdater.desktop
+/opt/kde3/share/autostart/suseupdater.desktop
 /opt/kde3/bin/kzmdauthutil
