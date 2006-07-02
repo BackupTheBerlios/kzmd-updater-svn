@@ -41,6 +41,7 @@ void ZmdDependencyDialog::initGUI() {
 	buttonLayout->addWidget(cancelButton,0,Qt::AlignLeft);
 	connect(okButton, SIGNAL(clicked()), this, SLOT(accept()));
 	connect(cancelButton, SIGNAL(clicked()), this, SLOT(reject()));
+	resize(400,200);
 }
 
 void ZmdDependencyDialog::setTitle(QString text) {
