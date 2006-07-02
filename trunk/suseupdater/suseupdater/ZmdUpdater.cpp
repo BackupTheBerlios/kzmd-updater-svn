@@ -19,6 +19,7 @@
 
 #include <kprocess.h>
 #include <kdebug.h>
+#include <klocale.h>
 
 #include <stdio.h>
 #include <string.h>
@@ -48,6 +49,12 @@ void ZmdUpdater::populateUpdateList(QListView *updateList) {
 	connect(core, SIGNAL(serviceListing(QValueList<Service>)), this, SLOT(gotServiceListing(QValueList<Service>)));
 	core->getServices();
 
+}
+
+void ZmdUpdater::updateSelected(QListViewItem *item) {
+	
+	currentUpdate = item;
+	core->getInfo(item->text(COLUMN_NAME));
 }
 
 void ZmdUpdater::startInstall() {
@@ -146,16 +153,12 @@ void ZmdUpdater::gotUpdateListing(QValueList<Package> packageList) {
 	for (iter = packageList.begin(); iter != packageList.end(); iter++) {
 		newItem = new QCheckListItem(tempList, (*iter).name, QCheckListItem::CheckBox);
 
-		newItem->setText(COLUMN_OLD_VERSION,"Unknown");
 		newItem->setText(COLUMN_NEW_VERSION,(*iter).version);
 		newItem->setText(COLUMN_SIZE, "Unknown");
 		newItem->setText(COLUMN_ID, (*iter).id);
-		newItem->setText(COLUMN_DESC, (*iter).description);
 		newItem->setText(COLUMN_INSTALLED, ((*iter).installed == true) ? "Yes" : "No");
 		newItem->setText(COLUMN_CATALOG, (*iter).catalog);
 
-		core->getInfo((*iter).name);
-		core->getDetails((*iter));
 	}
 	tempList->setSelected(tempList->firstChild(), true);
 }
@@ -165,26 +168,21 @@ void ZmdUpdater::gotPackageInfo(Package pack) {
 
 	if (pack.installed == false)
 		return;
-
 	item = tempList->findItem(pack.name, COLUMN_NAME);
 	if (item != NULL) {
-		item->setText(COLUMN_OLD_VERSION,pack.version);
+		currentDescription = pack.version;
+		core->getDetails(pack);
 	}
 }		
 
 void ZmdUpdater::gotPackageDetails(PackageDetails details) {
 	QListViewItem *item;
 
-	item = tempList->findItem(details.id, COLUMN_ID);
-	if (item != NULL) {
-		item->setText(COLUMN_DESC, details.description);
-	
-		if (item == tempList->selectedItem()) {
-			//force a refresh of the package description
-			tempList->setSelected(item, false);
-			tempList->setSelected(item, true);
-		}
-	}
+	QString version = currentDescription; //At this point, description is only the old size
+	currentDescription = details.description + "\n\n";
+	currentDescription += i18n("Upgrading from old version: ");
+	currentDescription += version;
+	emit(returnDescription(currentDescription));
 }
 
 void ZmdUpdater::gotPatchListing(QValueList<Patch> patchList) {
@@ -200,11 +198,9 @@ void ZmdUpdater::gotPatchListing(QValueList<Patch> patchList) {
 	for (iter = patchList.begin(); iter != patchList.end(); iter++) {
 		newItem = new QCheckListItem(tempList, (*iter).name + " (Patch)", QCheckListItem::CheckBox);
 
-		newItem->setText(COLUMN_OLD_VERSION,"Unknown");
 		newItem->setText(COLUMN_NEW_VERSION,(*iter).version);
 		newItem->setText(COLUMN_SIZE, "Unknown");
 		newItem->setText(COLUMN_ID, (*iter).id);
-		newItem->setText(COLUMN_DESC, (*iter).description);
 		newItem->setText(COLUMN_INSTALLED, ((*iter).installed == true) ? "Yes" : "No");
 		newItem->setText(COLUMN_CATALOG, (*iter).catalog);	
 	}

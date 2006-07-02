@@ -36,11 +36,9 @@
 //Define the columns of the update list. These must be set
 
 enum { 	COLUMN_NAME,
-		COLUMN_OLD_VERSION,
 		COLUMN_NEW_VERSION,
 		COLUMN_SIZE,
 		COLUMN_ID,
-		COLUMN_DESC,
 		COLUMN_INSTALLED,
 		COLUMN_CATALOG };
 
@@ -58,6 +56,7 @@ class MainWindow : public QWidget {
 		void populateUpdateList(QListView*);
 		void startInstall();
 		void configureUpdater();
+		void updateSelected(QListViewItem*);
 
 	public slots:
 
@@ -65,6 +64,7 @@ class MainWindow : public QWidget {
 		void checkUpdates();
 		void readConfig();
 		void disableSelectButtons();
+		void gotDescription(QString);
 
 	private slots:
 

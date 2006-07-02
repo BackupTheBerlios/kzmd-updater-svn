@@ -65,6 +65,12 @@ class Updater : public QObject {
 		**/
 		void disableSelectButtons();
 
+		/**
+			Fire this signal to delive the description of the currently selected update back
+			to the main window.
+		**/
+		void returnDescription(QString);
+
 	protected slots:
 
 		/**
@@ -87,6 +93,12 @@ class Updater : public QObject {
 			to the listview specified. 
 		**/
 		virtual void populateUpdateList(QListView*) = 0;
+
+		/**
+			This slot is signaled when an update is selected and we need to put together
+			a description for it.
+		**/
+		virtual void updateSelected(QListViewItem*) = 0;
 };
 
 #endif

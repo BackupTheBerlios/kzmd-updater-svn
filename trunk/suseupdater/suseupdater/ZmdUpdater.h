@@ -43,6 +43,7 @@ class ZmdUpdater : public Updater {
 		void configureUpdater();
 		void startInstall();
 		void populateUpdateList(QListView*);
+		void updateSelected(QListViewItem*);
 
 
 		//Our own slots
@@ -61,6 +62,12 @@ class ZmdUpdater : public Updater {
 
 		//We hold the QListView passed in "populateUpdateList" here
 		QListView *tempList;
+
+		//This holds the currently selected update in the list
+		QListViewItem *currentUpdate;
+
+		//Holds the descript for the currently selected update
+		QString currentDescription;
 
 		//We have to keep a service list around right now to compare catalogs too, because there is a bug in ZMD that allows orphan catalogs
 		QValueList<Service> tempServiceList;

@@ -50,6 +50,8 @@ UpdaterApplication::UpdaterApplication() : KUniqueApplication(true,true,false) {
 	connect(main, SIGNAL(startInstall()), updater, SLOT(startInstall()));
 	connect(main, SIGNAL(configureUpdater()), updater, SLOT(configureUpdater()));
 	connect(main, SIGNAL(populateUpdateList(QListView*)), updater, SLOT(populateUpdateList(QListView*)));
+	connect(main, SIGNAL(updateSelected(QListViewItem*)), updater, SLOT(updateSelected(QListViewItem*)));
+	connect(updater, SIGNAL(returnDescription(QString)), main, SLOT(gotDescription(QString)));
 	main->checkUpdates();
 
 }

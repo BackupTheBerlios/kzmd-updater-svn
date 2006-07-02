@@ -101,7 +101,6 @@ void MainWindow::initGUI() {
 
 	packageDescription->setReadOnly(true);
 	updateList->addColumn(i18n("Name"));
-	updateList->addColumn(i18n("Old Version"));
 	updateList->addColumn(i18n("New Version"));
 
 	/*
@@ -208,8 +207,13 @@ void MainWindow::checkUpdates() {
 	emit(populateUpdateList(updateList)); 
 }
 
+//Selection/Fetch Description slots
 void MainWindow::slotPackageSelected(QListViewItem *packageSelected) {
-	packageDescription->setText(((QCheckListItem*)packageSelected)->text(COLUMN_DESC));
+	emit(updateSelected(packageSelected));
+}
+
+void MainWindow::gotDescription(QString description) {
+	packageDescription->setText(description);
 }
 
 //This is where we actually close, called from the system tray
