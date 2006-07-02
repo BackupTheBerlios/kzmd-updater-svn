@@ -22,6 +22,7 @@
 
 #include <klocale.h>
 #include <kpushbutton.h>
+#include <ktextedit.h>
 
 #include <qdialog.h>
 #include <qlabel.h>
@@ -47,7 +48,7 @@ class ZmdDependencyDialog : public QDialog {
 
 		KPushButton *okButton;
 		KPushButton *cancelButton;
-		QLabel *label;
+		KTextEdit *packages;
 };
 
 #endif

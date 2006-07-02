@@ -29,9 +29,10 @@ void ZmdDependencyDialog::initGUI() {
 	mainLayout = new QVBoxLayout(this);
 	okButton = new KPushButton(i18n("Ok"), this);
 	cancelButton = new KPushButton(i18n("Cancel"), this);
-	label = new QLabel(this);
+	packages = new KTextEdit(this);
 
-	mainLayout->addWidget(label);
+	mainLayout->addWidget(packages);
+	packages->setReadOnly(true);
 	mainLayout->setMargin(10);
 	mainLayout->setSpacing(10);
 
@@ -47,5 +48,5 @@ void ZmdDependencyDialog::setTitle(QString text) {
 }
 
 void ZmdDependencyDialog::setText(QString text) {
-	label->setText(text);
+	packages->setText(text);
 }
