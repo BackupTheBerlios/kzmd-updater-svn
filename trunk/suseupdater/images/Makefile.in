@@ -517,7 +517,7 @@ uninstall-am: uninstall-images_dataDATA uninstall-info-am
 .NOEXPORT:
 
 #>+ 2
-KDE_DIST=suse_red.png suse_green.png Makefile.am suse_logo.png Makefile.in 
+KDE_DIST=Makefile.in suse_red.png suse_logo.png suse_green.png Makefile.am 
 
 #>+ 2
 docs-am:
