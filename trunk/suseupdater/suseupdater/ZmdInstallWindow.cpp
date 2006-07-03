@@ -112,7 +112,7 @@ void ZmdInstallWindow::gotDepInfo(QValueList<Package> installs,
 			text += "\n";
 		}
 	}
-	diag.setTitle(i18n("Other Packages..."));
+	diag.setTitle(i18n("Transaction Summary"));
 	diag.setText(text);
 	if (diag.exec() == QDialog::Accepted) {	
 		core->runTransaction();

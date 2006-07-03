@@ -66,13 +66,11 @@ void ZmdUpdater::updateSelected(QListViewItem *item) {
 void ZmdUpdater::startInstall() {
 
 	if (tempList != NULL) {
-		ZmdInstallWindow *win = new ZmdInstallWindow(core);
 		QValueList<Package> upList;
 		QValueList<Package> instList;
 		QCheckListItem *item = (QCheckListItem*)(tempList->firstChild());
 
 		if (item == NULL) {
-			delete win;
 			return;
 		}
 
@@ -93,6 +91,8 @@ void ZmdUpdater::startInstall() {
 		/* From reading the ZMD source, we only need name and ID for packages or patches. This may change in the future, was not in the API */
 
 		if (instList.size() > 0 || upList.size() > 0) {
+			ZmdInstallWindow *win = new ZmdInstallWindow(core);
+
 			win->setPackageList(instList, upList, QValueList<Package>());
 			win->startUpdate();
 			connect(win, SIGNAL(refreshUpdates()), this, SLOT(startRefresh()));
@@ -126,7 +126,6 @@ void ZmdUpdater::configureUpdater() {
 
 void ZmdUpdater::gotServiceListing(QValueList<Service> list) {
 
-	tempServiceList = list;
 	disconnect(core, SIGNAL(serviceListing(QValueList<Service>)), this, SLOT(gotServiceListing(QValueList<Service>)));
 	connect(core, SIGNAL(catalogListing(QValueList<Catalog>)), this, SLOT(gotCatalogListing(QValueList<Catalog>)));
 	core->getCatalogs(); 
@@ -134,6 +133,8 @@ void ZmdUpdater::gotServiceListing(QValueList<Service> list) {
 
 void ZmdUpdater::gotCatalogListing(QValueList<Catalog> catalogs) {
 	QValueList<Catalog>::iterator iter;
+
+	disconnect(core, SIGNAL(catalogListing(QValueList<Catalog>)), this, SLOT(gotCatalogListing(QValueList<Catalog>)));
 
 	if (catalogs.size() <= 0)
 		return;
@@ -143,7 +144,6 @@ void ZmdUpdater::gotCatalogListing(QValueList<Catalog> catalogs) {
 			core->getUpdates(*iter);
 		}
 	}
-	disconnect(core, SIGNAL(catalogListing(QValueList<Catalog>)), this, SLOT(gotCatalogListing(QValueList<Catalog>)));
 }
 
 void ZmdUpdater::gotUpdateListing(QValueList<Package> packageList) {
@@ -169,28 +169,6 @@ void ZmdUpdater::gotUpdateListing(QValueList<Package> packageList) {
 	tempList->setSelected(tempList->firstChild(), true);
 }
 
-void ZmdUpdater::gotPackageInfo(Package pack) {
-	QListViewItem *item;
-
-	if (pack.installed == false)
-		return;
-	item = tempList->findItem(pack.name, COLUMN_NAME);
-	if (item != NULL) {
-		currentDescription = pack.version;
-		core->getDetails(pack);
-	}
-}		
-
-void ZmdUpdater::gotPackageDetails(PackageDetails details) {
-	QListViewItem *item;
-
-	QString version = currentDescription; //At this point, description is only the old size
-	currentDescription = details.description + "\n\n";
-	currentDescription += i18n("Upgrading from old version: ");
-	currentDescription += version;
-	emit(returnDescription(currentDescription));
-}
-
 void ZmdUpdater::gotPatchListing(QValueList<Patch> patchList) {
 	QValueList<Patch>::iterator iter;
 	QCheckListItem *newItem;
@@ -211,6 +189,27 @@ void ZmdUpdater::gotPatchListing(QValueList<Patch> patchList) {
 		newItem->setText(COLUMN_CATALOG, (*iter).catalog);	
 	}
 	tempList->setSelected(tempList->firstChild(), true);
+}
+
+void ZmdUpdater::gotPackageInfo(Package pack) {
+	QListViewItem *item;
+
+	if (pack.installed == false)
+		return;
+	item = tempList->findItem(pack.name, COLUMN_NAME);
+	if (item != NULL) {
+		currentDescription = pack.version;
+		core->getDetails(pack);
+	}
+}		
+
+void ZmdUpdater::gotPackageDetails(PackageDetails details) {
+
+	QString version = currentDescription; //At this point, description is only the old size
+	currentDescription = details.description + "\n\n";
+	currentDescription += i18n("Upgrading from old version: ");
+	currentDescription += version;
+	emit(returnDescription(currentDescription));
 }
 
 /*

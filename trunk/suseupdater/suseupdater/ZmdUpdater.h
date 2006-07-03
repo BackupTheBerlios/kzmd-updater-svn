@@ -69,9 +69,6 @@ class ZmdUpdater : public Updater {
 		//Holds the descript for the currently selected update
 		QString currentDescription;
 
-		//We have to keep a service list around right now to compare catalogs too, because there is a bug in ZMD that allows orphan catalogs
-		QValueList<Service> tempServiceList;
-
 		//The core updater functionality
 		ZmdUpdaterCore *core;
 

@@ -44,14 +44,30 @@ UpdaterApplication::UpdaterApplication() : KUniqueApplication(true,true,false) {
 	main = new MainWindow();
 	setMainWidget(main);
 
+	//Connects the signals 
+
+	//Signal that controls applet state
 	connect(updater, SIGNAL(updateApplet(int)), main, SLOT(appletState(int)));
+
+	//Signal which allows updater "plugins" to force an update refresh
 	connect(updater, SIGNAL(refreshList()), main, SLOT(checkUpdates()));
+
+	//Signal to hide selection buttons if updater doesn't pack QCheckListItems
 	connect(updater, SIGNAL(disableSelectButtons()), main, SLOT(disableSelectButtons()));
+
+	//Starts installation
 	connect(main, SIGNAL(startInstall()), updater, SLOT(startInstall()));
+
+	//Starts updater backend configuration
 	connect(main, SIGNAL(configureUpdater()), updater, SLOT(configureUpdater()));
+
+	//Start update list populate, makes backend check for updates
 	connect(main, SIGNAL(populateUpdateList(QListView*)), updater, SLOT(populateUpdateList(QListView*)));
+
+	//Signals to get backend to put together a description for selected update and to return that description
 	connect(main, SIGNAL(updateSelected(QListViewItem*)), updater, SLOT(updateSelected(QListViewItem*)));
 	connect(updater, SIGNAL(returnDescription(QString)), main, SLOT(gotDescription(QString)));
+
 	main->checkUpdates();
 
 }

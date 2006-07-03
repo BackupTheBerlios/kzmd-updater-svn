@@ -30,7 +30,7 @@
 ZmdUpdaterCore::ZmdUpdaterCore(QObject *parent) : QObject(parent) {
 	KURL url(SERVER_ADDY);
 	server = new KXMLRPC::Server(url, this);
-	server->setUserAgent("kzmdupdater");
+	server->setUserAgent("ZMDUPDATER/0.1");
 
 	timer = new QTimer(this);
 	connect(timer, SIGNAL(timeout()), this, SLOT(timerSlot()));
@@ -326,6 +326,11 @@ void ZmdUpdaterCore::startTransaction(QValueList<Package> installList,
 									QValueList<Package> removeList) {
 
 	IS_ZMD_BUSY;
+
+	//clear our lists first, if something went wrong last time we may have strays
+	packagesToInstall.clear();
+	packagesToUpdate.clear();
+	packagesToRemove.clear();
 	
 	for (QValueList<Package>::iterator iter = installList.begin();
 		 iter != installList.end(); iter++) {
@@ -555,6 +560,7 @@ void ZmdUpdaterCore::faultData(int code, const QString& message, const QVariant&
 		case -607:
 			//Invalid progress ID
 			if (temp == "") {
+				//If temp is empty, we did not store a service name and thus this is a transaction
 				emit(transactionFinished(ERROR_INVALID, message));
 			} else {
 				emit(serviceAdded(temp, ERROR_INVALID, message));

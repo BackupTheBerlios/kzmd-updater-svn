@@ -148,8 +148,8 @@ class ZmdUpdaterCore : public QObject {
 			dep resolution. Data returns via signal realPackages.
 		**/
 		void startTransaction(QValueList<Package> installList, 
-							QValueList<Package> updateList,
-							QValueList<Package> removeList);
+						   	  QValueList<Package> updateList,
+							  QValueList<Package> removeList);
 
 		/**
 			Actually run the transaction you have just started. startTransaction MUST
