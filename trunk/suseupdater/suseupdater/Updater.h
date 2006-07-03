@@ -70,6 +70,12 @@ class Updater : public QObject {
 		**/
 		void returnDescription(QString);
 
+		/**
+			Fire this signal to inform the MainWindow that the updates are all added to the list.
+			This can be sent multiple times, it just causes the MainWindow to handle the new updates
+		**/
+		void populateDone();
+
 	protected slots:
 
 		/**

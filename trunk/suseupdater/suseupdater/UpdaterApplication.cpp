@@ -64,6 +64,9 @@ UpdaterApplication::UpdaterApplication() : KUniqueApplication(true,true,false) {
 	//Start update list populate, makes backend check for updates
 	connect(main, SIGNAL(populateUpdateList(QListView*)), updater, SLOT(populateUpdateList(QListView*)));
 
+	//Signal to inform the mainwindow of new updates in the list
+	connect(updater, SIGNAL(populateDone()), main, SLOT(populateDone()));
+
 	//Signals to get backend to put together a description for selected update and to return that description
 	connect(main, SIGNAL(updateSelected(QListViewItem*)), updater, SLOT(updateSelected(QListViewItem*)));
 	connect(updater, SIGNAL(returnDescription(QString)), main, SLOT(gotDescription(QString)));

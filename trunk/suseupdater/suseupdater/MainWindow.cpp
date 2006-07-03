@@ -28,6 +28,7 @@
 #include "MainWindow.h"
 #include "GeneralConfigWindow.h"
 #include "Updater.h"
+#include "UpdateListItem.h"
 
 
 MainWindow::MainWindow(QWidget *parent) : QWidget(parent) {
@@ -115,6 +116,7 @@ void MainWindow::initGUI() {
 	updateList->addColumn("Catalog", 0); //Obvious
 
 	connect(updateList, SIGNAL(selectionChanged(QListViewItem*)), this, SLOT(slotPackageSelected(QListViewItem*)));
+	connect(updateList, SIGNAL(clicked(QListViewItem*)), this, SLOT(slotPackageClicked(QListViewItem*)));
 
 	mainBox->setSpacing(10);
 	mainBox->setMargin(10);
@@ -136,6 +138,28 @@ void MainWindow::initMenu() {
 	menu->insertItem(i18n("Add/Remove Servers"), this, SLOT(serverButtonClicked()),0,-1,1);
 }
 
+void MainWindow::disableButtons(bool disable) {
+
+	if (disable) {
+		installButton->setDisabled(true);
+		if (selectAllButton != NULL) {
+			selectAllButton->setDisabled(true);
+			clearSelectionButton->setDisabled(true);
+		}
+	} else if (selectAllButton != NULL) {
+		if (updateList->childCount() > 0) {
+			selectAllButton->setDisabled(false);
+			clearSelectionButton->setDisabled(false);
+		}
+		if (updatesSelected > 0)
+			installButton->setDisabled(false);
+		else
+			installButton->setDisabled(true);
+	} else if (updateList->childCount() > 0) {
+		installButton->setDisabled(false);
+	}
+}
+
 void MainWindow::appletState(int state) {
 
 	switch (state) {
@@ -146,6 +170,20 @@ void MainWindow::appletState(int state) {
 		case APPLET_UPDATES:
 			applet->setPixmap(UserIcon(TRAY_ICON_RED));
 			break;
+	}
+}
+
+void MainWindow::populateDone() {
+	
+	if (selectAllButton != NULL) {
+		//ZmdUpdateListItems we have (yoda am I in this comment)
+		QListViewItem *item = updateList->firstChild();
+
+		while (item != NULL) {
+			((UpdateListItem*)item)->setCount(&updatesSelected);
+			kdWarning() << "Handing out count" << endl;
+			item = item->nextSibling();
+		}
 	}
 }
 
@@ -175,18 +213,26 @@ void MainWindow::selectButtonClicked() {
 	QCheckListItem *item = (QCheckListItem*)updateList->firstChild();
 	
 	while (item != NULL) {
-		item->setState(QCheckListItem::On);
+		if (!item->isOn()) {
+			item->setState(QCheckListItem::On);
+		}
 		item = (QCheckListItem*)item->nextSibling();
 	}
+	updatesSelected = updateList->childCount();
+	disableButtons(false);
 }
 
 void MainWindow::clearButtonClicked() {
 	QCheckListItem *item = (QCheckListItem*)updateList->firstChild();
 	
 	while (item != NULL) {
-		item->setState(QCheckListItem::Off);
+		if (item->isOn()) {
+			item->setState(QCheckListItem::Off);
+		}
 		item = (QCheckListItem*)item->nextSibling();
 	}
+	updatesSelected = 0;
+	disableButtons(false);
 }
 
 void MainWindow::disableSelectButtons() {
@@ -207,11 +253,21 @@ void MainWindow::checkUpdates() {
 	updateList->clear();
 	packageDescription->setText("");
 	emit(populateUpdateList(updateList)); 
+	disableButtons(true);
+	updatesSelected = false;
 }
 
 //Selection/Fetch Description slots
 void MainWindow::slotPackageSelected(QListViewItem *packageSelected) {
+	
+	if (selectAllButton != NULL) {
+		disableButtons(false);
+	}
 	emit(updateSelected(packageSelected));
+}
+
+void MainWindow::slotPackageClicked(QListViewItem *pack) {
+	disableButtons(false);
 }
 
 void MainWindow::gotDescription(QString description) {

@@ -65,11 +65,13 @@ class MainWindow : public QWidget {
 		void readConfig();
 		void disableSelectButtons();
 		void gotDescription(QString);
+		void populateDone();
 
 	private slots:
 
 		void slotExit();
 		void slotPackageSelected(QListViewItem *packageSelected);
+		void slotPackageClicked(QListViewItem *);
 
 		void configButtonClicked();
 		void serverButtonClicked();
@@ -83,6 +85,10 @@ class MainWindow : public QWidget {
 		
 		void initGUI();
 		void initMenu();
+
+		//Decides which buttons to disable, if arg is true, we disable all the buttons. 
+		//If false the logic runs
+		void disableButtons(bool);
 
 		KSystemTray *applet;
 		QListView *updateList;
@@ -100,6 +106,9 @@ class MainWindow : public QWidget {
 		QHBoxLayout *buttonsLayout;
 		QTimer *timer;
 		int timerInterval;
+
+		//This is only for CheckListItems, holds the number of items selected
+		int updatesSelected;
 
 };
 

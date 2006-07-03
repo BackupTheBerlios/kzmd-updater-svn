@@ -28,6 +28,7 @@
 #include "MainWindow.h"
 #include "ZmdInstallWindow.h"
 #include "ZmdConfigWindow.h"
+#include "UpdateListItem.h"
 
 ZmdUpdater::ZmdUpdater() : Updater() {
 
@@ -68,7 +69,7 @@ void ZmdUpdater::startInstall() {
 	if (tempList != NULL) {
 		QValueList<Package> upList;
 		QValueList<Package> instList;
-		QCheckListItem *item = (QCheckListItem*)(tempList->firstChild());
+		UpdateListItem *item = (UpdateListItem*)(tempList->firstChild());
 
 		if (item == NULL) {
 			return;
@@ -87,7 +88,7 @@ void ZmdUpdater::startInstall() {
 				else
 					instList.append(p);
 			}
-		} while ((item = (QCheckListItem*)(item->nextSibling())) != 0);
+		} while ((item = (UpdateListItem*)(item->nextSibling())) != 0);
 		/* From reading the ZMD source, we only need name and ID for packages or patches. This may change in the future, was not in the API */
 
 		if (instList.size() > 0 || upList.size() > 0) {
@@ -148,7 +149,7 @@ void ZmdUpdater::gotCatalogListing(QValueList<Catalog> catalogs) {
 
 void ZmdUpdater::gotUpdateListing(QValueList<Package> packageList) {
 	QValueList<Package>::iterator iter;
-	QCheckListItem *newItem;
+	UpdateListItem *newItem;
 
 	if (packageList.size() > 0 || tempList->childCount() > 0) {
 		emit(updateApplet(APPLET_UPDATES));
@@ -157,7 +158,7 @@ void ZmdUpdater::gotUpdateListing(QValueList<Package> packageList) {
 	}
 
 	for (iter = packageList.begin(); iter != packageList.end(); iter++) {
-		newItem = new QCheckListItem(tempList, (*iter).name, QCheckListItem::CheckBox);
+		newItem = new UpdateListItem(tempList, (*iter).name, QCheckListItem::CheckBox);
 
 		newItem->setText(COLUMN_NEW_VERSION,(*iter).version);
 		newItem->setText(COLUMN_SIZE, "Unknown");
@@ -167,11 +168,12 @@ void ZmdUpdater::gotUpdateListing(QValueList<Package> packageList) {
 
 	}
 	tempList->setSelected(tempList->firstChild(), true);
+	emit(populateDone());
 }
 
 void ZmdUpdater::gotPatchListing(QValueList<Patch> patchList) {
 	QValueList<Patch>::iterator iter;
-	QCheckListItem *newItem;
+	UpdateListItem *newItem;
 
 	if (patchList.size() > 0 || tempList->childCount() > 0) {
 		emit(updateApplet(APPLET_UPDATES));
@@ -180,7 +182,7 @@ void ZmdUpdater::gotPatchListing(QValueList<Patch> patchList) {
 	}
 
 	for (iter = patchList.begin(); iter != patchList.end(); iter++) {
-		newItem = new QCheckListItem(tempList, (*iter).name + " (Patch)", QCheckListItem::CheckBox);
+		newItem = new UpdateListItem(tempList, (*iter).name + " (Patch)", QCheckListItem::CheckBox);
 
 		newItem->setText(COLUMN_NEW_VERSION,(*iter).version);
 		newItem->setText(COLUMN_SIZE, "Unknown");
