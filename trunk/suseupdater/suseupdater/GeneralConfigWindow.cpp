@@ -88,7 +88,7 @@ void GeneralConfigWindow::readConfig() {
 			break;
 	}
 
-	switch(config->readEntry("Autostart").toInt()) {
+	switch(config->readEntry("Autostart") == "true") {
 
 		case true:
 			autostartButton->setChecked(true);
