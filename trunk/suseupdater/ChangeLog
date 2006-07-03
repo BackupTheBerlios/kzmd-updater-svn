@@ -4,3 +4,10 @@ Init Project - Not going to keep a change log until later, when things slow down
 
 Sat July 1 2006 - Narayan Newton <narayannewton@gmail.com>
 Starting change log now.
+
+Sun. July 2 2006 - Narayan Newton <narayannewton@gmail.com>
+	Changed name on the dep dialog.
+	Added formatting changes/code cleaning.
+	Fixed 3 possible signaling bugs.
+	Fixed very bad scaling on the getInfo and getDetails function calls via ZmdUpdater
+	Other small bug fixes found while pounding on things.
