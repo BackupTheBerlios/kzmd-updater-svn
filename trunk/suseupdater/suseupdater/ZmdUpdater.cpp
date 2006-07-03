@@ -143,6 +143,7 @@ void ZmdUpdater::gotCatalogListing(QValueList<Catalog> catalogs) {
 	for (iter = catalogs.begin(); iter != catalogs.end(); iter++) {
 		if ((*iter).subscribed) {
 			core->getUpdates(*iter);
+			core->getPatches(*iter);
 		}
 	}
 }
@@ -191,6 +192,7 @@ void ZmdUpdater::gotPatchListing(QValueList<Patch> patchList) {
 		newItem->setText(COLUMN_CATALOG, (*iter).catalog);	
 	}
 	tempList->setSelected(tempList->firstChild(), true);
+	emit(populateDone());
 }
 
 void ZmdUpdater::gotPackageInfo(Package pack) {

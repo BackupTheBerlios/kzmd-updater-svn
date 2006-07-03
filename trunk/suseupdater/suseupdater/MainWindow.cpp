@@ -49,7 +49,16 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent) {
 
 	initGUI();
 	initMenu();
+
+	//Initially we have 0 selected updates of course. 
+	updatesSelected = 0;
 }
+
+/*
+
+	INIT Methods
+
+*/
 
 // Read in the config, just the interval really as we cannot deal with the updater itself
 void MainWindow::readConfig() {
@@ -127,38 +136,42 @@ void MainWindow::initGUI() {
 	return;
 }
 
-//Make the main window hide, not quit
-void MainWindow::closeEvent(QCloseEvent *e) {
-	hide();
-}
-
 void MainWindow::initMenu() {
 	KPopupMenu *menu = applet->contextMenu();
 	menu->insertItem(i18n("Configure Updater"), this, SLOT(configButtonClicked()),0,-1,1);
 	menu->insertItem(i18n("Add/Remove Servers"), this, SLOT(serverButtonClicked()),0,-1,1);
 }
 
+//Button logic for mainWindow: 
+//If disable is true, we disable select/install buttons. If false, we make decisions based
+//on whether we have updates and if they are selected
 void MainWindow::disableButtons(bool disable) {
 
-	if (disable) {
+	if (disable) { //If true, we just disable the buttons
 		installButton->setDisabled(true);
-		if (selectAllButton != NULL) {
+		if (selectAllButton != NULL) { //if not null, we need to disable these buttons too
 			selectAllButton->setDisabled(true);
 			clearSelectionButton->setDisabled(true);
 		}
-	} else if (selectAllButton != NULL) {
-		if (updateList->childCount() > 0) {
+	} else if (selectAllButton != NULL) { //if this is true, we have to deal with the CheckListItems
+		if (updateList->childCount() > 0) { //if there are updates in the list, enable these
 			selectAllButton->setDisabled(false);
 			clearSelectionButton->setDisabled(false);
 		}
-		if (updatesSelected > 0)
+		if (updatesSelected > 0) //if there are updates selected for installation, enable this button
 			installButton->setDisabled(false);
 		else
-			installButton->setDisabled(true);
-	} else if (updateList->childCount() > 0) {
-		installButton->setDisabled(false);
+			installButton->setDisabled(true); //else disable it
+	} else if (updateList->childCount() > 0) { //if we don't have to deal with selections,
+		installButton->setDisabled(false);	   //just enable the install button if there are updates
 	}
 }
+
+/*
+
+	Slots recieving signals from the updater 
+
+*/
 
 void MainWindow::appletState(int state) {
 
@@ -181,11 +194,33 @@ void MainWindow::populateDone() {
 
 		while (item != NULL) {
 			((UpdateListItem*)item)->setCount(&updatesSelected);
-			kdWarning() << "Handing out count" << endl;
 			item = item->nextSibling();
 		}
 	}
 }
+
+void MainWindow::disableSelectButtons() {
+	if (selectAllButton != NULL) {
+		selectionButtonsLayout->remove(selectAllButton);
+		selectionButtonsLayout->remove(clearSelectionButton);
+
+		delete selectAllButton;
+		delete clearSelectionButton;
+		delete selectionButtonsLayout;
+		selectAllButton = clearSelectionButton = NULL;
+		update();
+	}
+}
+
+void MainWindow::gotDescription(QString description) {
+	packageDescription->setText(description);
+}
+
+/*
+	
+	Internal slots, recieving signals from GUI events and timers
+
+*/
 
 void MainWindow::serverButtonClicked() {
 	//Fire the configure signal to the backend
@@ -201,6 +236,11 @@ void MainWindow::configButtonClicked() {
 void MainWindow::installButtonClicked() {
 	//Fire the  install signal to the backend and hide ourselves
 	emit(startInstall());
+	hide();
+}
+
+//Make the main window hide, not quit
+void MainWindow::closeEvent(QCloseEvent *e) {
 	hide();
 }
 
@@ -235,43 +275,27 @@ void MainWindow::clearButtonClicked() {
 	disableButtons(false);
 }
 
-void MainWindow::disableSelectButtons() {
-	if (selectAllButton != NULL) {
-		selectionButtonsLayout->remove(selectAllButton);
-		selectionButtonsLayout->remove(clearSelectionButton);
-
-		delete selectAllButton;
-		delete clearSelectionButton;
-		delete selectionButtonsLayout;
-		selectAllButton = clearSelectionButton = NULL;
-		update();
-	}
-}
 
 void MainWindow::checkUpdates() {
 	//Clear the list and fire the update signal to the backend
 	updateList->clear();
 	packageDescription->setText("");
-	emit(populateUpdateList(updateList)); 
 	disableButtons(true);
-	updatesSelected = false;
+	updatesSelected = 0;
+
+	emit(populateUpdateList(updateList)); 
 }
 
 //Selection/Fetch Description slots
 void MainWindow::slotPackageSelected(QListViewItem *packageSelected) {
-	
 	if (selectAllButton != NULL) {
-		disableButtons(false);
-	}
+		disableButtons(false); //We have to enable the select buttons here, if they exist
+	} 
 	emit(updateSelected(packageSelected));
 }
 
 void MainWindow::slotPackageClicked(QListViewItem *pack) {
 	disableButtons(false);
-}
-
-void MainWindow::gotDescription(QString description) {
-	packageDescription->setText(description);
 }
 
 //This is where we actually close, called from the system tray
