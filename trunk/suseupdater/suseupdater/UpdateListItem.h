@@ -38,3 +38,4 @@ class UpdateListItem : public QCheckListItem {
 };
 
 #endif
+

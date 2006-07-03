@@ -134,7 +134,7 @@ void ZmdConfigWindow::gotCatalogList(QValueList<Catalog> catalogs) {
 		parentItem = serverList->findItem((*iter).service,CONFW_URI);
 		if (parentItem == NULL) {
 			if (alreadyShownOrphanWarning == false) {
-				KMessageBox::error(this, "Catalog " + (*iter).displayName + i18n(" has no service attached to it. This is is strange and you may want to look into it"));
+				KMessageBox::error(this, "Catalog " + (*iter).displayName + i18n(" has no service attached to it. This is is strange and you may want to restart ZMD."));
 				alreadyShownOrphanWarning = true;
 			}
 			continue;

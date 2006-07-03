@@ -499,6 +499,9 @@ void ZmdUpdaterCore::timerData(const QValueList<QVariant>& data, const QVariant 
 				downloadID = "";
 			}
 		} else {
+			if (status.messages.front() == "Preparing..." && status.status == 4) {
+				status.status = 1; //this is a bug in ZMD, somehow it transmits this as an error
+			}
 			emit(progress(status));
 			if (downloadID.isEmpty() && map["status"].toInt() > 1) {
 				ZMD_CLEAR;
