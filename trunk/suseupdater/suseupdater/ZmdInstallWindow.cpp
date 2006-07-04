@@ -171,7 +171,7 @@ void ZmdInstallWindow::progress(Progress status) {
 
 void ZmdInstallWindow::finished(int status, QString error) {
 	if (status == ERROR_DEP_FAIL) {
-		KMessageBox::error(this, i18n("Sorry, we couldn't resolve the dependencies for this update:")+error);
+		KMessageBox::error(this, i18n("Sorry, we couldn't resolve the dependencies for this update:\n")+error);
 	} else {
 		transactionList->setText("Done!");
 	}

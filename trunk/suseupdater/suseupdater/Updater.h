@@ -60,7 +60,8 @@ class Updater : public QObject {
 
 		/**
 			Send this signal to disable the two selection buttons on the GUI. You do this if you
-			are not going to load the list with CheckListItems.
+			are not going to load the list with UpdateListItems. If you don't disable these buttons,
+			we assume you are using UpdateListItems.
 		**/
 		void disableSelectButtons();
 
