@@ -30,7 +30,7 @@
 using namespace std;
 
 ZmdInstallWindow::ZmdInstallWindow(ZmdUpdaterCore *_core, QWidget *parent) : 
-	QWidget(parent,0,Qt::WDestructiveClose) {
+	QWidget(parent,0,Qt::WDestructiveClose | Qt::WShowModal) {
 	core = _core;
 	initGUI();
 

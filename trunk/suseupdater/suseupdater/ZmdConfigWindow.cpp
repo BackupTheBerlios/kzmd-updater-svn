@@ -26,7 +26,7 @@
 #include "ZmdProgressDialog.h"
 #include "ZmdCatalogListItem.h"
 
-ZmdConfigWindow::ZmdConfigWindow(ZmdUpdaterCore *_core, QWidget *parent) : QWidget(parent,0,Qt::WDestructiveClose) {
+ZmdConfigWindow::ZmdConfigWindow(ZmdUpdaterCore *_core, QWidget *parent) : QWidget(parent,0,Qt::WDestructiveClose | Qt::WShowModal) {
 	core = _core;
 
 	initGUI();

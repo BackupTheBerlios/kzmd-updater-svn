@@ -109,7 +109,6 @@ class MainWindow : public QWidget {
 
 		//This is only for CheckListItems, holds the number of items selected
 		int updatesSelected;
-
 };
 
 #endif
