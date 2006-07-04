@@ -213,6 +213,8 @@ void MainWindow::disableSelectButtons() {
 }
 
 void MainWindow::gotDescription(QString description) {
+	packageDescription->setText("");
+	packageDescription->setTextFormat(Qt::RichText);
 	packageDescription->setText(description);
 }
 

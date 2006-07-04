@@ -40,7 +40,6 @@ ZmdUpdater::ZmdUpdater() : Updater() {
 	connect(core, SIGNAL(updateListing(QValueList<Package>)), this, SLOT(gotUpdateListing(QValueList<Package>)));
 	connect(core, SIGNAL(patchListing(QValueList<Patch>)), this, SLOT(gotPatchListing(QValueList<Patch>)));
 	connect(core, SIGNAL(packageInfo(Package)), this, SLOT(gotPackageInfo(Package)));
-	connect(core, SIGNAL(packageDetails(PackageDetails)), this, SLOT(gotPackageDetails(PackageDetails)));
 }
 
 /*
@@ -159,7 +158,7 @@ void ZmdUpdater::gotUpdateListing(QValueList<Package> packageList) {
 	}
 
 	for (iter = packageList.begin(); iter != packageList.end(); iter++) {
-		newItem = new UpdateListItem(tempList, (*iter).name, QCheckListItem::CheckBox);
+		newItem = new UpdateListItem(tempList, (*iter).name, QCheckListItem::CheckBox); 
 
 		newItem->setText(COLUMN_NEW_VERSION,(*iter).version);
 		newItem->setText(COLUMN_SIZE, "Unknown");
@@ -203,15 +202,19 @@ void ZmdUpdater::gotPackageInfo(Package pack) {
 	item = tempList->findItem(pack.name, COLUMN_NAME);
 	if (item != NULL) {
 		currentDescription = pack.version;
+		connect(core, SIGNAL(packageDetails(PackageDetails)), this, SLOT(gotPackageDetails(PackageDetails)));
 		core->getDetails(pack);
 	}
 }		
 
 void ZmdUpdater::gotPackageDetails(PackageDetails details) {
 
-	QString version = currentDescription; //At this point, description is only the old size
-	currentDescription = details.description + "\n\n";
-	currentDescription += i18n("Upgrading from old version: ");
+	QString version = currentDescription;
+	disconnect(core, SIGNAL(packageDetails(PackageDetails)), this, SLOT(gotPackageDetails(PackageDetails)));
+
+	currentDescription = "<b>" + i18n("Description: ") + "</b><br>";
+	currentDescription += details.description + "<br>";
+	currentDescription += i18n("<b>Upgrading from old version:</b> ");
 	currentDescription += version;
 	emit(returnDescription(currentDescription));
 }
