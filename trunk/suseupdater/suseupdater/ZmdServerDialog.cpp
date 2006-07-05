@@ -24,7 +24,7 @@
 
 enum { TYPE_ZYPP=0, TYPE_YUM, TYPE_ZEN, TYPE_MOUNT };
 
-ZmdServerDialog::ZmdServerDialog(QWidget *parent) : QDialog(parent) {
+ZmdServerDialog::ZmdServerDialog(QWidget *parent) : QDialog(parent,0,Qt::WShowModal) {
 	initGUI();
 }
 
