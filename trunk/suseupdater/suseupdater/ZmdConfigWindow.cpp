@@ -195,6 +195,9 @@ void ZmdConfigWindow::addedServer(QString server, int status, QString error) {
 
 void ZmdConfigWindow::removeButtonClicked() {
 
+	if (serverList->currentItem() == NULL)
+		return;
+
 	if (serverList->currentItem()->parent() == NULL) {
 		Service serv;
 
