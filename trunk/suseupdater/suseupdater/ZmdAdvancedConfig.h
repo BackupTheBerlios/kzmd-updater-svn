@@ -17,52 +17,63 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef _ZMD_CONFIG_WINDOW_H_
-#define _ZMD_CONFIG_WINDOW_H_
+#ifndef _ZMD_ADVANCED_CONFIG_H_
+#define _ZMD_ADVANCED_CONFIG_H_
 
-#include <kpushbutton.h>
+#include <klineedit.h>
+#include <klocale.h>
 
 #include <qwidget.h>
+#include <qlabel.h>
 #include <qlayout.h>
-#include <qtabwidget.h>
+#include <qhbuttongroup.h>
 
-//Column IDs for the configure window
-enum { CONFW_NAME=0, CONFW_URI, CONFW_ID };
+class QProcess;
+class QComboBox;
+class ZmdRugParser;
 
-#include "ZmdEditServers.h"
-#include "ZmdAdvancedConfig.h"
-#include "HeaderWidget.h"
-#include "ZmdUpdaterCore.h"
-
-class ZmdConfigWindow : public QWidget {
+class ZmdAdvancedConfig : public QWidget {
 
 	Q_OBJECT
 
 	public:
 
-		ZmdConfigWindow(ZmdUpdaterCore *_core=0, QWidget *parent=0);
-
-	signals:
-
-		void refreshUpdates();
+		ZmdAdvancedConfig(QWidget *parent=0);
+		~ZmdAdvancedConfig();
 
 	private slots:
 
-		void serverChange();
-		void tabChanged(QWidget *);
+		void stdinReady();
 
 	private:
-
+	
 		void initGUI();
+		
+		QGridLayout *mainLayout;
 
-		QVBoxLayout *mainLayout;
-		HeaderWidget *header;
-		QTabWidget *tabs;
-		KPushButton *closeButton;
+		QLabel *hostLabel;
+		KLineEdit *hostEdit;
+		QString oldHost;
 
-		ZmdEditServers *editServers;
-		ZmdAdvancedConfig *advancedConfig;		
-		ZmdUpdaterCore *core;
+		QLabel *remoteLabel;
+		QHButtonGroup *remoteButtons;
+		bool oldRemote;
+
+		QLabel *certLabel;
+		QHButtonGroup *certButtons;
+		bool oldCert;
+
+		QLabel *logLabel;
+		QComboBox *logBox;
+		QString oldLog;
+
+		QLabel *rollbackLabel;
+		QHButtonGroup *rollbackButtons;
+		bool oldRollback;
+
+		QProcess *proc;
+		ZmdRugParser *parser;
+
 };
 
 #endif

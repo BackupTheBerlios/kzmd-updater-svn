@@ -66,9 +66,10 @@ am_SUSEUpdater_OBJECTS = main.$(OBJEXT) MainWindow.$(OBJEXT) \
 	ZmdProgressDialog.$(OBJEXT) ZmdCatalogListItem.$(OBJEXT) \
 	ZmdDependencyDialog.$(OBJEXT) ZmdUpdater.$(OBJEXT) \
 	UpdaterApplication.$(OBJEXT) GeneralConfigWindow.$(OBJEXT) \
-	UpdateListItem.$(OBJEXT)
+	UpdateListItem.$(OBJEXT) ZmdAdvancedConfig.$(OBJEXT) \
+	ZmdEditServers.$(OBJEXT) ZmdRugParser.$(OBJEXT)
 #>- SUSEUpdater_OBJECTS = $(am_SUSEUpdater_OBJECTS)
-#>+ 12
+#>+ 13
 SUSEUpdater_final_OBJECTS = SUSEUpdater.all_cpp.o 
 SUSEUpdater_nofinal_OBJECTS = main.$(OBJEXT) MainWindow.$(OBJEXT) \
 	HeaderWidget.$(OBJEXT) ZmdConfigWindow.$(OBJEXT) \
@@ -77,8 +78,9 @@ SUSEUpdater_nofinal_OBJECTS = main.$(OBJEXT) MainWindow.$(OBJEXT) \
 	ZmdProgressDialog.$(OBJEXT) ZmdCatalogListItem.$(OBJEXT) \
 	ZmdDependencyDialog.$(OBJEXT) ZmdUpdater.$(OBJEXT) \
 	UpdaterApplication.$(OBJEXT) GeneralConfigWindow.$(OBJEXT) \
-	UpdateListItem.$(OBJEXT)\
-ZmdDependencyDialog.moc.o ZmdInstallWindow.moc.o GeneralConfigWindow.moc.o ZmdConfigWindow.moc.o ZmdProgressDialog.moc.o ZmdUpdaterCore.moc.o ZmdUpdater.moc.o Updater.moc.o xmlrpciface.moc.o MainWindow.moc.o HeaderWidget.moc.o ZmdServerDialog.moc.o 
+	UpdateListItem.$(OBJEXT) ZmdAdvancedConfig.$(OBJEXT) \
+	ZmdEditServers.$(OBJEXT) ZmdRugParser.$(OBJEXT)\
+ZmdEditServers.moc.o ZmdDependencyDialog.moc.o ZmdInstallWindow.moc.o GeneralConfigWindow.moc.o ZmdConfigWindow.moc.o ZmdRugParser.moc.o ZmdProgressDialog.moc.o ZmdUpdaterCore.moc.o ZmdUpdater.moc.o ZmdAdvancedConfig.moc.o xmlrpciface.moc.o Updater.moc.o MainWindow.moc.o HeaderWidget.moc.o ZmdServerDialog.moc.o 
 @KDE_USE_FINAL_FALSE@SUSEUpdater_OBJECTS = $(SUSEUpdater_nofinal_OBJECTS)
 @KDE_USE_FINAL_TRUE@SUSEUpdater_OBJECTS = $(SUSEUpdater_final_OBJECTS)
 am__DEPENDENCIES_1 =
@@ -379,10 +381,10 @@ SUSEUpdater_LDFLAGS = $(KDE_RPATH) $(all_libraries)
 SUSEUpdater_LDADD = $(LIB_KFILE)
 
 # which sources should be compiled for kzmdupdater
-SUSEUpdater_SOURCES = main.cpp  MainWindow.cpp HeaderWidget.cpp ZmdConfigWindow.cpp ZmdInstallWindow.cpp ZmdServerDialog.cpp xmlrpciface.cpp ZmdUpdaterCore.cpp ZmdProgressDialog.cpp ZmdCatalogListItem.cpp ZmdDependencyDialog.cpp ZmdUpdater.cpp UpdaterApplication.cpp GeneralConfigWindow.cpp UpdateListItem.cpp
+SUSEUpdater_SOURCES = main.cpp  MainWindow.cpp HeaderWidget.cpp ZmdConfigWindow.cpp ZmdInstallWindow.cpp ZmdServerDialog.cpp xmlrpciface.cpp ZmdUpdaterCore.cpp ZmdProgressDialog.cpp ZmdCatalogListItem.cpp ZmdDependencyDialog.cpp ZmdUpdater.cpp UpdaterApplication.cpp GeneralConfigWindow.cpp UpdateListItem.cpp ZmdAdvancedConfig.cpp ZmdEditServers.cpp ZmdRugParser.cpp
 
 # these are the headers for your project that won't be installed
-noinst_HEADERS = MainWindow.h HeaderWidget.h ZmdConfigWindow.h ZmdInstallWindow.h ZmdServerDialog.h xmlrpciface.h ZmdUpdaterCore.h ZmdProgressDialog.h ZmdCatalogListItem.h ZmdDependencyDialog.h Updater.h ZmdUpdater.h UpdaterApplication.h GeneralConfigWindow.h UpdateListItem.h
+noinst_HEADERS = MainWindow.h HeaderWidget.h ZmdConfigWindow.h ZmdInstallWindow.h ZmdServerDialog.h xmlrpciface.h ZmdUpdaterCore.h ZmdProgressDialog.h ZmdCatalogListItem.h ZmdDependencyDialog.h Updater.h ZmdUpdater.h UpdaterApplication.h GeneralConfigWindow.h UpdateListItem.h ZmdAdvancedConfig.h ZmdEditServers.h ZmdRugParser.h
 
 # let automoc handle all of the meta source files (moc)
 #>- METASOURCES = AUTO
@@ -406,9 +408,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 #>- 	      exit 1;; \
 #>- 	  esac; \
 #>- 	done; \
-#>- 	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign  suseupdater/Makefile'; \
+#>- 	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  suseupdater/Makefile'; \
 #>- 	cd $(top_srcdir) && \
-#>- 	  $(AUTOMAKE) --foreign  suseupdater/Makefile
+#>- 	  $(AUTOMAKE) --gnu  suseupdater/Makefile
 #>+ 12
 	@for dep in $?; do \
 	  case '$(am__configure_deps)' in \
@@ -418,9 +420,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign  suseupdater/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  suseupdater/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --foreign  suseupdater/Makefile
+	  $(AUTOMAKE) --gnu  suseupdater/Makefile
 	cd $(top_srcdir) && perl admin/am_edit suseupdater/Makefile.in
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
@@ -482,11 +484,14 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/MainWindow.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/UpdateListItem.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/UpdaterApplication.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ZmdAdvancedConfig.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ZmdCatalogListItem.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ZmdConfigWindow.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ZmdDependencyDialog.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ZmdEditServers.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ZmdInstallWindow.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ZmdProgressDialog.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ZmdRugParser.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ZmdServerDialog.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ZmdUpdater.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ZmdUpdaterCore.Po@am__quote@
@@ -732,6 +737,12 @@ install-data-local:
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:
 
+#>+ 3
+ZmdEditServers.moc.cpp: $(srcdir)/ZmdEditServers.h
+	$(MOC) $(srcdir)/ZmdEditServers.h -o ZmdEditServers.moc.cpp
+
+#>+ 2
+mocs: ZmdEditServers.moc.cpp
 
 #>+ 3
 ZmdDependencyDialog.moc.cpp: $(srcdir)/ZmdDependencyDialog.h
@@ -762,6 +773,13 @@ ZmdConfigWindow.moc.cpp: $(srcdir)/ZmdConfigWindow.h
 mocs: ZmdConfigWindow.moc.cpp
 
 #>+ 3
+ZmdRugParser.moc.cpp: $(srcdir)/ZmdRugParser.h
+	$(MOC) $(srcdir)/ZmdRugParser.h -o ZmdRugParser.moc.cpp
+
+#>+ 2
+mocs: ZmdRugParser.moc.cpp
+
+#>+ 3
 ZmdProgressDialog.moc.cpp: $(srcdir)/ZmdProgressDialog.h
 	$(MOC) $(srcdir)/ZmdProgressDialog.h -o ZmdProgressDialog.moc.cpp
 
@@ -783,11 +801,11 @@ ZmdUpdater.moc.cpp: $(srcdir)/ZmdUpdater.h
 mocs: ZmdUpdater.moc.cpp
 
 #>+ 3
-Updater.moc.cpp: $(srcdir)/Updater.h
-	$(MOC) $(srcdir)/Updater.h -o Updater.moc.cpp
+ZmdAdvancedConfig.moc.cpp: $(srcdir)/ZmdAdvancedConfig.h
+	$(MOC) $(srcdir)/ZmdAdvancedConfig.h -o ZmdAdvancedConfig.moc.cpp
 
 #>+ 2
-mocs: Updater.moc.cpp
+mocs: ZmdAdvancedConfig.moc.cpp
 
 #>+ 3
 xmlrpciface.moc.cpp: $(srcdir)/xmlrpciface.h
@@ -795,6 +813,13 @@ xmlrpciface.moc.cpp: $(srcdir)/xmlrpciface.h
 
 #>+ 2
 mocs: xmlrpciface.moc.cpp
+
+#>+ 3
+Updater.moc.cpp: $(srcdir)/Updater.h
+	$(MOC) $(srcdir)/Updater.h -o Updater.moc.cpp
+
+#>+ 2
+mocs: Updater.moc.cpp
 
 #>+ 3
 MainWindow.moc.cpp: $(srcdir)/MainWindow.h
@@ -819,10 +844,10 @@ mocs: ZmdServerDialog.moc.cpp
 
 #>+ 3
 clean-metasources:
-	-rm -f  ZmdDependencyDialog.moc.cpp ZmdInstallWindow.moc.cpp GeneralConfigWindow.moc.cpp ZmdConfigWindow.moc.cpp ZmdProgressDialog.moc.cpp ZmdUpdaterCore.moc.cpp ZmdUpdater.moc.cpp Updater.moc.cpp xmlrpciface.moc.cpp MainWindow.moc.cpp HeaderWidget.moc.cpp ZmdServerDialog.moc.cpp
+	-rm -f  ZmdEditServers.moc.cpp ZmdDependencyDialog.moc.cpp ZmdInstallWindow.moc.cpp GeneralConfigWindow.moc.cpp ZmdConfigWindow.moc.cpp ZmdRugParser.moc.cpp ZmdProgressDialog.moc.cpp ZmdUpdaterCore.moc.cpp ZmdUpdater.moc.cpp ZmdAdvancedConfig.moc.cpp xmlrpciface.moc.cpp Updater.moc.cpp MainWindow.moc.cpp HeaderWidget.moc.cpp ZmdServerDialog.moc.cpp
 
 #>+ 2
-KDE_DIST=hi48-app-suseupdater.png suseupdater.spec hi16-app-suseupdater.png hi32-app-suseupdater.png suseupdater.desktop hi128-app-suseupdater.png suseupdater-start.desktop Constants.h Makefile.in ZmdUpdaterCoreUtils.h hi64-app-suseupdater.png Makefile.am 
+KDE_DIST=hi48-app-suseupdater.png suseupdater.spec hi16-app-suseupdater.png hi32-app-suseupdater.png suseupdater.desktop hi128-app-suseupdater.png suseupdater-start.desktop Constants.h ZmdConfigWindow.cpp.mine SUSEUpdater Makefile.in ZmdUpdaterCoreUtils.h hi64-app-suseupdater.png tags Makefile.am 
 
 #>+ 2
 docs-am:
@@ -857,9 +882,9 @@ force-reedit:
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign  suseupdater/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  suseupdater/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --foreign  suseupdater/Makefile
+	  $(AUTOMAKE) --gnu  suseupdater/Makefile
 	cd $(top_srcdir) && perl admin/am_edit suseupdater/Makefile.in
 
 
@@ -886,11 +911,11 @@ bcheck-am:
 
 
 #>+ 11
-SUSEUpdater.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/main.cpp $(srcdir)/MainWindow.cpp $(srcdir)/HeaderWidget.cpp $(srcdir)/ZmdConfigWindow.cpp $(srcdir)/ZmdInstallWindow.cpp $(srcdir)/ZmdServerDialog.cpp $(srcdir)/xmlrpciface.cpp $(srcdir)/ZmdUpdaterCore.cpp $(srcdir)/ZmdProgressDialog.cpp $(srcdir)/ZmdCatalogListItem.cpp $(srcdir)/ZmdDependencyDialog.cpp $(srcdir)/ZmdUpdater.cpp $(srcdir)/UpdaterApplication.cpp $(srcdir)/GeneralConfigWindow.cpp $(srcdir)/UpdateListItem.cpp ZmdDependencyDialog.moc.cpp ZmdConfigWindow.moc.cpp GeneralConfigWindow.moc.cpp ZmdInstallWindow.moc.cpp ZmdProgressDialog.moc.cpp ZmdUpdaterCore.moc.cpp ZmdUpdater.moc.cpp Updater.moc.cpp xmlrpciface.moc.cpp MainWindow.moc.cpp HeaderWidget.moc.cpp ZmdServerDialog.moc.cpp 
+SUSEUpdater.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/main.cpp $(srcdir)/MainWindow.cpp $(srcdir)/HeaderWidget.cpp $(srcdir)/ZmdConfigWindow.cpp $(srcdir)/ZmdInstallWindow.cpp $(srcdir)/ZmdServerDialog.cpp $(srcdir)/xmlrpciface.cpp $(srcdir)/ZmdUpdaterCore.cpp $(srcdir)/ZmdProgressDialog.cpp $(srcdir)/ZmdCatalogListItem.cpp $(srcdir)/ZmdDependencyDialog.cpp $(srcdir)/ZmdUpdater.cpp $(srcdir)/UpdaterApplication.cpp $(srcdir)/GeneralConfigWindow.cpp $(srcdir)/UpdateListItem.cpp $(srcdir)/ZmdAdvancedConfig.cpp $(srcdir)/ZmdEditServers.cpp $(srcdir)/ZmdRugParser.cpp $(srcdir)/ZmdEditServers.moc.cpp $(srcdir)/ZmdDependencyDialog.moc.cpp $(srcdir)/ZmdConfigWindow.moc.cpp $(srcdir)/GeneralConfigWindow.moc.cpp $(srcdir)/ZmdInstallWindow.moc.cpp $(srcdir)/ZmdProgressDialog.moc.cpp $(srcdir)/ZmdRugParser.moc.cpp $(srcdir)/ZmdUpdater.moc.cpp $(srcdir)/ZmdUpdaterCore.moc.cpp $(srcdir)/ZmdAdvancedConfig.moc.cpp $(srcdir)/Updater.moc.cpp $(srcdir)/xmlrpciface.moc.cpp $(srcdir)/MainWindow.moc.cpp $(srcdir)/HeaderWidget.moc.cpp $(srcdir)/ZmdServerDialog.moc.cpp 
 	@echo 'creating SUSEUpdater.all_cpp.cpp ...'; \
 	rm -f SUSEUpdater.all_cpp.files SUSEUpdater.all_cpp.final; \
 	echo "#define KDE_USE_FINAL 1" >> SUSEUpdater.all_cpp.final; \
-	for file in main.cpp MainWindow.cpp HeaderWidget.cpp ZmdConfigWindow.cpp ZmdInstallWindow.cpp ZmdServerDialog.cpp xmlrpciface.cpp ZmdUpdaterCore.cpp ZmdProgressDialog.cpp ZmdCatalogListItem.cpp ZmdDependencyDialog.cpp ZmdUpdater.cpp UpdaterApplication.cpp GeneralConfigWindow.cpp UpdateListItem.cpp ZmdDependencyDialog.moc.cpp ZmdConfigWindow.moc.cpp GeneralConfigWindow.moc.cpp ZmdInstallWindow.moc.cpp ZmdProgressDialog.moc.cpp ZmdUpdaterCore.moc.cpp ZmdUpdater.moc.cpp Updater.moc.cpp xmlrpciface.moc.cpp MainWindow.moc.cpp HeaderWidget.moc.cpp ZmdServerDialog.moc.cpp ; do \
+	for file in main.cpp MainWindow.cpp HeaderWidget.cpp ZmdConfigWindow.cpp ZmdInstallWindow.cpp ZmdServerDialog.cpp xmlrpciface.cpp ZmdUpdaterCore.cpp ZmdProgressDialog.cpp ZmdCatalogListItem.cpp ZmdDependencyDialog.cpp ZmdUpdater.cpp UpdaterApplication.cpp GeneralConfigWindow.cpp UpdateListItem.cpp ZmdAdvancedConfig.cpp ZmdEditServers.cpp ZmdRugParser.cpp ZmdEditServers.moc.cpp ZmdDependencyDialog.moc.cpp ZmdConfigWindow.moc.cpp GeneralConfigWindow.moc.cpp ZmdInstallWindow.moc.cpp ZmdProgressDialog.moc.cpp ZmdRugParser.moc.cpp ZmdUpdater.moc.cpp ZmdUpdaterCore.moc.cpp ZmdAdvancedConfig.moc.cpp Updater.moc.cpp xmlrpciface.moc.cpp MainWindow.moc.cpp HeaderWidget.moc.cpp ZmdServerDialog.moc.cpp ; do \
 	  echo "#include \"$$file\"" >> SUSEUpdater.all_cpp.files; \
 	  test ! -f $(srcdir)/$$file || egrep '^#pragma +implementation' $(srcdir)/$$file >> SUSEUpdater.all_cpp.final; \
 	done; \

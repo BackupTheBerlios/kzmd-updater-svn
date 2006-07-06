@@ -17,51 +17,54 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef _ZMD_CONFIG_WINDOW_H_
-#define _ZMD_CONFIG_WINDOW_H_
+#ifndef _ZMD_EDIT_SERVERS_H_
+#define _ZMD_EDIT_SERVERS_H_
 
 #include <kpushbutton.h>
 
-#include <qwidget.h>
+#include <qlistview.h>
+#include <qvbox.h>
 #include <qlayout.h>
-#include <qtabwidget.h>
 
-//Column IDs for the configure window
-enum { CONFW_NAME=0, CONFW_URI, CONFW_ID };
-
-#include "ZmdEditServers.h"
-#include "ZmdAdvancedConfig.h"
-#include "HeaderWidget.h"
 #include "ZmdUpdaterCore.h"
 
-class ZmdConfigWindow : public QWidget {
+class ZmdEditServers : public QWidget {
 
 	Q_OBJECT
 
 	public:
 
-		ZmdConfigWindow(ZmdUpdaterCore *_core=0, QWidget *parent=0);
+		ZmdEditServers(ZmdUpdaterCore *_core, QWidget *parent=0);
 
 	signals:
 
+		//We are going to fire this off after an add/remove to update the list
 		void refreshUpdates();
 
 	private slots:
 
-		void serverChange();
-		void tabChanged(QWidget *);
+		void addButtonClicked();
+		void removeButtonClicked();
+
+		//Core Signals
+
+		void gotServiceList(QValueList<Service>);
+		void gotCatalogList(QValueList<Catalog>);
+		void addedServer(QString, int, QString);
+		void serverFault(QString);
 
 	private:
 
 		void initGUI();
+		void initList();
 
-		QVBoxLayout *mainLayout;
-		HeaderWidget *header;
-		QTabWidget *tabs;
+		QVBoxLayout	*mainLayout;
+		QHBoxLayout *buttonLayout;
+		QListView *serverList;
+		KPushButton *addButton;
+		KPushButton *removeButton;
 		KPushButton *closeButton;
 
-		ZmdEditServers *editServers;
-		ZmdAdvancedConfig *advancedConfig;		
 		ZmdUpdaterCore *core;
 };
 
