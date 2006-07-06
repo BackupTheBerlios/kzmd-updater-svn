@@ -81,7 +81,7 @@ void MainWindow::initGUI() {
 	header = new HeaderWidget(this);
 	updateList = new QListView(this);
 	packageDescription = new KTextEdit(this);
-	configureButton = new KPushButton(i18n("Add/Remove Servers"),this);
+	configureButton = new KPushButton(i18n("Configure Servers"),this);
 	cancelButton = new KPushButton(i18n("Cancel"),this);
 	installButton = new KPushButton(i18n("Install"),this);
 	selectAllButton = new KPushButton(i18n("Select All"),this);
