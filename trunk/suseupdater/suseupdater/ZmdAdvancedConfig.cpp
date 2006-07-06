@@ -46,6 +46,8 @@ ZmdAdvancedConfig::ZmdAdvancedConfig(QWidget *parent) : QWidget(parent, "Advance
 	oldHost = "";
 	oldRemote = false;
 	oldCert = false;
+	oldLog = "off";
+	oldRollback = false;
 }
 
 void ZmdAdvancedConfig::initGUI() {
@@ -69,8 +71,11 @@ void ZmdAdvancedConfig::initGUI() {
 	offButton = new QRadioButton(i18n("Off"), rollbackButtons);
 
 	certButtons->setExclusive(true);
+	certButtons->setButton(CERT_BUTTON_NO);
 	remoteButtons->setExclusive(true);
+	remoteButtons->setButton(REMOTE_BUTTON_OFF);
 	rollbackButtons->setExclusive(true);
+	rollbackButtons->setButton(ROLLBACK_BUTTON_OFF);
 
 	logBox->insertItem("off",-1);
 	logBox->insertItem("fatal",-1);
@@ -78,6 +83,7 @@ void ZmdAdvancedConfig::initGUI() {
 	logBox->insertItem("warn",-1);
 	logBox->insertItem("info",-1);
 	logBox->insertItem("debug",-1);
+	logBox->setCurrentText("false");
 
 	mainLayout->addWidget(hostLabel, 0, 0);
 	mainLayout->addWidget(hostEdit, 0, 1);
@@ -142,6 +148,9 @@ void ZmdAdvancedConfig::stdinReady() {
 ZmdAdvancedConfig::~ZmdAdvancedConfig() {
 
 	QProcess *saveProc;
+
+	if (proc->isRunning() == true)
+		return;
 	
 	if (hostEdit->text() != oldHost) {
 		saveProc = new QProcess(QString("rug"), this);
@@ -152,6 +161,7 @@ ZmdAdvancedConfig::~ZmdAdvancedConfig() {
 	}
 	//note: since 0 = REMOTE_BUTTON_ON and 1 = REMOTE_BUTTON_OFF, the opposite matches our bool
 	if ((!remoteButtons->selectedId()) != oldRemote) {
+		kdWarning() << "Setting changed" << endl;
 		saveProc = new QProcess(QString("rug"), this);
 		saveProc->addArgument("set-prefs");
 		saveProc->addArgument("remote-enabled");
@@ -159,6 +169,7 @@ ZmdAdvancedConfig::~ZmdAdvancedConfig() {
 		saveProc->start();
 	}
 	if ((!certButtons->selectedId()) != oldCert) {
+		kdWarning() << "Setting changed" << endl;
 		saveProc = new QProcess(QString("rug"), this);
 		saveProc->addArgument("set-prefs");
 		saveProc->addArgument("require-verified-certs");
@@ -166,6 +177,7 @@ ZmdAdvancedConfig::~ZmdAdvancedConfig() {
 		saveProc->start();
 	}
 	if (logBox->currentText() != oldLog) {
+		kdWarning() << "Setting changed" << endl;
 		saveProc = new QProcess(QString("rug"), this);
 		saveProc->addArgument("set-prefs");
 		saveProc->addArgument("log-level");
@@ -173,10 +185,13 @@ ZmdAdvancedConfig::~ZmdAdvancedConfig() {
 		saveProc->start();
 	}
 	if ((!rollbackButtons->selectedId()) != oldRollback) {
+		kdWarning() << "Setting changed" << endl;
 		saveProc = new QProcess(QString("rug"), this);
 		saveProc->addArgument("set-prefs");
 		saveProc->addArgument("rollback");
 		saveProc->addArgument( ((!rollbackButtons->selectedId()) == true) ? "True" : "False" );
 		saveProc->start();
 	}
+	if (saveProc != NULL)
+		while (saveProc->isRunning() == true) sleep(1);
 }
