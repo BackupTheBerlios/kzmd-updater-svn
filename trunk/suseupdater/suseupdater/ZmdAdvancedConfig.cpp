@@ -142,8 +142,6 @@ void ZmdAdvancedConfig::stdinReady() {
 ZmdAdvancedConfig::~ZmdAdvancedConfig() {
 
 	QProcess *saveProc;
-	//Save settings here
-	kdWarning() << "Saving settings." << endl;
 	
 	if (hostEdit->text() != oldHost) {
 		saveProc = new QProcess(QString("rug"), this);
