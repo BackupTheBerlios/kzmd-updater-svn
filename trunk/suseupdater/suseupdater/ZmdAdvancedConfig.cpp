@@ -61,7 +61,7 @@ void ZmdAdvancedConfig::initGUI() {
 	certButtons = new QHButtonGroup(this);
 	onButton = new QRadioButton(i18n("Yes"), certButtons);
 	offButton = new QRadioButton(i18n("No"), certButtons);
-	logLabel = new QLabel(i18n("ZMD Logging Level"), this);
+	logLabel = new QLabel(i18n("ZMD Logging Level: "), this);
 	logBox = new QComboBox(false, this);
 	rollbackLabel = new QLabel(i18n("Rollback Support: "), this);
 	rollbackButtons = new QHButtonGroup(this);
