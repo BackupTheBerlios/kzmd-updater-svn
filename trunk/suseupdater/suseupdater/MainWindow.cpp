@@ -81,7 +81,7 @@ void MainWindow::initGUI() {
 	header = new HeaderWidget(this);
 	updateList = new QListView(this);
 	packageDescription = new KTextEdit(this);
-	configureButton = new KPushButton(i18n("Configure Servers"),this);
+	configureButton = new KPushButton(i18n("Add/Remove Servers"),this);
 	cancelButton = new KPushButton(i18n("Cancel"),this);
 	installButton = new KPushButton(i18n("Install"),this);
 	selectAllButton = new KPushButton(i18n("Select All"),this);
@@ -138,7 +138,7 @@ void MainWindow::initGUI() {
 
 void MainWindow::initMenu() {
 	KPopupMenu *menu = applet->contextMenu();
-	menu->insertItem(i18n("Configure Updater"), this, SLOT(configButtonClicked()),0,-1,1);
+	menu->insertItem(i18n("Configure Applet"), this, SLOT(configButtonClicked()),0,-1,1);
 	menu->insertItem(i18n("Add/Remove Servers"), this, SLOT(serverButtonClicked()),0,-1,1);
 }
 
