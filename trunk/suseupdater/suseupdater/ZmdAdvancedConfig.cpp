@@ -36,7 +36,7 @@ ZmdAdvancedConfig::ZmdAdvancedConfig(QWidget *parent) : QWidget(parent, "Advance
 	initGUI();
 	
 	parser = new ZmdRugParser(this);
-	proc = new QProcess(QString("rug"));
+	proc = new QProcess(QString("rug"), this);
 	proc->addArgument("get-prefs");
 	connect(proc, SIGNAL(processExited()), this, SLOT(stdinReady()));
 	if (!proc->start())
