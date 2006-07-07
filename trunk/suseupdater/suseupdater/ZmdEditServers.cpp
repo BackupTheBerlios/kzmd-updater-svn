@@ -141,7 +141,7 @@ void ZmdEditServers::addButtonClicked() {
 
 	QValueList<QString> list;
 	ZmdServerDialog diag;
-	ZmdProgressDialog prog(true,this);
+	ZmdProgressDialog prog(true, this);
 
 	if (diag.exec() != QDialog::Accepted)
 		return;
