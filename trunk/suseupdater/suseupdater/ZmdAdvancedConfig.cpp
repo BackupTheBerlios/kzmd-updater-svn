@@ -104,6 +104,14 @@ void ZmdAdvancedConfig::initGUI() {
 	mainLayout->addWidget(logBox, 3, 1);
 	mainLayout->setSpacing(10);
 	mainLayout->setMargin(10);
+
+
+	logBox->setDisabled(true);
+	hostEdit->setDisabled(true);
+	certButtons->setDisabled(true);
+	remoteButtons->setDisabled(true);
+	rollbackButtons->setDisabled(true);
+
 	show();
 }
 
@@ -142,6 +150,12 @@ void ZmdAdvancedConfig::stdinReady() {
 	} else {
 		rollbackButtons->setButton(ROLLBACK_BUTTON_OFF);
 	}
+	logBox->setDisabled(false);
+	hostEdit->setDisabled(false);
+	certButtons->setDisabled(false);
+	remoteButtons->setDisabled(false);
+	rollbackButtons->setDisabled(false);
+
 	connect(remoteButtons, SIGNAL(clicked(int)), this, SLOT(settingsChange(int)));		
 	connect(certButtons, SIGNAL(clicked(int)), this, SLOT(settingsChange(int)));	
 	connect(rollbackButtons, SIGNAL(clicked(int)), this, SLOT(settingsChange(int)));
