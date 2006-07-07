@@ -20,19 +20,22 @@
 #ifndef _ZMD_CONFIG_WINDOW_H_
 #define _ZMD_CONFIG_WINDOW_H_
 
-#include <kpushbutton.h>
-
 #include <qwidget.h>
-#include <qlayout.h>
-#include <qtabwidget.h>
 
 //Column IDs for the configure window
 enum { CONFW_NAME=0, CONFW_URI, CONFW_ID };
 
-#include "ZmdEditServers.h"
-#include "ZmdAdvancedConfig.h"
-#include "HeaderWidget.h"
-#include "ZmdUpdaterCore.h"
+
+//Forward declare so we can compile a bit faster
+class ZmdUpdaterCore;
+class ZmdEditServers;
+class ZmdAdvancedConfig;
+class QVBoxLayout;
+class HeaderWidget;
+class QTabWidget;
+class KPushButton;
+
+
 
 class ZmdConfigWindow : public QWidget {
 

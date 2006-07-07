@@ -17,12 +17,18 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include <klocale.h>
-
 #include "ZmdConfigWindow.h"
 
-#include <iostream>
-using namespace std;
+#include <klocale.h>
+#include <kpushbutton.h>
+
+#include <qlayout.h>
+#include <qtabwidget.h>
+
+#include "ZmdEditServers.h"
+#include "ZmdAdvancedConfig.h"
+#include "HeaderWidget.h"
+#include "ZmdUpdaterCore.h"
 
 ZmdConfigWindow::ZmdConfigWindow(ZmdUpdaterCore *_core, QWidget *parent) : QWidget(parent, 0, Qt::WDestructiveClose | Qt::WShowModal) {
 	core = _core;
@@ -60,8 +66,9 @@ void ZmdConfigWindow::serverChange() {
 }
 
 void ZmdConfigWindow::tabChanged(QWidget *tab) {
-	if (tab == NULL)
+	if (tab == NULL) //this shouldn't happen, but what the hell...
 		return;
+
 	if (QString(tab->name()) == QString("EditTab")) {
 		header->setDescription(i18n("<b>Add/Remove Package Servers:</b><br> You may add or remove update servers below or change your software catalog subscriptions.<br> <u>Make whatever changes you wish and press accept.</u>"));
 	} else if (QString(tab->name()) == QString("AdvancedTab")) {

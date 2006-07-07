@@ -19,7 +19,10 @@
 
 #include <klocale.h>
 #include <kmessagebox.h>
+#include <kpushbutton.h>
 #include <kdebug.h>
+
+#include <qlayout.h>
 
 #include "ZmdConfigWindow.h"
 #include "ZmdEditServers.h"

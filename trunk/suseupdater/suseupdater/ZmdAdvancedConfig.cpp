@@ -18,12 +18,17 @@
 */
 #include "ZmdAdvancedConfig.h"
 
+#include <klocale.h>
 #include <kdebug.h>
 #include <kmessagebox.h>
+#include <klineedit.h>
 
 #include <qradiobutton.h>
 #include <qprocess.h>
 #include <qcombobox.h>
+#include <qlabel.h>
+#include <qlayout.h>
+#include <qhbuttongroup.h>
 
 #include "ZmdRugParser.h"
 
@@ -105,7 +110,7 @@ void ZmdAdvancedConfig::initGUI() {
 	mainLayout->setSpacing(10);
 	mainLayout->setMargin(10);
 
-
+	//Disable the entire GUI until we get the first data drop from rug
 	logBox->setDisabled(true);
 	hostEdit->setDisabled(true);
 	certButtons->setDisabled(true);

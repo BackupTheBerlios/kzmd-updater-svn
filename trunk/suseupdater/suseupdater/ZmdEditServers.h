@@ -20,13 +20,16 @@
 #ifndef _ZMD_EDIT_SERVERS_H_
 #define _ZMD_EDIT_SERVERS_H_
 
-#include <kpushbutton.h>
-
-#include <qlistview.h>
-#include <qvbox.h>
-#include <qlayout.h>
+#include <qwidget.h>
+#include <qvaluelist.h>
 
 #include "ZmdUpdaterCore.h"
+
+class KPushButton;
+class QListView;
+class QVBoxLayout;
+class QHBoxLayout;
+class QString;
 
 class ZmdEditServers : public QWidget {
 

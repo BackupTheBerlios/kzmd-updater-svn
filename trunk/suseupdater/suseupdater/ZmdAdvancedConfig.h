@@ -20,16 +20,14 @@
 #ifndef _ZMD_ADVANCED_CONFIG_H_
 #define _ZMD_ADVANCED_CONFIG_H_
 
-#include <klineedit.h>
-#include <klocale.h>
-
 #include <qwidget.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qhbuttongroup.h>
 
 class QProcess;
 class QComboBox;
+class QLabel;
+class QHButtonGroup;
+class KLineEdit;
+class QGridLayout;
 class ZmdRugParser;
 
 class ZmdAdvancedConfig : public QWidget {
