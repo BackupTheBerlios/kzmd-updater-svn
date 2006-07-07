@@ -1,5 +1,10 @@
 #include "HeaderWidget.h"
 
+#include <kiconloader.h>
+
+#include <qlabel.h>
+#include <qlayout.h>
+
 HeaderWidget::HeaderWidget(QWidget *parent) : QWidget(parent) {
 
 	layout = new QHBoxLayout(this);

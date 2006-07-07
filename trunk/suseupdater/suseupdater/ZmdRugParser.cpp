@@ -2,6 +2,11 @@
 
 #include <kdebug.h>
 
+#include <qstring.h>
+#include <qstringlist.h>
+#include <qdict.h>
+#include <qvariant.h>
+
 ZmdRugParser::ZmdRugParser(QObject *parent) : QObject(parent) {
 }
 

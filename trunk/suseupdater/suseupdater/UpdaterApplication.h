@@ -22,11 +22,8 @@
 
 #include <kuniqueapplication.h>
 
-#include "Updater.h"
-#include "MainWindow.h"
-
-//Backends
-#include "ZmdUpdater.h"
+class MainWindow;
+class Updater;
 
 class UpdaterApplication : public KUniqueApplication {
 

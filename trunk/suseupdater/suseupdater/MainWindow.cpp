@@ -24,7 +24,17 @@
 #include <kapp.h>
 #include <kconfig.h>
 #include <kdebug.h>
+#include <ksystemtray.h>
+#include <ktextedit.h>
+#include <kpushbutton.h>
 
+#include <qlistview.h>
+#include <qlabel.h>
+#include <qtimer.h>
+#include <qlayout.h>
+
+#include "Constants.h"
+#include "HeaderWidget.h"
 #include "MainWindow.h"
 #include "GeneralConfigWindow.h"
 #include "Updater.h"
@@ -123,6 +133,7 @@ void MainWindow::initGUI() {
 	updateList->addColumn("Installed?", 0); // Is it installed? (Is it an update)
 	updateList->addColumn("Size", 0); //This is hidden for the moment, but it shouldn't be
 	updateList->addColumn("Catalog", 0); //Obvious
+	updateList->addColumn("Misc", 0); //This is used to store misc info (patch name for zmd)
 
 	connect(updateList, SIGNAL(selectionChanged(QListViewItem*)), this, SLOT(slotPackageSelected(QListViewItem*)));
 	connect(updateList, SIGNAL(clicked(QListViewItem*)), this, SLOT(slotPackageClicked(QListViewItem*)));

@@ -20,13 +20,13 @@
 #ifndef _ZMD_DEPENDENCY_DIALOG_H_
 #define _ZMD_DEPENDENCY_DIALOG_H_
 
-#include <klocale.h>
-#include <kpushbutton.h>
-#include <ktextedit.h>
-
 #include <qdialog.h>
-#include <qlabel.h>
-#include <qlayout.h>
+
+class KPushButton;
+class KTextEdit;
+class QLabel;
+class QVBoxLayout;
+class QHBoxLayout;
 
 class ZmdDependencyDialog : public QDialog {
 

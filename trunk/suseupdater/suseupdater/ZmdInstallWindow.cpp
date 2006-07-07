@@ -19,15 +19,19 @@
 
 #include <klocale.h>
 #include <kmessagebox.h>
+#include <kprogress.h>
+#include <kpushbutton.h>
+#include <ktextedit.h>
 
 #include <qmessagebox.h>
 #include <qvariant.h>
+#include <qlistview.h>
+#include <qlabel.h>
+#include <qlayout.h>
 
+#include "HeaderWidget.h"
 #include "ZmdInstallWindow.h"
 #include "ZmdDependencyDialog.h"
-
-#include <iostream>
-using namespace std;
 
 ZmdInstallWindow::ZmdInstallWindow(ZmdUpdaterCore *_core, QWidget *parent) : 
 	QWidget(parent,0,Qt::WDestructiveClose | Qt::WShowModal) {
@@ -123,12 +127,12 @@ void ZmdInstallWindow::gotDepInfo(QValueList<Package> installs,
 }
 
 void ZmdInstallWindow::download(Progress status) {
-
+/*
 	cout << "Download Progress" << endl;
 	cout << "Status: " << status.status << endl;
 	cout << "Name: " << status.name << endl;
 	cout << "Percent: " << status.percent << endl;
-
+*/
 	if (status.status > 0) {
 		progressBar->setValue((int)status.percent);
 		if (watchingDownload == false && status.status >= 1) {
@@ -144,12 +148,12 @@ void ZmdInstallWindow::download(Progress status) {
 }
 
 void ZmdInstallWindow::progress(Progress status) {
-
+/*
 	cout << "Trans Progress" << endl;
 	cout << "Status: " << status.status << endl;
 	cout << "Name: " << status.name << endl;
 	cout << "Percent: " << status.percent << endl;
-
+*/
 	if (status.status > 0 && status.status != 4) {
 	//if the transaction has started
 		progressBar->setValue((int)status.percent);

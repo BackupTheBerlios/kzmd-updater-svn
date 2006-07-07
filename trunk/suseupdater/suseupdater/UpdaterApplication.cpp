@@ -20,8 +20,13 @@
 #include <kapp.h>
 #include <kconfig.h>
 
+#include "Updater.h"
+#include "MainWindow.h"
 #include "UpdaterApplication.h"
 #include "Constants.h"
+
+//Backends
+#include "ZmdUpdater.h"
 
 UpdaterApplication::UpdaterApplication() : KUniqueApplication(true,true,false) {
 

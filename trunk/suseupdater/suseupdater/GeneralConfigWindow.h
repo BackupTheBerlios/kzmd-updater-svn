@@ -20,14 +20,17 @@
 #ifndef _GENERAL_CONFIG_WINDOW_H_
 #define _GENERAL_CONFIG_WINDOW_H_
 
-#include <kpushbutton.h>
+#include <qwidget.h>
 
-#include <qlayout.h>
-#include <qvbuttongroup.h>
-#include <qspinbox.h>
-#include <qcheckbox.h>
+class HeaderWidget;
+class KConfig;
+class QCheckBox;
+class KPushButton;
+class QSpinBox;
+class QVButtonGroup;
+class QHBoxLayout;
+class QVBoxLayout;
 
-#include "HeaderWidget.h"
 
 class GeneralConfigWindow : public QWidget {
 

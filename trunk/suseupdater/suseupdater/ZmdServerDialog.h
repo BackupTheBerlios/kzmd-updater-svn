@@ -21,16 +21,15 @@
 #ifndef _ZMD_SERVER_DIALOG_H_
 #define _ZMD_SERVER_DIALOG_H_
 
-#include <klocale.h>
-#include <klineedit.h>
-#include <kpushbutton.h>
-
-#include <qlabel.h>
 #include <qdialog.h>
-#include <qstring.h>
-#include <qlayout.h>
-#include <qhbuttongroup.h>
 
+class KLineEdit;
+class KPushButton;
+class QLabel;
+class QString;
+class QVBoxLayout;
+class QHBoxLayout;
+class QHButtonGroup;
 
 class ZmdServerDialog : public QDialog {
 

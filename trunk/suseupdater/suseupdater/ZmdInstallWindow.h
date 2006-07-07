@@ -20,17 +20,16 @@
 #ifndef _ZMD_INSTALL_WINDOW_
 #define _ZMD_INSTALL_WINDOW_
 
-#include <kprogress.h>
-#include <kpushbutton.h>
-#include <ktextedit.h>
-
 #include <qwidget.h>
-#include <qlistview.h>
-#include <qlabel.h>
-#include <qlayout.h>
-
-#include "HeaderWidget.h"
 #include "ZmdUpdaterCore.h"
+
+class KProgress;
+class KPushButton;
+class KTextEdit;
+class QListView;
+class QLabel;
+class QVBoxLayout;
+class HeaderWidget;
 
 class ZmdInstallWindow : public QWidget {
 

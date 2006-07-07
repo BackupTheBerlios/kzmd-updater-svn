@@ -2,10 +2,11 @@
 #define _ZMD_RUG_PARSER_H_
 
 #include <qobject.h>
-#include <qstring.h>
-#include <qstringlist.h>
 #include <qdict.h>
-#include <qvariant.h>
+
+class QVariant;
+class QString;
+class QStringList;
 
 /**
 

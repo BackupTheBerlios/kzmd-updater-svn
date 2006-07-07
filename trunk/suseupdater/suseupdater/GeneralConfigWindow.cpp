@@ -20,9 +20,15 @@
 #include <klocale.h>
 #include <kconfig.h>
 #include <kapp.h>
+#include <kpushbutton.h>
 
+#include <qlayout.h>
+#include <qvbuttongroup.h>
+#include <qspinbox.h>
+#include <qcheckbox.h>
 #include <qradiobutton.h>
 
+#include "HeaderWidget.h"
 #include "GeneralConfigWindow.h"
 #include "Constants.h"
 

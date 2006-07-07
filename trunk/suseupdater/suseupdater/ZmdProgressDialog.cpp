@@ -19,6 +19,12 @@
 
 #include "ZmdProgressDialog.h"
 
+#include <klocale.h>
+#include <kprogress.h>
+
+#include <qlayout.h>
+#include <qlabel.h>
+
 ZmdProgressDialog::ZmdProgressDialog(bool progressGUI, QWidget *parent) : QDialog(parent) {
 
 	if (progressGUI)

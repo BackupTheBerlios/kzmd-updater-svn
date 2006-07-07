@@ -20,9 +20,10 @@
 #ifndef _HEADER_WIDGET_H_
 #define _HEADER_WIDGET_H_
 
-#include <qlabel.h>
-#include <kiconloader.h>
-#include <qlayout.h>
+#include <qwidget.h>
+
+class QLabel;
+class QHBoxLayout;
 
 class HeaderWidget : public QWidget {
 

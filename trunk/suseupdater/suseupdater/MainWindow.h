@@ -21,26 +21,28 @@
 #ifndef _MAIN_WINDOW_H_
 #define _MAIN_WINDOW_H_
 
-#include <ksystemtray.h>
-#include <ktextedit.h>
-#include <kpushbutton.h>
+#include <qwidget.h>
 
-#include <qlistview.h>
-#include <qlabel.h>
-#include <qtimer.h>
-
-#include "Updater.h"
-#include "Constants.h"
-#include "HeaderWidget.h"
+class KSystemTray;
+class KTextEdit;
+class KPushButton;
+class QListView;
+class QListViewItem;
+class QTimer;
+class QVBoxLayout;
+class QHBoxLayout;
+class Updater;
+class HeaderWidget;
 
 //Define the columns of the update list. These must be set
 
-enum { 	COLUMN_NAME,
+enum { 	COLUMN_NAME, //Note, patches store the summary here ...this is for ZMD
 		COLUMN_NEW_VERSION,
 		COLUMN_SIZE,
 		COLUMN_ID,
 		COLUMN_INSTALLED,
-		COLUMN_CATALOG };
+		COLUMN_CATALOG,
+		COLUMN_MISC };
 
 
 class MainWindow : public QWidget {

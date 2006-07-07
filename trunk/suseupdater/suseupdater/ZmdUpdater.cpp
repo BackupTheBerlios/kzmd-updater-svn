@@ -51,7 +51,7 @@ ZmdUpdater::ZmdUpdater() : Updater() {
 void ZmdUpdater::populateUpdateList(QListView *updateList) {
 
 	tempList = updateList;
-
+	emit(updateApplet(APPLET_NO_UPDATES));
 	connect(core, SIGNAL(serviceListing(QValueList<Service>)), this, SLOT(gotServiceListing(QValueList<Service>)));
 	core->getServices();
 
@@ -60,7 +60,9 @@ void ZmdUpdater::populateUpdateList(QListView *updateList) {
 void ZmdUpdater::updateSelected(QListViewItem *item) {
 	
 	currentUpdate = item;
-	core->getInfo(item->text(COLUMN_NAME));
+	//Ok, so...if MISC is empty, that means we have a package and use COLUMN_NAME
+	//if MISC is not empty, we have a patch and we use COLUMN_MISC as the name
+	core->getInfo(item->text( (COLUMN_MISC == "") ? COLUMN_NAME : COLUMN_MISC));
 }
 
 void ZmdUpdater::startInstall() {
@@ -77,7 +79,12 @@ void ZmdUpdater::startInstall() {
 		do {
 			if (item->state() == QCheckListItem::On) {
 				Package p;
-				p.name = item->text(COLUMN_NAME); //gets the name
+
+				if (COLUMN_MISC == "")
+					p.name = item->text(COLUMN_NAME); //gets the name
+				else 
+					p.name = item->text(COLUMN_MISC); //gets the patch name
+
 				p.id = item->text(COLUMN_ID); //gets the id
 				p.version = item->text(COLUMN_NEW_VERSION);
 				p.catalog = item->text(COLUMN_CATALOG);
@@ -165,6 +172,7 @@ void ZmdUpdater::gotUpdateListing(QValueList<Package> packageList) {
 		newItem->setText(COLUMN_ID, (*iter).id);
 		newItem->setText(COLUMN_INSTALLED, ((*iter).installed == true) ? "Yes" : "No");
 		newItem->setText(COLUMN_CATALOG, (*iter).catalog);
+		newItem->setText(COLUMN_MISC, "");
 
 	}
 	tempList->setSelected(tempList->firstChild(), true);
@@ -182,13 +190,14 @@ void ZmdUpdater::gotPatchListing(QValueList<Patch> patchList) {
 	}
 
 	for (iter = patchList.begin(); iter != patchList.end(); iter++) {
-		newItem = new UpdateListItem(tempList, (*iter).name + " (Patch)", QCheckListItem::CheckBox);
+		newItem = new UpdateListItem(tempList, (*iter).description, QCheckListItem::CheckBox);
 
 		newItem->setText(COLUMN_NEW_VERSION,(*iter).version);
 		newItem->setText(COLUMN_SIZE, "Unknown");
 		newItem->setText(COLUMN_ID, (*iter).id);
 		newItem->setText(COLUMN_INSTALLED, ((*iter).installed == true) ? "Yes" : "No");
-		newItem->setText(COLUMN_CATALOG, (*iter).catalog);	
+		newItem->setText(COLUMN_CATALOG, (*iter).catalog);
+		newItem->setText(COLUMN_MISC, (*iter).name);
 	}
 	tempList->setSelected(tempList->firstChild(), true);
 	emit(populateDone());

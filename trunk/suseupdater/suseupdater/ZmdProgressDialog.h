@@ -20,15 +20,15 @@
 #ifndef _ZMD_PROGRESS_DIALOG_H_
 #define _ZMD_PROGRESS_DIALOG_H_
 
-#include <klocale.h>
-#include <kprogress.h>
-
 #include <qdialog.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qstring.h>
 
 #include "ZmdUpdaterCore.h"
+
+class QDialog;
+class QLabel;
+class QVBoxLayout;
+class QString;
+class KProgress;
 
 /*
 

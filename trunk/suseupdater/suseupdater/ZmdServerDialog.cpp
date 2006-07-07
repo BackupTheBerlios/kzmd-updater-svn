@@ -17,10 +17,17 @@
    Boston, MA 02110-1301, USA.
 */
 
-
-#include <qradiobutton.h>
-
 #include "ZmdServerDialog.h"
+
+#include <klocale.h>
+#include <klineedit.h>
+#include <kpushbutton.h>
+
+#include <qlabel.h>
+#include <qstring.h>
+#include <qlayout.h>
+#include <qhbuttongroup.h>
+#include <qradiobutton.h>
 
 enum { TYPE_ZYPP=0, TYPE_YUM, TYPE_ZEN, TYPE_MOUNT };
 

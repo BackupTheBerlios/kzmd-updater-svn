@@ -19,6 +19,13 @@
 
 #include "ZmdDependencyDialog.h"
 
+#include <klocale.h>
+#include <kpushbutton.h>
+#include <ktextedit.h>
+
+#include <qlabel.h>
+#include <qlayout.h>
+
 ZmdDependencyDialog::ZmdDependencyDialog(QWidget *parent) : QDialog(parent) {
 
 	initGUI();
