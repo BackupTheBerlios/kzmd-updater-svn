@@ -71,7 +71,6 @@ class ZmdAdvancedConfig : public QWidget {
 		QProcess *proc;
 		QProcess *saveProc;
 		ZmdRugParser *parser;
-
 };
 
 #endif

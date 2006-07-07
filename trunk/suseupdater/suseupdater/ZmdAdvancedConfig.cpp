@@ -174,7 +174,11 @@ void ZmdAdvancedConfig::settingsChange() {
 	saveProc->addArgument("set-prefs");
 	saveProc->addArgument("bind-ip");
 	saveProc->addArgument(hostEdit->text());
-	saveProc->start();
+	if (!saveProc->start()) {
+		KMessageBox::error(this, i18n("Rug must be installed to configure ZMD, is it in your path?"));
+		return;
+	}
+	connect(saveProc, SIGNAL(readyReadStderr()), this, SLOT(errorReady()));
 }
 
 void ZmdAdvancedConfig::settingsChange(const QString &newText) {
@@ -183,7 +187,11 @@ void ZmdAdvancedConfig::settingsChange(const QString &newText) {
 	saveProc->addArgument("set-prefs");
 	saveProc->addArgument("log-level");
 	saveProc->addArgument(logBox->currentText());
-	saveProc->start();
+	if (!saveProc->start()) {
+		KMessageBox::error(this, i18n("Rug must be installed to configure ZMD, is it in your path?"));
+		return;
+	}
+	connect(saveProc, SIGNAL(readyReadStderr()), this, SLOT(errorReady()));
 }
 
 void ZmdAdvancedConfig::settingsChange(int id) {
