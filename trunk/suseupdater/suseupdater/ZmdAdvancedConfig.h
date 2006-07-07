@@ -43,7 +43,11 @@ class ZmdAdvancedConfig : public QWidget {
 
 	private slots:
 
-		void stdinReady();
+		void stdinReady();		
+		void settingsChange();
+		void settingsChange(int id);
+		void settingsChange(const QString&);
+		void errorReady();
 
 	private:
 	
@@ -53,25 +57,21 @@ class ZmdAdvancedConfig : public QWidget {
 
 		QLabel *hostLabel;
 		KLineEdit *hostEdit;
-		QString oldHost;
 
 		QLabel *remoteLabel;
 		QHButtonGroup *remoteButtons;
-		bool oldRemote;
 
 		QLabel *certLabel;
 		QHButtonGroup *certButtons;
-		bool oldCert;
 
 		QLabel *logLabel;
 		QComboBox *logBox;
-		QString oldLog;
 
 		QLabel *rollbackLabel;
 		QHButtonGroup *rollbackButtons;
-		bool oldRollback;
 
 		QProcess *proc;
+		QProcess *saveProc;
 		ZmdRugParser *parser;
 
 };

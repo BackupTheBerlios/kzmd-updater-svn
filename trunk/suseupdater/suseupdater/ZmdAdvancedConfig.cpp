@@ -27,27 +27,25 @@
 
 #include "ZmdRugParser.h"
 
-enum { REMOTE_BUTTON_ON, REMOTE_BUTTON_OFF };
-enum { CERT_BUTTON_YES, CERT_BUTTON_NO };
-enum { ROLLBACK_BUTTON_ON, ROLLBACK_BUTTON_OFF };
+enum { 	REMOTE_BUTTON_ON, 
+		REMOTE_BUTTON_OFF,
+		CERT_BUTTON_YES, 
+		CERT_BUTTON_NO, 
+		ROLLBACK_BUTTON_ON, 
+		ROLLBACK_BUTTON_OFF };
 
 ZmdAdvancedConfig::ZmdAdvancedConfig(QWidget *parent) : QWidget(parent, "AdvancedTab", 0) {
 	
 	initGUI();
 	
-	parser = new ZmdRugParser(this);
+	parser = new ZmdRugParser(this);	
+	saveProc = NULL;
 	proc = new QProcess(QString("rug"), this);
 	proc->addArgument("get-prefs");
 	connect(proc, SIGNAL(processExited()), this, SLOT(stdinReady()));
+	connect(proc, SIGNAL(readyReadStderr()), this, SLOT(errorReady()));
 	if (!proc->start())
 		KMessageBox::error(this, i18n("To use this part of the updater, rug must be in your path"));
-
-	//init our data variables
-	oldHost = "";
-	oldRemote = false;
-	oldCert = false;
-	oldLog = "off";
-	oldRollback = false;
 }
 
 void ZmdAdvancedConfig::initGUI() {
@@ -57,18 +55,27 @@ void ZmdAdvancedConfig::initGUI() {
 	hostEdit = new KLineEdit(this);
 	remoteLabel = new QLabel(i18n("ZMD TCP Support: "), this);
 	remoteButtons = new QHButtonGroup(this);
-	QRadioButton *onButton = new QRadioButton(i18n("On"), remoteButtons);
-	QRadioButton *offButton = new QRadioButton(i18n("Off"), remoteButtons);
 	certLabel = new QLabel(i18n("Require GPG Certificates For Servers: "), this);
 	certButtons = new QHButtonGroup(this);
-	onButton = new QRadioButton(i18n("Yes"), certButtons);
-	offButton = new QRadioButton(i18n("No"), certButtons);
 	logLabel = new QLabel(i18n("ZMD Logging Level: "), this);
 	logBox = new QComboBox(false, this);
 	rollbackLabel = new QLabel(i18n("Rollback Support: "), this);
 	rollbackButtons = new QHButtonGroup(this);
+
+	QRadioButton *onButton = new QRadioButton(i18n("On"), remoteButtons);
+	QRadioButton *offButton = new QRadioButton(i18n("Off"), remoteButtons);
+	remoteButtons->insert(onButton, REMOTE_BUTTON_ON);
+	remoteButtons->insert(offButton, REMOTE_BUTTON_OFF);
+
+	onButton = new QRadioButton(i18n("Yes"), certButtons);
+	offButton = new QRadioButton(i18n("No"), certButtons);
+	certButtons->insert(onButton,CERT_BUTTON_YES);
+	certButtons->insert(offButton,CERT_BUTTON_NO);
+
 	onButton = new QRadioButton(i18n("On"), rollbackButtons);
 	offButton = new QRadioButton(i18n("Off"), rollbackButtons);
+	rollbackButtons->insert(onButton, ROLLBACK_BUTTON_ON);
+	rollbackButtons->insert(offButton, ROLLBACK_BUTTON_OFF);
 
 	certButtons->setExclusive(true);
 	certButtons->setButton(CERT_BUTTON_NO);
@@ -110,88 +117,119 @@ void ZmdAdvancedConfig::stdinReady() {
 	data = parser->getProperty("bind-ip");
 	if (data.isEmpty() == false) {
 		hostEdit->setText(data);
-		oldHost = data;
 	}
 
 	if (parser->getProperty("remote-enabled") == "True") {
 		remoteButtons->setButton(REMOTE_BUTTON_ON);
-		oldRemote = true;
 	} else {
 		remoteButtons->setButton(REMOTE_BUTTON_OFF);
-		oldRemote = false;
 	}
 
 	if (parser->getProperty("require-verified-certs") == "True") {
 		certButtons->setButton(CERT_BUTTON_YES);
-		oldCert = true;
 	} else {
 		certButtons->setButton(CERT_BUTTON_NO);
-		oldCert = false;
 	}
 	
 	data = "";
 	data = parser->getProperty("log-level");
 	if (data.isEmpty() == false) {
 		logBox->setCurrentText(data);
-		oldLog = data;
 	}
 	
 	if (parser->getProperty("rollback") == "True") {
 		rollbackButtons->setButton(ROLLBACK_BUTTON_ON);
-		oldRollback = true;
 	} else {
 		rollbackButtons->setButton(ROLLBACK_BUTTON_OFF);
-		oldRollback = false;
 	}
+	connect(remoteButtons, SIGNAL(clicked(int)), this, SLOT(settingsChange(int)));		
+	connect(certButtons, SIGNAL(clicked(int)), this, SLOT(settingsChange(int)));	
+	connect(rollbackButtons, SIGNAL(clicked(int)), this, SLOT(settingsChange(int)));
+	connect(hostEdit, SIGNAL(returnPressed()), this, SLOT(settingsChange()));
+	connect(logBox, SIGNAL(activated(const QString&)), this, SLOT(settingsChange(const QString&)));
+}
+
+void ZmdAdvancedConfig::settingsChange() {
+	kdWarning() << "Setting changed" << endl;
+	saveProc = new QProcess(QString("rug"), this);
+	saveProc->addArgument("set-prefs");
+	saveProc->addArgument("bind-ip");
+	saveProc->addArgument(hostEdit->text());
+	saveProc->start();
+}
+
+void ZmdAdvancedConfig::settingsChange(const QString &newText) {
+	kdWarning() << "Setting changed" << endl;
+	saveProc = new QProcess(QString("rug"), this);
+	saveProc->addArgument("set-prefs");
+	saveProc->addArgument("log-level");
+	saveProc->addArgument(logBox->currentText());
+	saveProc->start();
+}
+
+void ZmdAdvancedConfig::settingsChange(int id) {
+
+	//note: since 0 = REMOTE_BUTTON_ON and 1 = REMOTE_BUTTON_OFF, the opposite matches our bool
+	QString settingName;
+	bool settingValue;
+
+	switch (id) {
+
+		case REMOTE_BUTTON_ON:
+			settingName = "remote-enabled";
+			settingValue = true;
+			break;
+		case REMOTE_BUTTON_OFF:
+			settingName = "remote-enabled";
+			settingValue = false;
+			break;
+		case ROLLBACK_BUTTON_ON:
+			settingName = "rollback";
+			settingValue = true;
+			break;
+		case ROLLBACK_BUTTON_OFF:
+			settingName = "rollback";
+			settingValue = false;
+			break;
+		case CERT_BUTTON_YES:
+			settingName = "require-verified-certs";
+			settingValue = true;
+			break;
+		case CERT_BUTTON_NO:
+			settingName = "require-verified-certs";
+			settingValue = false;
+			break;
+	}
+	if (settingName.isEmpty() == false) {
+		saveProc = new QProcess(QString("rug"), this);
+		saveProc->addArgument("set-prefs");
+		saveProc->addArgument(settingName);
+		saveProc->addArgument((settingValue == true) ? "True" : "False");
+		kdWarning() << saveProc->arguments().join(" ") << endl;
+		if (!saveProc->start()) {
+			KMessageBox::error(this, i18n("Rug must be installed to configure ZMD, is it in your path?"));
+			return;
+		}
+		connect(saveProc, SIGNAL(readyReadStderr()), this, SLOT(errorReady()));
+	}
+}
+
+void ZmdAdvancedConfig::errorReady() {
+	QByteArray byteData;
+	QString *data;
+
+	if (saveProc != NULL)
+		byteData = saveProc->readStderr();
+	else  // the else case here is really only going to be true once
+		byteData = proc->readStderr();
+	data = new QString(byteData);
+	if (data->stripWhiteSpace() != "") {
+		KMessageBox::error(this, *data);
+	}
+	delete data;
 }
 
 ZmdAdvancedConfig::~ZmdAdvancedConfig() {
 
-	QProcess *saveProc;
-
-	if (proc->isRunning() == true)
-		return;
-	
-	if (hostEdit->text() != oldHost) {
-		saveProc = new QProcess(QString("rug"), this);
-		saveProc->addArgument("set-prefs");
-		saveProc->addArgument("bind-ip");
-		saveProc->addArgument(hostEdit->text());
-		saveProc->start();
-	}
-	//note: since 0 = REMOTE_BUTTON_ON and 1 = REMOTE_BUTTON_OFF, the opposite matches our bool
-	if ((!remoteButtons->selectedId()) != oldRemote) {
-		kdWarning() << "Setting changed" << endl;
-		saveProc = new QProcess(QString("rug"), this);
-		saveProc->addArgument("set-prefs");
-		saveProc->addArgument("remote-enabled");
-		saveProc->addArgument( ((!remoteButtons->selectedId()) == true) ? "True" : "False" );
-		saveProc->start();
-	}
-	if ((!certButtons->selectedId()) != oldCert) {
-		kdWarning() << "Setting changed" << endl;
-		saveProc = new QProcess(QString("rug"), this);
-		saveProc->addArgument("set-prefs");
-		saveProc->addArgument("require-verified-certs");
-		saveProc->addArgument( ((!certButtons->selectedId()) == true) ? "True" : "False" );
-		saveProc->start();
-	}
-	if (logBox->currentText() != oldLog) {
-		kdWarning() << "Setting changed" << endl;
-		saveProc = new QProcess(QString("rug"), this);
-		saveProc->addArgument("set-prefs");
-		saveProc->addArgument("log-level");
-		saveProc->addArgument(logBox->currentText());
-		saveProc->start();
-	}
-	if ((!rollbackButtons->selectedId()) != oldRollback) {
-		kdWarning() << "Setting changed" << endl;
-		saveProc = new QProcess(QString("rug"), this);
-		saveProc->addArgument("set-prefs");
-		saveProc->addArgument("rollback");
-		saveProc->addArgument( ((!rollbackButtons->selectedId()) == true) ? "True" : "False" );
-		saveProc->start();
-	}
-	if (saveProc != NULL)
-		while (saveProc->isRunning() == true) sleep(1);
 }
+
