@@ -70,6 +70,7 @@ void ZmdEditServers::initGUI() {
 void ZmdEditServers::initList() {
 	//Clear the list and re-populate it
 	serverList->clear();
+	removeButton->setDisabled(true); //We don't try to remove things from an empty list
 
 	//Connect the signals and call the backend
 	connect(core, SIGNAL(serviceListing(QValueList<Service>)), this, 
@@ -97,6 +98,7 @@ void ZmdEditServers::gotServiceList(QValueList<Service> servers) {
 	}
 
 	if (servers.size() > 0) {
+		removeButton->setDisabled(false); //re-enable the remove button
 		connect(core, SIGNAL(catalogListing(QValueList<Catalog>)), this, 
 		SLOT(gotCatalogList(QValueList<Catalog>)));
 		core->getCatalogs();
