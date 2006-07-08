@@ -8,6 +8,8 @@
 #include <qvariant.h>
 
 ZmdRugParser::ZmdRugParser(QObject *parent) : QObject(parent) {
+	propertyMap.setAutoDelete(true);
+	descriptionMap.setAutoDelete(true);
 }
 
 ZmdRugParser::ZmdRugParser(const QString rugOutput, QObject *parent) : QObject(parent) {
@@ -29,6 +31,7 @@ void ZmdRugParser::parse() {
 	data = data.simplifyWhiteSpace();
 	QStringList props;
 	props = QStringList::split("|", data);
+	
 	for (QStringList::iterator iter = props.begin(); iter != props.end(); iter++) {
 		QString name = *(iter);
 		QString value = *(++iter);
