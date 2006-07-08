@@ -55,6 +55,9 @@ class ZmdUpdater : public Updater {
 		void gotPackageInfo(Package);
 		void gotPackageDetails(PackageDetails);
 
+		//Error handling 
+		void error(QString); //Recieves error messages (generalFault) from the backend.
+
 
 	private:
 
@@ -68,6 +71,9 @@ class ZmdUpdater : public Updater {
 
 		//Holds the descript for the currently selected update
 		QString currentDescription;
+
+		//Holds a mapping of the catalog name to the catalog display name.
+		QMap<QString, QString> catalogNames;
 
 		//The core updater functionality
 		ZmdUpdaterCore *core;

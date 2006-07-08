@@ -38,10 +38,11 @@ class HeaderWidget;
 
 enum { 	COLUMN_NAME, //Note, patches store the summary here ...this is for ZMD
 		COLUMN_NEW_VERSION,
-		COLUMN_SIZE,
-		COLUMN_ID,
-		COLUMN_INSTALLED,
 		COLUMN_CATALOG,
+		COLUMN_ID,
+		COLUMN_DESC,
+		COLUMN_INSTALLED,
+		COLUMN_SIZE,
 		COLUMN_MISC };
 
 

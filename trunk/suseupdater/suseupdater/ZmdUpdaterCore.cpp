@@ -535,6 +535,9 @@ void ZmdUpdaterCore::faultData(int code, const QString& message, const QVariant&
 	switch (code) {
 
 		case 0:
+			//Thread dies
+		case 24:
+			//Could not connect to host
 			emit(generalFault(message));
 			break;
 		case 49:

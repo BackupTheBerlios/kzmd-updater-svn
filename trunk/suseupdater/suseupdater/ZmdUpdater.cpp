@@ -40,6 +40,7 @@ ZmdUpdater::ZmdUpdater() : Updater() {
 	connect(core, SIGNAL(updateListing(QValueList<Package>)), this, SLOT(gotUpdateListing(QValueList<Package>)));
 	connect(core, SIGNAL(patchListing(QValueList<Patch>)), this, SLOT(gotPatchListing(QValueList<Patch>)));
 	connect(core, SIGNAL(packageInfo(Package)), this, SLOT(gotPackageInfo(Package)));
+	connect(core, SIGNAL(generalFault(QString)), this, SLOT(error(QString)));
 }
 
 /*
@@ -148,6 +149,7 @@ void ZmdUpdater::gotCatalogListing(QValueList<Catalog> catalogs) {
 
 	for (iter = catalogs.begin(); iter != catalogs.end(); iter++) {
 		if ((*iter).subscribed) {
+			catalogNames[(*iter).name] = (*iter).displayName;
 			core->getUpdates(*iter);
 			core->getPatches(*iter);
 		}
@@ -171,7 +173,7 @@ void ZmdUpdater::gotUpdateListing(QValueList<Package> packageList) {
 		newItem->setText(COLUMN_SIZE, "Unknown");
 		newItem->setText(COLUMN_ID, (*iter).id);
 		newItem->setText(COLUMN_INSTALLED, ((*iter).installed == true) ? "Yes" : "No");
-		newItem->setText(COLUMN_CATALOG, (*iter).catalog);
+		newItem->setText(COLUMN_CATALOG, catalogNames[(*iter).catalog]);
 		newItem->setText(COLUMN_MISC, "");
 
 	}
@@ -196,7 +198,7 @@ void ZmdUpdater::gotPatchListing(QValueList<Patch> patchList) {
 		newItem->setText(COLUMN_SIZE, "Unknown");
 		newItem->setText(COLUMN_ID, (*iter).id);
 		newItem->setText(COLUMN_INSTALLED, ((*iter).installed == true) ? "Yes" : "No");
-		newItem->setText(COLUMN_CATALOG, (*iter).catalog);
+		newItem->setText(COLUMN_CATALOG, catalogNames[(*iter).catalog]);
 		newItem->setText(COLUMN_MISC, (*iter).name);
 	}
 	tempList->setSelected(tempList->firstChild(), true);
@@ -226,6 +228,18 @@ void ZmdUpdater::gotPackageDetails(PackageDetails details) {
 	currentDescription += i18n("<b>Upgrading from old version:</b> ");
 	currentDescription += version;
 	emit(returnDescription(currentDescription));
+}
+
+
+/*
+
+	ERROR Handling
+
+*/
+void ZmdUpdater::error(QString message) {
+	if (message.contains("Could not connect"))
+		KMessageBox:error("We could not connect to ZMD, you may need to go into 'Add/Remove Servers'"
+			" and the 'Advanced Options' tab to enable TCP support for ZMD. You will then have to restart ZMD.");
 }
 
 /*
