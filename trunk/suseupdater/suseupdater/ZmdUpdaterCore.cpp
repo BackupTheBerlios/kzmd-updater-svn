@@ -544,6 +544,15 @@ void ZmdUpdaterCore::faultData(int code, const QString& message, const QVariant&
 			//Timeout
 			//Don't say anything, sometimes we are just busy...
 			break;
+		case -601:
+			//Resolveable not found
+			emit(transactionFinished(ERROR_DEP_FAIL, message));
+			ZMD_CLEAR;
+			timer->stop();
+			packagesToInstall.clear();
+			packagesToRemove.clear();
+			packagesToUpdate.clear();
+			break;
 		case -603:
 			//Dep Failure
 			emit(transactionFinished(ERROR_DEP_FAIL, message));
