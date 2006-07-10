@@ -259,7 +259,6 @@ void ZmdUpdater::authorizeCore() {
 	QCString pass;
 
 	proc << "kdesu";
-	proc << "--noignorebutton";
 	proc << QString("kzmdauthutil ") + QString(ZMD_CONFIG_PATH);
 	if (proc.start() == false) {
 		kdError() << "Could not start authutil" << endl;
