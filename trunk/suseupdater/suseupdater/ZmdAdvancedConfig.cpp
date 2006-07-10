@@ -257,6 +257,5 @@ void ZmdAdvancedConfig::errorReady() {
 }
 
 ZmdAdvancedConfig::~ZmdAdvancedConfig() {
-
 }
 

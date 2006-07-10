@@ -58,3 +58,4 @@ void ZmdDependencyDialog::setTitle(QString text) {
 void ZmdDependencyDialog::setText(QString text) {
 	packages->setText(text);
 }
+

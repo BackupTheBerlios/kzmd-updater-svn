@@ -25,7 +25,6 @@
 //Column IDs for the configure window
 enum { CONFW_NAME=0, CONFW_URI, CONFW_ID };
 
-
 //Forward declare so we can compile a bit faster
 class ZmdUpdaterCore;
 class ZmdEditServers;
@@ -34,8 +33,6 @@ class QVBoxLayout;
 class HeaderWidget;
 class QTabWidget;
 class KPushButton;
-
-
 
 class ZmdConfigWindow : public QWidget {
 

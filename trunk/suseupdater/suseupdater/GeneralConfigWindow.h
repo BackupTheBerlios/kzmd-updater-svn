@@ -66,3 +66,4 @@ class GeneralConfigWindow : public QWidget {
 
 
 #endif
+

@@ -17,7 +17,6 @@
    Boston, MA 02110-1301, USA.
 */
 
-
 #ifndef _ZMD_SERVER_DIALOG_H_
 #define _ZMD_SERVER_DIALOG_H_
 

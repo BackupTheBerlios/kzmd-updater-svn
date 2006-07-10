@@ -130,3 +130,4 @@ void GeneralConfigWindow::okButtonClicked() {
 	emit(configChanged());
 	close();
 }
+

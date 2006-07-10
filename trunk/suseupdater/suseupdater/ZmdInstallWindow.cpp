@@ -210,3 +210,4 @@ void ZmdInstallWindow::closeEvent(QCloseEvent *e) {
 		e->ignore();
 	}
 }
+

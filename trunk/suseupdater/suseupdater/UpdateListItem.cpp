@@ -45,3 +45,4 @@ void UpdateListItem::stateChange(bool state) {
 			break;
 	}
 }
+

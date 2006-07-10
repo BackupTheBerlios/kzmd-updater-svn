@@ -79,3 +79,4 @@ class ZmdProgressDialog : public QDialog {
 };
 
 #endif
+

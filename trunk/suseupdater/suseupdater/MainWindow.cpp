@@ -200,8 +200,14 @@ void MainWindow::appletState(int state) {
 void MainWindow::populateDone() {
 	
 	if (selectAllButton != NULL) {
-		//ZmdUpdateListItems we have (yoda am I in this comment)
+		//UpdateListItems we have (yoda am I in this comment)
 		QListViewItem *item = updateList->firstChild();
+
+		/*
+			We loop through the list here, giving each UpdateListItem a reference to count.
+			This count variable is basically just a semephore type thing that controls which 
+			buttons are enabled. Only useful for those backends that use checkboxes.
+		*/
 
 		while (item != NULL) {
 			((UpdateListItem*)item)->setCount(&updatesSelected);

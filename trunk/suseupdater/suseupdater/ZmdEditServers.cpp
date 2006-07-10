@@ -208,3 +208,4 @@ void ZmdEditServers::removeButtonClicked() {
 void ZmdEditServers::serverFault(QString message) {
 	KMessageBox::error(this, message);
 }
+

@@ -115,3 +115,4 @@ void ZmdServerDialog::cancelButtonClicked() {
 	server = "";
 	reject();
 }
+

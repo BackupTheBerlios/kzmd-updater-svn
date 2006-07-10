@@ -17,7 +17,6 @@
    Boston, MA 02110-1301, USA.
 */
 
-
 #ifndef _MAIN_WINDOW_H_
 #define _MAIN_WINDOW_H_
 
@@ -38,12 +37,12 @@ class HeaderWidget;
 
 enum { 	COLUMN_NAME, //Note, patches store the summary here ...this is for ZMD
 		COLUMN_NEW_VERSION,
-		COLUMN_CATALOG,
+		COLUMN_CATALOG, //Note, for ZMD this is the displayName. If you try to search for something via the backend using this name all will go very badly for you
 		COLUMN_ID,
 		COLUMN_DESC,
 		COLUMN_INSTALLED,
 		COLUMN_SIZE,
-		COLUMN_MISC };
+		COLUMN_MISC }; //Exactly what it sounds like, for ZMD this ends up being the patch name
 
 
 class MainWindow : public QWidget {

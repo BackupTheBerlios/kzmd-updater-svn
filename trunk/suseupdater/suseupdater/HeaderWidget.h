@@ -44,3 +44,4 @@ class HeaderWidget : public QWidget {
 };
 
 #endif
+
