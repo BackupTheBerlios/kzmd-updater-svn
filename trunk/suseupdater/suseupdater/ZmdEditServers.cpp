@@ -181,6 +181,8 @@ void ZmdEditServers::addedServer(QString server, int status, QString error) {
 	disconnect(core, SIGNAL(serviceAdded(QString,int,QString)), this, SLOT(addedServer(QString,int,QString)));
 	if (status != ERROR_INVALID) {
 		initList();
+	} else if (status != ERROR_INVALID_TYPE) {
+		KMessageBox::error(this, i18n("The type you specified for the server is invalid:") + error);	
 	} else {
 		KMessageBox::error(this, i18n("Sorry, the server could not be added: ") + error);
 	}

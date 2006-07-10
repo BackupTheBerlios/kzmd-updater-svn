@@ -20,6 +20,8 @@
 #include <kprocess.h>
 #include <kdebug.h>
 #include <klocale.h>
+#include <kmessagebox.h>
+#include <kapp.h>
 
 #include <stdio.h>
 #include <string.h>
@@ -237,9 +239,10 @@ void ZmdUpdater::gotPackageDetails(PackageDetails details) {
 
 */
 void ZmdUpdater::error(QString message) {
-	if (message.contains("Could not connect"))
-		KMessageBox:error("We could not connect to ZMD, you may need to go into 'Add/Remove Servers'"
-			" and the 'Advanced Options' tab to enable TCP support for ZMD. You will then have to restart ZMD.");
+	if (message.contains("Could not connect")) {
+		KMessageBox::error(NULL, "We could not connect to ZMD, you may need to go into 'Add/Remove Servers'"
+			" and the 'Advanced Options' tab to enable TCP support for ZMD. You will then have to restart ZMD."); 
+	}
 }
 
 /*
@@ -256,14 +259,16 @@ void ZmdUpdater::authorizeCore() {
 	QCString pass;
 
 	proc << "kdesu";
+	proc << "--noignorebutton";
 	proc << QString("kzmdauthutil ") + QString(ZMD_CONFIG_PATH);
 	if (proc.start() == false) {
 		kdError() << "Could not start authutil" << endl;
 		authorizeCore();
 	}
 
-	while ( (fd = fopen("/var/tmp/kzmd-auth", "r")) == NULL)
+	while ((fd = fopen("/var/tmp/kzmd-auth", "r")) == NULL) {
 		sleep(10);
+	}
 
 	fgets(buffer, 1023, fd);
 	buffer[strlen(buffer)-1] = '\0'; //get rid of newline
