@@ -88,8 +88,8 @@ void ZmdUpdater::startInstall() {
 
 				p.id = item->text(COLUMN_ID); //gets the id
 				p.version = item->text(COLUMN_NEW_VERSION);
-				p.catalog = item->text(COLUMN_CATALOG);
 				p.installed = (item->text(COLUMN_INSTALLED) == "Yes") ? true : false;
+
 				if (p.installed == true)
 					upList.append(p);
 				else
