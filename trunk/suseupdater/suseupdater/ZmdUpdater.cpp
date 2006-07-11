@@ -37,6 +37,7 @@ ZmdUpdater::ZmdUpdater() : Updater() {
 
 	//Init and auth the core
 	core = new ZmdUpdaterCore(this);
+	errorShowed = false;
 	authorizeCore();
 
 	//Connect core signals
@@ -240,9 +241,10 @@ void ZmdUpdater::gotPackageDetails(PackageDetails details) {
 
 */
 void ZmdUpdater::error(QString message) {
-	if (message.contains("Could not connect")) {
+	if (message.contains("Could not connect") && errorShowed == false) {
 		KMessageBox::error(NULL, "We could not connect to ZMD, you may need to go into 'Add/Remove Servers'"
 			" and the 'Advanced Options' tab to enable TCP support for ZMD. You will then have to restart ZMD."); 
+		errorShowed = true;
 	}
 }
 

@@ -63,6 +63,9 @@ class ZmdUpdater : public Updater {
 
 		void authorizeCore();
 
+		//Watch variable to control the generalFault message (ZMD TCP Error)
+		bool errorShowed;
+
 		//We hold the QListView passed in "populateUpdateList" here
 		QListView *tempList;
 
