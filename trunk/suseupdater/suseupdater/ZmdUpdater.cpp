@@ -25,6 +25,7 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <unistd.h>
 
 #include "ZmdUpdater.h"
 #include "MainWindow.h"
@@ -257,6 +258,7 @@ void ZmdUpdater::authorizeCore() {
 	char buffer[1024];
 	KProcess proc;
 	QCString pass;
+
 
 	proc << "kdesu";
 	proc << QString("kzmdauthutil ") + QString(ZMD_CONFIG_PATH);

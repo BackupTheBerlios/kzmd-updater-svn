@@ -200,6 +200,10 @@ class ZmdUpdaterCore : public QObject {
 	private slots:
 
 		void catalogData(const QValueList<QVariant>&, const QVariant&);
+
+		//temp
+		void catalogSubData(const QValueList<QVariant>&, const QVariant&);
+
 		void serviceData(const QValueList<QVariant>&, const QVariant&);
 
 		void updateData(const QValueList<QVariant>&, const QVariant&);
@@ -230,6 +234,10 @@ class ZmdUpdaterCore : public QObject {
 		//Also may hold package IDs...just a temp variable
 		//I don't like this, but I am not sure at the moment
 		QString temp;
+
+		//Watch variables, temporary...we use these to get around a zmd bug with catalog subscription.
+		QString catalogID;
+		bool catalogStatus;
 
 		//Obvious, we cannot save these from signal to signal, so we store them here
 		QValueList<QVariant> packagesToInstall;
