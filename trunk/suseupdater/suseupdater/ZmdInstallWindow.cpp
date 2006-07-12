@@ -134,7 +134,9 @@ void ZmdInstallWindow::download(Progress status) {
 	cout << "Percent: " << status.percent << endl;
 */
 	if (status.status > 0) {
-		progressBar->setValue((int)status.percent);
+//		progressBar->setValue((int)status.percent);
+// Disable our download progress until the bug in ZMD that reports progress as 100% constantly is fixed
+		progressBar->setDisabled(true);
 		if (watchingDownload == false && status.status >= 1) {
 			transactionList->setText(transactionList->text() + "\n" + "Packages Are Downloading...");
 			watchingDownload = true;
@@ -142,6 +144,8 @@ void ZmdInstallWindow::download(Progress status) {
 		}
 		if (status.status == 2 && downloadDone == false) {
 			transactionList->setText(transactionList->text() + "Done");
+			//Re-enable when download is really done
+			progressBar->setDisabled(false);
 			downloadDone = true;
 		}
 	}

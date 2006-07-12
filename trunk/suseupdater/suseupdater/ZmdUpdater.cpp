@@ -26,6 +26,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
+#include <sys/poll.h>
+#include <sys/types.h>
+#include <fcntl.h>
 
 #include "ZmdUpdater.h"
 #include "MainWindow.h"
@@ -256,10 +259,14 @@ void ZmdUpdater::error(QString message) {
 
 void ZmdUpdater::authorizeCore() {
 
-	FILE *fd;
+	int fd;
 	char buffer[1024];
 	KProcess proc;
 	QCString pass;
+	struct pollfd pfd;
+	int count;
+	QString data;
+	QStringList list;
 
 
 	proc << "kdesu";
@@ -269,20 +276,36 @@ void ZmdUpdater::authorizeCore() {
 		authorizeCore();
 	}
 
-	while ((fd = fopen("/var/tmp/kzmd-auth", "r")) == NULL) {
-		sleep(10);
+	//This is just  to make sure we don't proceed faster than our child proc
+	mkfifo("/var/tmp/kzmd-auth", 0666);
+
+	if ((fd = open("/var/tmp/kzmd-auth", O_NONBLOCK | O_RDONLY)) == -1) {
+		perror("There has been a problem opening the fifo");
+		exit(1);
 	}
 
-	fgets(buffer, 1023, fd);
-	buffer[strlen(buffer)-1] = '\0'; //get rid of newline
-	core->setUser(buffer);
-	printf("User: %s\n", buffer);
-	memset(buffer, '\0', 1024);
-	fgets(buffer, 1023, fd);
-	buffer[strlen(buffer)-1] = '\0'; // get rid of newline
-	printf("Pass: %s\n", buffer);
-	core->setPass(buffer);
-	memset(buffer, '\0', 1024);
-	fclose(fd);
+	pfd.fd = fd;
+	pfd.events = POLLIN;
+
+	if (poll(&pfd, 1, 2*(100*60)) < 0) {
+		kdError() << "We timed out waiting for the root password" << endl;
+		exit(1);
+	}
+
+	while ((count = read(fd, buffer, 1024)) > 0) {
+		buffer[count] = '\0';
+		data += buffer;
+	}
+	list = QStringList::split("\n", data);
+	for (QStringList::iterator iter = list.begin(); iter != list.end(); iter++) {
+		if (iter == list.begin()) {
+			core->setUser((*iter).ascii());
+			kdWarning() << (*iter).ascii() << endl;
+		} else {
+			core->setPass((*iter).ascii());			
+			kdWarning() << (*iter).ascii() << endl;
+		}
+	}
+	close(fd);
 }
 
