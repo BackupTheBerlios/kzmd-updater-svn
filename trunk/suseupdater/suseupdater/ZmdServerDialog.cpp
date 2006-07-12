@@ -26,10 +26,10 @@
 #include <qlabel.h>
 #include <qstring.h>
 #include <qlayout.h>
-#include <qhbuttongroup.h>
+#include <qbuttongroup.h>
 #include <qradiobutton.h>
 
-enum { TYPE_ZYPP=0, TYPE_YUM, TYPE_ZEN, TYPE_MOUNT };
+enum { TYPE_ZYPP=0, TYPE_YUM, TYPE_ZEN, TYPE_MOUNT, TYPE_NU, TYPE_RCE };
 
 ZmdServerDialog::ZmdServerDialog(QWidget *parent) : QDialog(parent,0,Qt::WShowModal) {
 	initGUI();
@@ -55,6 +55,12 @@ QValueList<QString> ZmdServerDialog::getServerInfo() {
 		case TYPE_MOUNT:
 			list.append("mount");
 			break;
+		case TYPE_NU:
+			list.append("nu");
+			break;
+		case TYPE_RCE:
+			list.append("rce");
+			break;
 	}
 	return list;
 }
@@ -68,11 +74,13 @@ void ZmdServerDialog::initGUI() {
 	serverEdit = new KLineEdit(this);
 	cancelButton = new KPushButton(i18n("Cancel"), this);
 	addButton = new KPushButton(i18n("Add"), this);
-	typeGroup = new QHButtonGroup(this);
+	typeGroup = new QButtonGroup(2, Qt::Vertical, i18n("Server Type"), this);
 	QRadioButton *zButton = new QRadioButton("ZYPP", typeGroup);
 	QRadioButton *yButton = new QRadioButton("YUM", typeGroup);
 	QRadioButton *aButton = new QRadioButton("ZENworks", typeGroup);
 	QRadioButton *mButton = new QRadioButton("Mount", typeGroup);
+	QRadioButton *nButton = new QRadioButton("NU Server", typeGroup);
+	QRadioButton *rButton = new QRadioButton("RCE Server", typeGroup);
 
 	layout->addWidget(nameLabel,0,0);
 	layout->addWidget(nameEdit,0,0);
@@ -87,8 +95,9 @@ void ZmdServerDialog::initGUI() {
 	typeGroup->insert(yButton, TYPE_YUM);
 	typeGroup->insert(aButton, TYPE_ZEN);
 	typeGroup->insert(mButton, TYPE_MOUNT);
+	typeGroup->insert(nButton, TYPE_NU);
+	typeGroup->insert(rButton, TYPE_RCE);
 	typeGroup->setButton(TYPE_ZYPP);
-	typeGroup->setTitle(i18n("Server Type"));
 
 	buttonLayout = new QHBoxLayout(layout);
 	buttonLayout->addWidget(cancelButton,0,Qt::AlignLeft);

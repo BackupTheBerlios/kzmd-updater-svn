@@ -28,7 +28,7 @@ class QLabel;
 class QString;
 class QVBoxLayout;
 class QHBoxLayout;
-class QHButtonGroup;
+class QButtonGroup;
 
 class ZmdServerDialog : public QDialog {
 
@@ -58,7 +58,7 @@ class ZmdServerDialog : public QDialog {
 		KLineEdit *serverEdit;
 		KPushButton *cancelButton;
 		KPushButton *addButton;
-		QHButtonGroup *typeGroup;
+		QButtonGroup *typeGroup;
 
 		QString server;
 		QString name;
