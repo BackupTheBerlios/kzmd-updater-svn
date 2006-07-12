@@ -71,9 +71,15 @@ void ZmdEditServers::initGUI() {
 }
 
 void ZmdEditServers::initList() {
+
+	QListViewItem *item;
+
 	//Clear the list and re-populate it
 	serverList->clear();
 	removeButton->setDisabled(true); //We don't try to remove things from an empty list
+	addButton->setDisabled(true); //Don't allow the user to add a server until we get the data drop
+
+	item = new QListViewItem(serverList, i18n("Fetching service list..."));
 
 	//Connect the signals and call the backend
 	connect(core, SIGNAL(serviceListing(QValueList<Service>)), this, 
@@ -89,10 +95,9 @@ void ZmdEditServers::gotServiceList(QValueList<Service> servers) {
 	//Disconnect this signal. If this doesn't happen we will connect it again on each iteration and end up adding many copies of each service to the list
 	disconnect(core, SIGNAL(serviceListing(QValueList<Service>)), this, SLOT(gotServiceList(QValueList<Service>)));
 
-	if (serverList->childCount() > 0) {
-		kdWarning() << "ERROR: Trying to add servers to a list that already has them." << endl;
-		return;
-	}
+	serverList->clear(); //get rid of the preparing item and anything else that has lingered (multiple signals)
+	//Got data, re-enable the add button
+	addButton->setDisabled(false);
 
 	for (iter = servers.begin(); iter != servers.end(); iter++) {
 		item = new QListViewItem(serverList, (*iter).name);
