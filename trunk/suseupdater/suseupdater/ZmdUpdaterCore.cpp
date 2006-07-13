@@ -585,6 +585,9 @@ void ZmdUpdaterCore::timerData(const QValueList<QVariant>& data, const QVariant 
 void ZmdUpdaterCore::faultData(int code, const QString& message, const QVariant&t) {
 	switch (code) {
 
+		case -1:
+			emit(generalFault("We just had some communication trouble with ZMD, it is likely this will not impact your current operation"));
+			break;
 		case 0:
 			//Thread dies
 		case 24:

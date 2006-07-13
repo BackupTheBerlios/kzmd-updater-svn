@@ -33,6 +33,9 @@
 #include "ZmdInstallWindow.h"
 #include "ZmdDependencyDialog.h"
 
+#define DOWNLOAD_BUG_FIX  //When defined we use the workaround for the bug in zmd. 
+
+
 ZmdInstallWindow::ZmdInstallWindow(ZmdUpdaterCore *_core, QWidget *parent) : 
 	QWidget(parent,0,Qt::WDestructiveClose | Qt::WShowModal) {
 	core = _core;
@@ -127,39 +130,54 @@ void ZmdInstallWindow::gotDepInfo(QValueList<Package> installs,
 }
 
 void ZmdInstallWindow::download(Progress status) {
-/*
-	cout << "Download Progress" << endl;
-	cout << "Status: " << status.status << endl;
-	cout << "Name: " << status.name << endl;
-	cout << "Percent: " << status.percent << endl;
-*/
+
 	if (status.status > 0) {
-//		progressBar->setValue((int)status.percent);
+
+#ifndef DOWNLOAD_BUG_FIX
 // Disable our download progress until the bug in ZMD that reports progress as 100% constantly is fixed
+		progressBar->setValue((int)status.percent);
+#endif
 		progressBar->setDisabled(true);
 		if (watchingDownload == false && status.status >= 1) {
+
+#ifdef DOWNLOAD_BUG_FIX
+			transactionList->setText(transactionList->text() + "\nWe are currently unable to show the progress for the download. This is caused by a bug in ZMD, which should be fixed soon. We apologize for any inconvenience this may cause." + "\nPackages Are Downloading...");	
+#else
 			transactionList->setText(transactionList->text() + "\n" + "Packages Are Downloading...");
+#endif
+	
 			watchingDownload = true;
 			downloadDone = false;
 		}
+
+#ifndef DOWNLOAD_BUG_FIX		
+	//We set the download as done in the progress function currently, since the download starts off as done
+	//BUG workaround
+		
 		if (status.status == 2 && downloadDone == false) {
 			transactionList->setText(transactionList->text() + "Done");
 			//Re-enable when download is really done
 			progressBar->setDisabled(false);
 			downloadDone = true;
 		}
+#endif
+
 	}
 }
 
 void ZmdInstallWindow::progress(Progress status) {
-/*
-	cout << "Trans Progress" << endl;
-	cout << "Status: " << status.status << endl;
-	cout << "Name: " << status.name << endl;
-	cout << "Percent: " << status.percent << endl;
-*/
+
 	if (status.status > 0 && status.status != 4) {
-	//if the transaction has started
+
+#ifdef DOWNLOAD_BUG_FIX
+		if (downloadDone == false) { //we have just started the transaction, download is now done
+			transactionList->setText(transactionList->text() + "Done");
+			//Re-enable when download is really done
+			progressBar->setDisabled(false);
+			downloadDone = true;
+		}
+#endif
+
 		progressBar->setValue((int)status.percent);
 		if (watchingPackage == false && status.status == 1) {
 			//if we are not already watching a package and the transaction is running
