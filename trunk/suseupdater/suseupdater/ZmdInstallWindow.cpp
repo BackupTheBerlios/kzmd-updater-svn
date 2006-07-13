@@ -65,7 +65,7 @@ void ZmdInstallWindow::initGUI() {
 	progressBar = new KProgress(100, this);
 	mainLayout = new QVBoxLayout(this);
 
-	header->setDescription("<b>Installing updates and patches:</b><br> Below is a description of the packages being installed.<br>");
+	header->setDescription("<b>Installing updates and patches:</b><br> Below is a description of the transaction and its progress.<br>");
 
 #ifdef _ABORT_SUPPORTED_
 	abortButton = new KPushButton(i18n("Abort Upgrade"), this); // we can't yet abort an upgrade
