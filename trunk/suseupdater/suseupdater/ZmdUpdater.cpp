@@ -287,7 +287,7 @@ void ZmdUpdater::authorizeCore() {
 	pfd.fd = fd;
 	pfd.events = POLLIN;
 
-	if (poll(&pfd, 1, 2*(100*60)) < 0) {
+	if (poll(&pfd, 1, 2*(1000*60)) < 0) {
 		kdError() << "We timed out waiting for the root password" << endl;
 		exit(1);
 	}
@@ -297,6 +297,10 @@ void ZmdUpdater::authorizeCore() {
 		data += buffer;
 	}
 	list = QStringList::split("\n", data);
+	if (list.count() != 2) {
+		kdError() << "Could not read the pass file" << endl;
+		exit(1);
+	}
 	for (QStringList::iterator iter = list.begin(); iter != list.end(); iter++) {
 		if (iter == list.begin()) {
 			core->setUser((*iter).ascii());
