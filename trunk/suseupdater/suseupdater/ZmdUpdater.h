@@ -64,7 +64,9 @@ class ZmdUpdater : public Updater {
 		void authorizeCore();
 
 		//Watch variable to control the generalFault message (ZMD TCP Error)
-		bool errorShowed;
+		//We should only show the error on first data drop, otherwise error is probably due to
+		//zmd shutting down, sleeping or suspend. 
+		bool showError; 
 
 		//We hold the QListView passed in "populateUpdateList" here
 		QListView *tempList;
