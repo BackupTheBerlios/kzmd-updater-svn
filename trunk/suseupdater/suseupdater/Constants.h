@@ -21,7 +21,7 @@
 #define _CONSTANTS_H_
 
 #define PROGRAM_NAME "suseupdater"
-#define VERSION "0.0.1"
+#define VERSION "0.0.2"
 
 #define TRAY_ICON_GREEN "suse_green.png"
 #define TRAY_ICON_RED	"suse_red.png"
