@@ -11,3 +11,11 @@ Sun. July 2 2006 - Narayan Newton <narayannewton@gmail.com>
 	Fixed 3 possible signaling bugs.
 	Fixed very bad scaling on the getInfo and getDetails function calls via ZmdUpdater
 	Other small bug fixes found while pounding on things.
+
+Sat. July 15 2006 - Narayan Newton <narayannewton@gmail.com>
+	Added advanced configuration panel.
+	Fixed error codes
+	Edited error messages
+	Edited InstallWindow messages
+	Edited ConfigWinddow titles
+	Fixed many small bugs in the backend.
