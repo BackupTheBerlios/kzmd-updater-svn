@@ -34,6 +34,8 @@ ZmdUpdaterCore::ZmdUpdaterCore(QObject *parent) : QObject(parent) {
 
 	timer = new QTimer(this);
 	connect(timer, SIGNAL(timeout()), this, SLOT(timerSlot()));
+	
+	timeoutCount = 0;
 }
 
 ZmdUpdaterCore::~ZmdUpdaterCore() {
@@ -596,7 +598,11 @@ void ZmdUpdaterCore::faultData(int code, const QString& message, const QVariant&
 			break;
 		case 49:
 			//Timeout
-			//Don't say anything, sometimes we are just busy...
+			//Don't say anything, sometimes we are just busy...until we get to 4
+			if (timeoutCount++ < 4)
+				break;
+			else 
+				emit(generalFault(message));
 			break;
 		case -601:
 			//Resolveable not found

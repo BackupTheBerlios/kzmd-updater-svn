@@ -235,6 +235,9 @@ class ZmdUpdaterCore : public QObject {
 		//I don't like this, but I am not sure at the moment
 		QString temp;
 
+		//How many times have we timed out? If this gets above 4, we need to throw a fault.
+		int timeoutCount;
+
 		//Watch variables, temporary...we use these to get around a zmd bug with catalog subscription.
 		QString catalogID;
 		bool catalogStatus;
