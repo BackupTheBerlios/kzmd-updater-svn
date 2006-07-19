@@ -167,6 +167,45 @@ class Package {
 		bool installed;	
 };
 
+class PackageLock {
+
+	public:
+
+		PackageLock() {}
+
+		void fromMap(const QMap<QString, QVariant> &map) {
+			id = map["id"].toString();
+			catalog = map["catalog"].toString();
+			glob = map["glob"].toString();
+
+			if (map.contains("dependency") == true) {
+				QMap<QString, QVariant> depMap;
+
+				depMap = map["dependency"].toMap();
+				pack.fromMap(depMap);
+			}
+		}
+
+		QMap<QString, QVariant> toMap() {
+			QMap<QString, QVariant> map;
+			
+			if (id != "")
+				map["id"] = id;
+			if (catalog != "")
+				map["catalog"] = catalog;
+			if (glob != "") 
+				map["glob"] = glob;
+			if (pack.id != "")
+				map["dependency"] = pack.toMap();
+			return map;
+		}
+
+		QString id;
+		QString catalog;
+		QString glob; 
+		Package pack;
+};
+
 class Patch : public Package {
 
 	public:

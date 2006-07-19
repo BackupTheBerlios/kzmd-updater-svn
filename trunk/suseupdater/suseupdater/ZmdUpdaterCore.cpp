@@ -367,6 +367,87 @@ void ZmdUpdaterCore::infoData(const QValueList<QVariant>& data, const QVariant& 
 }
 
 
+/*******************************************************************
+ *
+ *						Add/Remove/List Locks
+ *
+ ******************************************************************/
+
+void ZmdUpdaterCore::lockPackage(PackageLock lock) {
+	IS_ZMD_BUSY;
+
+	QMap<QString, QVariant> map;
+	QValueList<QVariant> wrapper;
+	
+	map = lock.toMap();
+
+#ifdef DEBUG
+	kdWarning() << "Lock info we are sending: " << endl;
+	kdWarning() << (map["dependency"].toMap())["id"].toString() << endl;
+	kdWarning() << map["catalog"].toString() << endl;
+#endif
+
+	wrapper.append(map);
+
+	server->call("zmd.packsys.add_lock", wrapper, 
+	this, SLOT(lockData(const QValueList<QVariant>&, const QVariant&)),
+	this, SLOT(faultData(int, const QString&, const QVariant&)));
+}
+
+void ZmdUpdaterCore::unlockPackage(PackageLock lock) {
+	IS_ZMD_BUSY;
+
+	QValueList<QVariant> wrapper;
+
+	if (lock.id == "") 
+		return;
+
+	wrapper.append(lock.id);
+
+	server->call("zmd.packsys.remove_lock", wrapper, 
+	this, SLOT(lockData(const QValueList<QVariant>&, const QVariant&)),
+	this, SLOT(faultData(int, const QString&, const QVariant&)));
+}
+
+void ZmdUpdaterCore::getLocks() {
+	IS_ZMD_BUSY;
+
+	server->call("zmd.packsys.get_locks", QValueList<QVariant>(), 
+	this, SLOT(lockData(const QValueList<QVariant>&, const QVariant&)),
+	this, SLOT(faultData(int, const QString&, const QVariant&)));
+
+}
+
+void ZmdUpdaterCore::lockData(const QValueList<QVariant>& data, const QVariant &t) {
+
+	if (data.front().canCast(QVariant::List) == true) {
+		QMap<QString, QVariant> map;
+		QValueList<QVariant> list;
+		QValueList<PackageLock> lockList;
+
+#ifdef DEBUG
+		kdWarning() << "got a list of locks" << endl;
+#endif
+		list = data.front().toList();
+		for (QValueList<QVariant>::iterator iter = list.begin(); iter != list.end(); iter++) {
+			PackageLock lock;
+
+			map = (*iter).toMap();
+			lock.fromMap(map);
+			
+#ifdef DEBUG
+			kdWarning() << "Lock info: " << endl;
+			kdWarning() << lock.id << endl;
+			kdWarning() << lock.pack.name << endl;
+#endif
+
+			lockList.append(lock);
+		}
+		emit(lockListing(lockList));
+	} else {
+		kdWarning() << "Got something in the lock data function that was not a list" << endl;
+	}
+}
 
 /********************************************************************
  *

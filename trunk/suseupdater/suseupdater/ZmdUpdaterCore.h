@@ -26,10 +26,22 @@
 #include "xmlrpciface.h"
 #include "ZmdUpdaterCoreUtils.h"
 
+
+/***************************************************************************
+ *
+ *			@file
+ * 			This is our core class definition for the zmd backend. 
+ *			This file defines the ZMD functions that directly send xml data
+ *
+ *			@author Narayan Newton <narayannewton@gmail.com>
+ *
+ ***************************************************************************/
+
+
 #define DEBUG
 //#define _ABORT_SUPPORTED_
 
-/* Our error codes, there probably should be more of these, but not now */
+/** Our error codes. These are handled in the ZMD backend GUI **/
 enum {
 
 	ERROR_NONE = 0,
@@ -51,6 +63,16 @@ enum {
 #define ZMD_BLOCK(ID) (pollID = (ID))
 #define ZMD_CLEAR (pollID = downloadID = "")
 
+
+/******************************************************************************
+ *
+ *		The ZmdUpdaterCore class. Contains all the functionality that directly
+ *		relates to communication with ZMD. Every low-level function we support
+ *		will appear here.
+ *
+ *
+ ******************************************************************************/
+
 class ZmdUpdaterCore : public QObject {
 
 	Q_OBJECT
@@ -61,10 +83,18 @@ class ZmdUpdaterCore : public QObject {
 		~ZmdUpdaterCore();
 
 		/**
-			User/Pass functions for the temp authorization
+			User function for the temp authorization
+			
+			@param user the username, taken from /etc/zmd in ZmdUpdater.cpp
 		**/
-		void setUser(QString);
-		void setPass(QString);
+		void setUser(QString user);
+		
+		/**
+			Pass function for the temp authorization
+			
+			@param pass the password, taken from /etc/zmd in ZmdUpdater.cpp
+		**/
+		void setPass(QString pass);
    
    		/**
 			Sends a request for the list of registered servers on ZMD
@@ -75,15 +105,19 @@ class ZmdUpdaterCore : public QObject {
 		/**
 			Sends a request for an addition of the service specified. Type, URI and Name
 			required. Data arrives via serviceAdded.
+
+			@param serv the server to add, really we only need the type and uri to be set.
 		**/
-		void addService(Service);
+		void addService(Service serv);
 
 		/**
 			Sends a request to delete the specified service. No data return, this is problematic.
 			I would love there to be a return, but there isn't. A general fault maybe fired from 
 			this.
+
+			@param serv the service to remove, we only need the id.
 		**/
-		void removeService(Service);
+		void removeService(Service serv);
 
 		/**
 			Send a request for the list of catalogs currently provided by the service on ZMD. 
@@ -95,57 +129,77 @@ class ZmdUpdaterCore : public QObject {
 		/**
 			Send a request to subscribe to the specified catalog. Catalog ID is required.
 			Has no return data.
+
+			@param cat the catalog to which we will be subscribing. We only need the ID.
 		**/
-		void subscribeCatalog(Catalog);
+		void subscribeCatalog(Catalog cat);
 
 		/**
 			Send a request to unsubscribe to the specified catalog. Catalog ID is required.
 			Has no return data.
+
+			@param cat the catalog to which we will be unsubscribing. We only need the ID.
 		**/
-		void unsubscribeCatalog(Catalog);
+		void unsubscribeCatalog(Catalog cat);
 
 		/**
 			Get the Patches available for a specified catalog. Catalog ID is required.
 			Data returns via patchListing.
+
+			@param cat the catalog to check for patches. Only ID needs to be set.
 		**/
-		void getPatches(Catalog);
+		void getPatches(Catalog cat);
 
 		/**
 			Get the updates available for a specified catalog. Catalog ID is required.
 			Data returns via updateListing.
+
+			@param cat the catalog to check for updates. Only ID needs to bet set.
 		**/
-		void getUpdates(Catalog);
+		void getUpdates(Catalog cat);
 
 		/**
 			Get the info for an installed package. Searches via package name.
 			Data returns iva packageInfo.
+
+			@param packageName the name we will be using to execute a search through the packageDB.
 		**/
 		void getInfo(QString packageName);
 
 		/**
 			Get the details for an installed package.
 			Returns via packageDetails.
+
+			@param pack the package we will fetch details for. 
 		**/
-		void getDetails(Package);
+		void getDetails(Package pack);
 
 		/**
 			Lock package (hold back from being upgraded)
+
+			@param lock the package lock we will be adding
 		**/
-		//void lockPackage(Package);
+		void lockPackage(PackageLock lock);
 
 		/**
 			Remove a package lock
+
+			@param lock the lock we will be removing, we only really need the lockid
 		**/
-		//void unlockPackage(Package);
+		void unlockPackage(PackageLock lock);
 
 		/**
 			Get lock info - returns a list of locked packages
 		**/
-		//void getLocks();
+		void getLocks();
 
 		/**
 			Start a package transaction, sends requests for dep tree verification and 
 			dep resolution. Data returns via signal realPackages.
+
+			@param installList packages we will be installing.
+			@param updateList packages we will be updating.
+			@param removeList packages we will be removing.
 		**/
 		void startTransaction(QValueList<Package> installList, 
 						   	  QValueList<Package> updateList,
@@ -169,6 +223,7 @@ class ZmdUpdaterCore : public QObject {
 		void catalogListing(QValueList<Catalog>);
 		void patchListing(QValueList<Patch>);
 		void updateListing(QValueList<Package>);
+		void lockListing(QValueList<PackageLock>);
 
 		void packageInfo(Package);
 		void packageDetails(PackageDetails);
@@ -208,6 +263,7 @@ class ZmdUpdaterCore : public QObject {
 
 		void updateData(const QValueList<QVariant>&, const QVariant&);
 		void patchData(const QValueList<QVariant>&, const QVariant&);
+		void lockData(const QValueList<QVariant>&, const QVariant&);
 
 		void infoData(const QValueList<QVariant>&, const QVariant&);
 

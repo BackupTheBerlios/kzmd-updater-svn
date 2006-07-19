@@ -23,6 +23,8 @@
 #include <kmessagebox.h>
 #include <kapp.h>
 
+#include <qpopupmenu.h>
+
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
@@ -48,6 +50,7 @@ ZmdUpdater::ZmdUpdater() : Updater() {
 	connect(core, SIGNAL(patchListing(QValueList<Patch>)), this, SLOT(gotPatchListing(QValueList<Patch>)));
 	connect(core, SIGNAL(packageInfo(Package)), this, SLOT(gotPackageInfo(Package)));
 	connect(core, SIGNAL(generalFault(QString)), this, SLOT(error(QString)));
+	connect(core, SIGNAL(lockListing(QValueList<PackageLock>)), this, SLOT(gotLockListing(QValueList<PackageLock>)));
 }
 
 /*
@@ -60,6 +63,7 @@ void ZmdUpdater::populateUpdateList(QListView *updateList) {
 
 	tempList = updateList;
 	emit(updateApplet(APPLET_NO_UPDATES));
+	
 	connect(core, SIGNAL(serviceListing(QValueList<Service>)), this, SLOT(gotServiceListing(QValueList<Service>)));
 	core->getServices();
 
@@ -71,6 +75,45 @@ void ZmdUpdater::updateSelected(QListViewItem *item) {
 	//Ok, so...if MISC is empty, that means we have a package and use COLUMN_NAME
 	//if MISC is not empty, we have a patch and we use COLUMN_MISC as the name
 	core->getInfo(item->text( (COLUMN_MISC == "") ? COLUMN_NAME : COLUMN_MISC));
+}
+
+void ZmdUpdater::updateMenu(QListViewItem *item, const QPoint& point) {
+/*	if (item != NULL && tempList != NULL) {
+		QPopupMenu *menu = new QPopupMenu(tempList);
+		if (item->text(COLUMN_LOCK) == "") {
+			menu->insertItem(i18n("Hold Back Package"), this, SLOT(holdPackage()));
+		} else {
+			menu->insertItem(i18n("Don't Hold Back Package"), this, SLOT(removeHold()));
+		}
+		menu->popup(point);
+	}
+*/
+}
+
+void ZmdUpdater::holdPackage() {
+	QListViewItem *item;
+	PackageLock lock;
+
+	item = tempList->currentItem();
+	if (item == NULL)
+		return;
+
+	lock.pack.id = item->text(COLUMN_ID);
+	lock.pack.catalog = item->text(COLUMN_CATALOG);
+	lock.pack.name = (item->text(COLUMN_MISC == "")) ? item->text(COLUMN_NAME) : item->text(COLUMN_MISC);
+//	lock.glob = lock.pack.name; //testing
+	core->lockPackage(lock);
+}
+
+void ZmdUpdater::removeHold() {
+	QListViewItem *item;
+	PackageLock lock;
+
+	item = tempList->currentItem();
+	if (item == NULL)
+		return;
+
+//	core->removeHold
 }
 
 void ZmdUpdater::startInstall() {
@@ -131,6 +174,7 @@ void ZmdUpdater::configureUpdater() {
 
 	Information Recieving Slots
 
+		gotLockListing
 		gotServiceListing
 		gotCatalogListing
 		gotUpdateListing
@@ -138,6 +182,30 @@ void ZmdUpdater::configureUpdater() {
 		gotPackageDetails
 
 */
+
+void ZmdUpdater::gotLockListing(QValueList<PackageLock> locks) {
+
+	QListViewItem *item;
+	QValueList<PackageLock>::iterator iter;
+
+	if (tempList == NULL || tempList->childCount() == 0) {
+		kdWarning() << "List empty or null" << endl;
+		return;
+	}
+
+	for (iter = locks.begin(); iter != locks.end(); iter++) {
+		if ((*iter).pack.id.isEmpty() == false) {
+			if (tempList != NULL && (item = tempList->findItem((*iter).pack.id, COLUMN_ID)) != NULL) {
+				item->setText(COLUMN_LOCK, (*iter).id);
+				item->setText(COLUMN_NAME, item->text(COLUMN_NAME) + " (Package Held)");
+			} else if (tempList != NULL) {
+				//We have a lock without a package attached to it
+				kdWarning() << "Lock without a package" << endl;
+			}
+		}
+	}
+
+}
 
 void ZmdUpdater::gotServiceListing(QValueList<Service> list) {
 
@@ -179,7 +247,7 @@ void ZmdUpdater::gotUpdateListing(QValueList<Package> packageList) {
 	}
 
 	for (iter = packageList.begin(); iter != packageList.end(); iter++) {
-		newItem = new UpdateListItem(tempList, (*iter).name, QCheckListItem::CheckBox); 
+		newItem = new UpdateListItem(tempList, (*iter).name, QCheckListItem::CheckBox);
 
 		newItem->setText(COLUMN_NEW_VERSION,(*iter).version);
 		newItem->setText(COLUMN_SIZE, "Unknown");
@@ -189,8 +257,12 @@ void ZmdUpdater::gotUpdateListing(QValueList<Package> packageList) {
 		newItem->setText(COLUMN_MISC, "");
 
 	}
-	tempList->setSelected(tempList->firstChild(), true);
-	emit(populateDone());
+
+	if (packageList.size() > 0) {
+		tempList->setSelected(tempList->firstChild(), true);
+		core->getLocks();
+		emit(populateDone());
+	}
 }
 
 void ZmdUpdater::gotPatchListing(QValueList<Patch> patchList) {
@@ -213,8 +285,12 @@ void ZmdUpdater::gotPatchListing(QValueList<Patch> patchList) {
 		newItem->setText(COLUMN_CATALOG, catalogNames[(*iter).catalog]);
 		newItem->setText(COLUMN_MISC, (*iter).name);
 	}
-	tempList->setSelected(tempList->firstChild(), true);
-	emit(populateDone());
+
+	if (patchList.size() > 0) {
+		tempList->setSelected(tempList->firstChild(), true);
+		core->getLocks();
+		emit(populateDone());
+	}
 }
 
 void ZmdUpdater::gotPackageInfo(Package pack) {

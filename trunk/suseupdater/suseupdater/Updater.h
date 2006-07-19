@@ -25,18 +25,29 @@
 
 #include "Constants.h"
 
-//Used to set the applet state
+/**
+	Constants that define the various states our applet can be in. 
+	Currently APPLET_CHECKING is a useless constant.
+*/
+
 enum { 	APPLET_NO_UPDATES,
 		APPLET_UPDATES,
 		APPLET_CHECKING };
 
 /**
+	@file
+
 	This is the base class for all updater backends. 
 	If a backend class conforms to this, it will work
+
+	@author Narayan Newton
 
 **/
 
 
+/**
+	Parent class for all updater backends
+*/
 class Updater : public QObject {
 
 	Q_OBJECT
@@ -49,8 +60,9 @@ class Updater : public QObject {
 
 		/** This is a signal sent to the MainWindow class. It updates the applet
 			to the specified state.
+			@param state this is the state the updater applet will be refreshed to reflect
 		**/
-		void updateApplet(int);
+		void updateApplet(int state);
 
 		/** 
 			Send this signal to force an update list refresh. You should do this after an installation or
@@ -68,8 +80,10 @@ class Updater : public QObject {
 		/**
 			Fire this signal to deliver the description of the currently selected update back
 			to the main window.
+
+			@param desc the description text which will be displayed in the Main Window
 		**/
-		void returnDescription(QString);
+		void returnDescription(QString desc);
 
 		/**
 			Fire this signal to inform the MainWindow that the updates are all added to the list.
@@ -97,14 +111,27 @@ class Updater : public QObject {
 		/**
 			When signaled, this slot should fetch a list of current updates available and add them
 			to the listview specified. 
+
+			@param updateList the QListView we will be loading with updates.
 		**/
-		virtual void populateUpdateList(QListView*) = 0;
+		virtual void populateUpdateList(QListView* updateList) = 0;
 
 		/**
 			This slot is signaled when an update is selected and we need to put together
 			a description for it.
+
+			@param selectedItem the currently selected update. 
 		**/
-		virtual void updateSelected(QListViewItem*) = 0;
+		virtual void updateSelected(QListViewItem* selectedItem) = 0;
+
+		/**
+			This slot is signaled when an update is right clicked. What menu comes up is entirely
+			the decision of the backend, but it is expected that this will control holding packages.
+
+			@param item the QListViewItem currently selected.
+			@param point where to show the menu.
+		**/
+		virtual void updateMenu(QListViewItem *item, const QPoint &point) = 0;
 };
 
 #endif

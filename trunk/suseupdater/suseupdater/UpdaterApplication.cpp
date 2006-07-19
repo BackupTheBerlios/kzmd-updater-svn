@@ -76,6 +76,9 @@ UpdaterApplication::UpdaterApplication() : KUniqueApplication(true,true,false) {
 	connect(main, SIGNAL(updateSelected(QListViewItem*)), updater, SLOT(updateSelected(QListViewItem*)));
 	connect(updater, SIGNAL(returnDescription(QString)), main, SLOT(gotDescription(QString)));
 
+	//Signal to tell the backend to show a menu at the specified position
+	connect(main, SIGNAL(updateMenu(QListViewItem*, const QPoint&)), updater, SLOT(updateMenu(QListViewItem*, const QPoint&)));
+
 	main->checkUpdates();
 
 }

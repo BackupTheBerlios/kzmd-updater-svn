@@ -168,7 +168,7 @@ void ZmdEditServers::addButtonClicked() {
 	
 		//Tell the user what is going on, this takes a long long time
 		prog.setTitle(i18n("Adding server.."));
-		prog.setDescription(i18n("We are adding a server to the updater, this may take long time. \nPlease be patient"));
+		prog.setDescription(i18n("We are adding a server to the updater, this may take a long time. \nPlease be patient"));
 
 		//Connect the progress dialog signals
 		connect(core, SIGNAL(progress(Progress)), &prog, SLOT(progress(Progress)));

@@ -134,9 +134,12 @@ void MainWindow::initGUI() {
 	updateList->addColumn("Installed?", 0); // Is it installed? (Is it an update)
 	updateList->addColumn("Size", 0); //This is hidden for the moment, but it shouldn't be
 	updateList->addColumn("Misc", 0); //This is used to store misc info (patch name for zmd)
+	updateList->addColumn("LockID", 0); //Stores our lock id
 
 	connect(updateList, SIGNAL(selectionChanged(QListViewItem*)), this, SLOT(slotPackageSelected(QListViewItem*)));
 	connect(updateList, SIGNAL(clicked(QListViewItem*)), this, SLOT(slotPackageClicked(QListViewItem*)));
+	connect(updateList, SIGNAL(contextMenuRequested(QListViewItem*, const QPoint&, int)), this,
+			SLOT(slotPackageRightClicked(QListViewItem*, const QPoint&, int)));
 
 	mainBox->setSpacing(10);
 	mainBox->setMargin(10);
@@ -315,6 +318,11 @@ void MainWindow::slotPackageSelected(QListViewItem *packageSelected) {
 
 void MainWindow::slotPackageClicked(QListViewItem *pack) {
 	disableButtons(false);
+}
+
+//Menu/Lock Menu Slot
+void MainWindow::slotPackageRightClicked(QListViewItem *update, const QPoint &point, int col) {
+	emit(updateMenu(update, point));
 }
 
 //This is where we actually close, called from the system tray

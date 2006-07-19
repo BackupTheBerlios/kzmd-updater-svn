@@ -29,8 +29,10 @@ HeaderWidget::HeaderWidget(QWidget *parent) : QWidget(parent) {
 	layout = new QHBoxLayout(this);
 	suseLogo = new QLabel(this);
 	text = new QLabel(this);
+	pic = new QPixmap(UserIcon("suse_logo.png"));
 
-	suseLogo->setPixmap(UserIcon("suse_logo.png"));
+	pic->setOptimization(QPixmap::BestOptim);
+	suseLogo->setPixmap(*pic);
 
 	layout->addWidget(suseLogo,false,Qt::AlignLeft);
 	layout->addWidget(text,true,Qt::AlignRight);

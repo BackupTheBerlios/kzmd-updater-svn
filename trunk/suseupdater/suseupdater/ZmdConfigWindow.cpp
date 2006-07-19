@@ -50,7 +50,7 @@ void ZmdConfigWindow::initGUI() {
 	tabs->addTab(editServers, i18n("Add/Remove Servers"));
 	tabs->addTab(advancedConfig, i18n("Advanced Options"));
 
-	header->setDescription(i18n("<b>Add/Remove Package Servers:</b><br> You may add or remove update servers below or change your software catalog subscriptions.<br> <u>Make whatever changes you wish and press accept.</u>"));
+	header->setDescription(i18n("<b>Add/Remove Package Servers:</b><br> You may add or remove update servers below or change your software catalog subscriptions.<br> <u>Make whatever changes you wish and press close.</u>"));
 
 	connect(editServers, SIGNAL(refreshUpdates()), this, SLOT(serverChange()));
 	connect(tabs, SIGNAL(currentChanged(QWidget *)), this, SLOT(tabChanged(QWidget *)));

@@ -24,6 +24,14 @@
 #include "UpdaterApplication.h"
 #include "Constants.h"
 
+/**
+  	@author Narayan Newton <narayannewton@gmail.com>
+ */
+
+/**
+	Simple stub main to start up our app and make sure its not already running.
+*/
+
 int main(int argc, char **argv) {
 
 	KAboutData about(PROGRAM_NAME, PROGRAM_NAME, VERSION, "SUSE Updater");

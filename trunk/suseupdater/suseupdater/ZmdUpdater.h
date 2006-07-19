@@ -29,6 +29,20 @@
 //These hold the username and password for zmd
 #define ZMD_CONFIG_PATH "/etc/zmd"
 
+/**
+	@file
+
+	This file defines our ZMD Backend and the path to the zmd configuration files.
+
+	@author Narayan Newton <narayannewton@gmail.com>
+*/
+
+
+/**
+
+	Our ZMD Backend class. Is connected to the MainWindow class via UpdaterApp
+*/
+
 class ZmdUpdater : public Updater {
 
 	Q_OBJECT
@@ -40,20 +54,54 @@ class ZmdUpdater : public Updater {
 	private slots:
 
 		//Slots implemented from Updater abstract class
+
+		/**
+			Slot which gets called when we need to throw up the add/remove server dialog.
+		*/
 		void configureUpdater();
+
+		/**
+			Slot which gets called when we need to start an update. Collect our update info
+			from the list we got passed in populateList and go. 
+		*/
 		void startInstall();
-		void populateUpdateList(QListView*);
-		void updateSelected(QListViewItem*);
+
+		/**
+			Slot which gets called when we need to check for updates and load up the list. 
+
+			@param updateList the list on the main window
+		*/
+		void populateUpdateList(QListView* updateList);
+
+		/**
+			Slot which gets called when the user selects an update. We are expected to 
+			write a description of the update and pass it back.
+
+			@param item the update itself
+
+		*/
+		void updateSelected(QListViewItem* item);
+
+		/**
+			Slot which gets called when the user right clicks an update.
+
+			@param updateItem the update itself.
+			@param point where to show the menu
+		*/
+		void updateMenu(QListViewItem* item, const QPoint& point);
 
 
 		//Our own slots
 		void startRefresh();
+		void gotLockListing(QValueList<PackageLock>);
 		void gotCatalogListing(QValueList<Catalog>);
 		void gotServiceListing(QValueList<Service>);
 		void gotUpdateListing(QValueList<Package>);
 		void gotPatchListing(QValueList<Patch>);
 		void gotPackageInfo(Package);
 		void gotPackageDetails(PackageDetails);
+		void holdPackage();
+		void removeHold();
 
 		//Error handling 
 		void error(QString); //Recieves error messages (generalFault) from the backend.
@@ -61,6 +109,10 @@ class ZmdUpdater : public Updater {
 
 	private:
 
+		/**
+			Does the auth routine for the core ZMD functions. Basically, just gets the user/pass
+			and gives it to the backend. This will change later when we get a real auth routine.
+		*/
 		void authorizeCore();
 
 		//Watch variable to control the generalFault message (ZMD TCP Error)

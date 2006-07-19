@@ -22,8 +22,22 @@
 
 #include <kuniqueapplication.h>
 
+/**
+	@file
+
+	Defines our UpdaterApplication.
+
+	@author Narayan Newton <narayannewton@gmail.com>
+*/
+
 class MainWindow;
 class Updater;
+
+/**
+
+	This class represents the actual app, it inits the applet, loads the mainWindow
+	and connects the GUI with the currently selected backend. It has no methods.
+*/
 
 class UpdaterApplication : public KUniqueApplication {
 

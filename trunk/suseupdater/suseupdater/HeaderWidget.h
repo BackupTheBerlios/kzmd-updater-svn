@@ -23,6 +23,7 @@
 #include <qwidget.h>
 
 class QLabel;
+class QPixmap;
 class QHBoxLayout;
 
 class HeaderWidget : public QWidget {
@@ -39,6 +40,7 @@ class HeaderWidget : public QWidget {
 	private:
 
 		QHBoxLayout	*layout;
+		QPixmap *pic;
 		QLabel *suseLogo;
 		QLabel *text;
 };

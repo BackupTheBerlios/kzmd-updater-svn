@@ -33,8 +33,20 @@ class QHBoxLayout;
 class Updater;
 class HeaderWidget;
 
-//Define the columns of the update list. These must be set
 
+/**
+	@file
+
+	This file defines our MainWindow class, which also controls the applet itself. This is
+	where much of the GUI logic that is non-backend specific lives.
+
+	@author Narayan Newton <narayannewton@gmail.com>
+*/
+
+
+/**
+	Represnts the various columns, some hidden and some not, which hold our package info
+*/
 enum { 	COLUMN_NAME, //Note, patches store the summary here ...this is for ZMD
 		COLUMN_NEW_VERSION,
 		COLUMN_CATALOG, //Note, for ZMD this is the displayName. If you try to search for something via the backend using this name all will go very badly for you
@@ -42,8 +54,13 @@ enum { 	COLUMN_NAME, //Note, patches store the summary here ...this is for ZMD
 		COLUMN_DESC,
 		COLUMN_INSTALLED,
 		COLUMN_SIZE,
-		COLUMN_MISC }; //Exactly what it sounds like, for ZMD this ends up being the patch name
+		COLUMN_MISC, //Exactly what it sounds like, for ZMD this ends up being the patch name
+		COLUMN_LOCK };  //Stores the lock id, if its blank the package is not locked
 
+/**
+	Class to represent our MainWindow, init the applet itself and hold much of
+	the GUI logic.
+*/
 
 class MainWindow : public QWidget {
 
@@ -51,28 +68,97 @@ class MainWindow : public QWidget {
 
 	public:
 
+		/**
+			Init function
+			@param parent the parent window, always null in our case.
+		*/
 		MainWindow(QWidget *parent=0);
 
 	signals:
 
-		void populateUpdateList(QListView*);
+		/**
+			Signal we send to our current backend requesting updates for the list.
+
+			@param updateList our QListView we want the backend to pack.
+		*/
+		void populateUpdateList(QListView* updateList);
+
+		/**
+			Signal we send to our current backend requesting the start of an installation. 
+			Note we don't pass a package list, the backend must take the info from the QListView
+			we passed it.
+		*/
 		void startInstall();
+
+		/**
+			Signal we send to our current backend when the user has requested to config the server
+			list. Implementation is entirely backend specific.
+		*/
 		void configureUpdater();
-		void updateSelected(QListViewItem*);
+
+		/**
+			Signal we send to our current backend when the user has selected a particular update. 
+			We fully expect to backend to build a package description for us, but that is not 
+			technically required.
+
+			@param updateSelected the recently selected update.
+		*/
+		void updateSelected(QListViewItem* updateSelected);
+
+		/**
+			Signal we send to our current backend when the user has right clicked an update.
+			We expect a menu to be shown allowing the user to configure package locking, but
+			that is entirely up to the backend author.
+
+			@param update clicked the update the user right clicked.
+			@param point where to display the menu
+		*/
+		void updateMenu(QListViewItem *updateClicked, const QPoint &point);
 
 	public slots:
 
-		void appletState(int);
+		/**
+			Updates the applet to the specified state.
+
+			@param state the state, taken from Updater.h definition.
+		*/
+		void appletState(int state);
+
+		/**
+			Tells the backend to repopulate our list.
+		*/
 		void checkUpdates();
+
+		/**
+			Reads in the config file
+		*/
 		void readConfig();
+
+		/**
+			Hides and deletes the "Select All" and "Clear Selection" buttons. This is for backends which
+			do not QCheckListItems.
+		*/
 		void disableSelectButtons();
-		void gotDescription(QString);
+
+		/**
+			Gets the description from the backend. We probably just sent an "updateSelected" signal
+			to signal for the description.
+
+			@param desc the description itself.
+		*/
+		void gotDescription(QString desc);
+
+		/**
+			Informs us that the backend has finished populating the update list. We do some house
+			keeping at this point.
+		*/
 		void populateDone();
 
 	private slots:
 
 		void slotExit();
 		void slotPackageSelected(QListViewItem *packageSelected);
+		void slotPackageRightClicked(QListViewItem*, const QPoint&, int);
 		void slotPackageClicked(QListViewItem *);
 
 		void configButtonClicked();
