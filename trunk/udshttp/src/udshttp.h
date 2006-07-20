@@ -27,18 +27,23 @@
 class QCString;
 class KSocket;
 
-//The version of http we are using
+/**
+	An anonymous enum to define the version of HTTP we will be using.
+**/
 enum { HTTP_1_0, HTTP_1_1 };
 
-//The method we are using
+/**
+	An anonymous enum to define the HTTP method we will be performing
+**/
 enum { HTTP_GET, HTTP_POST, HTTP_HEAD };
 
 
 /**
 
-	This is the main class for the uds kioslave
+	This is the main class for the uds kioslave. It is used through TransferJob right now,
+	as some of the http specific commands in KIO are biased toward the HTTPProtocol slave
 
-*/
+**/
 
 class kio_udshttpProtocol : public KIO::SlaveBase {
 
@@ -100,14 +105,13 @@ class kio_udshttpProtocol : public KIO::SlaveBase {
 
 		KSocket *m_socket;
 		bool m_connectionDone;
+
 		KURL m_url;
 		QString m_realSocketUrl;
 		QString m_realPath;
 
 		QString m_userAgent;
 		QString m_fromLine;
-
-		QMap<QString, QString> m_args;
 
 		//Data, we split into 3 parts
 		QString m_reqLine;

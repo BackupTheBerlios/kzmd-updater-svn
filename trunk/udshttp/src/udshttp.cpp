@@ -328,9 +328,6 @@ void kio_udshttpProtocol::buildHeader() {
 	if (m_userAgent != "") {
 		m_header += "User-Agent: " + m_userAgent + "\r\n";
 	}
-	for (QMap<QString,QString>::iterator iter = m_args.begin(); iter != m_args.end(); iter++) {
-		m_header += iter.key() + " " + iter.data() + "\r\n";
-	}
 	if (m_httpMethod == HTTP_POST) {
 		QString length;
 
