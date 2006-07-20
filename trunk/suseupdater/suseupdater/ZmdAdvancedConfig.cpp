@@ -22,6 +22,8 @@
 #include <kdebug.h>
 #include <kmessagebox.h>
 #include <klineedit.h>
+#include <kapp.h>
+#include <kconfig.h>
 
 #include <qradiobutton.h>
 #include <qprocess.h>
@@ -31,6 +33,7 @@
 #include <qhbuttongroup.h>
 
 #include "ZmdRugParser.h"
+#include "Constants.h"
 
 enum { 	REMOTE_BUTTON_ON, 
 		REMOTE_BUTTON_OFF,
@@ -238,6 +241,12 @@ void ZmdAdvancedConfig::settingsChange(int id) {
 			return;
 		}
 		connect(saveProc, SIGNAL(readyReadStderr()), this, SLOT(errorReady()));
+		if (settingName == "remote-enabled") {
+			KConfig *config = kapp->config();
+			config->setGroup("General");
+			config->writeEntry("ZmdProc", ((settingValue == true) ? ZMD_TCP : ZMD_UDS));
+			emit(zmdProtocolChange(((settingValue == true) ? ZMD_TCP : ZMD_UDS)));
+		}
 	}
 }
 

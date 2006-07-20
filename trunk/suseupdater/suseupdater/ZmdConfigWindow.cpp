@@ -29,6 +29,7 @@
 #include "ZmdAdvancedConfig.h"
 #include "HeaderWidget.h"
 #include "ZmdUpdaterCore.h"
+#include "Constants.h"
 
 ZmdConfigWindow::ZmdConfigWindow(ZmdUpdaterCore *_core, QWidget *parent) : QWidget(parent, 0, Qt::WDestructiveClose | Qt::WShowModal) {
 	core = _core;
@@ -55,6 +56,7 @@ void ZmdConfigWindow::initGUI() {
 	connect(editServers, SIGNAL(refreshUpdates()), this, SLOT(serverChange()));
 	connect(tabs, SIGNAL(currentChanged(QWidget *)), this, SLOT(tabChanged(QWidget *)));
 	connect(closeButton, SIGNAL(clicked()), this, SLOT(close()));
+	connect(advancedConfig, SIGNAL(zmdProtocolChange(int)), this, SLOT(zmdProtocolChange(int)));
 	
 	mainLayout->setSpacing(10);
 	mainLayout->setMargin(10);
@@ -63,6 +65,19 @@ void ZmdConfigWindow::initGUI() {
 
 void ZmdConfigWindow::serverChange() {
 	emit(refreshUpdates());
+}
+
+void ZmdConfigWindow::zmdProtocolChange(int proto) {
+
+	switch (proto) {
+
+		case ZMD_TCP:
+			core->setServer(TCP_SERVER_ADDY);
+			break;
+		case ZMD_UDS:
+			core->setServer(UDS_SERVER_ADDY);
+			break;
+	}
 }
 
 void ZmdConfigWindow::tabChanged(QWidget *tab) {

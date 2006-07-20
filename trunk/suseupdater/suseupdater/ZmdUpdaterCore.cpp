@@ -20,6 +20,8 @@
 #include <kdebug.h>
 
 #include "ZmdUpdaterCore.h"
+#include "Constants.h"
+
 
 /********************************************************************
  *
@@ -28,8 +30,7 @@
  ********************************************************************/
 
 ZmdUpdaterCore::ZmdUpdaterCore(QObject *parent) : QObject(parent) {
-	KURL url(SERVER_ADDY);
-	server = new KXMLRPC::Server(url, this);
+	server = new KXMLRPC::Server(KURL(), this);
 	server->setUserAgent("ZMDUPDATER/0.1");
 
 	timer = new QTimer(this);
@@ -58,6 +59,27 @@ void ZmdUpdaterCore::setPass(QString pass) {
 	server->setUrl(url);
 }
 
+/********************************************************************
+ *
+ *                    Server Settings 
+ *
+ ********************************************************************/
+
+void ZmdUpdaterCore::setServer(KURL url) {
+
+	QString user;
+	QString pass;
+	KURL serverUrl;
+
+	serverUrl = server->url();
+	user = serverUrl.user();
+	pass = serverUrl.pass();
+	serverUrl = url;
+	serverUrl.setUser(user);
+	serverUrl.setPass(pass);
+
+	server->setUrl(serverUrl);
+}
 
 /********************************************************************
  *
@@ -147,11 +169,12 @@ void ZmdUpdaterCore::subscribeCatalog(Catalog cat) {
 	this, SLOT(catalogData(const QValueList<QVariant>&, const QVariant&)),
 	this, SLOT(faultData(int, const QString&, const QVariant&)));
 
+#ifdef BUGGY_ZMD
 	//temp call
 	server->call("zmd.system.catalog_list", QValueList<QVariant>(), 
 	this, SLOT(catalogSubData(const QValueList<QVariant>&, const QVariant&)),
 	this, SLOT(faultData(int, const QString&, const QVariant&)));
-
+#endif
 }
 
 void ZmdUpdaterCore::unsubscribeCatalog(Catalog cat) {
@@ -168,11 +191,12 @@ void ZmdUpdaterCore::unsubscribeCatalog(Catalog cat) {
 	this, SLOT(catalogData(const QValueList<QVariant>&, const QVariant&)),
 	this, SLOT(faultData(int, const QString&, const QVariant&)));
 
+#ifdef BUGGY_ZMD
 	//temp call
 	server->call("zmd.system.catalog_list", QValueList<QVariant>(), 
 	this, SLOT(catalogSubData(const QValueList<QVariant>&, const QVariant&)),
 	this, SLOT(faultData(int, const QString&, const QVariant&)));
-
+#endif
 }
 
 /***************************************************************************************** */

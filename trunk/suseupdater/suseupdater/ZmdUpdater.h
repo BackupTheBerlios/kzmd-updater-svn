@@ -120,6 +120,9 @@ class ZmdUpdater : public Updater {
 		//zmd shutting down, sleeping or suspend. 
 		bool showError; 
 
+		//Read in configuration for ZMD and tell the core backend what protocol to use
+		void readConfig();
+
 		//We hold the QListView passed in "populateUpdateList" here
 		QListView *tempList;
 

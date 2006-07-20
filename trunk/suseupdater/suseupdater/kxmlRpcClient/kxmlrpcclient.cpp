@@ -17,7 +17,7 @@
 #include <iostream>
 using namespace std;
 
-#include "xmlrpciface.h"
+#include "kxmlrpcclient.h"
 
 using namespace KXMLRPC;
 

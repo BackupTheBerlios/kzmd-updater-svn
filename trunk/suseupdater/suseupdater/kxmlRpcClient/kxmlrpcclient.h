@@ -7,8 +7,8 @@
 *   the Free Software Foundation; either version 2 of the License, or     *
 *   (at your option) any later version.                                   *
 ***************************************************************************/
-#ifndef KXMLRPCIFACE_H
-#define KXMLRPCIFACE_H
+#ifndef KXMLRPCCLIENT_H
+#define KXMLRPCCLIENT_H
 
 #include <kurl.h>
 #include <kio/job.h>

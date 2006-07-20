@@ -50,6 +50,7 @@ class ZmdConfigWindow : public QWidget {
 
 		void serverChange();
 		void tabChanged(QWidget *);
+		void zmdProtocolChange(int);
 
 	private:
 

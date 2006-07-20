@@ -103,6 +103,10 @@ void ZmdEditServers::gotServiceList(QValueList<Service> servers) {
 		item = new QListViewItem(serverList, (*iter).name);
 		item->setText(CONFW_URI,(*iter).uri);
 		item->setText(CONFW_ID,(*iter).id);
+
+		//Inform the user that we have not got the catalogs yet
+		item->setOpen(true);
+		item = new QListViewItem(item, i18n("Fetching Catalogs For Service..."));
 	}
 
 	if (servers.size() > 0) {
@@ -123,8 +127,8 @@ void ZmdEditServers::gotCatalogList(QValueList<Catalog> catalogs) {
 	disconnect(core, SIGNAL(catalogListing(QValueList<Catalog>)), this, 
 				SLOT(gotCatalogList(QValueList<Catalog>)));
 
-	if (serverList->firstChild()->childCount() > 0) {
-		kdWarning() << "ERROR: We are trying to add catalogs to a list that already has them" << endl;
+	if (serverList->firstChild()->childCount() != 1) {
+		kdWarning() << "ERROR: We are trying to add catalogs to a list that already has them or has not had a service drop yet" << endl;
 		return;
 	}
 
@@ -137,6 +141,9 @@ void ZmdEditServers::gotCatalogList(QValueList<Catalog> catalogs) {
 			}
 			continue;
 		} else {
+			if (parentItem->firstChild() != NULL)
+				delete parentItem->firstChild(); //get rid of "Fetching" item
+
 			item = new ZmdCatalogListItem(parentItem, (*iter).name, core);
 			item->setOn((*iter).subscribed);
 			item->setText(CONFW_ID, (*iter).id);

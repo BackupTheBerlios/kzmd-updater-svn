@@ -31,5 +31,16 @@ enum { BACKEND_ZMD, BACKEND_ZYPP, BACKEND_SMART };
 
 //ZYPP and SMART don't actually exist at this point by the way...
 
+//Enum to represent the two protocols for ZMD
+enum { ZMD_TCP, ZMD_UDS };
+
+/* The TCP and UDS address of the local zmd server */
+#define TCP_SERVER_ADDY "http://127.0.0.1:2544/zmd/RPC2"
+#define UDS_SERVER_ADDY "udshttp:/var/tmp/kzmd-http"
+
+//Program Options
+#define BUGGY_ZMD //turns on bug workarounds for ZMD
+#define NO_PACKAGE_LOCKS //turns off support for locking packages
+
 #endif
 

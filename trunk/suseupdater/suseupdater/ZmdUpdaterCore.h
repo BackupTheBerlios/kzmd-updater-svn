@@ -52,9 +52,6 @@ enum {
 	ERROR_TRANS_FAIL
 };
 
-/* The TCP address of the local zmd server */
-#define SERVER_ADDY "http://127.0.0.1:2544/zmd/RPC2"
-
 //We poll the server ever 1 second on transactions
 #define CHECK_INTERVAL (1000)  //1 second
 
@@ -81,6 +78,14 @@ class ZmdUpdaterCore : public QObject {
 
 		ZmdUpdaterCore(QObject *parent=0);
 		~ZmdUpdaterCore();
+
+		/**
+			This method sets the url for the server, this also decides whether it uses the
+			http ioslave or the uds ioslave.
+
+			@param url the address of the server
+		**/
+		void setServer(KURL url);
 
 		/**
 			User function for the temp authorization

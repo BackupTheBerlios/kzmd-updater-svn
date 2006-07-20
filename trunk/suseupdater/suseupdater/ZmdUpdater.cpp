@@ -21,6 +21,7 @@
 #include <kdebug.h>
 #include <klocale.h>
 #include <kmessagebox.h>
+#include <kconfig.h>
 #include <kapp.h>
 
 #include <qpopupmenu.h>
@@ -43,6 +44,7 @@ ZmdUpdater::ZmdUpdater() : Updater() {
 	//Init and auth the core
 	core = new ZmdUpdaterCore(this);
 	showError = true;
+	readConfig();
 	authorizeCore();
 
 	//Connect core signals
@@ -50,7 +52,11 @@ ZmdUpdater::ZmdUpdater() : Updater() {
 	connect(core, SIGNAL(patchListing(QValueList<Patch>)), this, SLOT(gotPatchListing(QValueList<Patch>)));
 	connect(core, SIGNAL(packageInfo(Package)), this, SLOT(gotPackageInfo(Package)));
 	connect(core, SIGNAL(generalFault(QString)), this, SLOT(error(QString)));
+
+#ifndef NO_PACKAGE_LOCKS
 	connect(core, SIGNAL(lockListing(QValueList<PackageLock>)), this, SLOT(gotLockListing(QValueList<PackageLock>)));
+#endif
+
 }
 
 /*
@@ -78,7 +84,9 @@ void ZmdUpdater::updateSelected(QListViewItem *item) {
 }
 
 void ZmdUpdater::updateMenu(QListViewItem *item, const QPoint& point) {
-/*	if (item != NULL && tempList != NULL) {
+
+#ifndef NO_PACKAGE_LOCKS
+	if (item != NULL && tempList != NULL) {
 		QPopupMenu *menu = new QPopupMenu(tempList);
 		if (item->text(COLUMN_LOCK) == "") {
 			menu->insertItem(i18n("Hold Back Package"), this, SLOT(holdPackage()));
@@ -87,7 +95,7 @@ void ZmdUpdater::updateMenu(QListViewItem *item, const QPoint& point) {
 		}
 		menu->popup(point);
 	}
-*/
+#endif
 }
 
 void ZmdUpdater::holdPackage() {
@@ -101,7 +109,6 @@ void ZmdUpdater::holdPackage() {
 	lock.pack.id = item->text(COLUMN_ID);
 	lock.pack.catalog = item->text(COLUMN_CATALOG);
 	lock.pack.name = (item->text(COLUMN_MISC == "")) ? item->text(COLUMN_NAME) : item->text(COLUMN_MISC);
-//	lock.glob = lock.pack.name; //testing
 	core->lockPackage(lock);
 }
 
@@ -112,7 +119,7 @@ void ZmdUpdater::removeHold() {
 	item = tempList->currentItem();
 	if (item == NULL)
 		return;
-
+// FIX 
 //	core->removeHold
 }
 
@@ -165,6 +172,7 @@ void ZmdUpdater::startRefresh() {
 
 void ZmdUpdater::configureUpdater() {
 	ZmdConfigWindow *win = new ZmdConfigWindow(core);
+	//FIX
 //	connect(win, SIGNAL(refreshUpdates()), this, SLOT(startRefresh()));
 	win->show();
 }
@@ -330,6 +338,34 @@ void ZmdUpdater::error(QString message) {
 			" and the 'Advanced Options' tab to enable TCP support for ZMD. You will then have to restart ZMD."); 
 		showError = false;
 	}
+}
+
+/*
+
+	Read configuration
+
+*/
+
+void ZmdUpdater::readConfig() {
+
+	KConfig *config = kapp->config();
+	config->setGroup("General");
+
+
+	switch (config->readEntry("ZmdProto").toInt()) {
+
+		case ZMD_TCP:
+			core->setServer(TCP_SERVER_ADDY);
+			break;
+		case ZMD_UDS:
+			core->setServer(UDS_SERVER_ADDY);
+			break;
+		default:
+			core->setServer(TCP_SERVER_ADDY);
+			config->writeEntry("ZmdProto", ZMD_TCP);
+			break;
+	}
+
 }
 
 /*

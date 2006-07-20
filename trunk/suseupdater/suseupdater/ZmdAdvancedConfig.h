@@ -39,6 +39,10 @@ class ZmdAdvancedConfig : public QWidget {
 		ZmdAdvancedConfig(QWidget *parent=0);
 		~ZmdAdvancedConfig();
 
+	signals:
+
+		void zmdProtocolChange(int);
+
 	private slots:
 
 		void stdinReady();		
