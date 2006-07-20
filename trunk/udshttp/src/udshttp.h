@@ -99,6 +99,7 @@ class kio_udshttpProtocol : public KIO::SlaveBase {
 
 
 		KSocket *m_socket;
+		bool m_connectionDone;
 		KURL m_url;
 		QString m_realSocketUrl;
 		QString m_realPath;

@@ -30,6 +30,7 @@ using namespace KIO;
 
 #define LOG
 #define DEBUGCODE 7101
+#define SOCKET_TIMEOUT (100*60)
 
 extern "C"
 {
@@ -58,12 +59,23 @@ kio_udshttpProtocol::kio_udshttpProtocol(const QCString &pool_socket, const QCSt
  	m_socket = NULL; 
 	m_httpVersion = HTTP_1_1;
 	m_userAgent = "kio_udshttp/1.0";
+	m_connectionDone = false;
 }
 
 
 kio_udshttpProtocol::~kio_udshttpProtocol() {
 	closeConnection();
 }
+
+
+/*******************************************************************
+ *
+ *				Virtual Functions From SlaveBase
+ *
+ *						Called By TransferJobs
+ *
+ *
+ *******************************************************************/
 
 void kio_udshttpProtocol::special(const QByteArray &data) {
 
@@ -165,11 +177,11 @@ void kio_udshttpProtocol::mimetype(const KURL& url) {
 	finished();
 }
 
-/*
-
-	Private member functions
-
-*/
+/*********************************************************************
+ *
+ *	Private member functions
+ *
+ *********************************************************************/
 
 void kio_udshttpProtocol::openConnection() {
 
@@ -189,8 +201,10 @@ void kio_udshttpProtocol::closeConnection() {
 	} 
 }
 
+//Sends data and cleary out our temp holding variables
 void kio_udshttpProtocol::sendSocketData() {
 	QString d;
+	ssize_t amountSent = 0;
 
 	if (m_reqLine.isEmpty() == false) {
 		d += m_reqLine;
@@ -207,20 +221,27 @@ void kio_udshttpProtocol::sendSocketData() {
 		m_data.truncate(0);
 	}
 
-	send(m_socket->socket(), d.ascii(), d.length(), 0);
+	while ((amountSent += send(m_socket->socket(), d.ascii(), d.length(), 0)) < d.length())
+		continue;
 }
 
+//Polls for a response on our socket
 void kio_udshttpProtocol::getSocketResponse() {
 
 	int count;
 	char buffer[1024];
 	struct pollfd fd;
 
+	if (m_socket->socket() <= 0)
+		return;
+
 	fd.fd = m_socket->socket();
 	fd.events = POLLIN;
+
+	//clear any data we had sitting around
 	m_outputData.truncate(0);
 
-	if (poll(&fd, 1, 100*60) > 0) {
+	if (poll(&fd, 1, SOCKET_TIMEOUT) > 0) {
 		while ((count = recv(m_socket->socket(), buffer, 1024, MSG_DONTWAIT)) > 0) {
 			buffer[count] = '\0';
 			m_outputData += buffer;
@@ -235,6 +256,7 @@ void kio_udshttpProtocol::getSocketResponse() {
 	error(ERR_SERVER_TIMEOUT, i18n("Timeout on server"));
 }
 
+//Parses out the real socket and path, sets m_realPath and m_realSocketUrl
 void kio_udshttpProtocol::parseUrl() {
 
 	int index;
@@ -387,6 +409,9 @@ void kio_udshttpProtocol::parseResponse() {
 			continue;
 		} else if (tokens[0] == "Content-Size:") {
 			size = tokens[1].toUInt();	
+		} else if (tokens[0] == "Connection:") {
+			if (tokens[1] == "close")
+				m_connectionDone = true;
 		}
 	}
 	m_outputData = stream.read();

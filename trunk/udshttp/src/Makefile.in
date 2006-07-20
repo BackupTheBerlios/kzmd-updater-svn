@@ -672,6 +672,7 @@ messages: rc.cpp
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:
 
+
 #>+ 8
 kio_udshttp.la.closure: $(kio_udshttp_la_OBJECTS) $(kio_udshttp_la_DEPENDENCIES)
 	@echo "int main() {return 0;}" > kio_udshttp_la_closure.cpp
@@ -682,7 +683,7 @@ kio_udshttp.la.closure: $(kio_udshttp_la_OBJECTS) $(kio_udshttp_la_DEPENDENCIES)
 
 
 #>+ 2
-KDE_DIST=Makefile.in udshttp.lsm udshttp.protocol tags Makefile.am udshttp.h 
+KDE_DIST=udshttp.protocol Makefile.am Makefile.in udshttp.lsm udshttp.h tags 
 
 #>+ 3
 clean-closures:

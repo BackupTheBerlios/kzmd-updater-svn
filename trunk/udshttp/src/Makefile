@@ -94,16 +94,16 @@ CTAGS = ctags
 #>- DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 #>+ 1
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST) $(KDE_DIST)
-ACLOCAL = ${SHELL} /home/raven/src/udshttp/admin/missing --run aclocal-1.9
+ACLOCAL = ${SHELL} /home/raven/src/trunk/udshttp/admin/missing --run aclocal-1.9
 AMDEP_FALSE = #
 AMDEP_TRUE = 
-AMTAR = ${SHELL} /home/raven/src/udshttp/admin/missing --run tar
+AMTAR = ${SHELL} /home/raven/src/trunk/udshttp/admin/missing --run tar
 AR = ar
 ARTSCCONFIG = /opt/kde3/bin/artsc-config
 AUTOCONF = $(SHELL) $(top_srcdir)/admin/cvs.sh configure || touch configure
 AUTODIRS = 
-AUTOHEADER = ${SHELL} /home/raven/src/udshttp/admin/missing --run autoheader
-AUTOMAKE = ${SHELL} /home/raven/src/udshttp/admin/missing --run automake-1.9
+AUTOHEADER = ${SHELL} /home/raven/src/trunk/udshttp/admin/missing --run autoheader
+AUTOMAKE = ${SHELL} /home/raven/src/trunk/udshttp/admin/missing --run automake-1.9
 AWK = gawk
 CC = gcc
 CCDEPMODE = depmode=gcc3
@@ -207,7 +207,7 @@ LIB_XEXT = -lXext
 LIB_XRENDER = 
 LN_S = ln -s
 LTLIBOBJS = 
-MAKEINFO = ${SHELL} /home/raven/src/udshttp/admin/missing --run makeinfo
+MAKEINFO = ${SHELL} /home/raven/src/trunk/udshttp/admin/missing --run makeinfo
 MAKEKDEWIDGETS = 
 MCOPIDL = /opt/kde3/bin/mcopidl
 MEINPROC = /opt/kde3/bin/meinproc
@@ -286,7 +286,7 @@ include_x11_FALSE = #
 include_x11_TRUE = 
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = /home/raven/src/udshttp/admin/install-sh
+install_sh = /home/raven/src/trunk/udshttp/admin/install-sh
 kde_appsdir = ${datadir}/applnk
 kde_bindir = ${exec_prefix}/bin
 kde_confdir = ${datadir}/config
@@ -672,6 +672,7 @@ messages: rc.cpp
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:
 
+
 #>+ 8
 kio_udshttp.la.closure: $(kio_udshttp_la_OBJECTS) $(kio_udshttp_la_DEPENDENCIES)
 	@echo "int main() {return 0;}" > kio_udshttp_la_closure.cpp
@@ -682,7 +683,7 @@ kio_udshttp.la.closure: $(kio_udshttp_la_OBJECTS) $(kio_udshttp_la_DEPENDENCIES)
 
 
 #>+ 2
-KDE_DIST=Makefile.in udshttp.lsm udshttp.protocol tags Makefile.am udshttp.h 
+KDE_DIST=udshttp.protocol Makefile.am Makefile.in udshttp.lsm udshttp.h tags 
 
 #>+ 3
 clean-closures:
