@@ -64,6 +64,7 @@ kio_udshttpProtocol::kio_udshttpProtocol(const QCString &pool_socket, const QCSt
 
 
 kio_udshttpProtocol::~kio_udshttpProtocol() {
+	m_connectionDone = true;
 	closeConnection();
 }
 
@@ -189,12 +190,12 @@ void kio_udshttpProtocol::openConnection() {
 		return;
 	if (m_realSocketUrl.isEmpty())
 		return;
-
+	m_connectionDone = false;
 	m_socket = new KSocket(m_realSocketUrl);
 }
 
 void kio_udshttpProtocol::closeConnection() {
-	if (m_socket->socket() > 0) {
+	if (m_socket->socket() > 0 && m_connectionDone == true) {
 		close(m_socket->socket());
 		delete m_socket;
 		m_socket = NULL;
@@ -246,8 +247,8 @@ void kio_udshttpProtocol::getSocketResponse() {
 			buffer[count] = '\0';
 			m_outputData += buffer;
 		}
-		closeConnection();
 		parseResponse();
+		closeConnection();
 		data(QCString(m_outputData.local8Bit()));
 		data(QByteArray());
 		finished();
@@ -390,7 +391,7 @@ void kio_udshttpProtocol::parseResponse() {
 					break;
 			}
 		default:
-			kdError(450) << "ERROR: " << tokens[2] << endl;
+			kdError(DEBUGCODE) << "ERROR: " << tokens[2] << endl;
 			return;
 	}
 
@@ -408,6 +409,7 @@ void kio_udshttpProtocol::parseResponse() {
 			size = tokens[1].toUInt();	
 		} else if (tokens[0] == "Connection:") {
 			if (tokens[1] == "close")
+				kdWarning(DEBUGCODE) << "Got a close" << endl;
 				m_connectionDone = true;
 		}
 	}

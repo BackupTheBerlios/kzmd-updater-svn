@@ -9,8 +9,8 @@ using namespace std;
 UDSTest::UDSTest(QObject *parent) : QObject(parent) {
 
 	KURL url = "udshttp:/var/tmp/kzmd-http";
-	KIO_ARGS << (int)1 << url;
-	KIO::TransferJob *job = new KIO::TransferJob(url, KIO::CMD_SPECIAL, packedArgs,QCString("Test"), false);
+//	KIO_ARGS << (int)1 << url;
+//	KIO::TransferJob *job = new KIO::TransferJob(url, KIO::CMD_SPECIAL, packedArgs,QCString("Test"), false);
 	if (!job) {
 		cout << "We could not create the specified job, something is rather wrong" << endl;
 	}

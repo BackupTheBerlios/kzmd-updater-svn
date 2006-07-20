@@ -654,6 +654,7 @@ uninstall-am: uninstall-binPROGRAMS uninstall-info-am
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:
 
+
 #>+ 3
 udstest.moc.cpp: $(srcdir)/udstest.h
 	$(MOC) $(srcdir)/udstest.h -o udstest.moc.cpp
@@ -666,7 +667,7 @@ clean-metasources:
 	-rm -f  udstest.moc.cpp
 
 #>+ 2
-KDE_DIST=Makefile.in Makefile.am 
+KDE_DIST=udstest Makefile.am Makefile.in 
 
 #>+ 2
 docs-am:
@@ -710,7 +711,7 @@ bcheck-am:
 
 
 #>+ 11
-udstest.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/udstest.cpp $(srcdir)/main.cpp udstest.moc.cpp 
+udstest.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/udstest.cpp $(srcdir)/main.cpp $(srcdir)/udstest.moc.cpp 
 	@echo 'creating udstest.all_cpp.cpp ...'; \
 	rm -f udstest.all_cpp.files udstest.all_cpp.final; \
 	echo "#define KDE_USE_FINAL 1" >> udstest.all_cpp.final; \
