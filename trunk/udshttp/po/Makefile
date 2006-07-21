@@ -52,16 +52,16 @@ DIST_SOURCES =
 #>- DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 #>+ 1
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST) $(KDE_DIST)
-ACLOCAL = ${SHELL} /home/raven/src/udshttp/admin/missing --run aclocal-1.9
+ACLOCAL = ${SHELL} /home/raven/src/trunk/udshttp/admin/missing --run aclocal-1.9
 AMDEP_FALSE = #
 AMDEP_TRUE = 
-AMTAR = ${SHELL} /home/raven/src/udshttp/admin/missing --run tar
+AMTAR = ${SHELL} /home/raven/src/trunk/udshttp/admin/missing --run tar
 AR = ar
 ARTSCCONFIG = /opt/kde3/bin/artsc-config
 AUTOCONF = $(SHELL) $(top_srcdir)/admin/cvs.sh configure || touch configure
 AUTODIRS = 
-AUTOHEADER = ${SHELL} /home/raven/src/udshttp/admin/missing --run autoheader
-AUTOMAKE = ${SHELL} /home/raven/src/udshttp/admin/missing --run automake-1.9
+AUTOHEADER = ${SHELL} /home/raven/src/trunk/udshttp/admin/missing --run autoheader
+AUTOMAKE = ${SHELL} /home/raven/src/trunk/udshttp/admin/missing --run automake-1.9
 AWK = gawk
 CC = gcc
 CCDEPMODE = depmode=gcc3
@@ -165,7 +165,7 @@ LIB_XEXT = -lXext
 LIB_XRENDER = 
 LN_S = ln -s
 LTLIBOBJS = 
-MAKEINFO = ${SHELL} /home/raven/src/udshttp/admin/missing --run makeinfo
+MAKEINFO = ${SHELL} /home/raven/src/trunk/udshttp/admin/missing --run makeinfo
 MAKEKDEWIDGETS = 
 MCOPIDL = /opt/kde3/bin/mcopidl
 MEINPROC = /opt/kde3/bin/meinproc
@@ -244,7 +244,7 @@ include_x11_FALSE = #
 include_x11_TRUE = 
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = /home/raven/src/udshttp/admin/install-sh
+install_sh = /home/raven/src/trunk/udshttp/admin/install-sh
 kde_appsdir = ${datadir}/applnk
 kde_bindir = ${exec_prefix}/bin
 kde_confdir = ${datadir}/config
@@ -480,8 +480,9 @@ uninstall-am: uninstall-info-am
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:
 
+
 #>+ 2
-KDE_DIST=Makefile.in Makefile.am 
+KDE_DIST=Makefile.am Makefile.in 
 
 #>+ 2
 docs-am:

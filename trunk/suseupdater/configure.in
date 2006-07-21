@@ -40,7 +40,7 @@ dnl Perform program name transformation
 AC_ARG_PROGRAM
 
 dnl Automake doc recommends to do this only here. (Janos)
-AM_INIT_AUTOMAKE(suseupdater, "0.0.2") dnl searches for some needed programs
+AM_INIT_AUTOMAKE(suseupdater, "3.5.1") dnl searches for some needed programs
 
 KDE_SET_PREFIX
 
@@ -76,6 +76,7 @@ AC_CONFIG_FILES([ images/Makefile ])
 AC_CONFIG_FILES([ kzmdauthutil/Makefile ])
 AC_CONFIG_FILES([ po/Makefile ])
 AC_CONFIG_FILES([ suseupdater/Makefile ])
+AC_CONFIG_FILES([ suseupdater/kxmlRpcClient/Makefile ])
 AC_OUTPUT
 # Check if KDE_SET_PREFIX was called, and --prefix was passed to configure
 if test -n "$kde_libs_prefix" -a -n "$given_prefix"; then
