@@ -76,7 +76,6 @@ AC_CONFIG_FILES([ images/Makefile ])
 AC_CONFIG_FILES([ kzmdauthutil/Makefile ])
 AC_CONFIG_FILES([ po/Makefile ])
 AC_CONFIG_FILES([ suseupdater/Makefile ])
-AC_CONFIG_FILES([ suseupdater/kxmlRpcClient/Makefile ])
 AC_OUTPUT
 # Check if KDE_SET_PREFIX was called, and --prefix was passed to configure
 if test -n "$kde_libs_prefix" -a -n "$given_prefix"; then

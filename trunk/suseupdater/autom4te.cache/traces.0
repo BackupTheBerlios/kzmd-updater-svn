@@ -17490,8 +17490,7 @@ m4trace:configure.in:75: -1- AC_CONFIG_FILES([ images/Makefile ])
 m4trace:configure.in:76: -1- AC_CONFIG_FILES([ kzmdauthutil/Makefile ])
 m4trace:configure.in:77: -1- AC_CONFIG_FILES([ po/Makefile ])
 m4trace:configure.in:78: -1- AC_CONFIG_FILES([ suseupdater/Makefile ])
-m4trace:configure.in:79: -1- AC_CONFIG_FILES([ suseupdater/kxmlRpcClient/Makefile ])
-m4trace:configure.in:80: -1- AC_SUBST([LIB@&t@OBJS], [$ac_libobjs])
-m4trace:configure.in:80: -1- AC_SUBST([LTLIBOBJS], [$ac_ltlibobjs])
-m4trace:configure.in:80: -1- _AC_AM_CONFIG_HEADER_HOOK([$ac_file])
-m4trace:configure.in:80: -1- _AM_OUTPUT_DEPENDENCY_COMMANDS
+m4trace:configure.in:79: -1- AC_SUBST([LIB@&t@OBJS], [$ac_libobjs])
+m4trace:configure.in:79: -1- AC_SUBST([LTLIBOBJS], [$ac_ltlibobjs])
+m4trace:configure.in:79: -1- _AC_AM_CONFIG_HEADER_HOOK([$ac_file])
+m4trace:configure.in:79: -1- _AM_OUTPUT_DEPENDENCY_COMMANDS
