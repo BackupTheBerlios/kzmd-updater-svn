@@ -51,7 +51,7 @@ ZmdUpdater::ZmdUpdater() : Updater() {
 	connect(core, SIGNAL(updateListing(QValueList<Package>)), this, SLOT(gotUpdateListing(QValueList<Package>)));
 	connect(core, SIGNAL(patchListing(QValueList<Patch>)), this, SLOT(gotPatchListing(QValueList<Patch>)));
 	connect(core, SIGNAL(packageInfo(Package)), this, SLOT(gotPackageInfo(Package)));
-	connect(core, SIGNAL(generalFault(QString)), this, SLOT(error(QString)));
+	connect(core, SIGNAL(generalFault(QString, int)), this, SLOT(error(QString, int)));
 
 #ifndef NO_PACKAGE_LOCKS
 	connect(core, SIGNAL(lockListing(QValueList<PackageLock>)), this, SLOT(gotLockListing(QValueList<PackageLock>)));
@@ -332,7 +332,7 @@ void ZmdUpdater::gotPackageDetails(PackageDetails details) {
 	ERROR Handling
 
 */
-void ZmdUpdater::error(QString message) {
+void ZmdUpdater::error(QString message, int errorCode) {
 	if (showError == true && message.contains("Could not connect")) {
 		KMessageBox::error(NULL, "We could not connect to ZMD, you may need to go into 'Add/Remove Servers'"
 			" and the 'Advanced Options' tab to enable TCP support for ZMD. You will then have to restart ZMD."); 

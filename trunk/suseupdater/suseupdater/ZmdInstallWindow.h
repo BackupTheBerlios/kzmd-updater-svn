@@ -58,7 +58,7 @@ class ZmdInstallWindow : public QWidget {
 		void download(Progress);
 		void finished(int, QString);
 		void gotDepInfo(QValueList<Package>, QValueList<Package>, QValueList<Package>);
-		void generalFault(QString);
+		void generalFault(QString, int);
 
 	private:
 
@@ -86,6 +86,9 @@ class ZmdInstallWindow : public QWidget {
 
 		//variable to decide if we should really close the window
 		bool reallyDone;
+
+		//Here we hold the ID of the last error
+		int lastError;
 };
 
 

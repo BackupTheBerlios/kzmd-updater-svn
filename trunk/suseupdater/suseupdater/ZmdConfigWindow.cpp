@@ -77,6 +77,9 @@ void ZmdConfigWindow::zmdProtocolChange(int proto) {
 		case ZMD_UDS:
 			core->setServer(UDS_SERVER_ADDY);
 			break;
+		default:
+			core->setServer(TCP_SERVER_ADDY);
+			break;
 	}
 }
 

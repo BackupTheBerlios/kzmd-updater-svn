@@ -104,7 +104,7 @@ class ZmdUpdater : public Updater {
 		void removeHold();
 
 		//Error handling 
-		void error(QString); //Recieves error messages (generalFault) from the backend.
+		void error(QString, int); //Recieves error messages (generalFault) from the backend.
 
 
 	private:

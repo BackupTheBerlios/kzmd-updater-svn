@@ -52,7 +52,9 @@ ZmdInstallWindow::ZmdInstallWindow(ZmdUpdaterCore *_core, QWidget *parent) :
 	connect(core, SIGNAL(downloadProgress(Progress)), this, SLOT(download(Progress)));
 	connect(core, SIGNAL(progress(Progress)), this, SLOT(progress(Progress)));
 	connect(core, SIGNAL(transactionFinished(int,QString)), this, SLOT(finished(int,QString)));	
-	connect(core, SIGNAL(generalFault(QString)), this, SLOT(generalFault(QString)));
+	connect(core, SIGNAL(generalFault(QString, int)), this, SLOT(generalFault(QString, int)));
+
+	lastError = 0;
 }
 
 ZmdInstallWindow::~ZmdInstallWindow() {
@@ -204,8 +206,15 @@ void ZmdInstallWindow::finished(int status, QString error) {
 	closeWindow();
 }
 
-void ZmdInstallWindow::generalFault(QString message) {
-	KMessageBox::error(this, message);
+void ZmdInstallWindow::generalFault(QString message, int errorCode) {
+
+	if (lastError != errorCode) {
+		lastError = errorCode;
+		KMessageBox::error(this, message);
+	} else {
+		//If we have shown this error before, don't show it again.
+		return;
+	}
 }
 
 void ZmdInstallWindow::setPackageList(QValueList<Package> installs, 

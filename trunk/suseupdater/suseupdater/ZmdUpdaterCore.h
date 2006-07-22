@@ -222,6 +222,11 @@ class ZmdUpdaterCore : public QObject {
 		**/
 		void cancelTransaction();
 
+		/**
+			Restart zmd
+		**/
+		void restart();
+
 	signals:
 
 		void serviceListing(QValueList<Service>);
@@ -246,7 +251,7 @@ class ZmdUpdaterCore : public QObject {
 		void serviceAdded(QString serviceName, int flags, QString errorMessage);
 
 		//General Fault Signal - For non-specific faults
-		void generalFault(QString faultMessage);
+		void generalFault(QString faultMessage, int errorCode);
 
 		/**
 			General progress signal, reports progress on any on-going process.

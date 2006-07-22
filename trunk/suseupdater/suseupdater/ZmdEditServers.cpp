@@ -35,7 +35,7 @@ ZmdEditServers::ZmdEditServers(ZmdUpdaterCore *_core, QWidget *parent) : QWidget
 
 	initGUI();
 	initList();
-	connect(core, SIGNAL(generalFault(QString)), this, SLOT(serverFault(QString)));
+	connect(core, SIGNAL(generalFault(QString, int)), this, SLOT(serverFault(QString, int)));
 }
 
 void ZmdEditServers::initGUI() {
@@ -219,7 +219,7 @@ void ZmdEditServers::removeButtonClicked() {
 	}
 }
 
-void ZmdEditServers::serverFault(QString message) {
+void ZmdEditServers::serverFault(QString message, int errorCode) {
 	KMessageBox::error(this, message);
 }
 

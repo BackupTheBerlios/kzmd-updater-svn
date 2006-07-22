@@ -685,6 +685,18 @@ void ZmdUpdaterCore::timerData(const QValueList<QVariant>& data, const QVariant 
 
 /********************************************************************
  *
+ *                  	  ZMD Admin 
+ *
+ ********************************************************************/
+
+void ZmdUpdaterCore::restart() {
+	server->call("zmd.system.restart", QValueList<QVariant>(), 
+	this, SLOT(timerData(const QValueList<QVariant>&, const QVariant&)),
+	this, SLOT(faultData(int, const QString&, const QVariant&)));
+}
+
+/********************************************************************
+ *
  *                     Fault Handling
  *
  ********************************************************************/
@@ -693,13 +705,13 @@ void ZmdUpdaterCore::faultData(int code, const QString& message, const QVariant&
 	switch (code) {
 
 		case -1:
-			emit(generalFault("We just had some communication trouble with ZMD, it is likely this will not impact your current operation"));
+			emit(generalFault("We just had some communication trouble with ZMD, it is likely this will not impact your current operation", code));
 			break;
 		case 0:
 			//Thread dies
-		case 24:
-			//Could not connect to host
-			emit(generalFault(message));
+		case 23:
+			//Could not connection to host
+			emit(generalFault(message, code));
 			break;
 		case 49:
 			//Timeout
@@ -707,7 +719,7 @@ void ZmdUpdaterCore::faultData(int code, const QString& message, const QVariant&
 			if (timeoutCount++ < 4)
 				break;
 			else 
-				emit(generalFault(message));
+				emit(generalFault(message, code));
 			break;
 		case -601:
 			//Resolveable not found
@@ -765,7 +777,7 @@ void ZmdUpdaterCore::faultData(int code, const QString& message, const QVariant&
 			break;
 		default:
 			//Things we do not handle
-			emit(generalFault(message));
+			emit(generalFault(message, code));
 			break;
 	}
 #ifdef DEBUG
