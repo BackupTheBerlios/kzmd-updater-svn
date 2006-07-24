@@ -32670,6 +32670,10 @@ fi
 
           ac_config_files="$ac_config_files suseupdater/Makefile"
 
+          ac_config_files="$ac_config_files suseupdater/udshttp/Makefile"
+
+          ac_config_files="$ac_config_files suseupdater/udshttp/test/Makefile"
+
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
 # tests run on this system so they can be shared between configure
@@ -33288,6 +33292,8 @@ do
   "kzmdauthutil/Makefile" ) CONFIG_FILES="$CONFIG_FILES kzmdauthutil/Makefile" ;;
   "po/Makefile" ) CONFIG_FILES="$CONFIG_FILES po/Makefile" ;;
   "suseupdater/Makefile" ) CONFIG_FILES="$CONFIG_FILES suseupdater/Makefile" ;;
+  "suseupdater/udshttp/Makefile" ) CONFIG_FILES="$CONFIG_FILES suseupdater/udshttp/Makefile" ;;
+  "suseupdater/udshttp/test/Makefile" ) CONFIG_FILES="$CONFIG_FILES suseupdater/udshttp/test/Makefile" ;;
   "depfiles" ) CONFIG_COMMANDS="$CONFIG_COMMANDS depfiles" ;;
   "config.h" ) CONFIG_HEADERS="$CONFIG_HEADERS config.h" ;;
   *) { { echo "$as_me:$LINENO: error: invalid argument: $ac_config_target" >&5
