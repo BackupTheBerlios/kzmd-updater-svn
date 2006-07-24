@@ -73,6 +73,7 @@ class ZmdAdvancedConfig : public QWidget {
 		QProcess *saveProc;
 		ZmdRugParser *parser;
 		ZmdUpdaterCore *core;
+		bool restartZMDOnExit;
 };
 
 #endif

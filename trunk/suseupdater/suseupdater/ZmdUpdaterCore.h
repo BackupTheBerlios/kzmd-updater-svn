@@ -222,11 +222,6 @@ class ZmdUpdaterCore : public QObject {
 		**/
 		void cancelTransaction();
 
-		/**
-			Restart zmd
-		**/
-		void restart();
-
 	signals:
 
 		void serviceListing(QValueList<Service>);

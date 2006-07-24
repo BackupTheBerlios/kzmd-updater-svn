@@ -685,18 +685,6 @@ void ZmdUpdaterCore::timerData(const QValueList<QVariant>& data, const QVariant 
 
 /********************************************************************
  *
- *                  	  ZMD Admin 
- *
- ********************************************************************/
-
-void ZmdUpdaterCore::restart() {
-	server->call("zmd.system.restart", QValueList<QVariant>(), 
-	this, SLOT(timerData(const QValueList<QVariant>&, const QVariant&)),
-	this, SLOT(faultData(int, const QString&, const QVariant&)));
-}
-
-/********************************************************************
- *
  *                     Fault Handling
  *
  ********************************************************************/

@@ -46,6 +46,7 @@ enum { 	REMOTE_BUTTON_ON,
 ZmdAdvancedConfig::ZmdAdvancedConfig(ZmdUpdaterCore *_core, QWidget *parent) : QWidget(parent, "AdvancedTab", 0) {
 
 	core = _core;
+	restartZMDOnExit = false;
 	initGUI();
 	
 	parser = new ZmdRugParser(this);	
@@ -249,10 +250,10 @@ void ZmdAdvancedConfig::settingsChange(int id) {
 			config->writeEntry("ZmdProc", ((settingValue == true) ? ZMD_TCP : ZMD_UDS));
 			if (settingValue == true) {
 				core->setServer(TCP_SERVER_ADDY);
-				core->restart();
+				restartZMDOnExit = true;
 			} else {
 				core->setServer(UDS_SERVER_ADDY);
-				core->restart();
+				restartZMDOnExit = true;
 			}
 		}
 	}
@@ -274,5 +275,9 @@ void ZmdAdvancedConfig::errorReady() {
 }
 
 ZmdAdvancedConfig::~ZmdAdvancedConfig() {
+
+	if (restartZMDOnExit == true) {
+		kdWarning() << "We should be restarting, we arn't though" << endl;
+	}
 }
 
