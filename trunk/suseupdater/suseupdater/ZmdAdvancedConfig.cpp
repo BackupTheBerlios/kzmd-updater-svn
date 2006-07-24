@@ -33,6 +33,7 @@
 #include <qhbuttongroup.h>
 
 #include "ZmdRugParser.h"
+#include "ZmdUpdaterCore.h"
 #include "Constants.h"
 
 enum { 	REMOTE_BUTTON_ON, 
@@ -42,8 +43,9 @@ enum { 	REMOTE_BUTTON_ON,
 		ROLLBACK_BUTTON_ON, 
 		ROLLBACK_BUTTON_OFF };
 
-ZmdAdvancedConfig::ZmdAdvancedConfig(QWidget *parent) : QWidget(parent, "AdvancedTab", 0) {
-	
+ZmdAdvancedConfig::ZmdAdvancedConfig(ZmdUpdaterCore *_core, QWidget *parent) : QWidget(parent, "AdvancedTab", 0) {
+
+	core = _core;
 	initGUI();
 	
 	parser = new ZmdRugParser(this);	
@@ -245,7 +247,13 @@ void ZmdAdvancedConfig::settingsChange(int id) {
 			KConfig *config = kapp->config();
 			config->setGroup("General");
 			config->writeEntry("ZmdProc", ((settingValue == true) ? ZMD_TCP : ZMD_UDS));
-			emit(zmdProtocolChange(((settingValue == true) ? ZMD_TCP : ZMD_UDS)));
+			if (settingValue == true) {
+				core->setServer(TCP_SERVER_ADDY);
+				core->restart();
+			} else {
+				core->setServer(UDS_SERVER_ADDY);
+				core->restart();
+			}
 		}
 	}
 }

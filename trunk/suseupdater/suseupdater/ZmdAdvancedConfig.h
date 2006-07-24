@@ -29,6 +29,7 @@ class QHButtonGroup;
 class KLineEdit;
 class QGridLayout;
 class ZmdRugParser;
+class ZmdUpdaterCore;
 
 class ZmdAdvancedConfig : public QWidget {
 
@@ -36,13 +37,9 @@ class ZmdAdvancedConfig : public QWidget {
 
 	public:
 
-		ZmdAdvancedConfig(QWidget *parent=0);
+		ZmdAdvancedConfig(ZmdUpdaterCore *_core, QWidget *parent=0);
 		~ZmdAdvancedConfig();
-
-	signals:
-
-		void zmdProtocolChange(int);
-
+	
 	private slots:
 
 		void stdinReady();		
@@ -75,6 +72,7 @@ class ZmdAdvancedConfig : public QWidget {
 		QProcess *proc;
 		QProcess *saveProc;
 		ZmdRugParser *parser;
+		ZmdUpdaterCore *core;
 };
 
 #endif

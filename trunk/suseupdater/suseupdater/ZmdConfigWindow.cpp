@@ -21,6 +21,7 @@
 
 #include <klocale.h>
 #include <kpushbutton.h>
+#include <kdebug.h>
 
 #include <qlayout.h>
 #include <qtabwidget.h>
@@ -43,7 +44,7 @@ void ZmdConfigWindow::initGUI() {
 	tabs = new QTabWidget(this);
 	closeButton = new KPushButton(i18n("Close"), this);
 	editServers = new ZmdEditServers(core, tabs);
-	advancedConfig = new ZmdAdvancedConfig(tabs);
+	advancedConfig = new ZmdAdvancedConfig(core, tabs);
 
 	mainLayout->addWidget(header, 0, 0);
 	mainLayout->addWidget(tabs, 0, 0);
@@ -56,7 +57,6 @@ void ZmdConfigWindow::initGUI() {
 	connect(editServers, SIGNAL(refreshUpdates()), this, SLOT(serverChange()));
 	connect(tabs, SIGNAL(currentChanged(QWidget *)), this, SLOT(tabChanged(QWidget *)));
 	connect(closeButton, SIGNAL(clicked()), this, SLOT(close()));
-	connect(advancedConfig, SIGNAL(zmdProtocolChange(int)), this, SLOT(zmdProtocolChange(int)));
 	
 	mainLayout->setSpacing(10);
 	mainLayout->setMargin(10);
@@ -65,22 +65,6 @@ void ZmdConfigWindow::initGUI() {
 
 void ZmdConfigWindow::serverChange() {
 	emit(refreshUpdates());
-}
-
-void ZmdConfigWindow::zmdProtocolChange(int proto) {
-
-	switch (proto) {
-
-		case ZMD_TCP:
-			core->setServer(TCP_SERVER_ADDY);
-			break;
-		case ZMD_UDS:
-			core->setServer(UDS_SERVER_ADDY);
-			break;
-		default:
-			core->setServer(TCP_SERVER_ADDY);
-			break;
-	}
 }
 
 void ZmdConfigWindow::tabChanged(QWidget *tab) {

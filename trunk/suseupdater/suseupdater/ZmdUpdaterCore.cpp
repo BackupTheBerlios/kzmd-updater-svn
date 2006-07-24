@@ -713,6 +713,9 @@ void ZmdUpdaterCore::faultData(int code, const QString& message, const QVariant&
 			//Could not connection to host
 			emit(generalFault(message, code));
 			break;
+		case 24: //Connection broken
+			emit(generalFault(message, code));
+			break;
 		case 49:
 			//Timeout
 			//Don't say anything, sometimes we are just busy...until we get to 4
