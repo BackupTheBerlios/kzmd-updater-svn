@@ -89,8 +89,8 @@ class kio_udshttpProtocol : public KIO::SlaveBase {
 
 	private:
 
-		void openConnection();
-		void closeConnection();
+		void httpOpenConnection();
+		void httpCloseConnection();
 
 		//Send any data/headers and wait for response
 		void sendSocketData();

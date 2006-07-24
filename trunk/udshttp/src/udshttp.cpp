@@ -65,7 +65,7 @@ kio_udshttpProtocol::kio_udshttpProtocol(const QCString &pool_socket, const QCSt
 
 kio_udshttpProtocol::~kio_udshttpProtocol() {
 	m_connectionDone = true;
-	closeConnection();
+	httpCloseConnection();
 }
 
 
@@ -92,7 +92,7 @@ void kio_udshttpProtocol::special(const QByteArray &data) {
 			post(url);
 			break;
 		case 99:
-			closeConnection();
+			httpCloseConnection();
 			break;
 	};
 
@@ -106,7 +106,7 @@ void kio_udshttpProtocol::post(const KURL& url) {
 
 	fetchMeta();
 	parseUrl();
-	openConnection();
+	httpOpenConnection();
 	m_httpMethod = HTTP_POST;
 
 	if (m_data.isEmpty() == true) {
@@ -142,7 +142,7 @@ void kio_udshttpProtocol::get(const KURL& url ) {
 
 	fetchMeta();
 	parseUrl();
-	openConnection();
+	httpOpenConnection();
 	m_httpMethod = HTTP_GET;
 	buildReqLine();
 	buildHeader();
@@ -160,7 +160,7 @@ void kio_udshttpProtocol::head(const KURL& url) {
 
 	fetchMeta();
 	parseUrl();
-	openConnection();
+	httpOpenConnection();
 	m_httpMethod = HTTP_HEAD;
 	buildReqLine();
 	buildHeader();
@@ -184,7 +184,7 @@ void kio_udshttpProtocol::mimetype(const KURL& url) {
  *
  *********************************************************************/
 
-void kio_udshttpProtocol::openConnection() {
+void kio_udshttpProtocol::httpOpenConnection() {
 
 	if (m_socket != NULL)
 		return;
@@ -194,7 +194,7 @@ void kio_udshttpProtocol::openConnection() {
 	m_socket = new KSocket(m_realSocketUrl);
 }
 
-void kio_udshttpProtocol::closeConnection() {
+void kio_udshttpProtocol::httpCloseConnection() {
 	if (m_socket->socket() > 0 && m_connectionDone == true) {
 		close(m_socket->socket());
 		delete m_socket;
@@ -248,7 +248,7 @@ void kio_udshttpProtocol::getSocketResponse() {
 			m_outputData += buffer;
 		}
 		parseResponse();
-		closeConnection();
+		httpCloseConnection();
 		data(QCString(m_outputData.local8Bit()));
 		data(QByteArray());
 		finished();
