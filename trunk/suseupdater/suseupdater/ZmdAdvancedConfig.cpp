@@ -41,7 +41,7 @@ enum { 	REMOTE_BUTTON_ON,
 		CERT_BUTTON_YES, 
 		CERT_BUTTON_NO, 
 		ROLLBACK_BUTTON_ON, 
-		ROLLBACK_BUTTON_OFF };
+		ROLLBACK_BUTTON_OFF, };
 
 ZmdAdvancedConfig::ZmdAdvancedConfig(ZmdUpdaterCore *_core, QWidget *parent) : QWidget(parent, "AdvancedTab", 0) {
 
@@ -250,10 +250,10 @@ void ZmdAdvancedConfig::settingsChange(int id) {
 			config->writeEntry("ZmdProc", ((settingValue == true) ? ZMD_TCP : ZMD_UDS));
 			if (settingValue == true) {
 				core->setServer(TCP_SERVER_ADDY);
+				restartZMDOnExit = true; //we only restart when enabling. Restarting to disable is too unstable
 			} else {
 				core->setServer(UDS_SERVER_ADDY);
 			}
-			restartZMDOnExit = true;
 		}
 	}
 }

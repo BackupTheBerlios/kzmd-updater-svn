@@ -69,9 +69,15 @@ class ZmdAdvancedConfig : public QWidget {
 		QLabel *rollbackLabel;
 		QHButtonGroup *rollbackButtons;
 
+		//proc to fetch current settings
 		QProcess *proc;
+
+		//proc to save settings
 		QProcess *saveProc;
+
 		ZmdRugParser *parser;
+
+		//backend and variable to watch for required backend restart.
 		ZmdUpdaterCore *core;
 		bool restartZMDOnExit;
 };
