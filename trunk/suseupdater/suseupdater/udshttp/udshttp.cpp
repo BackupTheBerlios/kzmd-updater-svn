@@ -41,8 +41,6 @@ using namespace KIO;
 //the connection open
 #define KEEP_ALIVE_TIMEOUT (60*3) //3 minutes to keepalive
 
-//#define KEEP_ALIVE_TIMEOUT 30
-
 extern "C"
 {
     int kdemain(int argc, char **argv)
@@ -106,8 +104,8 @@ void kio_udshttpProtocol::special(const QByteArray &data) {
 			m_connectionDone = true;
 			kdWarning(DEBUGCODE) << "Exiting" << endl;
 			httpCloseConnection();
-			setTimeoutSpecialCommand(-1);
-			exit();
+			setTimeoutSpecialCommand(-1); //clear out the timeouts
+			exit(); 
 			break;
 	};
 
@@ -143,8 +141,6 @@ void kio_udshttpProtocol::post(const KURL& url) {
 	buildReqLine();
 	buildHeader();
 
-
-
 	sendSocketData();
 	getSocketResponse();
 }
@@ -162,7 +158,6 @@ void kio_udshttpProtocol::get(const KURL& url ) {
 	buildReqLine();
 	buildHeader();
 	
-
 	sendSocketData();
 	getSocketResponse();
 }
@@ -179,7 +174,6 @@ void kio_udshttpProtocol::head(const KURL& url) {
 	m_httpMethod = HTTP_HEAD;
 	buildReqLine();
 	buildHeader();
-	
 
 	sendSocketData();
 	getSocketResponse();
