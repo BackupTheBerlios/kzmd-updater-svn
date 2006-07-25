@@ -28,10 +28,21 @@
 
 using namespace KIO;
 
+//Will we log? This is ignored at the moment
 #define LOG
+
+//our debug space in kde
 #define DEBUGCODE 7101
+
+//How long we wait in poll
 #define SOCKET_TIMEOUT (100*60)
-#define KEEP_ALIVE_TIMEOUT (60*3) //3 minutes to keepalive
+
+//This is the timeout we wait for new connections and how long we hold
+//the connection open
+//#define KEEP_ALIVE_TIMEOUT (60*3) //3 minutes to keepalive
+
+#define KEEP_ALIVE_TIMEOUT 30
+
 extern "C"
 {
     int kdemain(int argc, char **argv)
@@ -95,6 +106,7 @@ void kio_udshttpProtocol::special(const QByteArray &data) {
 			m_connectionDone = true;
 			kdWarning(DEBUGCODE) << "Exiting" << endl;
 			httpCloseConnection();
+			setTimeoutSpecialCommand(-1);
 			exit();
 			break;
 	};
@@ -209,21 +221,16 @@ void kio_udshttpProtocol::httpCloseConnection() {
 	QDataStream stream( data, IO_WriteOnly );
     stream << int(99); // special: Close connection
 
+	//if socket is not already NULL and we are done with the connection
 	if (m_socket->socket() > 0 && m_connectionDone == true) {
 		close(m_socket->socket());
 		delete m_socket;
 		m_socket = NULL;
 		
-		if (m_httpVersion == HTTP_1_0) {
-			kdWarning(DEBUGCODE) << "Setting 1 second timeout" << endl;
-			setTimeoutSpecialCommand(1, data);
-		} else {
-			kdWarning(DEBUGCODE) << "Setting KeepAliveTimeout" << endl;
-			setTimeoutSpecialCommand(KEEP_ALIVE_TIMEOUT, data);
-		}
-	} else if (m_connectionDone == false && m_socket->socket() > 0) {
-		setTimeoutSpecialCommand(20*60, data);
 	}
+
+	kdWarning(DEBUGCODE) << "Setting KeepAliveTimeout" << endl;
+	setTimeoutSpecialCommand(KEEP_ALIVE_TIMEOUT, data);
 }
 
 //Sends data and cleary out our temp holding variables

@@ -95,6 +95,9 @@ class kio_udshttpProtocol : public KIO::SlaveBase {
 	private:
 
 		void httpOpenConnection();
+
+		//decides whether or not to close the connection and does so
+		//also sets up the timeouts. 
 		void httpCloseConnection();
 
 		//Send any data/headers and wait for response
