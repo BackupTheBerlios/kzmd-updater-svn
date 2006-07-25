@@ -39,9 +39,9 @@ using namespace KIO;
 
 //This is the timeout we wait for new connections and how long we hold
 //the connection open
-//#define KEEP_ALIVE_TIMEOUT (60*3) //3 minutes to keepalive
+#define KEEP_ALIVE_TIMEOUT (60*3) //3 minutes to keepalive
 
-#define KEEP_ALIVE_TIMEOUT 30
+//#define KEEP_ALIVE_TIMEOUT 30
 
 extern "C"
 {
