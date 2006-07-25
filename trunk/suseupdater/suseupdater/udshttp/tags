@@ -4,16 +4,16 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.6	//
-ACLOCAL	Makefile	/^ACLOCAL = ${SHELL} \/home\/raven\/src\/trunk\/udshttp\/admin\/missing --run aclocal-1.9$/;"	m
-ACLOCAL	test/Makefile	/^ACLOCAL = ${SHELL} \/home\/raven\/src\/trunk\/udshttp\/admin\/missing --run aclocal-1.9$/;"	m
+ACLOCAL	Makefile	/^ACLOCAL = ${SHELL} \/home\/raven\/src\/trunk\/suseupdater\/admin\/missing --run aclocal-1.9$/;"	m
+ACLOCAL	test/Makefile	/^ACLOCAL = ${SHELL} \/home\/raven\/src\/trunk\/suseupdater\/admin\/missing --run aclocal-1.9$/;"	m
 ACLOCAL_M4	Makefile	/^ACLOCAL_M4 = $(top_srcdir)\/aclocal.m4$/;"	m
 ACLOCAL_M4	test/Makefile	/^ACLOCAL_M4 = $(top_srcdir)\/aclocal.m4$/;"	m
 AMDEP_FALSE	Makefile	/^AMDEP_FALSE = #$/;"	m
 AMDEP_FALSE	test/Makefile	/^AMDEP_FALSE = #$/;"	m
 AMDEP_TRUE	Makefile	/^AMDEP_TRUE = $/;"	m
 AMDEP_TRUE	test/Makefile	/^AMDEP_TRUE = $/;"	m
-AMTAR	Makefile	/^AMTAR = ${SHELL} \/home\/raven\/src\/trunk\/udshttp\/admin\/missing --run tar$/;"	m
-AMTAR	test/Makefile	/^AMTAR = ${SHELL} \/home\/raven\/src\/trunk\/udshttp\/admin\/missing --run tar$/;"	m
+AMTAR	Makefile	/^AMTAR = ${SHELL} \/home\/raven\/src\/trunk\/suseupdater\/admin\/missing --run tar$/;"	m
+AMTAR	test/Makefile	/^AMTAR = ${SHELL} \/home\/raven\/src\/trunk\/suseupdater\/admin\/missing --run tar$/;"	m
 AR	Makefile	/^AR = ar$/;"	m
 AR	test/Makefile	/^AR = ar$/;"	m
 ARTSCCONFIG	Makefile	/^ARTSCCONFIG = \/opt\/kde3\/bin\/artsc-config$/;"	m
@@ -22,10 +22,10 @@ AUTOCONF	Makefile	/^AUTOCONF = $(SHELL) $(top_srcdir)\/admin\/cvs.sh configure |
 AUTOCONF	test/Makefile	/^AUTOCONF = $(SHELL) $(top_srcdir)\/admin\/cvs.sh configure || touch configure$/;"	m
 AUTODIRS	Makefile	/^AUTODIRS = $/;"	m
 AUTODIRS	test/Makefile	/^AUTODIRS = $/;"	m
-AUTOHEADER	Makefile	/^AUTOHEADER = ${SHELL} \/home\/raven\/src\/trunk\/udshttp\/admin\/missing --run autoheader$/;"	m
-AUTOHEADER	test/Makefile	/^AUTOHEADER = ${SHELL} \/home\/raven\/src\/trunk\/udshttp\/admin\/missing --run autoheader$/;"	m
-AUTOMAKE	Makefile	/^AUTOMAKE = ${SHELL} \/home\/raven\/src\/trunk\/udshttp\/admin\/missing --run automake-1.9$/;"	m
-AUTOMAKE	test/Makefile	/^AUTOMAKE = ${SHELL} \/home\/raven\/src\/trunk\/udshttp\/admin\/missing --run automake-1.9$/;"	m
+AUTOHEADER	Makefile	/^AUTOHEADER = ${SHELL} \/home\/raven\/src\/trunk\/suseupdater\/admin\/missing --run autoheader$/;"	m
+AUTOHEADER	test/Makefile	/^AUTOHEADER = ${SHELL} \/home\/raven\/src\/trunk\/suseupdater\/admin\/missing --run autoheader$/;"	m
+AUTOMAKE	Makefile	/^AUTOMAKE = ${SHELL} \/home\/raven\/src\/trunk\/suseupdater\/admin\/missing --run automake-1.9$/;"	m
+AUTOMAKE	test/Makefile	/^AUTOMAKE = ${SHELL} \/home\/raven\/src\/trunk\/suseupdater\/admin\/missing --run automake-1.9$/;"	m
 AWK	Makefile	/^AWK = gawk$/;"	m
 AWK	test/Makefile	/^AWK = gawk$/;"	m
 CC	Makefile	/^CC = gcc$/;"	m
@@ -92,8 +92,8 @@ ECHO_N	Makefile	/^ECHO_N = -n$/;"	m
 ECHO_N	test/Makefile	/^ECHO_N = -n$/;"	m
 ECHO_T	Makefile	/^ECHO_T = $/;"	m
 ECHO_T	test/Makefile	/^ECHO_T = $/;"	m
-EGREP	Makefile	/^EGREP = \/usr\/bin\/grep -E$/;"	m
-EGREP	test/Makefile	/^EGREP = \/usr\/bin\/grep -E$/;"	m
+EGREP	Makefile	/^EGREP = grep -E$/;"	m
+EGREP	test/Makefile	/^EGREP = grep -E$/;"	m
 ENABLE_PERMISSIVE_FLAG	Makefile	/^ENABLE_PERMISSIVE_FLAG = -fpermissive$/;"	m
 ENABLE_PERMISSIVE_FLAG	test/Makefile	/^ENABLE_PERMISSIVE_FLAG = -fpermissive$/;"	m
 ETAGS	Makefile	/^ETAGS = etags$/;"	m
@@ -108,8 +108,6 @@ FRAMEWORK_COREAUDIO	Makefile	/^FRAMEWORK_COREAUDIO = $/;"	m
 FRAMEWORK_COREAUDIO	test/Makefile	/^FRAMEWORK_COREAUDIO = $/;"	m
 GMSGFMT	Makefile	/^GMSGFMT = \/usr\/bin\/msgfmt$/;"	m
 GMSGFMT	test/Makefile	/^GMSGFMT = \/usr\/bin\/msgfmt$/;"	m
-GREP	Makefile	/^GREP = \/usr\/bin\/grep$/;"	m
-GREP	test/Makefile	/^GREP = \/usr\/bin\/grep$/;"	m
 HAVE_GCC_VISIBILITY	Makefile	/^HAVE_GCC_VISIBILITY = 0$/;"	m
 HAVE_GCC_VISIBILITY	test/Makefile	/^HAVE_GCC_VISIBILITY = 0$/;"	m
 HEADERS	test/Makefile	/^HEADERS = $(noinst_HEADERS)$/;"	m
@@ -140,8 +138,8 @@ KDECONFIG	Makefile	/^KDECONFIG = \/opt\/kde3\/bin\/kde-config$/;"	m
 KDECONFIG	test/Makefile	/^KDECONFIG = \/opt\/kde3\/bin\/kde-config$/;"	m
 KDE_CHECK_PLUGIN	Makefile	/^KDE_CHECK_PLUGIN = $(KDE_PLUGIN) -rpath $(libdir)$/;"	m
 KDE_CHECK_PLUGIN	test/Makefile	/^KDE_CHECK_PLUGIN = $(KDE_PLUGIN) -rpath $(libdir)$/;"	m
-KDE_DIST	Makefile	/^KDE_DIST=udshttp.protocol Makefile.am Makefile.in udshttp.lsm udshttp.h tags $/;"	m
-KDE_DIST	test/Makefile	/^KDE_DIST=udstest Makefile.am Makefile.in $/;"	m
+KDE_DIST	Makefile	/^KDE_DIST=udshttp.protocol udshttp.h Makefile.in udshttp.lsm tags Makefile.am $/;"	m
+KDE_DIST	test/Makefile	/^KDE_DIST=Makefile.in udstest Makefile.am $/;"	m
 KDE_EXTRA_RPATH	Makefile	/^KDE_EXTRA_RPATH = $/;"	m
 KDE_EXTRA_RPATH	test/Makefile	/^KDE_EXTRA_RPATH = $/;"	m
 KDE_INCLUDES	Makefile	/^KDE_INCLUDES = -I\/opt\/kde3\/include$/;"	m
@@ -176,6 +174,7 @@ KDE_USE_PIE	Makefile	/^KDE_USE_PIE = -pie$/;"	m
 KDE_USE_PIE	test/Makefile	/^KDE_USE_PIE = -pie$/;"	m
 KDE_XSL_STYLESHEET	Makefile	/^KDE_XSL_STYLESHEET = \/opt\/kde3\/share\/apps\/ksgmltools2\/customization\/kde-chunk.xsl$/;"	m
 KDE_XSL_STYLESHEET	test/Makefile	/^KDE_XSL_STYLESHEET = \/opt\/kde3\/share\/apps\/ksgmltools2\/customization\/kde-chunk.xsl$/;"	m
+KEEP_ALIVE_TIMEOUT	udshttp.cpp	34;"	d	file:
 KIO_ARGS	test/udstest.cpp	7;"	d	file:
 LDFLAGS	Makefile	/^LDFLAGS = $/;"	m
 LDFLAGS	test/Makefile	/^LDFLAGS = $/;"	m
@@ -275,10 +274,10 @@ LTCXXCOMPILE	test/Makefile	/^LTCXXCOMPILE = $(LIBTOOL) --tag=CXX --mode=compile 
 LTLIBOBJS	Makefile	/^LTLIBOBJS = $/;"	m
 LTLIBOBJS	test/Makefile	/^LTLIBOBJS = $/;"	m
 LTLIBRARIES	Makefile	/^LTLIBRARIES = $(kde_module_LTLIBRARIES)$/;"	m
-MAKEINFO	Makefile	/^MAKEINFO = ${SHELL} \/home\/raven\/src\/trunk\/udshttp\/admin\/missing --run makeinfo$/;"	m
-MAKEINFO	test/Makefile	/^MAKEINFO = ${SHELL} \/home\/raven\/src\/trunk\/udshttp\/admin\/missing --run makeinfo$/;"	m
-MAKEKDEWIDGETS	Makefile	/^MAKEKDEWIDGETS = $/;"	m
-MAKEKDEWIDGETS	test/Makefile	/^MAKEKDEWIDGETS = $/;"	m
+MAKEINFO	Makefile	/^MAKEINFO = ${SHELL} \/home\/raven\/src\/trunk\/suseupdater\/admin\/missing --run makeinfo$/;"	m
+MAKEINFO	test/Makefile	/^MAKEINFO = ${SHELL} \/home\/raven\/src\/trunk\/suseupdater\/admin\/missing --run makeinfo$/;"	m
+MAKEKDEWIDGETS	Makefile	/^MAKEKDEWIDGETS = \/opt\/kde3\/bin\/makekdewidgets$/;"	m
+MAKEKDEWIDGETS	test/Makefile	/^MAKEKDEWIDGETS = \/opt\/kde3\/bin\/makekdewidgets$/;"	m
 MCOPIDL	Makefile	/^MCOPIDL = \/opt\/kde3\/bin\/mcopidl$/;"	m
 MCOPIDL	test/Makefile	/^MCOPIDL = \/opt\/kde3\/bin\/mcopidl$/;"	m
 MEINPROC	Makefile	/^MEINPROC = \/opt\/kde3\/bin\/meinproc$/;"	m
@@ -297,8 +296,8 @@ NORMAL_UNINSTALL	Makefile	/^NORMAL_UNINSTALL = :$/;"	m
 NORMAL_UNINSTALL	test/Makefile	/^NORMAL_UNINSTALL = :$/;"	m
 OBJEXT	Makefile	/^OBJEXT = o$/;"	m
 OBJEXT	test/Makefile	/^OBJEXT = o$/;"	m
-PACKAGE	Makefile	/^PACKAGE = udshttp$/;"	m
-PACKAGE	test/Makefile	/^PACKAGE = udshttp$/;"	m
+PACKAGE	Makefile	/^PACKAGE = suseupdater$/;"	m
+PACKAGE	test/Makefile	/^PACKAGE = suseupdater$/;"	m
 PACKAGE_BUGREPORT	Makefile	/^PACKAGE_BUGREPORT = $/;"	m
 PACKAGE_BUGREPORT	test/Makefile	/^PACKAGE_BUGREPORT = $/;"	m
 PACKAGE_NAME	Makefile	/^PACKAGE_NAME = $/;"	m
@@ -340,8 +339,8 @@ SOURCES	Makefile	/^SOURCES = $(kio_udshttp_la_SOURCES)$/;"	m
 SOURCES	test/Makefile	/^SOURCES = $(udstest_SOURCES)$/;"	m
 STRIP	Makefile	/^STRIP = strip$/;"	m
 STRIP	test/Makefile	/^STRIP = strip$/;"	m
-TOPSUBDIRS	Makefile	/^TOPSUBDIRS =  doc po src$/;"	m
-TOPSUBDIRS	test/Makefile	/^TOPSUBDIRS =  doc po src$/;"	m
+TOPSUBDIRS	Makefile	/^TOPSUBDIRS =  images kzmdauthutil po suseupdater$/;"	m
+TOPSUBDIRS	test/Makefile	/^TOPSUBDIRS =  images kzmdauthutil po suseupdater$/;"	m
 UDSTest	test/udstest.cpp	/^UDSTest::UDSTest(QObject *parent) : QObject(parent) {$/;"	f	class:UDSTest
 UDSTest	test/udstest.h	/^class UDSTest : public QObject {$/;"	c
 UIC	Makefile	/^UIC = \/usr\/lib\/qt3\/bin\/uic -L $(kde_widgetdir) -nounload$/;"	m
@@ -358,14 +357,14 @@ USE_RTTI	Makefile	/^USE_RTTI = $/;"	m
 USE_RTTI	test/Makefile	/^USE_RTTI = $/;"	m
 USE_THREADS	Makefile	/^USE_THREADS = $/;"	m
 USE_THREADS	test/Makefile	/^USE_THREADS = $/;"	m
-VERSION	Makefile	/^VERSION = 0.1$/;"	m
-VERSION	test/Makefile	/^VERSION = 0.1$/;"	m
+VERSION	Makefile	/^VERSION = 3.5.1$/;"	m
+VERSION	test/Makefile	/^VERSION = 3.5.1$/;"	m
+VPATH	Makefile	/^VPATH = .$/;"	m
+VPATH	test/Makefile	/^VPATH = .$/;"	m
 WOVERLOADED_VIRTUAL	Makefile	/^WOVERLOADED_VIRTUAL = $/;"	m
 WOVERLOADED_VIRTUAL	test/Makefile	/^WOVERLOADED_VIRTUAL = $/;"	m
 XGETTEXT	Makefile	/^XGETTEXT = \/usr\/bin\/xgettext$/;"	m
 XGETTEXT	test/Makefile	/^XGETTEXT = \/usr\/bin\/xgettext$/;"	m
-XMKMF	Makefile	/^XMKMF = $/;"	m
-XMKMF	test/Makefile	/^XMKMF = $/;"	m
 XMLLINT	Makefile	/^XMLLINT = \/usr\/bin\/xmllint$/;"	m
 XMLLINT	test/Makefile	/^XMLLINT = \/usr\/bin\/xmllint$/;"	m
 X_EXTRA_LIBS	Makefile	/^X_EXTRA_LIBS = $/;"	m
@@ -380,12 +379,22 @@ X_RPATH	Makefile	/^X_RPATH = -R $(x_libraries)$/;"	m
 X_RPATH	test/Makefile	/^X_RPATH = -R $(x_libraries)$/;"	m
 _UDS_TEST_H_	test/udstest.h	2;"	d
 _udshttp_H_	udshttp.h	3;"	d
+ac_ct_AR	Makefile	/^ac_ct_AR = ar$/;"	m
+ac_ct_AR	test/Makefile	/^ac_ct_AR = ar$/;"	m
 ac_ct_CC	Makefile	/^ac_ct_CC = gcc$/;"	m
 ac_ct_CC	test/Makefile	/^ac_ct_CC = gcc$/;"	m
 ac_ct_CXX	Makefile	/^ac_ct_CXX = g++$/;"	m
 ac_ct_CXX	test/Makefile	/^ac_ct_CXX = g++$/;"	m
 ac_ct_F77	Makefile	/^ac_ct_F77 = $/;"	m
 ac_ct_F77	test/Makefile	/^ac_ct_F77 = $/;"	m
+ac_ct_RANLIB	Makefile	/^ac_ct_RANLIB = ranlib$/;"	m
+ac_ct_RANLIB	test/Makefile	/^ac_ct_RANLIB = ranlib$/;"	m
+ac_ct_STRIP	Makefile	/^ac_ct_STRIP = strip$/;"	m
+ac_ct_STRIP	test/Makefile	/^ac_ct_STRIP = strip$/;"	m
+admin_SUBDIR_included_FALSE	Makefile	/^admin_SUBDIR_included_FALSE = $/;"	m
+admin_SUBDIR_included_FALSE	test/Makefile	/^admin_SUBDIR_included_FALSE = $/;"	m
+admin_SUBDIR_included_TRUE	Makefile	/^admin_SUBDIR_included_TRUE = #$/;"	m
+admin_SUBDIR_included_TRUE	test/Makefile	/^admin_SUBDIR_included_TRUE = #$/;"	m
 all_includes	Makefile	/^all_includes = -I\/opt\/kde3\/include -I\/usr\/lib\/qt3\/include -I\/usr\/X11R6\/include $/;"	m
 all_includes	test/Makefile	/^all_includes = -I\/opt\/kde3\/include -I\/usr\/lib\/qt3\/include -I\/usr\/X11R6\/include $/;"	m
 all_libraries	Makefile	/^all_libraries = -L\/opt\/kde3\/lib -L\/usr\/lib\/qt3\/lib -L\/usr\/X11R6\/lib   $/;"	m
@@ -444,16 +453,10 @@ build_vendor	Makefile	/^build_vendor = unknown$/;"	m
 build_vendor	test/Makefile	/^build_vendor = unknown$/;"	m
 className	test/udstest.moc.cpp	/^const char *UDSTest::className() const$/;"	f	class:UDSTest
 closeConnection	udshttp.cpp	/^void kio_udshttpProtocol::closeConnection() {$/;"	f	class:kio_udshttpProtocol
-datadir	Makefile	/^datadir = ${datarootdir}$/;"	m
-datadir	test/Makefile	/^datadir = ${datarootdir}$/;"	m
-datarootdir	Makefile	/^datarootdir = ${prefix}\/share$/;"	m
-datarootdir	test/Makefile	/^datarootdir = ${prefix}\/share$/;"	m
+datadir	Makefile	/^datadir = ${prefix}\/share$/;"	m
+datadir	test/Makefile	/^datadir = ${prefix}\/share$/;"	m
 depcomp	Makefile	/^depcomp = $(SHELL) $(top_srcdir)\/admin\/depcomp$/;"	m
 depcomp	test/Makefile	/^depcomp = $(SHELL) $(top_srcdir)\/admin\/depcomp$/;"	m
-docdir	Makefile	/^docdir = ${datarootdir}\/doc\/${PACKAGE}$/;"	m
-docdir	test/Makefile	/^docdir = ${datarootdir}\/doc\/${PACKAGE}$/;"	m
-dvidir	Makefile	/^dvidir = ${docdir}$/;"	m
-dvidir	test/Makefile	/^dvidir = ${docdir}$/;"	m
 exec_prefix	Makefile	/^exec_prefix = ${prefix}$/;"	m
 exec_prefix	test/Makefile	/^exec_prefix = ${prefix}$/;"	m
 fetchMeta	udshttp.cpp	/^void kio_udshttpProtocol::fetchMeta() {$/;"	f	class:kio_udshttpProtocol
@@ -472,8 +475,12 @@ host_triplet	Makefile	/^host_triplet = powerpc-unknown-linux-gnu$/;"	m
 host_triplet	test/Makefile	/^host_triplet = powerpc-unknown-linux-gnu$/;"	m
 host_vendor	Makefile	/^host_vendor = unknown$/;"	m
 host_vendor	test/Makefile	/^host_vendor = unknown$/;"	m
-htmldir	Makefile	/^htmldir = ${docdir}$/;"	m
-htmldir	test/Makefile	/^htmldir = ${docdir}$/;"	m
+httpCloseConnection	udshttp.cpp	/^void kio_udshttpProtocol::httpCloseConnection() {$/;"	f	class:kio_udshttpProtocol
+httpOpenConnection	udshttp.cpp	/^void kio_udshttpProtocol::httpOpenConnection() {$/;"	f	class:kio_udshttpProtocol
+images_SUBDIR_included_FALSE	Makefile	/^images_SUBDIR_included_FALSE = #$/;"	m
+images_SUBDIR_included_FALSE	test/Makefile	/^images_SUBDIR_included_FALSE = #$/;"	m
+images_SUBDIR_included_TRUE	Makefile	/^images_SUBDIR_included_TRUE = $/;"	m
+images_SUBDIR_included_TRUE	test/Makefile	/^images_SUBDIR_included_TRUE = $/;"	m
 include_ARTS_FALSE	Makefile	/^include_ARTS_FALSE = #$/;"	m
 include_ARTS_FALSE	test/Makefile	/^include_ARTS_FALSE = #$/;"	m
 include_ARTS_TRUE	Makefile	/^include_ARTS_TRUE = $/;"	m
@@ -484,10 +491,10 @@ include_x11_TRUE	Makefile	/^include_x11_TRUE = $/;"	m
 include_x11_TRUE	test/Makefile	/^include_x11_TRUE = $/;"	m
 includedir	Makefile	/^includedir = ${prefix}\/include$/;"	m
 includedir	test/Makefile	/^includedir = ${prefix}\/include$/;"	m
-infodir	Makefile	/^infodir = ${datarootdir}\/info$/;"	m
-infodir	test/Makefile	/^infodir = ${datarootdir}\/info$/;"	m
-install_sh	Makefile	/^install_sh = \/home\/raven\/src\/trunk\/udshttp\/admin\/install-sh$/;"	m
-install_sh	test/Makefile	/^install_sh = \/home\/raven\/src\/trunk\/udshttp\/admin\/install-sh$/;"	m
+infodir	Makefile	/^infodir = ${prefix}\/info$/;"	m
+infodir	test/Makefile	/^infodir = ${prefix}\/info$/;"	m
+install_sh	Makefile	/^install_sh = \/home\/raven\/src\/trunk\/suseupdater\/admin\/install-sh$/;"	m
+install_sh	test/Makefile	/^install_sh = \/home\/raven\/src\/trunk\/suseupdater\/admin\/install-sh$/;"	m
 install_sh_DATA	Makefile	/^install_sh_DATA = $(install_sh) -c -m 644$/;"	m
 install_sh_DATA	test/Makefile	/^install_sh_DATA = $(install_sh) -c -m 644$/;"	m
 install_sh_PROGRAM	Makefile	/^install_sh_PROGRAM = $(install_sh) -c$/;"	m
@@ -550,12 +557,14 @@ kio_udshttp_la_LDFLAGS	Makefile	/^kio_udshttp_la_LDFLAGS = -module -avoid-versio
 kio_udshttp_la_LIBADD	Makefile	/^kio_udshttp_la_LIBADD = -lkio        $/;"	m
 kio_udshttp_la_OBJECTS	Makefile	/^kio_udshttp_la_OBJECTS = udshttp.lo$/;"	m
 kio_udshttp_la_SOURCES	Makefile	/^kio_udshttp_la_SOURCES = udshttp.cpp$/;"	m
+kzmdauthutil_SUBDIR_included_FALSE	Makefile	/^kzmdauthutil_SUBDIR_included_FALSE = #$/;"	m
+kzmdauthutil_SUBDIR_included_FALSE	test/Makefile	/^kzmdauthutil_SUBDIR_included_FALSE = #$/;"	m
+kzmdauthutil_SUBDIR_included_TRUE	Makefile	/^kzmdauthutil_SUBDIR_included_TRUE = $/;"	m
+kzmdauthutil_SUBDIR_included_TRUE	test/Makefile	/^kzmdauthutil_SUBDIR_included_TRUE = $/;"	m
 libdir	Makefile	/^libdir = ${exec_prefix}\/lib$/;"	m
 libdir	test/Makefile	/^libdir = ${exec_prefix}\/lib$/;"	m
 libexecdir	Makefile	/^libexecdir = ${exec_prefix}\/libexec$/;"	m
 libexecdir	test/Makefile	/^libexecdir = ${exec_prefix}\/libexec$/;"	m
-localedir	Makefile	/^localedir = ${datarootdir}\/locale$/;"	m
-localedir	test/Makefile	/^localedir = ${datarootdir}\/locale$/;"	m
 localstatedir	Makefile	/^localstatedir = ${prefix}\/var$/;"	m
 localstatedir	test/Makefile	/^localstatedir = ${prefix}\/var$/;"	m
 m_connectionDone	udshttp.h	/^		bool m_connectionDone;$/;"	m	class:kio_udshttpProtocol
@@ -573,8 +582,8 @@ m_socket	udshttp.h	/^		KSocket *m_socket;$/;"	m	class:kio_udshttpProtocol
 m_url	udshttp.h	/^		KURL m_url;$/;"	m	class:kio_udshttpProtocol
 m_userAgent	udshttp.h	/^		QString m_userAgent;$/;"	m	class:kio_udshttpProtocol
 main	test/main.cpp	/^int main(int argc, char **argv) {$/;"	f
-mandir	Makefile	/^mandir = ${datarootdir}\/man$/;"	m
-mandir	test/Makefile	/^mandir = ${datarootdir}\/man$/;"	m
+mandir	Makefile	/^mandir = ${prefix}\/man$/;"	m
+mandir	test/Makefile	/^mandir = ${prefix}\/man$/;"	m
 metaObj	test/udstest.moc.cpp	/^QMetaObject *UDSTest::metaObj = 0;$/;"	m	class:UDSTest	file:
 mimetype	udshttp.cpp	/^void kio_udshttpProtocol::mimetype(const KURL& url) {$/;"	f	class:kio_udshttpProtocol
 mkdir_p	Makefile	/^mkdir_p = mkdir -p --$/;"	m
@@ -584,17 +593,18 @@ mkinstalldirs	test/Makefile	/^mkinstalldirs = $(SHELL) $(top_srcdir)\/admin\/mki
 noinst_HEADERS	test/Makefile	/^noinst_HEADERS = udstest.h$/;"	m
 oldincludedir	Makefile	/^oldincludedir = \/usr\/include$/;"	m
 oldincludedir	test/Makefile	/^oldincludedir = \/usr\/include$/;"	m
-openConnection	udshttp.cpp	/^void kio_udshttpProtocol::openConnection() {$/;"	f	class:kio_udshttpProtocol
 parseResponse	udshttp.cpp	/^void kio_udshttpProtocol::parseResponse() {$/;"	f	class:kio_udshttpProtocol
 parseUrl	udshttp.cpp	/^void kio_udshttpProtocol::parseUrl() {$/;"	f	class:kio_udshttpProtocol
-pdfdir	Makefile	/^pdfdir = ${docdir}$/;"	m
-pdfdir	test/Makefile	/^pdfdir = ${docdir}$/;"	m
-pkgdatadir	Makefile	/^pkgdatadir = $(datadir)\/udshttp$/;"	m
-pkgdatadir	test/Makefile	/^pkgdatadir = $(datadir)\/udshttp$/;"	m
-pkgincludedir	Makefile	/^pkgincludedir = $(includedir)\/udshttp$/;"	m
-pkgincludedir	test/Makefile	/^pkgincludedir = $(includedir)\/udshttp$/;"	m
-pkglibdir	Makefile	/^pkglibdir = $(libdir)\/udshttp$/;"	m
-pkglibdir	test/Makefile	/^pkglibdir = $(libdir)\/udshttp$/;"	m
+pkgdatadir	Makefile	/^pkgdatadir = $(datadir)\/suseupdater$/;"	m
+pkgdatadir	test/Makefile	/^pkgdatadir = $(datadir)\/suseupdater$/;"	m
+pkgincludedir	Makefile	/^pkgincludedir = $(includedir)\/suseupdater$/;"	m
+pkgincludedir	test/Makefile	/^pkgincludedir = $(includedir)\/suseupdater$/;"	m
+pkglibdir	Makefile	/^pkglibdir = $(libdir)\/suseupdater$/;"	m
+pkglibdir	test/Makefile	/^pkglibdir = $(libdir)\/suseupdater$/;"	m
+po_SUBDIR_included_FALSE	Makefile	/^po_SUBDIR_included_FALSE = #$/;"	m
+po_SUBDIR_included_FALSE	test/Makefile	/^po_SUBDIR_included_FALSE = #$/;"	m
+po_SUBDIR_included_TRUE	Makefile	/^po_SUBDIR_included_TRUE = $/;"	m
+po_SUBDIR_included_TRUE	test/Makefile	/^po_SUBDIR_included_TRUE = $/;"	m
 post	udshttp.cpp	/^void kio_udshttpProtocol::post(const KURL& url) {$/;"	f	class:kio_udshttpProtocol
 prefix	Makefile	/^prefix = \/opt\/kde3$/;"	m
 prefix	test/Makefile	/^prefix = \/opt\/kde3$/;"	m
@@ -603,8 +613,6 @@ program_transform_name	test/Makefile	/^program_transform_name = s,x,x,$/;"	m
 protocolDATA_INSTALL	Makefile	/^protocolDATA_INSTALL = $(INSTALL_DATA)$/;"	m
 protocol_DATA	Makefile	/^protocol_DATA = udshttp.protocol$/;"	m
 protocoldir	Makefile	/^protocoldir = $(kde_servicesdir)$/;"	m
-psdir	Makefile	/^psdir = ${docdir}$/;"	m
-psdir	test/Makefile	/^psdir = ${docdir}$/;"	m
 qt_cast	test/udstest.moc.cpp	/^void* UDSTest::qt_cast( const char* clname )$/;"	f	class:UDSTest
 qt_emit	test/udstest.moc.cpp	/^bool UDSTest::qt_emit( int _id, QUObject* _o )$/;"	f	class:UDSTest
 qt_includes	Makefile	/^qt_includes = \/usr\/lib\/qt3\/include$/;"	m
@@ -625,9 +633,13 @@ special	udshttp.cpp	/^void kio_udshttpProtocol::special(const QByteArray &data) 
 srcdir	Makefile	/^srcdir = .$/;"	m
 srcdir	test/Makefile	/^srcdir = .$/;"	m
 staticMetaObject	test/udstest.moc.cpp	/^QMetaObject* UDSTest::staticMetaObject()$/;"	f	class:UDSTest
-subdir	Makefile	/^subdir = src$/;"	m
-subdir	test/Makefile	/^subdir = src\/test$/;"	m
+subdir	Makefile	/^subdir = suseupdater\/udshttp$/;"	m
+subdir	test/Makefile	/^subdir = suseupdater\/udshttp\/test$/;"	m
 subdirs	Makefile	/^subdirs = test$/;"	m
+suseupdater_SUBDIR_included_FALSE	Makefile	/^suseupdater_SUBDIR_included_FALSE = #$/;"	m
+suseupdater_SUBDIR_included_FALSE	test/Makefile	/^suseupdater_SUBDIR_included_FALSE = #$/;"	m
+suseupdater_SUBDIR_included_TRUE	Makefile	/^suseupdater_SUBDIR_included_TRUE = $/;"	m
+suseupdater_SUBDIR_included_TRUE	test/Makefile	/^suseupdater_SUBDIR_included_TRUE = $/;"	m
 sysconfdir	Makefile	/^sysconfdir = ${prefix}\/etc$/;"	m
 sysconfdir	test/Makefile	/^sysconfdir = ${prefix}\/etc$/;"	m
 target	Makefile	/^target = powerpc-unknown-linux-gnu$/;"	m
@@ -642,10 +654,10 @@ target_triplet	Makefile	/^target_triplet = powerpc-unknown-linux-gnu$/;"	m
 target_triplet	test/Makefile	/^target_triplet = powerpc-unknown-linux-gnu$/;"	m
 target_vendor	Makefile	/^target_vendor = unknown$/;"	m
 target_vendor	test/Makefile	/^target_vendor = unknown$/;"	m
-top_builddir	Makefile	/^top_builddir = ..$/;"	m
-top_builddir	test/Makefile	/^top_builddir = ..\/..$/;"	m
-top_srcdir	Makefile	/^top_srcdir = ..$/;"	m
-top_srcdir	test/Makefile	/^top_srcdir = ..\/..$/;"	m
+top_builddir	Makefile	/^top_builddir = ..\/..$/;"	m
+top_builddir	test/Makefile	/^top_builddir = ..\/..\/..$/;"	m
+top_srcdir	Makefile	/^top_srcdir = ..\/..$/;"	m
+top_srcdir	test/Makefile	/^top_srcdir = ..\/..\/..$/;"	m
 tr	test/udstest.moc.cpp	/^QString UDSTest::tr( const char *s, const char *c )$/;"	f	class:UDSTest
 trUtf8	test/udstest.moc.cpp	/^QString UDSTest::trUtf8( const char *s, const char *c )$/;"	f	class:UDSTest
 transform	Makefile	/^transform = $(program_transform_name)$/;"	m

@@ -31,7 +31,7 @@ using namespace KIO;
 #define LOG
 #define DEBUGCODE 7101
 #define SOCKET_TIMEOUT (100*60)
-
+#define KEEP_ALIVE_TIMEOUT (60*3) //3 minutes to keepalive
 extern "C"
 {
     int kdemain(int argc, char **argv)
@@ -92,7 +92,10 @@ void kio_udshttpProtocol::special(const QByteArray &data) {
 			post(url);
 			break;
 		case 99:
+			m_connectionDone = true;
+			kdWarning(DEBUGCODE) << "Exiting" << endl;
 			httpCloseConnection();
+			exit();
 			break;
 	};
 
@@ -178,6 +181,13 @@ void kio_udshttpProtocol::mimetype(const KURL& url) {
 	finished();
 }
 
+void kio_udshttpProtocol::closeConnection() {
+	m_connectionDone = true;
+	setTimeoutSpecialCommand(-1);
+	httpCloseConnection();
+	exit();
+}
+
 /*********************************************************************
  *
  *	Private member functions
@@ -195,11 +205,25 @@ void kio_udshttpProtocol::httpOpenConnection() {
 }
 
 void kio_udshttpProtocol::httpCloseConnection() {
+	QByteArray data;
+	QDataStream stream( data, IO_WriteOnly );
+    stream << int(99); // special: Close connection
+
 	if (m_socket->socket() > 0 && m_connectionDone == true) {
 		close(m_socket->socket());
 		delete m_socket;
 		m_socket = NULL;
-	} 
+		
+		if (m_httpVersion == HTTP_1_0) {
+			kdWarning(DEBUGCODE) << "Setting 1 second timeout" << endl;
+			setTimeoutSpecialCommand(1, data);
+		} else {
+			kdWarning(DEBUGCODE) << "Setting KeepAliveTimeout" << endl;
+			setTimeoutSpecialCommand(KEEP_ALIVE_TIMEOUT, data);
+		}
+	} else if (m_connectionDone == false && m_socket->socket() > 0) {
+		setTimeoutSpecialCommand(20*60, data);
+	}
 }
 
 //Sends data and cleary out our temp holding variables
@@ -356,6 +380,11 @@ void kio_udshttpProtocol::parseResponse() {
 		return;
 
 	tokens = QStringList::split(" ", line);
+	if (tokens[0] == "HTTP/1.0") {
+		m_connectionDone = true;
+		m_httpVersion = HTTP_1_0;
+	}
+
 	int responseCode = tokens[1].toInt();
 	switch (responseCode) {
 		case 100:

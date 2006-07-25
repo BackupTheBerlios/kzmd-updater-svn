@@ -250,11 +250,10 @@ void ZmdAdvancedConfig::settingsChange(int id) {
 			config->writeEntry("ZmdProc", ((settingValue == true) ? ZMD_TCP : ZMD_UDS));
 			if (settingValue == true) {
 				core->setServer(TCP_SERVER_ADDY);
-				restartZMDOnExit = true;
 			} else {
 				core->setServer(UDS_SERVER_ADDY);
-				restartZMDOnExit = true;
 			}
+			restartZMDOnExit = true;
 		}
 	}
 }
@@ -277,7 +276,10 @@ void ZmdAdvancedConfig::errorReady() {
 ZmdAdvancedConfig::~ZmdAdvancedConfig() {
 
 	if (restartZMDOnExit == true) {
-		kdWarning() << "We should be restarting, we arn't though" << endl;
+		proc = new QProcess(QString("rug"), this);
+		proc->addArgument("restart");
+		proc->start();
+		kdWarning() << "Restarting ZMD" << endl;
 	}
 }
 

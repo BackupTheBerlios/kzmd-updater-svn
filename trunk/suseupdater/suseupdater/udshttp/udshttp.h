@@ -87,6 +87,11 @@ class kio_udshttpProtocol : public KIO::SlaveBase {
 		*/
 		virtual void head(const KURL& url);
 
+		/**
+			Close the connection, force close. 
+		*/
+		virtual void closeConnection();
+
 	private:
 
 		void httpOpenConnection();
