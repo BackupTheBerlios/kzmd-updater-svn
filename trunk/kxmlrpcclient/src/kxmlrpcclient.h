@@ -1,4 +1,5 @@
 /**************************************************************************
+*   Copyright (C) 2006 by Narayan Newton <narayannewton@gmail.com>        *
 *   Copyright (C) 2003 - 2004 by Frerich Raabe <raabe@kde.org>            *
 *                                Tobias Koenig <tokoe@kde.org>            *
 *                                                                         *
