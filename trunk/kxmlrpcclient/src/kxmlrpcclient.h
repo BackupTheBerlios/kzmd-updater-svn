@@ -7,8 +7,8 @@
 *   the Free Software Foundation; either version 2 of the License, or     *
 *   (at your option) any later version.                                   *
 ***************************************************************************/
-#ifndef KXMLRPCIFACE_H
-#define KXMLRPCIFACE_H
+#ifndef KXMLRPCCLIENT_H
+#define KXMLRPCCLIENT_H
 
 #include <kurl.h>
 #include <kio/job.h>
@@ -20,17 +20,17 @@
 #include <qvaluelist.h>
 
 /***************************************************************************
-  *
-  * @file
-  *
-  *	This file is part of the KXMLRPCClient interface definition.  	
-  * 
-  *
+  
+   @file
+  
+  	This file is part of the KXMLRPCClient interface definition.  	
+   
+  
  ***************************************************************************/
 
 
 /***************************************************************************
-  * KXMLRPC namespace to prevent conflicts.
+   KXMLRPC namespace to prevent conflicts.
   **************************************************************************/
 
 namespace KXMLRPC {
@@ -41,10 +41,10 @@ namespace KXMLRPC {
 	class Result;
 
 	/*******************************************************************************
-	 *
-	 *			Query is a class that represents an individual XML-RPC call.
-	 *			This is an internal class and is only used by the Server class.
-	 *
+	 
+	 			Query is a class that represents an individual XML-RPC call.
+	 			This is an internal class and is only used by the Server class.
+	 
 	 ******************************************************************************/
 
 	class Query : public QObject {
@@ -96,19 +96,27 @@ namespace KXMLRPC {
 			QValueList<KIO::Job*> m_pendingJobs;
 	};
 
-	/*******************************************************************************
-	 *
-	 *
-	 *			Server is a class that represents the server we are
-	 *			communicating with. This is the main (only) class you	
-	 * 			need to worry about.
-	 *
-	 * 			@author Narayan Newton <narayannewton@gmail.com>
-	 *
-	 *			@code
- 	 * 			//put example here
-	 *			@endcode
-	 ******************************************************************************/
+
+  /*******************************************************************************
+   
+  
+			Server is a class that represents the xmlrpc server we are
+			communicating with. This is the main (only) class you
+			need to worry about for building an xml-rpc client.
+			This class has one main method, "call", which is overloaded extensively
+			to handle different arguments.
+   
+			@author Narayan Newton <narayannewton@gmail.com>
+
+			@code
+				KXMLRPC::Server *serv = new KXMLRPC::Server(KURL("http://localhost"), this);
+				serv->setUserAgent("Test/1.0");
+				serv->call("xmlrpc.command1", "Hi!", 
+						   this, SLOT(gotData(const QValueList<QVariant>&, const QVariant)),
+						   this, SLOT(gotError(const QString&, const QVariant&)));
+			@endcode
+   ******************************************************************************/
+
 
 	class Server : public QObject {
 	
@@ -116,72 +124,161 @@ namespace KXMLRPC {
 		
 		public:
 
+			/**********************************************************************
+
+					The standard init function with few (possibly no) arguments
+
+					@param parent the parent of this object, defaults to NULL.
+					@param name the name of the object, defaults to NULL.
+
+
+			**********************************************************************/
+
+			Server( QObject *parent = 0, const char *name = 0 );
+ 
+			/**********************************************************************
+
+					The not so standard init function that takes a server url 
+					as an argument 
+		
+					@param url the url for the xml-rpc server we will be connecting to
+					@param parent the parent of this object, defaults to NULL.
+					@param name the name of the object, defaults to NULL.
+
+			**********************************************************************/
+
 			Server( const KURL &url = KURL(),
 					QObject *parent = 0, const char *name = 0 );
 			~Server();
 
+
+			/**********************************************************************
+
+				Gets the current url of the xml-rpc server.
+
+				@return returns a QString set to the url of the xml-rpc server
+
+			**********************************************************************/
+
 			const KURL &url() const { return m_url; }
+
+			/**********************************************************************
+
+				Sets the url for the xml-rpc server 
+				
+				@param url the url for the xml-rpc server we will be connecting to
+
+
+			**********************************************************************/
 			void setUrl( const KURL &url );
 
+			/**********************************************************************
+
+				Gets the current user agent
+
+				@return returns a QString set to the user agent
+
+			**********************************************************************/
 			QString userAgent() const { return m_userAgent; }
+
+			/**********************************************************************
+
+				Sets the url for the xml-rpc server
+
+				@param userAgent the user agent to use for connecting to the xml-rpc server
+
+
+			**********************************************************************/
 			void setUserAgent( const QString &userAgent ) { m_userAgent = userAgent; }
 
+
+			/**********************************************************************
+
+				The main function for KXMLRPC. This make a xml-rpc call to the server set via
+				the constructor or via setUrl. You pass in the method, the argument list and
+				a slot for data arrival and a slot for possible errors.
+
+				This method is HIGHLY over-loaded and relies heavily on QValueLists and QVariants.
+
+				The following are the types of arguments supported as arguments:
+
+					QValueList<QVariant>
+					QVariant
+					QString
+					QCString
+					QByteArray
+					QDateTime
+					QStringList
+					int
+					bool
+					double
+
+				@param method the method on the server we are going to be calling
+				@param arg the argument or arguments you will be passing to the method
+				@param obj the QObject of the error slot
+				@param faultSlot the error slot itself
+				@param obj the QObject of the data slot
+				@param messageSlot the slot receiving the data
+				@param id the id for our Server object, defaults to empty
+
+			**********************************************************************/
 			template <typename T>
 			void call( const QString &method, const QValueList<T> &arg,
+					QObject* obj, const char* messageSlot, 
 					QObject* obj, const char* faultSlot,
-					QObject* obj, const char* messageSlot, const QVariant &id = QVariant() );
+					const QVariant &id = QVariant() );
 
 
 		public slots:
 		
 			void call( const QString &method, const QValueList<QVariant> &args,
-					QObject* faultObj, const char* faultSlot,
 					QObject* msgObj, const char* messageSlot,
+					QObject* faultObj, const char* faultSlot,
 					const QVariant &id = QVariant() );
 
 			void call( const QString &method, const QVariant &arg,
-					QObject* faultObj, const char* faultSlot,
 					QObject* msgObj, const char* messageSlot,
+					QObject* faultObj, const char* faultSlot,
 					const QVariant &id = QVariant() );
 
 			void call( const QString &method, int arg ,
-					QObject* faultObj, const char* faultSlot,
 					QObject* msgObj, const char* messageSlot,
+					QObject* faultObj, const char* faultSlot,
 					const QVariant &id = QVariant() );
 
 			void call( const QString &method, bool arg,
-					QObject* faultObj, const char* faultSlot,
 					QObject* msgObj, const char* messageSlot,
+					QObject* faultObj, const char* faultSlot,
 					const QVariant &id = QVariant() );
 
 			void call( const QString &method, double arg,
-					QObject* faultObj, const char* faultSlot,
 					QObject* msgObj, const char* messageSlot,
+					QObject* faultObj, const char* faultSlot,
 					const QVariant &id = QVariant() );
 
 			void call( const QString &method, const QString &arg,
-					QObject* faultObj, const char* faultSlot,
 					QObject* msgObj, const char* messageSlot,
+					QObject* faultObj, const char* faultSlot,
 					const QVariant &id = QVariant() );
 
 			void call( const QString &method, const QCString &arg ,
-					QObject* faultObj, const char* faultSlot,
 					QObject* msgObj, const char* messageSlot,
+					QObject* faultObj, const char* faultSlot,
 					const QVariant &id = QVariant() );
 
 			void call( const QString &method, const QByteArray &arg,
-					QObject* faultObj, const char* faultSlot,
 					QObject* msgObj, const char* messageSlot,
+					QObject* faultObj, const char* faultSlot,
 					const QVariant &id = QVariant() );
 
 			void call( const QString &method, const QDateTime &arg,
-					QObject* faultObj, const char* faultSlot,
 					QObject* msgObj, const char* messageSlot,
+					QObject* faultObj, const char* faultSlot,
 					const QVariant &id = QVariant() );
 
 			void call( const QString &method, const QStringList &arg,
-					QObject* faultObj, const char* faultSlot,
 					QObject* msgObj, const char* messageSlot,
+					QObject* faultObj, const char* faultSlot,
 					const QVariant &id = QVariant() );
 
 		private slots:
@@ -199,8 +296,9 @@ namespace KXMLRPC {
 
 template <typename T>
 void KXMLRPC::Server::call( const QString &method, const QValueList<T> &arg,
-							QObject* faultObj, const char* faultSlot,
-							QObject* msgObj, const char* messageSlot, const QVariant &id ) {
+						QObject* msgObj, const char* messageSlot, 							
+						QObject* faultObj, const char* faultSlot,
+						const QVariant &id ) {
 
 	QValueList<QVariant> args;
 

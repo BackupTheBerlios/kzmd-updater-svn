@@ -40,7 +40,7 @@ enum { HTTP_GET, HTTP_POST, HTTP_HEAD };
 
 /**
 
-	This is the main class for the uds kioslave. It is used through TransferJob right now, as some of the http specific commands in KIO are biased toward the HTTPProtocol slave
+	This is the main class for the uds kioslave. It is used through TransferJob right now, as some of the http specific commands in KIO are biased toward the HTTPProtocol slave. You may send it metadata, but it will ignore quite a lot of it. You can however set the user agent and the content-type. These two things are most important for HTTP, especially HTTP_1_1.
 
 **/
 

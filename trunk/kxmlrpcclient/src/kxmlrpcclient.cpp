@@ -17,10 +17,7 @@
 #include <iostream>
 using namespace std;
 
-#include "xmlrpciface.h"
-
-//small macro taken from HTTP IOSlave
-#define KIO_ARGS QByteArray packedArgs; QDataStream kioArgsStream( packedArgs, IO_WriteOnly ); kioArgsStream
+#include "kxmlrpcclient.h"
 
 using namespace KXMLRPC;
 
@@ -72,10 +69,7 @@ void Query::call( const QString &server, const QString &method,
   QDataStream stream( postData, IO_WriteOnly );
   stream.writeRawBytes( xmlMarkup.utf8(), xmlMarkup.utf8().length() );
 
-  //KIO::TransferJob *job = KIO::http_post( KURL( server ), postData, false );
-  KIO_ARGS << (int)1 << KURL(server);
-
-  KIO::TransferJob *job = new KIO::TransferJob(KURL(server), KIO::CMD_SPECIAL, packedArgs, postData, false);
+  KIO::TransferJob *job = KIO::http_post( KURL( server ), postData, false );
   if ( !job ) {
     kdWarning() << "Unable to create KIO job for " << server << endl;
     return;
@@ -90,7 +84,7 @@ void Query::call( const QString &server, const QString &method,
            this, SLOT( slotResult( KIO::Job * ) ) );
 
   m_pendingJobs.append( job );
-  //cout << xmlMarkup << endl;
+  cout << xmlMarkup << endl;
 }
 
 void Query::slotData( KIO::Job *, const QByteArray &data )

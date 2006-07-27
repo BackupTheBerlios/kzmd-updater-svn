@@ -118,7 +118,7 @@ class ZmdUpdater : public Updater {
 		//Watch variable to control the generalFault message (ZMD TCP Error)
 		//We should only show the error on first data drop, otherwise error is probably due to
 		//zmd shutting down, sleeping or suspend. 
-		bool showError; 
+		bool showGeneralFaultError; 
 
 		//Read in configuration for ZMD and tell the core backend what protocol to use
 		void readConfig();

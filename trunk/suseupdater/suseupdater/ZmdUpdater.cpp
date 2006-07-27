@@ -43,7 +43,7 @@ ZmdUpdater::ZmdUpdater() : Updater() {
 
 	//Init and auth the core
 	core = new ZmdUpdaterCore(this);
-	showError = true;
+	showGeneralFaultError = true;
 	readConfig();
 	authorizeCore();
 
@@ -221,7 +221,7 @@ void ZmdUpdater::gotServiceListing(QValueList<Service> list) {
 	connect(core, SIGNAL(catalogListing(QValueList<Catalog>)), this, SLOT(gotCatalogListing(QValueList<Catalog>)));
 
 	//Ok, we communicated with zmd, don't show the error on failure now
-	showError = false;
+	showGeneralFaultError = false;
 
 	//get the catalogs
 	core->getCatalogs(); 
@@ -333,10 +333,10 @@ void ZmdUpdater::gotPackageDetails(PackageDetails details) {
 
 */
 void ZmdUpdater::error(QString message, int errorCode) {
-	if (showError == true && message.contains("Could not connect")) {
+	if (showGeneralFaultError == true && message.contains("Could not connect")) {
 		KMessageBox::error(NULL, "We could not connect to ZMD, you may need to go into 'Add/Remove Servers'"
 			" and the 'Advanced Options' tab to enable TCP support for ZMD. You will then have to restart ZMD."); 
-		showError = false;
+		showGeneralFaultError = false;
 	}
 }
 
