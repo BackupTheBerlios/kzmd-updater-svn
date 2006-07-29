@@ -14,3 +14,5 @@ protocoldir = $(kde_servicesdir)
 messages: rc.cpp
 	$(EXTRACTRC) `find . -name \*.ui -o -name \*.rc` > rc.cpp
 	$(XGETTEXT) *.cpp -o $(podir)/kio_udshttp.pot
+
+include $(top_srcdir)/admin/Doxyfile.am

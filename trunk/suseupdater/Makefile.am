@@ -5,6 +5,6 @@ MAINTAINERCLEANFILES = subdirs configure.in acinclude.m4 configure.files
 
 include admin/deps.am
 
-include admin/Doxyfile.am
-
 SUBDIRS=$(TOPSUBDIRS)
+
+include $(top_srcdir)/admin/Doxyfile.am

@@ -38,3 +38,6 @@ install-data-local:
 	$(mkinstalldirs) $(DESTDIR)/$(prefix)/share/autostart
 	$(INSTALL_DATA) $(srcdir)/suseupdater-start.desktop \
 		$(DESTDIR)/$(prefix)/share/autostart/suseupdater.desktop
+
+
+include $(top_srcdir)/admin/Doxyfile.am
