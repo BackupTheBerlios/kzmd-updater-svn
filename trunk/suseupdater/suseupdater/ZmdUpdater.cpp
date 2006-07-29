@@ -119,8 +119,8 @@ void ZmdUpdater::removeHold() {
 	item = tempList->currentItem();
 	if (item == NULL)
 		return;
-// FIX 
-//	core->removeHold
+
+//This does nothing, since locking support is not available in ZMD as of yet
 }
 
 void ZmdUpdater::startInstall() {
