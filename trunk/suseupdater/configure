@@ -1953,7 +1953,7 @@ fi
 
 # Define the identity of the package.
  PACKAGE=suseupdater
- VERSION="3.5.1"
+ VERSION="0.1"
 
 
 cat >>confdefs.h <<_ACEOF

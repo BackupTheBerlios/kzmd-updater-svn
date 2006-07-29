@@ -198,7 +198,7 @@ USER_LDFLAGS =
 USE_EXCEPTIONS = -fexceptions
 USE_RTTI = 
 USE_THREADS = 
-VERSION = 3.5.1
+VERSION = 0.1
 WOVERLOADED_VIRTUAL = 
 XGETTEXT = /usr/bin/xgettext
 XMLLINT = /usr/bin/xmllint
@@ -316,9 +316,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 #>- 	      exit 1;; \
 #>- 	  esac; \
 #>- 	done; \
-#>- 	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  admin/Makefile'; \
+#>- 	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign  admin/Makefile'; \
 #>- 	cd $(top_srcdir) && \
-#>- 	  $(AUTOMAKE) --gnu  admin/Makefile
+#>- 	  $(AUTOMAKE) --foreign  admin/Makefile
 #>+ 12
 	@for dep in $?; do \
 	  case '$(am__configure_deps)' in \
@@ -328,9 +328,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  admin/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign  admin/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu  admin/Makefile
+	  $(AUTOMAKE) --foreign  admin/Makefile
 	cd $(top_srcdir) && perl admin/am_edit admin/Makefile.in
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
@@ -513,9 +513,9 @@ force-reedit:
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  admin/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign  admin/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu  admin/Makefile
+	  $(AUTOMAKE) --foreign  admin/Makefile
 	cd $(top_srcdir) && perl admin/am_edit admin/Makefile.in
 
 
