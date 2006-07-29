@@ -29,20 +29,34 @@ class KSocket;
 
 /**
 	An anonymous enum to define the version of HTTP we will be using.
+
+	HTTP_1_0 is of course HTTP 1.0 and HTTP_1_1 is HTTP 1.1
+
 **/
 enum { HTTP_1_0, HTTP_1_1 };
 
 /**
 	An anonymous enum to define the HTTP method we will be performing
+
+	HTTP_GET is GET
+	HTTP_PUT is PUT
+	HTTP_HEAD is HEAD
+
 **/
 enum { HTTP_GET, HTTP_POST, HTTP_HEAD };
 
 
-/**
+/**********************************************************************************
 
-	This is the main class for the uds kioslave. It is used through TransferJob right now, as some of the http specific commands in KIO are biased toward the HTTPProtocol slave. You may send it metadata, but it will ignore quite a lot of it. You can however set the user agent and the content-type. These two things are most important for HTTP, especially HTTP_1_1.
+	This is the main class for the uds kioslave. It is used through TransferJob 
+	right now, as some of the http specific commands in KIO are biased toward the 
+	HTTPProtocol slave. You may send it metadata, but it will ignore quite a lot 
+	of it. You can however set the user agent and the content-type. These two 
+	things are most important for HTTP, especially HTTP_1_1.
 
-**/
+	@author Narayan Newton <narayannewton@gmail.com>
+
+***********************************************************************************/
 
 class kio_udshttpProtocol : public KIO::SlaveBase {
 
@@ -52,37 +66,36 @@ class kio_udshttpProtocol : public KIO::SlaveBase {
 
 		/**
 			Returns the mimetype of the file at the given URL
-			NEED HEAD FOR THIS
 
-			@param url The url we are checking.
+			@param url the url we are checking.
 		*/
 		virtual void mimetype(const KURL& url);
 
 		/**
 			Gets the document at the specified url.
 
-			@param The url that represents the doc we are fetching.
+			@param url the url that represents the doc we are fetching.
 		*/
 		virtual void get(const KURL& url);
 
 		/**
 			The handler for "special" functions, those specific to our slave.
 
-			@param data The code that defines the "real" function we are going to execute
+			@param data the code that defines the "real" function we are going to execute
 		*/
 		virtual void special(const QByteArray &data);
 
 		/**
 			Executes an HTTP_POST to the given url of data we are passed from the job
 
-			@param url The actual url we will be uploading too
+			@param url the actual url we will be uploading too
 		*/
 		virtual void post(const KURL& url);
 
 		/**
 			Executes an HTTP_HEAD for the given url. This is used by mimetype.
 
-			@param url The actual url we will be checking.
+			@param url the actual url we will be checking.
 		*/
 		virtual void head(const KURL& url);
 

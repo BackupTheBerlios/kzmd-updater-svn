@@ -365,9 +365,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 #>- 	      exit 1;; \
 #>- 	  esac; \
 #>- 	done; \
-#>- 	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  suseupdater/udshttp/Makefile'; \
+#>- 	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign  suseupdater/udshttp/Makefile'; \
 #>- 	cd $(top_srcdir) && \
-#>- 	  $(AUTOMAKE) --gnu  suseupdater/udshttp/Makefile
+#>- 	  $(AUTOMAKE) --foreign  suseupdater/udshttp/Makefile
 #>+ 12
 	@for dep in $?; do \
 	  case '$(am__configure_deps)' in \
@@ -377,9 +377,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  suseupdater/udshttp/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign  suseupdater/udshttp/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu  suseupdater/udshttp/Makefile
+	  $(AUTOMAKE) --foreign  suseupdater/udshttp/Makefile
 	cd $(top_srcdir) && perl admin/am_edit suseupdater/udshttp/Makefile.in
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
@@ -705,9 +705,9 @@ force-reedit:
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  suseupdater/udshttp/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign  suseupdater/udshttp/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu  suseupdater/udshttp/Makefile
+	  $(AUTOMAKE) --foreign  suseupdater/udshttp/Makefile
 	cd $(top_srcdir) && perl admin/am_edit suseupdater/udshttp/Makefile.in
 
 
