@@ -10,9 +10,14 @@ libkxmlrpcclient_la_LDFLAGS = $(KDE_RPATH) $(all_libraries)
 libkxmlrpcclient_la_LIBADD   = $(LIB_KFILE)
 
 # which sources should be compiled for kzmdupdater
-libkxmlrpcclient_la_SOURCES = kxmlrpcserver.cpp kxmlrpcserver.h kxmlrpcquery.h kxmlrpcquery.cpp
+libkxmlrpcclient_la_SOURCES = kxmlrpcserver.cpp kxmlrpcquery.cpp
+
+include_HEADERS = kxmlrpcserver.h
+
+noinst_HEADERS = kxmlrpcquery.h
 
 # let automoc handle all of the meta source files (moc)
 METASOURCES = AUTO
 
 include $(top_srcdir)/admin/Doxyfile.am
+
