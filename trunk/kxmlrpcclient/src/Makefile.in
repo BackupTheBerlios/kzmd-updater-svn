@@ -818,7 +818,7 @@ bcheck-am:
 
 
 #>+ 11
-libkxmlrpcserver_la.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/kxmlrpcserver.cpp $(srcdir)/kxmlrpcquery.cpp $(srcdir)/kxmlrpcserver.moc.cpp $(srcdir)/kxmlrpcquery.moc.cpp 
+libkxmlrpcserver_la.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/kxmlrpcserver.cpp $(srcdir)/kxmlrpcquery.cpp kxmlrpcserver.moc.cpp kxmlrpcquery.moc.cpp 
 	@echo 'creating libkxmlrpcserver_la.all_cpp.cpp ...'; \
 	rm -f libkxmlrpcserver_la.all_cpp.files libkxmlrpcserver_la.all_cpp.final; \
 	echo "#define KDE_USE_FINAL 1" >> libkxmlrpcserver_la.all_cpp.final; \

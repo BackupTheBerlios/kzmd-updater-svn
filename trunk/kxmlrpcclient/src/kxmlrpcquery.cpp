@@ -18,6 +18,15 @@
 
 #include "kxmlrpcquery.h"
 
+/**
+
+	@file
+
+	Implementation of KXmlRpcResult and KXmlRpcQuery
+
+**/
+
+
 //small macro taken from HTTP IOSlave
 #define KIO_ARGS QByteArray packedArgs; QDataStream kioArgsStream( packedArgs, IO_WriteOnly ); kioArgsStream
 

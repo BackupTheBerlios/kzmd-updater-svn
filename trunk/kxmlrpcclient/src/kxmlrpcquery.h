@@ -24,6 +24,15 @@ class QDomDocument;
 class QDomElement;
 
 /**
+
+	@file
+
+	This file defines KXmlRpcResult and KXmlRpcQuery, our internal classes
+
+**/
+
+
+/**
 	KXmlRpcResult is an internal class that represents a response from the XML-RPC 
 	server. This is an internal class and is only used by KXmlRpcQuery
 

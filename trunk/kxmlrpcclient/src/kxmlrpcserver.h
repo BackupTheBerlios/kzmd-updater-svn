@@ -21,9 +21,8 @@
 /**   
    @file
   
-  	This file is part of the KXmlRpc Client Library. It defines KXmlRpcServer,
-	the main method of interaction with the library and the object which
-	represents the xml-rpc server.
+  	This file defines KXmlRpcServer, our main class.
+	It is the primary method of interaction with the library and is the object which represents the xml-rpc server.
 
 	@author Narayan Newton <narayannewton@gmail.com>
 	@author Frerich Raabe <raabe@kde.org>

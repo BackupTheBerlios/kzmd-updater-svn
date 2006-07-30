@@ -4,3 +4,5 @@ AM_INIT_AUTOMAKE(kxmlrpcclient, 0.1)
 AC_C_BIGENDIAN
 AC_CHECK_KDEMAXPATHLEN
 
+
+KDE_INIT_DOXYGEN([The KXMLRpcClient API Reference], [Version $VERSION])

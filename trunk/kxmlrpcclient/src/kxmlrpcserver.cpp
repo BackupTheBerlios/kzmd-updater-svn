@@ -22,6 +22,16 @@
 #include "kxmlrpcserver.h"
 #include "kxmlrpcquery.h"
 
+/**
+
+	@file
+
+	The implementation of KXmlRpcServer
+
+**/
+
+
+
 KXmlRpcServer::KXmlRpcServer( const KURL &url, QObject *parent, const char *name ) : QObject( parent, name ) {
 
 	if ( url.isValid() )
