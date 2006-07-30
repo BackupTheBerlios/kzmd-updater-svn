@@ -59,15 +59,15 @@ am__installdirs = "$(DESTDIR)$(libdir)"
 libLTLIBRARIES_INSTALL = $(INSTALL)
 LTLIBRARIES = $(lib_LTLIBRARIES)
 am__DEPENDENCIES_1 =
-libkxmlrpcserver_la_DEPENDENCIES = $(am__DEPENDENCIES_1)
-am_libkxmlrpcserver_la_OBJECTS = kxmlrpcserver.lo kxmlrpcquery.lo
-#>- libkxmlrpcserver_la_OBJECTS = $(am_libkxmlrpcserver_la_OBJECTS)
+libkxmlrpcclient_la_DEPENDENCIES = $(am__DEPENDENCIES_1)
+am_libkxmlrpcclient_la_OBJECTS = kxmlrpcserver.lo kxmlrpcquery.lo
+#>- libkxmlrpcclient_la_OBJECTS = $(am_libkxmlrpcclient_la_OBJECTS)
 #>+ 5
-libkxmlrpcserver_la_final_OBJECTS = libkxmlrpcserver_la.all_cpp.lo 
-libkxmlrpcserver_la_nofinal_OBJECTS = kxmlrpcserver.lo kxmlrpcquery.lo\
+libkxmlrpcclient_la_final_OBJECTS = libkxmlrpcclient_la.all_cpp.lo 
+libkxmlrpcclient_la_nofinal_OBJECTS = kxmlrpcserver.lo kxmlrpcquery.lo\
 kxmlrpcserver.moc.lo kxmlrpcquery.moc.lo 
-@KDE_USE_FINAL_FALSE@libkxmlrpcserver_la_OBJECTS = $(libkxmlrpcserver_la_nofinal_OBJECTS)
-@KDE_USE_FINAL_TRUE@libkxmlrpcserver_la_OBJECTS = $(libkxmlrpcserver_la_final_OBJECTS)
+@KDE_USE_FINAL_FALSE@libkxmlrpcclient_la_OBJECTS = $(libkxmlrpcclient_la_nofinal_OBJECTS)
+@KDE_USE_FINAL_TRUE@libkxmlrpcclient_la_OBJECTS = $(libkxmlrpcclient_la_final_OBJECTS)
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/admin/depcomp
 am__depfiles_maybe = depfiles
@@ -97,8 +97,8 @@ LTCOMPILE = $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) \
 CCLD = $(CC)
 LINK = $(LIBTOOL) --tag=CC --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
 	$(AM_LDFLAGS) $(LDFLAGS) -o $@
-SOURCES = $(libkxmlrpcserver_la_SOURCES)
-DIST_SOURCES = $(libkxmlrpcserver_la_SOURCES)
+SOURCES = $(libkxmlrpcclient_la_SOURCES)
+DIST_SOURCES = $(libkxmlrpcclient_la_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 #>- DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -348,19 +348,19 @@ x_libraries = @x_libraries@
 xdg_appsdir = @xdg_appsdir@
 xdg_directorydir = @xdg_directorydir@
 xdg_menudir = @xdg_menudir@
-lib_LTLIBRARIES = libkxmlrpcserver.la
+lib_LTLIBRARIES = libkxmlrpcclient.la
 
 # set the include path for X, qt and KDE
 INCLUDES = $(all_includes)
 
 # the library search path. 
-libkxmlrpcserver_la_LDFLAGS = $(KDE_RPATH) $(all_libraries)
+libkxmlrpcclient_la_LDFLAGS = $(KDE_RPATH) $(all_libraries)
 
 # the libraries to link against.
-libkxmlrpcserver_la_LIBADD = $(LIB_KFILE)
+libkxmlrpcclient_la_LIBADD = $(LIB_KFILE)
 
 # which sources should be compiled for kzmdupdater
-libkxmlrpcserver_la_SOURCES = kxmlrpcserver.cpp kxmlrpcserver.h kxmlrpcquery.h kxmlrpcquery.cpp
+libkxmlrpcclient_la_SOURCES = kxmlrpcserver.cpp kxmlrpcserver.h kxmlrpcquery.h kxmlrpcquery.cpp
 
 # let automoc handle all of the meta source files (moc)
 #>- METASOURCES = AUTO
@@ -439,8 +439,8 @@ clean-libLTLIBRARIES:
 	  echo "rm -f \"$${dir}/so_locations\""; \
 	  rm -f "$${dir}/so_locations"; \
 	done
-libkxmlrpcserver.la: $(libkxmlrpcserver_la_OBJECTS) $(libkxmlrpcserver_la_DEPENDENCIES) 
-	$(CXXLINK) -rpath $(libdir) $(libkxmlrpcserver_la_LDFLAGS) $(libkxmlrpcserver_la_OBJECTS) $(libkxmlrpcserver_la_LIBADD) $(LIBS)
+libkxmlrpcclient.la: $(libkxmlrpcclient_la_OBJECTS) $(libkxmlrpcclient_la_DEPENDENCIES) 
+	$(CXXLINK) -rpath $(libdir) $(libkxmlrpcclient_la_LDFLAGS) $(libkxmlrpcclient_la_OBJECTS) $(libkxmlrpcclient_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -755,6 +755,7 @@ install-apidox-recurse: install-apidox
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:
 
+
 #>+ 3
 kxmlrpcserver.moc.cpp: $(srcdir)/kxmlrpcserver.h
 	$(MOC) $(srcdir)/kxmlrpcserver.h -o kxmlrpcserver.moc.cpp
@@ -774,7 +775,7 @@ clean-metasources:
 	-rm -f  kxmlrpcserver.moc.cpp kxmlrpcquery.moc.cpp
 
 #>+ 2
-KDE_DIST=Makefile.in Makefile.am 
+KDE_DIST=Makefile.am Makefile.in 
 
 #>+ 2
 docs-am:
@@ -818,36 +819,36 @@ bcheck-am:
 
 
 #>+ 11
-libkxmlrpcserver_la.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/kxmlrpcserver.cpp $(srcdir)/kxmlrpcquery.cpp kxmlrpcserver.moc.cpp kxmlrpcquery.moc.cpp 
-	@echo 'creating libkxmlrpcserver_la.all_cpp.cpp ...'; \
-	rm -f libkxmlrpcserver_la.all_cpp.files libkxmlrpcserver_la.all_cpp.final; \
-	echo "#define KDE_USE_FINAL 1" >> libkxmlrpcserver_la.all_cpp.final; \
+libkxmlrpcclient_la.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/kxmlrpcserver.cpp $(srcdir)/kxmlrpcquery.cpp kxmlrpcserver.moc.cpp kxmlrpcquery.moc.cpp 
+	@echo 'creating libkxmlrpcclient_la.all_cpp.cpp ...'; \
+	rm -f libkxmlrpcclient_la.all_cpp.files libkxmlrpcclient_la.all_cpp.final; \
+	echo "#define KDE_USE_FINAL 1" >> libkxmlrpcclient_la.all_cpp.final; \
 	for file in kxmlrpcserver.cpp kxmlrpcquery.cpp kxmlrpcserver.moc.cpp kxmlrpcquery.moc.cpp ; do \
-	  echo "#include \"$$file\"" >> libkxmlrpcserver_la.all_cpp.files; \
-	  test ! -f $(srcdir)/$$file || egrep '^#pragma +implementation' $(srcdir)/$$file >> libkxmlrpcserver_la.all_cpp.final; \
+	  echo "#include \"$$file\"" >> libkxmlrpcclient_la.all_cpp.files; \
+	  test ! -f $(srcdir)/$$file || egrep '^#pragma +implementation' $(srcdir)/$$file >> libkxmlrpcclient_la.all_cpp.final; \
 	done; \
-	cat libkxmlrpcserver_la.all_cpp.final libkxmlrpcserver_la.all_cpp.files > libkxmlrpcserver_la.all_cpp.cpp; \
-	rm -f libkxmlrpcserver_la.all_cpp.final libkxmlrpcserver_la.all_cpp.files
+	cat libkxmlrpcclient_la.all_cpp.final libkxmlrpcclient_la.all_cpp.files > libkxmlrpcclient_la.all_cpp.cpp; \
+	rm -f libkxmlrpcclient_la.all_cpp.final libkxmlrpcclient_la.all_cpp.files
 
 #>+ 3
 clean-final:
-	-rm -f libkxmlrpcserver_la.all_cpp.cpp
+	-rm -f libkxmlrpcclient_la.all_cpp.cpp
 
 #>+ 3
 final:
-	$(MAKE) libkxmlrpcserver_la_OBJECTS="$(libkxmlrpcserver_la_final_OBJECTS)" all-am
+	$(MAKE) libkxmlrpcclient_la_OBJECTS="$(libkxmlrpcclient_la_final_OBJECTS)" all-am
 
 #>+ 3
 final-install:
-	$(MAKE) libkxmlrpcserver_la_OBJECTS="$(libkxmlrpcserver_la_final_OBJECTS)" install-am
+	$(MAKE) libkxmlrpcclient_la_OBJECTS="$(libkxmlrpcclient_la_final_OBJECTS)" install-am
 
 #>+ 3
 no-final:
-	$(MAKE) libkxmlrpcserver_la_OBJECTS="$(libkxmlrpcserver_la_nofinal_OBJECTS)" all-am
+	$(MAKE) libkxmlrpcclient_la_OBJECTS="$(libkxmlrpcclient_la_nofinal_OBJECTS)" all-am
 
 #>+ 3
 no-final-install:
-	$(MAKE) libkxmlrpcserver_la_OBJECTS="$(libkxmlrpcserver_la_nofinal_OBJECTS)" install-am
+	$(MAKE) libkxmlrpcclient_la_OBJECTS="$(libkxmlrpcclient_la_nofinal_OBJECTS)" install-am
 
 #>+ 3
 kde-rpo-clean:
