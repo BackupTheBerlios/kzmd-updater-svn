@@ -18,8 +18,7 @@
 #include <qvaluelist.h>
 #include <qvariant.h>
 
-/***************************************************************************
-  
+/**   
    @file
   
   	This file is part of the KXmlRpc Client Library. It defines KXmlRpcServer,
@@ -30,15 +29,14 @@
 	@author Frerich Raabe <raabe@kde.org>
 	@author Tobias Koenig <tokoe@kde.org>
   
- ***************************************************************************/
+**/
 
 //pre-decls
 class KXmlRpcQuery;
 class KXmlRpcServer;
 
 
-/*******************************************************************************
-
+/**
 		KXmlRpcServer is a class that represents the xmlrpc server we are
 		communicating with. This is the main (only) class you
 		need to worry about for building an xml-rpc client.
@@ -55,7 +53,7 @@ class KXmlRpcServer;
 					   this, SLOT(gotError(const QString&, const QVariant&)));
 		@endcode
 
-******************************************************************************/
+**/
 
 class KXmlRpcServer : public QObject {
 
@@ -63,20 +61,18 @@ class KXmlRpcServer : public QObject {
 	
 	public:
 
-		/**********************************************************************
-
+		/**
 				The standard init function with few (possibly no) arguments
 
 				@param parent the parent of this object, defaults to NULL.
 				@param name the name of the object, defaults to NULL.
 
 
-		**********************************************************************/
+		**/
 
 		KXmlRpcServer( QObject *parent = 0, const char *name = 0 );
 
-		/**********************************************************************
-
+		/**
 				The not so standard init function that takes a server url 
 				as an argument 
 	
@@ -84,55 +80,53 @@ class KXmlRpcServer : public QObject {
 				@param parent the parent of this object, defaults to NULL.
 				@param name the name of the object, defaults to NULL.
 
-		**********************************************************************/
+		**/
 
 		KXmlRpcServer( const KURL &url = KURL(),
 				QObject *parent = 0, const char *name = 0 );
 		~KXmlRpcServer();
 
 
-		/**********************************************************************
-
+		/**
 			Gets the current url of the xml-rpc server.
 
 			@return returns a QString set to the url of the xml-rpc server
 
-		**********************************************************************/
+		**/
 
 		const KURL &url() const { return m_url; }
 
-		/**********************************************************************
-
+		/**
 			Sets the url for the xml-rpc server 
 			
 			@param url the url for the xml-rpc server we will be connecting to
 
 
-		**********************************************************************/
+		**/
+
 		void setUrl( const KURL &url );
 
-		/**********************************************************************
-
+		/**
 			Gets the current user agent
 
 			@return returns a QString set to the user agent
 
-		**********************************************************************/
+		**/
+
 		QString userAgent() const { return m_userAgent; }
 
-		/**********************************************************************
-
+		/**
 			Sets the url for the xml-rpc server
 
 			@param userAgent the user agent to use for connecting to the xml-rpc server
 
 
-		**********************************************************************/
+		**/
+
 		void setUserAgent( const QString &userAgent ) { m_userAgent = userAgent; }
 
 
-		/**********************************************************************
-
+		/**
 			The main function for KXMLRPC. This make a xml-rpc call to the server set via
 			the constructor or via setUrl. You pass in the method, the argument list and
 			a slot for data arrival and a slot for possible errors.
@@ -160,7 +154,8 @@ class KXmlRpcServer : public QObject {
 			@param messageSlot the slot receiving the data
 			@param id the id for our KXmlRpcServer object, defaults to empty
 
-		**********************************************************************/
+		**/
+
 		template <typename T>
 		void call( const QString &method, const QValueList<T> &arg,
 				QObject* obj, const char* messageSlot, 

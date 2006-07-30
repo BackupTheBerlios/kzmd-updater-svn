@@ -23,12 +23,11 @@ class QString;
 class QDomDocument;
 class QDomElement;
 
-/*********************************************************************************
-
+/**
 	KXmlRpcResult is an internal class that represents a response from the XML-RPC 
 	server. This is an internal class and is only used by KXmlRpcQuery
 
-*********************************************************************************/
+**/
 
 class KXmlRpcResult {
 
@@ -63,12 +62,11 @@ class KXmlRpcResult {
 		QValueList<QVariant> m_data;
 };
 
-/*******************************************************************************
- 
+/** 
 			KXmlRpcQuery is a class that represents an individual XML-RPC call.
 			This is an internal class and is only used by the Server class.
  
- ******************************************************************************/
+**/
 
 class KXmlRpcQuery : public QObject {
 

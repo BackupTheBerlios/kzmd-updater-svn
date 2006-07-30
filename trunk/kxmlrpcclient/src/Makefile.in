@@ -132,6 +132,9 @@ DCOPIDLNG = @DCOPIDLNG@
 DCOP_DEPENDENCIES = @DCOP_DEPENDENCIES@
 DEFS = @DEFS@
 DEPDIR = @DEPDIR@
+DOXYGEN = @DOXYGEN@
+DOXYGEN_PROJECT_NAME = @DOXYGEN_PROJECT_NAME@
+DOXYGEN_PROJECT_NUMBER = @DOXYGEN_PROJECT_NUMBER@
 ECHO = @ECHO@
 ECHO_C = @ECHO_C@
 ECHO_N = @ECHO_N@
@@ -153,6 +156,8 @@ KCONFIG_COMPILER = @KCONFIG_COMPILER@
 KDECONFIG = @KDECONFIG@
 KDE_CHECK_PLUGIN = @KDE_CHECK_PLUGIN@
 KDE_EXTRA_RPATH = @KDE_EXTRA_RPATH@
+KDE_HAS_DOXYGEN = @KDE_HAS_DOXYGEN@
+KDE_HAVE_DOT = @KDE_HAVE_DOT@
 KDE_INCLUDES = @KDE_INCLUDES@
 KDE_LDFLAGS = @KDE_LDFLAGS@
 KDE_MT_LDFLAGS = @KDE_MT_LDFLAGS@
@@ -233,6 +238,7 @@ PACKAGE_TARNAME = @PACKAGE_TARNAME@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
 PERL = @PERL@
+QTDOCDIR = @QTDOCDIR@
 QTE_NORTTI = @QTE_NORTTI@
 QT_INCLUDES = @QT_INCLUDES@
 QT_LDFLAGS = @QT_LDFLAGS@
@@ -812,7 +818,7 @@ bcheck-am:
 
 
 #>+ 11
-libkxmlrpcserver_la.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/kxmlrpcserver.cpp $(srcdir)/kxmlrpcquery.cpp kxmlrpcserver.moc.cpp kxmlrpcquery.moc.cpp 
+libkxmlrpcserver_la.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/kxmlrpcserver.cpp $(srcdir)/kxmlrpcquery.cpp $(srcdir)/kxmlrpcserver.moc.cpp $(srcdir)/kxmlrpcquery.moc.cpp 
 	@echo 'creating libkxmlrpcserver_la.all_cpp.cpp ...'; \
 	rm -f libkxmlrpcserver_la.all_cpp.files libkxmlrpcserver_la.all_cpp.final; \
 	echo "#define KDE_USE_FINAL 1" >> libkxmlrpcserver_la.all_cpp.final; \
