@@ -22,7 +22,7 @@ VPATH = @srcdir@
 pkgdatadir = $(datadir)/@PACKAGE@
 pkglibdir = $(libdir)/@PACKAGE@
 pkgincludedir = $(includedir)/@PACKAGE@
-top_builddir = ../..
+top_builddir = ..
 am__cd = CDPATH="$${ZSH_VERSION+.}$(PATH_SEPARATOR)" && cd
 INSTALL = @INSTALL@
 install_sh_DATA = $(install_sh) -c -m 644
@@ -41,7 +41,7 @@ host_triplet = @host@
 target_triplet = @target@
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in \
 	$(top_srcdir)/admin/Doxyfile.am
-subdir = suseupdater/udshttp
+subdir = udshttp
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/acinclude.m4 \
 	$(top_srcdir)/configure.in
@@ -318,6 +318,8 @@ kde_templatesdir = @kde_templatesdir@
 kde_wallpaperdir = @kde_wallpaperdir@
 kde_widgetdir = @kde_widgetdir@
 kdeinitdir = @kdeinitdir@
+kxmlrpcclient_SUBDIR_included_FALSE = @kxmlrpcclient_SUBDIR_included_FALSE@
+kxmlrpcclient_SUBDIR_included_TRUE = @kxmlrpcclient_SUBDIR_included_TRUE@
 kzmdauthutil_SUBDIR_included_FALSE = @kzmdauthutil_SUBDIR_included_FALSE@
 kzmdauthutil_SUBDIR_included_TRUE = @kzmdauthutil_SUBDIR_included_TRUE@
 libdir = @libdir@
@@ -342,6 +344,8 @@ target_alias = @target_alias@
 target_cpu = @target_cpu@
 target_os = @target_os@
 target_vendor = @target_vendor@
+udshttp_SUBDIR_included_FALSE = @udshttp_SUBDIR_included_FALSE@
+udshttp_SUBDIR_included_TRUE = @udshttp_SUBDIR_included_TRUE@
 unsermake_enable_pch_FALSE = @unsermake_enable_pch_FALSE@
 unsermake_enable_pch_TRUE = @unsermake_enable_pch_TRUE@
 x_includes = @x_includes@
@@ -372,9 +376,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am $(top_srcdir)/admin/Doxyfile.am $(
 #>- 	      exit 1;; \
 #>- 	  esac; \
 #>- 	done; \
-#>- 	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  suseupdater/udshttp/Makefile'; \
+#>- 	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  udshttp/Makefile'; \
 #>- 	cd $(top_srcdir) && \
-#>- 	  $(AUTOMAKE) --gnu  suseupdater/udshttp/Makefile
+#>- 	  $(AUTOMAKE) --gnu  udshttp/Makefile
 #>+ 12
 	@for dep in $?; do \
 	  case '$(am__configure_deps)' in \
@@ -384,10 +388,10 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am $(top_srcdir)/admin/Doxyfile.am $(
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  suseupdater/udshttp/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  udshttp/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu  suseupdater/udshttp/Makefile
-	cd $(top_srcdir) && perl admin/am_edit suseupdater/udshttp/Makefile.in
+	  $(AUTOMAKE) --gnu  udshttp/Makefile
+	cd $(top_srcdir) && perl admin/am_edit udshttp/Makefile.in
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
@@ -543,7 +547,7 @@ distclean-tags:
 	-rm -f TAGS ID GTAGS GRTAGS GSYMS GPATH tags
 
 distdir: $(DISTFILES)
-	$(mkdir_p) $(distdir)/../../admin
+	$(mkdir_p) $(distdir)/../admin
 	@srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`; \
 	topsrcdirstrip=`echo "$(top_srcdir)" | sed 's|.|.|g'`; \
 	list='$(DISTFILES)'; for file in $$list; do \
@@ -808,10 +812,10 @@ force-reedit:
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  suseupdater/udshttp/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  udshttp/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu  suseupdater/udshttp/Makefile
-	cd $(top_srcdir) && perl admin/am_edit suseupdater/udshttp/Makefile.in
+	  $(AUTOMAKE) --gnu  udshttp/Makefile
+	cd $(top_srcdir) && perl admin/am_edit udshttp/Makefile.in
 
 
 #>+ 21

@@ -110,7 +110,7 @@ class MainWindow : public QWidget {
 			We expect a menu to be shown allowing the user to configure package locking, but
 			that is entirely up to the backend author.
 
-			@param update clicked the update the user right clicked.
+			@param updateClicked clicked the update the user right clicked.
 			@param point where to display the menu
 		*/
 		void updateMenu(QListViewItem *updateClicked, const QPoint &point);

@@ -21,7 +21,7 @@ VPATH = @srcdir@
 pkgdatadir = $(datadir)/@PACKAGE@
 pkglibdir = $(libdir)/@PACKAGE@
 pkgincludedir = $(includedir)/@PACKAGE@
-top_builddir = ../..
+top_builddir = ..
 am__cd = CDPATH="$${ZSH_VERSION+.}$(PATH_SEPARATOR)" && cd
 INSTALL = @INSTALL@
 install_sh_DATA = $(install_sh) -c -m 644
@@ -38,8 +38,9 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 target_triplet = @target@
-subdir = suseupdater/kxmlrpcclient
-DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
+DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in \
+	$(top_srcdir)/admin/Doxyfile.am
+subdir = kxmlrpcclient
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/acinclude.m4 \
 	$(top_srcdir)/configure.in
@@ -58,15 +59,15 @@ am__installdirs = "$(DESTDIR)$(libdir)"
 libLTLIBRARIES_INSTALL = $(INSTALL)
 LTLIBRARIES = $(lib_LTLIBRARIES)
 am__DEPENDENCIES_1 =
-libkxmlrpcserver_la_DEPENDENCIES = $(am__DEPENDENCIES_1)
-am_libkxmlrpcserver_la_OBJECTS = kxmlrpcserver.lo kxmlrpcquery.lo
-#>- libkxmlrpcserver_la_OBJECTS = $(am_libkxmlrpcserver_la_OBJECTS)
+libkxmlrpcclient_la_DEPENDENCIES = $(am__DEPENDENCIES_1)
+am_libkxmlrpcclient_la_OBJECTS = kxmlrpcserver.lo kxmlrpcquery.lo
+#>- libkxmlrpcclient_la_OBJECTS = $(am_libkxmlrpcclient_la_OBJECTS)
 #>+ 5
-libkxmlrpcserver_la_final_OBJECTS = libkxmlrpcserver_la.all_cpp.lo 
-libkxmlrpcserver_la_nofinal_OBJECTS = kxmlrpcserver.lo kxmlrpcquery.lo\
+libkxmlrpcclient_la_final_OBJECTS = libkxmlrpcclient_la.all_cpp.lo 
+libkxmlrpcclient_la_nofinal_OBJECTS = kxmlrpcserver.lo kxmlrpcquery.lo\
 kxmlrpcserver.moc.lo kxmlrpcquery.moc.lo 
-@KDE_USE_FINAL_FALSE@libkxmlrpcserver_la_OBJECTS = $(libkxmlrpcserver_la_nofinal_OBJECTS)
-@KDE_USE_FINAL_TRUE@libkxmlrpcserver_la_OBJECTS = $(libkxmlrpcserver_la_final_OBJECTS)
+@KDE_USE_FINAL_FALSE@libkxmlrpcclient_la_OBJECTS = $(libkxmlrpcclient_la_nofinal_OBJECTS)
+@KDE_USE_FINAL_TRUE@libkxmlrpcclient_la_OBJECTS = $(libkxmlrpcclient_la_final_OBJECTS)
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/admin/depcomp
 am__depfiles_maybe = depfiles
@@ -96,8 +97,8 @@ LTCOMPILE = $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) \
 CCLD = $(CC)
 LINK = $(LIBTOOL) --tag=CC --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
 	$(AM_LDFLAGS) $(LDFLAGS) -o $@
-SOURCES = $(libkxmlrpcserver_la_SOURCES)
-DIST_SOURCES = $(libkxmlrpcserver_la_SOURCES)
+SOURCES = $(libkxmlrpcclient_la_SOURCES)
+DIST_SOURCES = $(libkxmlrpcclient_la_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 #>- DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -326,6 +327,8 @@ kde_templatesdir = @kde_templatesdir@
 kde_wallpaperdir = @kde_wallpaperdir@
 kde_widgetdir = @kde_widgetdir@
 kdeinitdir = @kdeinitdir@
+kxmlrpcclient_SUBDIR_included_FALSE = @kxmlrpcclient_SUBDIR_included_FALSE@
+kxmlrpcclient_SUBDIR_included_TRUE = @kxmlrpcclient_SUBDIR_included_TRUE@
 kzmdauthutil_SUBDIR_included_FALSE = @kzmdauthutil_SUBDIR_included_FALSE@
 kzmdauthutil_SUBDIR_included_TRUE = @kzmdauthutil_SUBDIR_included_TRUE@
 libdir = @libdir@
@@ -350,6 +353,8 @@ target_alias = @target_alias@
 target_cpu = @target_cpu@
 target_os = @target_os@
 target_vendor = @target_vendor@
+udshttp_SUBDIR_included_FALSE = @udshttp_SUBDIR_included_FALSE@
+udshttp_SUBDIR_included_TRUE = @udshttp_SUBDIR_included_TRUE@
 unsermake_enable_pch_FALSE = @unsermake_enable_pch_FALSE@
 unsermake_enable_pch_TRUE = @unsermake_enable_pch_TRUE@
 x_includes = @x_includes@
@@ -357,19 +362,19 @@ x_libraries = @x_libraries@
 xdg_appsdir = @xdg_appsdir@
 xdg_directorydir = @xdg_directorydir@
 xdg_menudir = @xdg_menudir@
-lib_LTLIBRARIES = libkxmlrpcserver.la
+lib_LTLIBRARIES = libkxmlrpcclient.la
 
 # set the include path for X, qt and KDE
 INCLUDES = $(all_includes)
 
 # the library search path. 
-libkxmlrpcserver_la_LDFLAGS = $(KDE_RPATH) $(all_libraries)
+libkxmlrpcclient_la_LDFLAGS = $(KDE_RPATH) $(all_libraries)
 
 # the libraries to link against.
-libkxmlrpcserver_la_LIBADD = $(LIB_KFILE)
+libkxmlrpcclient_la_LIBADD = $(LIB_KFILE)
 
 # which sources should be compiled for kzmdupdater
-libkxmlrpcserver_la_SOURCES = kxmlrpcserver.cpp kxmlrpcserver.h kxmlrpcquery.h kxmlrpcquery.cpp
+libkxmlrpcclient_la_SOURCES = kxmlrpcserver.cpp kxmlrpcserver.h kxmlrpcquery.h kxmlrpcquery.cpp
 
 # let automoc handle all of the meta source files (moc)
 #>- METASOURCES = AUTO
@@ -379,7 +384,7 @@ all: docs-am  all-am
 
 .SUFFIXES:
 .SUFFIXES: .cpp .lo .o .obj
-$(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
+$(srcdir)/Makefile.in:  $(srcdir)/Makefile.am $(top_srcdir)/admin/Doxyfile.am $(am__configure_deps)
 #>- 	@for dep in $?; do \
 #>- 	  case '$(am__configure_deps)' in \
 #>- 	    *$$dep*) \
@@ -388,9 +393,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 #>- 	      exit 1;; \
 #>- 	  esac; \
 #>- 	done; \
-#>- 	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  suseupdater/kxmlrpcclient/Makefile'; \
+#>- 	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  kxmlrpcclient/Makefile'; \
 #>- 	cd $(top_srcdir) && \
-#>- 	  $(AUTOMAKE) --gnu  suseupdater/kxmlrpcclient/Makefile
+#>- 	  $(AUTOMAKE) --gnu  kxmlrpcclient/Makefile
 #>+ 12
 	@for dep in $?; do \
 	  case '$(am__configure_deps)' in \
@@ -400,10 +405,10 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  suseupdater/kxmlrpcclient/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  kxmlrpcclient/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu  suseupdater/kxmlrpcclient/Makefile
-	cd $(top_srcdir) && perl admin/am_edit suseupdater/kxmlrpcclient/Makefile.in
+	  $(AUTOMAKE) --gnu  kxmlrpcclient/Makefile
+	cd $(top_srcdir) && perl admin/am_edit kxmlrpcclient/Makefile.in
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
@@ -448,8 +453,8 @@ clean-libLTLIBRARIES:
 	  echo "rm -f \"$${dir}/so_locations\""; \
 	  rm -f "$${dir}/so_locations"; \
 	done
-libkxmlrpcserver.la: $(libkxmlrpcserver_la_OBJECTS) $(libkxmlrpcserver_la_DEPENDENCIES) 
-	$(CXXLINK) -rpath $(libdir) $(libkxmlrpcserver_la_LDFLAGS) $(libkxmlrpcserver_la_OBJECTS) $(libkxmlrpcserver_la_LIBADD) $(LIBS)
+libkxmlrpcclient.la: $(libkxmlrpcclient_la_OBJECTS) $(libkxmlrpcclient_la_DEPENDENCIES) 
+	$(CXXLINK) -rpath $(libdir) $(libkxmlrpcclient_la_LDFLAGS) $(libkxmlrpcclient_la_OBJECTS) $(libkxmlrpcclient_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -540,6 +545,7 @@ distclean-tags:
 	-rm -f TAGS ID GTAGS GRTAGS GSYMS GPATH tags
 
 distdir: $(DISTFILES)
+	$(mkdir_p) $(distdir)/../admin
 	@srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`; \
 	topsrcdirstrip=`echo "$(top_srcdir)" | sed 's|.|.|g'`; \
 	list='$(DISTFILES)'; for file in $$list; do \
@@ -623,7 +629,7 @@ info: info-am
 
 info-am:
 
-install-data-am:
+install-data-am: install-data-local
 
 install-exec-am: install-libLTLIBRARIES
 
@@ -651,21 +657,114 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am: uninstall-info-am uninstall-libLTLIBRARIES
+uninstall-am: uninstall-info-am uninstall-libLTLIBRARIES \
+	uninstall-local
 
 .PHONY: CTAGS GTAGS all all-am check check-am clean clean-generic \
 	clean-libLTLIBRARIES clean-libtool ctags distclean \
 	distclean-compile distclean-generic distclean-libtool \
 	distclean-tags distdir dvi dvi-am html html-am info info-am \
-	install install-am install-data install-data-am install-exec \
-	install-exec-am install-info install-info-am \
-	install-libLTLIBRARIES install-man install-strip installcheck \
-	installcheck-am installdirs maintainer-clean \
-	maintainer-clean-generic mostlyclean mostlyclean-compile \
-	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
-	tags uninstall uninstall-am uninstall-info-am \
-	uninstall-libLTLIBRARIES
+	install install-am install-data install-data-am \
+	install-data-local install-exec install-exec-am install-info \
+	install-info-am install-libLTLIBRARIES install-man \
+	install-strip installcheck installcheck-am installdirs \
+	maintainer-clean maintainer-clean-generic mostlyclean \
+	mostlyclean-compile mostlyclean-generic mostlyclean-libtool \
+	pdf pdf-am ps ps-am tags uninstall uninstall-am \
+	uninstall-info-am uninstall-libLTLIBRARIES uninstall-local
 
+apidox-am-yes:
+	@if test \! -d "$(top_srcdir)/doc/common/" && test -z "$$DOXDATA" ; then \
+		export DOXDATA=$(kde_libs_htmldir)/en/common ; \
+	fi ; \
+	abs_top_srcdir=`cd $(top_srcdir) && pwd` ;\
+	test -d $(top_builddir)/apidocs || \
+		( cd $(top_builddir) && sh $$abs_top_srcdir/admin/doxygen.sh \
+		--no-modulename --installdir=$(kde_libs_htmldir)/en \
+		--no-recurse $(abs_top_srcdir) . ) ; \
+	cd $(top_builddir) && sh $$abs_top_srcdir/admin/doxygen.sh \
+		--recurse --no-modulename --installdir=$(kde_libs_htmldir)/en \
+		$$abs_top_srcdir $(subdir)
+
+apidox-am-toplevel-yes:
+	@if test \! -d "$(top_srcdir)/doc/common/" && test -z "$$ADMIN" ; then \
+		export DOXDATA=$(kde_libs_htmldir)/en/common ; \
+	fi ; \
+	abs_top_srcdir=`cd $(top_srcdir) && pwd` ;\
+	cd $(top_builddir) && sh $$abs_top_srcdir/admin/doxygen.sh \
+		--no-modulename --installdir=$(kde_libs_htmldir)/en \
+		$$abs_top_srcdir
+
+apidox-am-no:
+
+apidox-am-toplevel-no:
+
+apidox:
+	@if test "$(subdir)" != "."; then \
+		$(MAKE) apidox-am-@KDE_HAS_DOXYGEN@ ;\
+	else \
+		$(MAKE) apidox-am-toplevel-@KDE_HAS_DOXYGEN@ ;\
+	fi
+
+install-data-local: install-apidox
+
+install-apidox:
+	@if test "$(subdir)" != "."; then \
+		$(mkinstalldirs) $(DESTDIR)$(kde_htmldir)/en/$(PACKAGE)-apidocs/$(subdir)/html ; \
+		if test -f $(top_builddir)/apidocs/$(subdir)/$(subdir).tag; then \
+		echo $(INSTALL_DATA) $(top_builddir)/apidocs/$(subdir)/$(subdir).tag $(DESTDIR)$(kde_htmldir)/en/$(PACKAGE)-apidocs/$(subdir); \
+		$(INSTALL_DATA) $(top_builddir)/apidocs/$(subdir)/$(subdir).tag $(DESTDIR)$(kde_htmldir)/en/$(PACKAGE)-apidocs/$(subdir); \
+		fi; \
+		if test -d $(top_builddir)/apidocs/$(subdir)/html; then \
+			list=`ls $(top_builddir)/apidocs/$(subdir)/html`; \
+			echo "installing $(top_builddir)/apidocs/$(subdir)/html" ;\
+			for file in $$list; do \
+				$(INSTALL_DATA) $(top_builddir)/apidocs/$(subdir)/html/$$file $(DESTDIR)$(kde_htmldir)/en/$(PACKAGE)-apidocs/$(subdir)/html; \
+		done; \
+		fi; \
+	else\
+		if test -d $(top_builddir)/apidocs; then \
+		$(mkinstalldirs) $(DESTDIR)$(kde_htmldir)/en/$(PACKAGE)-apidocs ;\
+		list=`cd $(top_builddir)/apidocs && ls -1`; \
+		echo "installing $(top_builddir)/apidocs/$$file" ;\
+		echo "target directory $(DESTDIR)$(kde_htmldir)/en/$(PACKAGE)-apidocs" ; \
+		for file in $$list; do \
+			if test -f $(top_builddir)/apidocs/$$file; then \
+				$(INSTALL_DATA) $(top_builddir)/apidocs/$$file $(DESTDIR)$(kde_htmldir)/en/$(PACKAGE)-apidocs; \
+			fi; \
+		done ; fi; \
+	fi
+
+uninstall-local: uninstall-apidox
+
+uninstall-apidox:
+	@if test "$(subdir)" != "."; then \
+		if test -d $(DESTDIR)$(kde_htmldir)/en/$(PACKAGE)-apidocs/$(subdir); then \
+			rm -rfv $(DESTDIR)$(kde_htmldir)/en/$(PACKAGE)-apidocs/$(subdir); \
+		fi \
+	else \
+		if test -d $(DESTDIR)$(kde_htmldir)/en/$(PACKAGE)-apidocs; then \
+			rm -rfv $(DESTDIR)$(kde_htmldir)/en/$(PACKAGE)-apidocs; \
+		fi \
+	fi
+
+install-apidox-recurse: install-apidox
+	@set fnord $(MAKEFLAGS); amf=$$2; if test -n '$(SUBDIRS)'; then \
+	    list='$(SUBDIRS)'; \
+	    for subdir in $$list; do \
+		if grep '^include .*Doxyfile.am' $(srcdir)/$$subdir/Makefile.am > /dev/null ; then \
+		echo "Installing apidox from $$subdir"; \
+		if test "$$subdir" != "."; then \
+			(cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) GENERATE_FLAG=no install-apidox-recurse) || exit 1; \
+		fi ; fi ;\
+	    done; \
+	fi
+
+.PHONY: apidox-am-yes apidox-am-no install-data-local install-apidox install-apidox uninstall-local uninstall-apidox uninstall-apidox apidox apidox-am-toplevel-no apidox-am-toplevel-yes
+
+# Local Variables:
+# mode: makefile
+# End:
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:
@@ -689,7 +788,7 @@ clean-metasources:
 	-rm -f  kxmlrpcserver.moc.cpp kxmlrpcquery.moc.cpp
 
 #>+ 2
-KDE_DIST=Makefile.in Makefile.am 
+KDE_DIST=Makefile.am Makefile.in 
 
 #>+ 2
 docs-am:
@@ -704,10 +803,10 @@ force-reedit:
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  suseupdater/kxmlrpcclient/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  kxmlrpcclient/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu  suseupdater/kxmlrpcclient/Makefile
-	cd $(top_srcdir) && perl admin/am_edit suseupdater/kxmlrpcclient/Makefile.in
+	  $(AUTOMAKE) --gnu  kxmlrpcclient/Makefile
+	cd $(top_srcdir) && perl admin/am_edit kxmlrpcclient/Makefile.in
 
 
 #>+ 21
@@ -733,36 +832,36 @@ bcheck-am:
 
 
 #>+ 11
-libkxmlrpcserver_la.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/kxmlrpcserver.cpp $(srcdir)/kxmlrpcquery.cpp kxmlrpcserver.moc.cpp kxmlrpcquery.moc.cpp 
-	@echo 'creating libkxmlrpcserver_la.all_cpp.cpp ...'; \
-	rm -f libkxmlrpcserver_la.all_cpp.files libkxmlrpcserver_la.all_cpp.final; \
-	echo "#define KDE_USE_FINAL 1" >> libkxmlrpcserver_la.all_cpp.final; \
+libkxmlrpcclient_la.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/kxmlrpcserver.cpp $(srcdir)/kxmlrpcquery.cpp $(srcdir)/kxmlrpcserver.moc.cpp $(srcdir)/kxmlrpcquery.moc.cpp 
+	@echo 'creating libkxmlrpcclient_la.all_cpp.cpp ...'; \
+	rm -f libkxmlrpcclient_la.all_cpp.files libkxmlrpcclient_la.all_cpp.final; \
+	echo "#define KDE_USE_FINAL 1" >> libkxmlrpcclient_la.all_cpp.final; \
 	for file in kxmlrpcserver.cpp kxmlrpcquery.cpp kxmlrpcserver.moc.cpp kxmlrpcquery.moc.cpp ; do \
-	  echo "#include \"$$file\"" >> libkxmlrpcserver_la.all_cpp.files; \
-	  test ! -f $(srcdir)/$$file || egrep '^#pragma +implementation' $(srcdir)/$$file >> libkxmlrpcserver_la.all_cpp.final; \
+	  echo "#include \"$$file\"" >> libkxmlrpcclient_la.all_cpp.files; \
+	  test ! -f $(srcdir)/$$file || egrep '^#pragma +implementation' $(srcdir)/$$file >> libkxmlrpcclient_la.all_cpp.final; \
 	done; \
-	cat libkxmlrpcserver_la.all_cpp.final libkxmlrpcserver_la.all_cpp.files > libkxmlrpcserver_la.all_cpp.cpp; \
-	rm -f libkxmlrpcserver_la.all_cpp.final libkxmlrpcserver_la.all_cpp.files
+	cat libkxmlrpcclient_la.all_cpp.final libkxmlrpcclient_la.all_cpp.files > libkxmlrpcclient_la.all_cpp.cpp; \
+	rm -f libkxmlrpcclient_la.all_cpp.final libkxmlrpcclient_la.all_cpp.files
 
 #>+ 3
 clean-final:
-	-rm -f libkxmlrpcserver_la.all_cpp.cpp
+	-rm -f libkxmlrpcclient_la.all_cpp.cpp
 
 #>+ 3
 final:
-	$(MAKE) libkxmlrpcserver_la_OBJECTS="$(libkxmlrpcserver_la_final_OBJECTS)" all-am
+	$(MAKE) libkxmlrpcclient_la_OBJECTS="$(libkxmlrpcclient_la_final_OBJECTS)" all-am
 
 #>+ 3
 final-install:
-	$(MAKE) libkxmlrpcserver_la_OBJECTS="$(libkxmlrpcserver_la_final_OBJECTS)" install-am
+	$(MAKE) libkxmlrpcclient_la_OBJECTS="$(libkxmlrpcclient_la_final_OBJECTS)" install-am
 
 #>+ 3
 no-final:
-	$(MAKE) libkxmlrpcserver_la_OBJECTS="$(libkxmlrpcserver_la_nofinal_OBJECTS)" all-am
+	$(MAKE) libkxmlrpcclient_la_OBJECTS="$(libkxmlrpcclient_la_nofinal_OBJECTS)" all-am
 
 #>+ 3
 no-final-install:
-	$(MAKE) libkxmlrpcserver_la_OBJECTS="$(libkxmlrpcserver_la_nofinal_OBJECTS)" install-am
+	$(MAKE) libkxmlrpcclient_la_OBJECTS="$(libkxmlrpcclient_la_nofinal_OBJECTS)" install-am
 
 #>+ 3
 kde-rpo-clean:

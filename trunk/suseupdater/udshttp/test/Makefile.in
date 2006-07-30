@@ -26,7 +26,7 @@ VPATH = @srcdir@
 pkgdatadir = $(datadir)/@PACKAGE@
 pkglibdir = $(libdir)/@PACKAGE@
 pkgincludedir = $(includedir)/@PACKAGE@
-top_builddir = ../../..
+top_builddir = ../..
 am__cd = CDPATH="$${ZSH_VERSION+.}$(PATH_SEPARATOR)" && cd
 INSTALL = @INSTALL@
 install_sh_DATA = $(install_sh) -c -m 644
@@ -44,7 +44,7 @@ build_triplet = @build@
 host_triplet = @host@
 target_triplet = @target@
 bin_PROGRAMS = udstest$(EXEEXT)
-subdir = suseupdater/udshttp/test
+subdir = udshttp/test
 DIST_COMMON = $(noinst_HEADERS) $(srcdir)/Makefile.am \
 	$(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -320,6 +320,8 @@ kde_templatesdir = @kde_templatesdir@
 kde_wallpaperdir = @kde_wallpaperdir@
 kde_widgetdir = @kde_widgetdir@
 kdeinitdir = @kdeinitdir@
+kxmlrpcclient_SUBDIR_included_FALSE = @kxmlrpcclient_SUBDIR_included_FALSE@
+kxmlrpcclient_SUBDIR_included_TRUE = @kxmlrpcclient_SUBDIR_included_TRUE@
 kzmdauthutil_SUBDIR_included_FALSE = @kzmdauthutil_SUBDIR_included_FALSE@
 kzmdauthutil_SUBDIR_included_TRUE = @kzmdauthutil_SUBDIR_included_TRUE@
 libdir = @libdir@
@@ -344,6 +346,8 @@ target_alias = @target_alias@
 target_cpu = @target_cpu@
 target_os = @target_os@
 target_vendor = @target_vendor@
+udshttp_SUBDIR_included_FALSE = @udshttp_SUBDIR_included_FALSE@
+udshttp_SUBDIR_included_TRUE = @udshttp_SUBDIR_included_TRUE@
 unsermake_enable_pch_FALSE = @unsermake_enable_pch_FALSE@
 unsermake_enable_pch_TRUE = @unsermake_enable_pch_TRUE@
 x_includes = @x_includes@
@@ -383,9 +387,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 #>- 	      exit 1;; \
 #>- 	  esac; \
 #>- 	done; \
-#>- 	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  suseupdater/udshttp/test/Makefile'; \
+#>- 	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  udshttp/test/Makefile'; \
 #>- 	cd $(top_srcdir) && \
-#>- 	  $(AUTOMAKE) --gnu  suseupdater/udshttp/test/Makefile
+#>- 	  $(AUTOMAKE) --gnu  udshttp/test/Makefile
 #>+ 12
 	@for dep in $?; do \
 	  case '$(am__configure_deps)' in \
@@ -395,10 +399,10 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  suseupdater/udshttp/test/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  udshttp/test/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu  suseupdater/udshttp/test/Makefile
-	cd $(top_srcdir) && perl admin/am_edit suseupdater/udshttp/test/Makefile.in
+	  $(AUTOMAKE) --gnu  udshttp/test/Makefile
+	cd $(top_srcdir) && perl admin/am_edit udshttp/test/Makefile.in
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
@@ -691,10 +695,10 @@ force-reedit:
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  suseupdater/udshttp/test/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  udshttp/test/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu  suseupdater/udshttp/test/Makefile
-	cd $(top_srcdir) && perl admin/am_edit suseupdater/udshttp/test/Makefile.in
+	  $(AUTOMAKE) --gnu  udshttp/test/Makefile
+	cd $(top_srcdir) && perl admin/am_edit udshttp/test/Makefile.in
 
 
 #>+ 21

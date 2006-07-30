@@ -69,18 +69,20 @@ KDE_INIT_DOXYGEN([The KDE Updater Applet API Reference], [Version $VERSION])
 KDE_CREATE_SUBDIRSLIST
 AM_CONDITIONAL(admin_SUBDIR_included, test "x$admin_SUBDIR_included" = xyes)
 AM_CONDITIONAL(images_SUBDIR_included, test "x$images_SUBDIR_included" = xyes)
+AM_CONDITIONAL(kxmlrpcclient_SUBDIR_included, test "x$kxmlrpcclient_SUBDIR_included" = xyes)
 AM_CONDITIONAL(kzmdauthutil_SUBDIR_included, test "x$kzmdauthutil_SUBDIR_included" = xyes)
 AM_CONDITIONAL(po_SUBDIR_included, test "x$po_SUBDIR_included" = xyes)
 AM_CONDITIONAL(suseupdater_SUBDIR_included, test "x$suseupdater_SUBDIR_included" = xyes)
+AM_CONDITIONAL(udshttp_SUBDIR_included, test "x$udshttp_SUBDIR_included" = xyes)
 AC_CONFIG_FILES([ Makefile ])
 AC_CONFIG_FILES([ admin/Makefile ])
 AC_CONFIG_FILES([ images/Makefile ])
+AC_CONFIG_FILES([ kxmlrpcclient/Makefile ])
 AC_CONFIG_FILES([ kzmdauthutil/Makefile ])
 AC_CONFIG_FILES([ po/Makefile ])
 AC_CONFIG_FILES([ suseupdater/Makefile ])
-AC_CONFIG_FILES([ suseupdater/kxmlrpcclient/Makefile ])
-AC_CONFIG_FILES([ suseupdater/udshttp/Makefile ])
-AC_CONFIG_FILES([ suseupdater/udshttp/test/Makefile ])
+AC_CONFIG_FILES([ udshttp/Makefile ])
+AC_CONFIG_FILES([ udshttp/test/Makefile ])
 AC_OUTPUT
 # Check if KDE_SET_PREFIX was called, and --prefix was passed to configure
 if test -n "$kde_libs_prefix" -a -n "$given_prefix"; then
