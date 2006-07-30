@@ -15,5 +15,3 @@ libkxmlrpcserver_la_SOURCES = kxmlrpcserver.cpp kxmlrpcserver.h kxmlrpcquery.h k
 # let automoc handle all of the meta source files (moc)
 METASOURCES = AUTO
 
-include $(top_srcdir)/admin/Doxyfile.am
-

@@ -390,7 +390,7 @@ xdg_menudir = @xdg_menudir@
 # this has all of the subdirectories that make will recurse into.  if
 # there are none, comment this out
 #SUBDIRS = kxmlRpcClient
-SUBDIRS = udshttp
+SUBDIRS = udshttp kxmlrpcclient
 
 # set the include path for X, qt and KDE
 INCLUDES = $(all_includes)

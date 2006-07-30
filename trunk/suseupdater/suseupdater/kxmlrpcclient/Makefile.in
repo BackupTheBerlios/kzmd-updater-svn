@@ -21,7 +21,7 @@ VPATH = @srcdir@
 pkgdatadir = $(datadir)/@PACKAGE@
 pkglibdir = $(libdir)/@PACKAGE@
 pkgincludedir = $(includedir)/@PACKAGE@
-top_builddir = ..
+top_builddir = ../..
 am__cd = CDPATH="$${ZSH_VERSION+.}$(PATH_SEPARATOR)" && cd
 INSTALL = @INSTALL@
 install_sh_DATA = $(install_sh) -c -m 644
@@ -38,9 +38,8 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 target_triplet = @target@
-DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in \
-	$(top_srcdir)/admin/Doxyfile.am
-subdir = src
+subdir = suseupdater/kxmlrpcclient
+DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/acinclude.m4 \
 	$(top_srcdir)/configure.in
@@ -269,6 +268,8 @@ ac_ct_CXX = @ac_ct_CXX@
 ac_ct_F77 = @ac_ct_F77@
 ac_ct_RANLIB = @ac_ct_RANLIB@
 ac_ct_STRIP = @ac_ct_STRIP@
+admin_SUBDIR_included_FALSE = @admin_SUBDIR_included_FALSE@
+admin_SUBDIR_included_TRUE = @admin_SUBDIR_included_TRUE@
 all_includes = @all_includes@
 all_libraries = @all_libraries@
 am__fastdepCC_FALSE = @am__fastdepCC_FALSE@
@@ -293,6 +294,8 @@ host_alias = @host_alias@
 host_cpu = @host_cpu@
 host_os = @host_os@
 host_vendor = @host_vendor@
+images_SUBDIR_included_FALSE = @images_SUBDIR_included_FALSE@
+images_SUBDIR_included_TRUE = @images_SUBDIR_included_TRUE@
 include_ARTS_FALSE = @include_ARTS_FALSE@
 include_ARTS_TRUE = @include_ARTS_TRUE@
 include_x11_FALSE = @include_x11_FALSE@
@@ -323,18 +326,24 @@ kde_templatesdir = @kde_templatesdir@
 kde_wallpaperdir = @kde_wallpaperdir@
 kde_widgetdir = @kde_widgetdir@
 kdeinitdir = @kdeinitdir@
+kzmdauthutil_SUBDIR_included_FALSE = @kzmdauthutil_SUBDIR_included_FALSE@
+kzmdauthutil_SUBDIR_included_TRUE = @kzmdauthutil_SUBDIR_included_TRUE@
 libdir = @libdir@
 libexecdir = @libexecdir@
 localstatedir = @localstatedir@
 mandir = @mandir@
 mkdir_p = @mkdir_p@
 oldincludedir = @oldincludedir@
+po_SUBDIR_included_FALSE = @po_SUBDIR_included_FALSE@
+po_SUBDIR_included_TRUE = @po_SUBDIR_included_TRUE@
 prefix = @prefix@
 program_transform_name = @program_transform_name@
 qt_includes = @qt_includes@
 qt_libraries = @qt_libraries@
 sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
+suseupdater_SUBDIR_included_FALSE = @suseupdater_SUBDIR_included_FALSE@
+suseupdater_SUBDIR_included_TRUE = @suseupdater_SUBDIR_included_TRUE@
 sysconfdir = @sysconfdir@
 target = @target@
 target_alias = @target_alias@
@@ -370,7 +379,7 @@ all: docs-am  all-am
 
 .SUFFIXES:
 .SUFFIXES: .cpp .lo .o .obj
-$(srcdir)/Makefile.in:  $(srcdir)/Makefile.am $(top_srcdir)/admin/Doxyfile.am $(am__configure_deps)
+$(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 #>- 	@for dep in $?; do \
 #>- 	  case '$(am__configure_deps)' in \
 #>- 	    *$$dep*) \
@@ -379,9 +388,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am $(top_srcdir)/admin/Doxyfile.am $(
 #>- 	      exit 1;; \
 #>- 	  esac; \
 #>- 	done; \
-#>- 	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  src/Makefile'; \
+#>- 	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  suseupdater/kxmlrpcclient/Makefile'; \
 #>- 	cd $(top_srcdir) && \
-#>- 	  $(AUTOMAKE) --gnu  src/Makefile
+#>- 	  $(AUTOMAKE) --gnu  suseupdater/kxmlrpcclient/Makefile
 #>+ 12
 	@for dep in $?; do \
 	  case '$(am__configure_deps)' in \
@@ -391,10 +400,10 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am $(top_srcdir)/admin/Doxyfile.am $(
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  src/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  suseupdater/kxmlrpcclient/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu  src/Makefile
-	cd $(top_srcdir) && perl admin/am_edit src/Makefile.in
+	  $(AUTOMAKE) --gnu  suseupdater/kxmlrpcclient/Makefile
+	cd $(top_srcdir) && perl admin/am_edit suseupdater/kxmlrpcclient/Makefile.in
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
@@ -531,7 +540,6 @@ distclean-tags:
 	-rm -f TAGS ID GTAGS GRTAGS GSYMS GPATH tags
 
 distdir: $(DISTFILES)
-	$(mkdir_p) $(distdir)/../admin
 	@srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`; \
 	topsrcdirstrip=`echo "$(top_srcdir)" | sed 's|.|.|g'`; \
 	list='$(DISTFILES)'; for file in $$list; do \
@@ -615,7 +623,7 @@ info: info-am
 
 info-am:
 
-install-data-am: install-data-local
+install-data-am:
 
 install-exec-am: install-libLTLIBRARIES
 
@@ -643,114 +651,21 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am: uninstall-info-am uninstall-libLTLIBRARIES \
-	uninstall-local
+uninstall-am: uninstall-info-am uninstall-libLTLIBRARIES
 
 .PHONY: CTAGS GTAGS all all-am check check-am clean clean-generic \
 	clean-libLTLIBRARIES clean-libtool ctags distclean \
 	distclean-compile distclean-generic distclean-libtool \
 	distclean-tags distdir dvi dvi-am html html-am info info-am \
-	install install-am install-data install-data-am \
-	install-data-local install-exec install-exec-am install-info \
-	install-info-am install-libLTLIBRARIES install-man \
-	install-strip installcheck installcheck-am installdirs \
-	maintainer-clean maintainer-clean-generic mostlyclean \
-	mostlyclean-compile mostlyclean-generic mostlyclean-libtool \
-	pdf pdf-am ps ps-am tags uninstall uninstall-am \
-	uninstall-info-am uninstall-libLTLIBRARIES uninstall-local
+	install install-am install-data install-data-am install-exec \
+	install-exec-am install-info install-info-am \
+	install-libLTLIBRARIES install-man install-strip installcheck \
+	installcheck-am installdirs maintainer-clean \
+	maintainer-clean-generic mostlyclean mostlyclean-compile \
+	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
+	tags uninstall uninstall-am uninstall-info-am \
+	uninstall-libLTLIBRARIES
 
-apidox-am-yes:
-	@if test \! -d "$(top_srcdir)/doc/common/" && test -z "$$DOXDATA" ; then \
-		export DOXDATA=$(kde_libs_htmldir)/en/common ; \
-	fi ; \
-	abs_top_srcdir=`cd $(top_srcdir) && pwd` ;\
-	test -d $(top_builddir)/apidocs || \
-		( cd $(top_builddir) && sh $$abs_top_srcdir/admin/doxygen.sh \
-		--no-modulename --installdir=$(kde_libs_htmldir)/en \
-		--no-recurse $(abs_top_srcdir) . ) ; \
-	cd $(top_builddir) && sh $$abs_top_srcdir/admin/doxygen.sh \
-		--recurse --no-modulename --installdir=$(kde_libs_htmldir)/en \
-		$$abs_top_srcdir $(subdir)
-
-apidox-am-toplevel-yes:
-	@if test \! -d "$(top_srcdir)/doc/common/" && test -z "$$ADMIN" ; then \
-		export DOXDATA=$(kde_libs_htmldir)/en/common ; \
-	fi ; \
-	abs_top_srcdir=`cd $(top_srcdir) && pwd` ;\
-	cd $(top_builddir) && sh $$abs_top_srcdir/admin/doxygen.sh \
-		--no-modulename --installdir=$(kde_libs_htmldir)/en \
-		$$abs_top_srcdir
-
-apidox-am-no:
-
-apidox-am-toplevel-no:
-
-apidox:
-	@if test "$(subdir)" != "."; then \
-		$(MAKE) apidox-am-@KDE_HAS_DOXYGEN@ ;\
-	else \
-		$(MAKE) apidox-am-toplevel-@KDE_HAS_DOXYGEN@ ;\
-	fi
-
-install-data-local: install-apidox
-
-install-apidox:
-	@if test "$(subdir)" != "."; then \
-		$(mkinstalldirs) $(DESTDIR)$(kde_htmldir)/en/$(PACKAGE)-apidocs/$(subdir)/html ; \
-		if test -f $(top_builddir)/apidocs/$(subdir)/$(subdir).tag; then \
-		echo $(INSTALL_DATA) $(top_builddir)/apidocs/$(subdir)/$(subdir).tag $(DESTDIR)$(kde_htmldir)/en/$(PACKAGE)-apidocs/$(subdir); \
-		$(INSTALL_DATA) $(top_builddir)/apidocs/$(subdir)/$(subdir).tag $(DESTDIR)$(kde_htmldir)/en/$(PACKAGE)-apidocs/$(subdir); \
-		fi; \
-		if test -d $(top_builddir)/apidocs/$(subdir)/html; then \
-			list=`ls $(top_builddir)/apidocs/$(subdir)/html`; \
-			echo "installing $(top_builddir)/apidocs/$(subdir)/html" ;\
-			for file in $$list; do \
-				$(INSTALL_DATA) $(top_builddir)/apidocs/$(subdir)/html/$$file $(DESTDIR)$(kde_htmldir)/en/$(PACKAGE)-apidocs/$(subdir)/html; \
-		done; \
-		fi; \
-	else\
-		if test -d $(top_builddir)/apidocs; then \
-		$(mkinstalldirs) $(DESTDIR)$(kde_htmldir)/en/$(PACKAGE)-apidocs ;\
-		list=`cd $(top_builddir)/apidocs && ls -1`; \
-		echo "installing $(top_builddir)/apidocs/$$file" ;\
-		echo "target directory $(DESTDIR)$(kde_htmldir)/en/$(PACKAGE)-apidocs" ; \
-		for file in $$list; do \
-			if test -f $(top_builddir)/apidocs/$$file; then \
-				$(INSTALL_DATA) $(top_builddir)/apidocs/$$file $(DESTDIR)$(kde_htmldir)/en/$(PACKAGE)-apidocs; \
-			fi; \
-		done ; fi; \
-	fi
-
-uninstall-local: uninstall-apidox
-
-uninstall-apidox:
-	@if test "$(subdir)" != "."; then \
-		if test -d $(DESTDIR)$(kde_htmldir)/en/$(PACKAGE)-apidocs/$(subdir); then \
-			rm -rfv $(DESTDIR)$(kde_htmldir)/en/$(PACKAGE)-apidocs/$(subdir); \
-		fi \
-	else \
-		if test -d $(DESTDIR)$(kde_htmldir)/en/$(PACKAGE)-apidocs; then \
-			rm -rfv $(DESTDIR)$(kde_htmldir)/en/$(PACKAGE)-apidocs; \
-		fi \
-	fi
-
-install-apidox-recurse: install-apidox
-	@set fnord $(MAKEFLAGS); amf=$$2; if test -n '$(SUBDIRS)'; then \
-	    list='$(SUBDIRS)'; \
-	    for subdir in $$list; do \
-		if grep '^include .*Doxyfile.am' $(srcdir)/$$subdir/Makefile.am > /dev/null ; then \
-		echo "Installing apidox from $$subdir"; \
-		if test "$$subdir" != "."; then \
-			(cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) GENERATE_FLAG=no install-apidox-recurse) || exit 1; \
-		fi ; fi ;\
-	    done; \
-	fi
-
-.PHONY: apidox-am-yes apidox-am-no install-data-local install-apidox install-apidox uninstall-local uninstall-apidox uninstall-apidox apidox apidox-am-toplevel-no apidox-am-toplevel-yes
-
-# Local Variables:
-# mode: makefile
-# End:
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:
@@ -789,10 +704,10 @@ force-reedit:
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  src/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  suseupdater/kxmlrpcclient/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu  src/Makefile
-	cd $(top_srcdir) && perl admin/am_edit src/Makefile.in
+	  $(AUTOMAKE) --gnu  suseupdater/kxmlrpcclient/Makefile
+	cd $(top_srcdir) && perl admin/am_edit suseupdater/kxmlrpcclient/Makefile.in
 
 
 #>+ 21
