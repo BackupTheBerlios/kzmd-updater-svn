@@ -12,9 +12,11 @@
 #ifndef _KXML_RPC_SERVER_H_
 #define _KXML_RPC_SERVER_H_
 
+#include <kurl.h>
+
 #include <qobject.h>
 #include <qvaluelist.h>
-
+#include <qvariant.h>
 
 /***************************************************************************
   
@@ -33,8 +35,6 @@
 //pre-decls
 class KXmlRpcQuery;
 class KXmlRpcServer;
-class KURL;
-class QVariant;
 
 
 /*******************************************************************************

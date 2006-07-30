@@ -16,9 +16,9 @@
 
 #include <qobject.h>
 #include <qvaluelist.h>
+#include <qvariant.h>
 
 //pre-decls
-class QVariant;
 class QString;
 class QDomDocument;
 class QDomElement;
