@@ -23,7 +23,7 @@
 #include <qvaluelist.h>
 #include <qtimer.h>
 
-#include "xmlrpciface.h"
+#include <kxmlrpcserver.h>
 #include "ZmdUpdaterCoreUtils.h"
 
 
@@ -308,7 +308,7 @@ class ZmdUpdaterCore : public QObject {
 		QValueList<QVariant> packagesToUpdate;
 		QValueList<QVariant> packagesToRemove;
 
-		KXMLRPC::Server *server; 
+		KXmlRpcServer *server; 
 		QTimer *timer;
 };
 

@@ -81,8 +81,8 @@ class KXmlRpcServer : public QObject {
 
 		**/
 
-		KXmlRpcServer( const KURL &url = KURL(),
-				QObject *parent = 0, const char *name = 0 );
+		KXmlRpcServer( const KURL &url, QObject *parent = 0, const char *name = 0 );
+
 		~KXmlRpcServer();
 
 

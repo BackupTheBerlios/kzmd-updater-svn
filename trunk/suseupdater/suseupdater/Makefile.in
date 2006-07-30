@@ -83,7 +83,8 @@ ZmdEditServers.moc.o ZmdDependencyDialog.moc.o ZmdInstallWindow.moc.o GeneralCon
 @KDE_USE_FINAL_FALSE@SUSEUpdater_OBJECTS = $(SUSEUpdater_nofinal_OBJECTS)
 @KDE_USE_FINAL_TRUE@SUSEUpdater_OBJECTS = $(SUSEUpdater_final_OBJECTS)
 am__DEPENDENCIES_1 =
-SUSEUpdater_DEPENDENCIES = $(am__DEPENDENCIES_1)
+SUSEUpdater_DEPENDENCIES = $(am__DEPENDENCIES_1) \
+	$(top_srcdir)/kxmlrpcclient/libkxmlrpcclient.la
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/admin/depcomp
 am__depfiles_maybe = depfiles
@@ -381,13 +382,13 @@ xdg_directorydir = @xdg_directorydir@
 xdg_menudir = @xdg_menudir@
 
 # set the include path for X, qt and KDE
-INCLUDES = $(all_includes)
+INCLUDES = $(all_includes) $(top_srcdir)/kxmlrpcclient
 
 # the library search path. 
 SUSEUpdater_LDFLAGS = $(KDE_RPATH) $(all_libraries)
 
 # the libraries to link against.
-SUSEUpdater_LDADD = $(LIB_KFILE)
+SUSEUpdater_LDADD = $(LIB_KFILE) $(top_srcdir)/kxmlrpcclient/libkxmlrpcclient.la -lkxmlrpcclient
 
 # which sources should be compiled for kzmdupdater
 SUSEUpdater_SOURCES = main.cpp  MainWindow.cpp HeaderWidget.cpp ZmdConfigWindow.cpp ZmdInstallWindow.cpp ZmdServerDialog.cpp xmlrpciface.cpp ZmdUpdaterCore.cpp ZmdProgressDialog.cpp ZmdCatalogListItem.cpp ZmdDependencyDialog.cpp ZmdUpdater.cpp UpdaterApplication.cpp GeneralConfigWindow.cpp UpdateListItem.cpp ZmdAdvancedConfig.cpp ZmdEditServers.cpp ZmdRugParser.cpp
@@ -1014,7 +1015,7 @@ bcheck-am:
 
 
 #>+ 11
-SUSEUpdater.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/main.cpp $(srcdir)/MainWindow.cpp $(srcdir)/HeaderWidget.cpp $(srcdir)/ZmdConfigWindow.cpp $(srcdir)/ZmdInstallWindow.cpp $(srcdir)/ZmdServerDialog.cpp $(srcdir)/xmlrpciface.cpp $(srcdir)/ZmdUpdaterCore.cpp $(srcdir)/ZmdProgressDialog.cpp $(srcdir)/ZmdCatalogListItem.cpp $(srcdir)/ZmdDependencyDialog.cpp $(srcdir)/ZmdUpdater.cpp $(srcdir)/UpdaterApplication.cpp $(srcdir)/GeneralConfigWindow.cpp $(srcdir)/UpdateListItem.cpp $(srcdir)/ZmdAdvancedConfig.cpp $(srcdir)/ZmdEditServers.cpp $(srcdir)/ZmdRugParser.cpp ZmdEditServers.moc.cpp ZmdDependencyDialog.moc.cpp ZmdConfigWindow.moc.cpp GeneralConfigWindow.moc.cpp ZmdInstallWindow.moc.cpp ZmdProgressDialog.moc.cpp ZmdRugParser.moc.cpp ZmdUpdater.moc.cpp ZmdUpdaterCore.moc.cpp ZmdAdvancedConfig.moc.cpp Updater.moc.cpp xmlrpciface.moc.cpp MainWindow.moc.cpp HeaderWidget.moc.cpp ZmdServerDialog.moc.cpp 
+SUSEUpdater.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/main.cpp $(srcdir)/MainWindow.cpp $(srcdir)/HeaderWidget.cpp $(srcdir)/ZmdConfigWindow.cpp $(srcdir)/ZmdInstallWindow.cpp $(srcdir)/ZmdServerDialog.cpp $(srcdir)/xmlrpciface.cpp $(srcdir)/ZmdUpdaterCore.cpp $(srcdir)/ZmdProgressDialog.cpp $(srcdir)/ZmdCatalogListItem.cpp $(srcdir)/ZmdDependencyDialog.cpp $(srcdir)/ZmdUpdater.cpp $(srcdir)/UpdaterApplication.cpp $(srcdir)/GeneralConfigWindow.cpp $(srcdir)/UpdateListItem.cpp $(srcdir)/ZmdAdvancedConfig.cpp $(srcdir)/ZmdEditServers.cpp $(srcdir)/ZmdRugParser.cpp $(srcdir)/ZmdEditServers.moc.cpp $(srcdir)/ZmdDependencyDialog.moc.cpp $(srcdir)/ZmdConfigWindow.moc.cpp $(srcdir)/GeneralConfigWindow.moc.cpp $(srcdir)/ZmdInstallWindow.moc.cpp $(srcdir)/ZmdProgressDialog.moc.cpp $(srcdir)/ZmdRugParser.moc.cpp $(srcdir)/ZmdUpdater.moc.cpp $(srcdir)/ZmdUpdaterCore.moc.cpp $(srcdir)/ZmdAdvancedConfig.moc.cpp $(srcdir)/Updater.moc.cpp $(srcdir)/xmlrpciface.moc.cpp $(srcdir)/MainWindow.moc.cpp $(srcdir)/HeaderWidget.moc.cpp $(srcdir)/ZmdServerDialog.moc.cpp 
 	@echo 'creating SUSEUpdater.all_cpp.cpp ...'; \
 	rm -f SUSEUpdater.all_cpp.files SUSEUpdater.all_cpp.final; \
 	echo "#define KDE_USE_FINAL 1" >> SUSEUpdater.all_cpp.final; \

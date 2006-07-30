@@ -30,7 +30,7 @@
  ********************************************************************/
 
 ZmdUpdaterCore::ZmdUpdaterCore(QObject *parent) : QObject(parent) {
-	server = new KXMLRPC::Server(KURL(), this);
+	server = new KXmlRpcServer(KURL());
 	server->setUserAgent("ZMDUPDATER/0.1");
 
 	timer = new QTimer(this);

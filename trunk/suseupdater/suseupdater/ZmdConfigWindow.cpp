@@ -60,6 +60,7 @@ void ZmdConfigWindow::initGUI() {
 	
 	mainLayout->setSpacing(10);
 	mainLayout->setMargin(10);
+	setCaption(i18n("Add/Remove Servers"));
 	resize(250,500);
 }
 

@@ -6,13 +6,13 @@
 bin_PROGRAMS = SUSEUpdater 
 
 # set the include path for X, qt and KDE
-INCLUDES = $(all_includes)
+INCLUDES = $(all_includes) $(top_srcdir)/kxmlrpcclient
 
 # the library search path. 
 SUSEUpdater_LDFLAGS = $(KDE_RPATH) $(all_libraries)
 
 # the libraries to link against.
-SUSEUpdater_LDADD   = $(LIB_KFILE)
+SUSEUpdater_LDADD   = $(LIB_KFILE) $(top_srcdir)/kxmlrpcclient/libkxmlrpcclient.la -lkxmlrpcclient
 
 # which sources should be compiled for kzmdupdater
 SUSEUpdater_SOURCES = main.cpp  MainWindow.cpp HeaderWidget.cpp ZmdConfigWindow.cpp ZmdInstallWindow.cpp ZmdServerDialog.cpp xmlrpciface.cpp ZmdUpdaterCore.cpp ZmdProgressDialog.cpp ZmdCatalogListItem.cpp ZmdDependencyDialog.cpp ZmdUpdater.cpp UpdaterApplication.cpp GeneralConfigWindow.cpp UpdateListItem.cpp ZmdAdvancedConfig.cpp ZmdEditServers.cpp ZmdRugParser.cpp
