@@ -1,0 +1,16 @@
+Begin3
+Title:          udshttp -- Some description
+Version:        0.1
+Entered-date:   
+Description:    
+Keywords:       KDE Qt
+Author:         Narayan Newton <narayannewton@gmail.com>
+Maintained-by:  Narayan Newton <narayannewton@gmail.com>
+Home-page:      
+Alternate-site: 
+Primary-site:   ftp://ftp.kde.org/pub/kde/unstable/apps/utils
+                xxxxxx  udshttp-0.1.tar.gz
+                xxx     udshttp-0.1.lsm
+Platform:       Linux. Needs KDE
+Copying-policy: GPL
+End
