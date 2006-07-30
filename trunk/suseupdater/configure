@@ -32841,6 +32841,8 @@ fi
 
           ac_config_files="$ac_config_files suseupdater/Makefile"
 
+          ac_config_files="$ac_config_files suseupdater/kxmlrpcclient/Makefile"
+
           ac_config_files="$ac_config_files suseupdater/udshttp/Makefile"
 
           ac_config_files="$ac_config_files suseupdater/udshttp/test/Makefile"
@@ -33463,6 +33465,7 @@ do
   "kzmdauthutil/Makefile" ) CONFIG_FILES="$CONFIG_FILES kzmdauthutil/Makefile" ;;
   "po/Makefile" ) CONFIG_FILES="$CONFIG_FILES po/Makefile" ;;
   "suseupdater/Makefile" ) CONFIG_FILES="$CONFIG_FILES suseupdater/Makefile" ;;
+  "suseupdater/kxmlrpcclient/Makefile" ) CONFIG_FILES="$CONFIG_FILES suseupdater/kxmlrpcclient/Makefile" ;;
   "suseupdater/udshttp/Makefile" ) CONFIG_FILES="$CONFIG_FILES suseupdater/udshttp/Makefile" ;;
   "suseupdater/udshttp/test/Makefile" ) CONFIG_FILES="$CONFIG_FILES suseupdater/udshttp/test/Makefile" ;;
   "depfiles" ) CONFIG_COMMANDS="$CONFIG_COMMANDS depfiles" ;;

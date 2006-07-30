@@ -78,6 +78,7 @@ AC_CONFIG_FILES([ images/Makefile ])
 AC_CONFIG_FILES([ kzmdauthutil/Makefile ])
 AC_CONFIG_FILES([ po/Makefile ])
 AC_CONFIG_FILES([ suseupdater/Makefile ])
+AC_CONFIG_FILES([ suseupdater/kxmlrpcclient/Makefile ])
 AC_CONFIG_FILES([ suseupdater/udshttp/Makefile ])
 AC_CONFIG_FILES([ suseupdater/udshttp/test/Makefile ])
 AC_OUTPUT
