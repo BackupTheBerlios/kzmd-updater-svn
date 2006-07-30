@@ -37,8 +37,9 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 target_triplet = @target@
+DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in \
+	$(top_srcdir)/admin/Doxyfile.am
 subdir = src
-DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/acinclude.m4 \
 	$(top_srcdir)/configure.in
@@ -342,7 +343,7 @@ all: all-am
 
 .SUFFIXES:
 .SUFFIXES: .cpp .lo .o .obj
-$(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
+$(srcdir)/Makefile.in:  $(srcdir)/Makefile.am $(top_srcdir)/admin/Doxyfile.am $(am__configure_deps)
 	@for dep in $?; do \
 	  case '$(am__configure_deps)' in \
 	    *$$dep*) \
@@ -490,6 +491,7 @@ distclean-tags:
 	-rm -f TAGS ID GTAGS GRTAGS GSYMS GPATH tags
 
 distdir: $(DISTFILES)
+	$(mkdir_p) $(distdir)/../admin
 	@srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`; \
 	topsrcdirstrip=`echo "$(top_srcdir)" | sed 's|.|.|g'`; \
 	list='$(DISTFILES)'; for file in $$list; do \
@@ -568,7 +570,7 @@ info: info-am
 
 info-am:
 
-install-data-am:
+install-data-am: install-data-local
 
 install-exec-am: install-libLTLIBRARIES
 
@@ -596,21 +598,114 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am: uninstall-info-am uninstall-libLTLIBRARIES
+uninstall-am: uninstall-info-am uninstall-libLTLIBRARIES \
+	uninstall-local
 
 .PHONY: CTAGS GTAGS all all-am check check-am clean clean-generic \
 	clean-libLTLIBRARIES clean-libtool ctags distclean \
 	distclean-compile distclean-generic distclean-libtool \
 	distclean-tags distdir dvi dvi-am html html-am info info-am \
-	install install-am install-data install-data-am install-exec \
-	install-exec-am install-info install-info-am \
-	install-libLTLIBRARIES install-man install-strip installcheck \
-	installcheck-am installdirs maintainer-clean \
-	maintainer-clean-generic mostlyclean mostlyclean-compile \
-	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
-	tags uninstall uninstall-am uninstall-info-am \
-	uninstall-libLTLIBRARIES
+	install install-am install-data install-data-am \
+	install-data-local install-exec install-exec-am install-info \
+	install-info-am install-libLTLIBRARIES install-man \
+	install-strip installcheck installcheck-am installdirs \
+	maintainer-clean maintainer-clean-generic mostlyclean \
+	mostlyclean-compile mostlyclean-generic mostlyclean-libtool \
+	pdf pdf-am ps ps-am tags uninstall uninstall-am \
+	uninstall-info-am uninstall-libLTLIBRARIES uninstall-local
 
+apidox-am-yes:
+	@if test \! -d "$(top_srcdir)/doc/common/" && test -z "$$DOXDATA" ; then \
+		export DOXDATA=$(kde_libs_htmldir)/en/common ; \
+	fi ; \
+	abs_top_srcdir=`cd $(top_srcdir) && pwd` ;\
+	test -d $(top_builddir)/apidocs || \
+		( cd $(top_builddir) && sh $$abs_top_srcdir/admin/doxygen.sh \
+		--no-modulename --installdir=$(kde_libs_htmldir)/en \
+		--no-recurse $(abs_top_srcdir) . ) ; \
+	cd $(top_builddir) && sh $$abs_top_srcdir/admin/doxygen.sh \
+		--recurse --no-modulename --installdir=$(kde_libs_htmldir)/en \
+		$$abs_top_srcdir $(subdir)
+
+apidox-am-toplevel-yes:
+	@if test \! -d "$(top_srcdir)/doc/common/" && test -z "$$ADMIN" ; then \
+		export DOXDATA=$(kde_libs_htmldir)/en/common ; \
+	fi ; \
+	abs_top_srcdir=`cd $(top_srcdir) && pwd` ;\
+	cd $(top_builddir) && sh $$abs_top_srcdir/admin/doxygen.sh \
+		--no-modulename --installdir=$(kde_libs_htmldir)/en \
+		$$abs_top_srcdir
+
+apidox-am-no:
+
+apidox-am-toplevel-no:
+
+apidox:
+	@if test "$(subdir)" != "."; then \
+		$(MAKE) apidox-am-@KDE_HAS_DOXYGEN@ ;\
+	else \
+		$(MAKE) apidox-am-toplevel-@KDE_HAS_DOXYGEN@ ;\
+	fi
+
+install-data-local: install-apidox
+
+install-apidox:
+	@if test "$(subdir)" != "."; then \
+		$(mkinstalldirs) $(DESTDIR)$(kde_htmldir)/en/$(PACKAGE)-apidocs/$(subdir)/html ; \
+		if test -f $(top_builddir)/apidocs/$(subdir)/$(subdir).tag; then \
+		echo $(INSTALL_DATA) $(top_builddir)/apidocs/$(subdir)/$(subdir).tag $(DESTDIR)$(kde_htmldir)/en/$(PACKAGE)-apidocs/$(subdir); \
+		$(INSTALL_DATA) $(top_builddir)/apidocs/$(subdir)/$(subdir).tag $(DESTDIR)$(kde_htmldir)/en/$(PACKAGE)-apidocs/$(subdir); \
+		fi; \
+		if test -d $(top_builddir)/apidocs/$(subdir)/html; then \
+			list=`ls $(top_builddir)/apidocs/$(subdir)/html`; \
+			echo "installing $(top_builddir)/apidocs/$(subdir)/html" ;\
+			for file in $$list; do \
+				$(INSTALL_DATA) $(top_builddir)/apidocs/$(subdir)/html/$$file $(DESTDIR)$(kde_htmldir)/en/$(PACKAGE)-apidocs/$(subdir)/html; \
+		done; \
+		fi; \
+	else\
+		if test -d $(top_builddir)/apidocs; then \
+		$(mkinstalldirs) $(DESTDIR)$(kde_htmldir)/en/$(PACKAGE)-apidocs ;\
+		list=`cd $(top_builddir)/apidocs && ls -1`; \
+		echo "installing $(top_builddir)/apidocs/$$file" ;\
+		echo "target directory $(DESTDIR)$(kde_htmldir)/en/$(PACKAGE)-apidocs" ; \
+		for file in $$list; do \
+			if test -f $(top_builddir)/apidocs/$$file; then \
+				$(INSTALL_DATA) $(top_builddir)/apidocs/$$file $(DESTDIR)$(kde_htmldir)/en/$(PACKAGE)-apidocs; \
+			fi; \
+		done ; fi; \
+	fi
+
+uninstall-local: uninstall-apidox
+
+uninstall-apidox:
+	@if test "$(subdir)" != "."; then \
+		if test -d $(DESTDIR)$(kde_htmldir)/en/$(PACKAGE)-apidocs/$(subdir); then \
+			rm -rfv $(DESTDIR)$(kde_htmldir)/en/$(PACKAGE)-apidocs/$(subdir); \
+		fi \
+	else \
+		if test -d $(DESTDIR)$(kde_htmldir)/en/$(PACKAGE)-apidocs; then \
+			rm -rfv $(DESTDIR)$(kde_htmldir)/en/$(PACKAGE)-apidocs; \
+		fi \
+	fi
+
+install-apidox-recurse: install-apidox
+	@set fnord $(MAKEFLAGS); amf=$$2; if test -n '$(SUBDIRS)'; then \
+	    list='$(SUBDIRS)'; \
+	    for subdir in $$list; do \
+		if grep '^include .*Doxyfile.am' $(srcdir)/$$subdir/Makefile.am > /dev/null ; then \
+		echo "Installing apidox from $$subdir"; \
+		if test "$$subdir" != "."; then \
+			(cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) GENERATE_FLAG=no install-apidox-recurse) || exit 1; \
+		fi ; fi ;\
+	    done; \
+	fi
+
+.PHONY: apidox-am-yes apidox-am-no install-data-local install-apidox install-apidox uninstall-local uninstall-apidox uninstall-apidox apidox apidox-am-toplevel-no apidox-am-toplevel-yes
+
+# Local Variables:
+# mode: makefile
+# End:
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

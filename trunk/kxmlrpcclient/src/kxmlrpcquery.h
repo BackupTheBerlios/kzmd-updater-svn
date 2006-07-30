@@ -21,8 +21,7 @@
 class QVariant;
 class QString;
 class QDomDocument;
-class QByteArray;
-
+class QDomElement;
 
 /*********************************************************************************
 

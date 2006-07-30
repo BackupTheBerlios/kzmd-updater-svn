@@ -144,7 +144,7 @@ QString KXmlRpcQuery::markupCall( const QString &cmd, const QValueList<QVariant>
 
 	if ( !args.isEmpty() ) {
 
-		jmarkup += "<params>\r\n";
+		markup += "<params>\r\n";
 		QValueList<QVariant>::ConstIterator it = args.begin();
 		QValueList<QVariant>::ConstIterator end = args.end();
 		for ( ; it != end; ++it )
