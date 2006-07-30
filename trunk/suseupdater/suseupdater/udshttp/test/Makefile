@@ -40,9 +40,9 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-build_triplet = powerpc-unknown-linux-gnu
-host_triplet = powerpc-unknown-linux-gnu
-target_triplet = powerpc-unknown-linux-gnu
+build_triplet = i686-pc-linux-gnu
+host_triplet = i686-pc-linux-gnu
+target_triplet = i686-pc-linux-gnu
 bin_PROGRAMS = udstest$(EXEEXT)
 subdir = suseupdater/udshttp/test
 DIST_COMMON = $(noinst_HEADERS) $(srcdir)/Makefile.am \
@@ -97,16 +97,16 @@ CTAGS = ctags
 #>- DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 #>+ 1
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST) $(KDE_DIST)
-ACLOCAL = ${SHELL} /home/raven/src/trunk/suseupdater/admin/missing --run aclocal-1.9
+ACLOCAL = ${SHELL} /home/raven/raven/src/trunk/suseupdater/admin/missing --run aclocal-1.9
 AMDEP_FALSE = #
 AMDEP_TRUE = 
-AMTAR = ${SHELL} /home/raven/src/trunk/suseupdater/admin/missing --run tar
+AMTAR = ${SHELL} /home/raven/raven/src/trunk/suseupdater/admin/missing --run tar
 AR = ar
 ARTSCCONFIG = /opt/kde3/bin/artsc-config
 AUTOCONF = $(SHELL) $(top_srcdir)/admin/cvs.sh configure || touch configure
 AUTODIRS = 
-AUTOHEADER = ${SHELL} /home/raven/src/trunk/suseupdater/admin/missing --run autoheader
-AUTOMAKE = ${SHELL} /home/raven/src/trunk/suseupdater/admin/missing --run automake-1.9
+AUTOHEADER = ${SHELL} /home/raven/raven/src/trunk/suseupdater/admin/missing --run autoheader
+AUTOMAKE = ${SHELL} /home/raven/raven/src/trunk/suseupdater/admin/missing --run automake-1.9
 AWK = gawk
 CC = gcc
 CCDEPMODE = depmode=gcc3
@@ -125,6 +125,9 @@ DCOPIDLNG = /opt/kde3/bin/dcopidlng
 DCOP_DEPENDENCIES = $(DCOPIDL) $(DCOPIDLNG)
 DEFS = -DHAVE_CONFIG_H
 DEPDIR = .deps
+DOXYGEN = /usr/bin/doxygen
+DOXYGEN_PROJECT_NAME = The KDE Updater Applet API Reference
+DOXYGEN_PROJECT_NUMBER = Version 3.5.1
 ECHO = echo
 ECHO_C = 
 ECHO_N = -n
@@ -146,6 +149,8 @@ KCONFIG_COMPILER = /opt/kde3/bin/kconfig_compiler
 KDECONFIG = /opt/kde3/bin/kde-config
 KDE_CHECK_PLUGIN = $(KDE_PLUGIN) -rpath $(libdir)
 KDE_EXTRA_RPATH = 
+KDE_HAS_DOXYGEN = yes
+KDE_HAVE_DOT = YES
 KDE_INCLUDES = -I/opt/kde3/include
 KDE_LDFLAGS = -L/opt/kde3/lib
 KDE_MT_LDFLAGS = 
@@ -209,7 +214,7 @@ LIB_XEXT = -lXext
 LIB_XRENDER = 
 LN_S = ln -s
 LTLIBOBJS = 
-MAKEINFO = ${SHELL} /home/raven/src/trunk/suseupdater/admin/missing --run makeinfo
+MAKEINFO = ${SHELL} /home/raven/raven/src/trunk/suseupdater/admin/missing --run makeinfo
 MAKEKDEWIDGETS = /opt/kde3/bin/makekdewidgets
 MCOPIDL = /opt/kde3/bin/mcopidl
 MEINPROC = /opt/kde3/bin/meinproc
@@ -226,6 +231,7 @@ PACKAGE_TARNAME =
 PACKAGE_VERSION = 
 PATH_SEPARATOR = :
 PERL = /usr/bin/perl
+QTDOCDIR = /usr/lib/qt3/doc/html
 QTE_NORTTI = 
 QT_INCLUDES = -I/usr/lib/qt3/include
 QT_LDFLAGS = -L/usr/lib/qt3/lib
@@ -241,7 +247,7 @@ USER_LDFLAGS =
 USE_EXCEPTIONS = -fexceptions
 USE_RTTI = 
 USE_THREADS = 
-VERSION = 0.1
+VERSION = 3.5.1
 WOVERLOADED_VIRTUAL = 
 XGETTEXT = /usr/bin/xgettext
 XMLLINT = /usr/bin/xmllint
@@ -270,18 +276,18 @@ am__quote =
 am__tar = ${AMTAR} chof - "$$tardir"
 am__untar = ${AMTAR} xf -
 bindir = ${exec_prefix}/bin
-build = powerpc-unknown-linux-gnu
+build = i686-pc-linux-gnu
 build_alias = 
-build_cpu = powerpc
+build_cpu = i686
 build_os = linux-gnu
-build_vendor = unknown
+build_vendor = pc
 datadir = ${prefix}/share
 exec_prefix = ${prefix}
-host = powerpc-unknown-linux-gnu
+host = i686-pc-linux-gnu
 host_alias = 
-host_cpu = powerpc
+host_cpu = i686
 host_os = linux-gnu
-host_vendor = unknown
+host_vendor = pc
 images_SUBDIR_included_FALSE = #
 images_SUBDIR_included_TRUE = 
 include_ARTS_FALSE = #
@@ -290,7 +296,7 @@ include_x11_FALSE = #
 include_x11_TRUE = 
 includedir = ${prefix}/include
 infodir = ${prefix}/info
-install_sh = /home/raven/src/trunk/suseupdater/admin/install-sh
+install_sh = /home/raven/raven/src/trunk/suseupdater/admin/install-sh
 kde_appsdir = ${datadir}/applnk
 kde_bindir = ${exec_prefix}/bin
 kde_confdir = ${datadir}/config
@@ -333,11 +339,11 @@ sharedstatedir = ${prefix}/com
 suseupdater_SUBDIR_included_FALSE = #
 suseupdater_SUBDIR_included_TRUE = 
 sysconfdir = ${prefix}/etc
-target = powerpc-unknown-linux-gnu
+target = i686-pc-linux-gnu
 target_alias = 
-target_cpu = powerpc
+target_cpu = i686
 target_os = linux-gnu
-target_vendor = unknown
+target_vendor = pc
 unsermake_enable_pch_FALSE = 
 unsermake_enable_pch_TRUE = #
 x_includes = /usr/X11R6/include
@@ -377,9 +383,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 #>- 	      exit 1;; \
 #>- 	  esac; \
 #>- 	done; \
-#>- 	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign  suseupdater/udshttp/test/Makefile'; \
+#>- 	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  suseupdater/udshttp/test/Makefile'; \
 #>- 	cd $(top_srcdir) && \
-#>- 	  $(AUTOMAKE) --foreign  suseupdater/udshttp/test/Makefile
+#>- 	  $(AUTOMAKE) --gnu  suseupdater/udshttp/test/Makefile
 #>+ 12
 	@for dep in $?; do \
 	  case '$(am__configure_deps)' in \
@@ -389,9 +395,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign  suseupdater/udshttp/test/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  suseupdater/udshttp/test/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --foreign  suseupdater/udshttp/test/Makefile
+	  $(AUTOMAKE) --gnu  suseupdater/udshttp/test/Makefile
 	cd $(top_srcdir) && perl admin/am_edit suseupdater/udshttp/test/Makefile.in
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
@@ -685,9 +691,9 @@ force-reedit:
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign  suseupdater/udshttp/test/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  suseupdater/udshttp/test/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --foreign  suseupdater/udshttp/test/Makefile
+	  $(AUTOMAKE) --gnu  suseupdater/udshttp/test/Makefile
 	cd $(top_srcdir) && perl admin/am_edit suseupdater/udshttp/test/Makefile.in
 
 

@@ -107,6 +107,9 @@ DCOPIDLNG = @DCOPIDLNG@
 DCOP_DEPENDENCIES = @DCOP_DEPENDENCIES@
 DEFS = @DEFS@
 DEPDIR = @DEPDIR@
+DOXYGEN = @DOXYGEN@
+DOXYGEN_PROJECT_NAME = @DOXYGEN_PROJECT_NAME@
+DOXYGEN_PROJECT_NUMBER = @DOXYGEN_PROJECT_NUMBER@
 ECHO = @ECHO@
 ECHO_C = @ECHO_C@
 ECHO_N = @ECHO_N@
@@ -128,6 +131,8 @@ KCONFIG_COMPILER = @KCONFIG_COMPILER@
 KDECONFIG = @KDECONFIG@
 KDE_CHECK_PLUGIN = @KDE_CHECK_PLUGIN@
 KDE_EXTRA_RPATH = @KDE_EXTRA_RPATH@
+KDE_HAS_DOXYGEN = @KDE_HAS_DOXYGEN@
+KDE_HAVE_DOT = @KDE_HAVE_DOT@
 KDE_INCLUDES = @KDE_INCLUDES@
 KDE_LDFLAGS = @KDE_LDFLAGS@
 KDE_MT_LDFLAGS = @KDE_MT_LDFLAGS@
@@ -208,6 +213,7 @@ PACKAGE_TARNAME = @PACKAGE_TARNAME@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
 PERL = @PERL@
+QTDOCDIR = @QTDOCDIR@
 QTE_NORTTI = @QTE_NORTTI@
 QT_INCLUDES = @QT_INCLUDES@
 QT_LDFLAGS = @QT_LDFLAGS@
@@ -343,9 +349,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 #>- 	      exit 1;; \
 #>- 	  esac; \
 #>- 	done; \
-#>- 	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign  kzmdauthutil/Makefile'; \
+#>- 	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  kzmdauthutil/Makefile'; \
 #>- 	cd $(top_srcdir) && \
-#>- 	  $(AUTOMAKE) --foreign  kzmdauthutil/Makefile
+#>- 	  $(AUTOMAKE) --gnu  kzmdauthutil/Makefile
 #>+ 12
 	@for dep in $?; do \
 	  case '$(am__configure_deps)' in \
@@ -355,9 +361,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign  kzmdauthutil/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  kzmdauthutil/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --foreign  kzmdauthutil/Makefile
+	  $(AUTOMAKE) --gnu  kzmdauthutil/Makefile
 	cd $(top_srcdir) && perl admin/am_edit kzmdauthutil/Makefile.in
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
@@ -624,7 +630,7 @@ uninstall-am: uninstall-binPROGRAMS uninstall-info-am
 .NOEXPORT:
 
 #>+ 2
-KDE_DIST=Makefile.in Makefile.am 
+KDE_DIST=Makefile.in Makefile.am kzmdauthutil 
 
 #>+ 2
 docs-am:
@@ -639,9 +645,9 @@ force-reedit:
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign  kzmdauthutil/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  kzmdauthutil/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --foreign  kzmdauthutil/Makefile
+	  $(AUTOMAKE) --gnu  kzmdauthutil/Makefile
 	cd $(top_srcdir) && perl admin/am_edit kzmdauthutil/Makefile.in
 
 

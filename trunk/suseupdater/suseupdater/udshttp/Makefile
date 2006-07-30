@@ -36,11 +36,12 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-build_triplet = powerpc-unknown-linux-gnu
-host_triplet = powerpc-unknown-linux-gnu
-target_triplet = powerpc-unknown-linux-gnu
+build_triplet = i686-pc-linux-gnu
+host_triplet = i686-pc-linux-gnu
+target_triplet = i686-pc-linux-gnu
+DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in \
+	$(top_srcdir)/admin/Doxyfile.am
 subdir = suseupdater/udshttp
-DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/acinclude.m4 \
 	$(top_srcdir)/configure.in
@@ -94,16 +95,16 @@ CTAGS = ctags
 #>- DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 #>+ 1
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST) $(KDE_DIST)
-ACLOCAL = ${SHELL} /home/raven/src/trunk/suseupdater/admin/missing --run aclocal-1.9
+ACLOCAL = ${SHELL} /home/raven/raven/src/trunk/suseupdater/admin/missing --run aclocal-1.9
 AMDEP_FALSE = #
 AMDEP_TRUE = 
-AMTAR = ${SHELL} /home/raven/src/trunk/suseupdater/admin/missing --run tar
+AMTAR = ${SHELL} /home/raven/raven/src/trunk/suseupdater/admin/missing --run tar
 AR = ar
 ARTSCCONFIG = /opt/kde3/bin/artsc-config
 AUTOCONF = $(SHELL) $(top_srcdir)/admin/cvs.sh configure || touch configure
 AUTODIRS = 
-AUTOHEADER = ${SHELL} /home/raven/src/trunk/suseupdater/admin/missing --run autoheader
-AUTOMAKE = ${SHELL} /home/raven/src/trunk/suseupdater/admin/missing --run automake-1.9
+AUTOHEADER = ${SHELL} /home/raven/raven/src/trunk/suseupdater/admin/missing --run autoheader
+AUTOMAKE = ${SHELL} /home/raven/raven/src/trunk/suseupdater/admin/missing --run automake-1.9
 AWK = gawk
 CC = gcc
 CCDEPMODE = depmode=gcc3
@@ -122,6 +123,9 @@ DCOPIDLNG = /opt/kde3/bin/dcopidlng
 DCOP_DEPENDENCIES = $(DCOPIDL) $(DCOPIDLNG)
 DEFS = -DHAVE_CONFIG_H
 DEPDIR = .deps
+DOXYGEN = /usr/bin/doxygen
+DOXYGEN_PROJECT_NAME = The KDE Updater Applet API Reference
+DOXYGEN_PROJECT_NUMBER = Version 3.5.1
 ECHO = echo
 ECHO_C = 
 ECHO_N = -n
@@ -143,6 +147,8 @@ KCONFIG_COMPILER = /opt/kde3/bin/kconfig_compiler
 KDECONFIG = /opt/kde3/bin/kde-config
 KDE_CHECK_PLUGIN = $(KDE_PLUGIN) -rpath $(libdir)
 KDE_EXTRA_RPATH = 
+KDE_HAS_DOXYGEN = yes
+KDE_HAVE_DOT = YES
 KDE_INCLUDES = -I/opt/kde3/include
 KDE_LDFLAGS = -L/opt/kde3/lib
 KDE_MT_LDFLAGS = 
@@ -206,7 +212,7 @@ LIB_XEXT = -lXext
 LIB_XRENDER = 
 LN_S = ln -s
 LTLIBOBJS = 
-MAKEINFO = ${SHELL} /home/raven/src/trunk/suseupdater/admin/missing --run makeinfo
+MAKEINFO = ${SHELL} /home/raven/raven/src/trunk/suseupdater/admin/missing --run makeinfo
 MAKEKDEWIDGETS = /opt/kde3/bin/makekdewidgets
 MCOPIDL = /opt/kde3/bin/mcopidl
 MEINPROC = /opt/kde3/bin/meinproc
@@ -223,6 +229,7 @@ PACKAGE_TARNAME =
 PACKAGE_VERSION = 
 PATH_SEPARATOR = :
 PERL = /usr/bin/perl
+QTDOCDIR = /usr/lib/qt3/doc/html
 QTE_NORTTI = 
 QT_INCLUDES = -I/usr/lib/qt3/include
 QT_LDFLAGS = -L/usr/lib/qt3/lib
@@ -267,18 +274,18 @@ am__quote =
 am__tar = ${AMTAR} chof - "$$tardir"
 am__untar = ${AMTAR} xf -
 bindir = ${exec_prefix}/bin
-build = powerpc-unknown-linux-gnu
+build = i686-pc-linux-gnu
 build_alias = 
-build_cpu = powerpc
+build_cpu = i686
 build_os = linux-gnu
-build_vendor = unknown
+build_vendor = pc
 datadir = ${prefix}/share
 exec_prefix = ${prefix}
-host = powerpc-unknown-linux-gnu
+host = i686-pc-linux-gnu
 host_alias = 
-host_cpu = powerpc
+host_cpu = i686
 host_os = linux-gnu
-host_vendor = unknown
+host_vendor = pc
 images_SUBDIR_included_FALSE = #
 images_SUBDIR_included_TRUE = 
 include_ARTS_FALSE = #
@@ -287,7 +294,7 @@ include_x11_FALSE = #
 include_x11_TRUE = 
 includedir = ${prefix}/include
 infodir = ${prefix}/info
-install_sh = /home/raven/src/trunk/suseupdater/admin/install-sh
+install_sh = /home/raven/raven/src/trunk/suseupdater/admin/install-sh
 kde_appsdir = ${datadir}/applnk
 kde_bindir = ${exec_prefix}/bin
 kde_confdir = ${datadir}/config
@@ -330,11 +337,11 @@ sharedstatedir = ${prefix}/com
 suseupdater_SUBDIR_included_FALSE = #
 suseupdater_SUBDIR_included_TRUE = 
 sysconfdir = ${prefix}/etc
-target = powerpc-unknown-linux-gnu
+target = i686-pc-linux-gnu
 target_alias = 
-target_cpu = powerpc
+target_cpu = i686
 target_os = linux-gnu
-target_vendor = unknown
+target_vendor = pc
 unsermake_enable_pch_FALSE = 
 unsermake_enable_pch_TRUE = #
 x_includes = /usr/X11R6/include
@@ -356,7 +363,7 @@ all: docs-am  all-am
 
 .SUFFIXES:
 .SUFFIXES: .cpp .lo .o .obj
-$(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
+$(srcdir)/Makefile.in:  $(srcdir)/Makefile.am $(top_srcdir)/admin/Doxyfile.am $(am__configure_deps)
 #>- 	@for dep in $?; do \
 #>- 	  case '$(am__configure_deps)' in \
 #>- 	    *$$dep*) \
@@ -536,6 +543,7 @@ distclean-tags:
 	-rm -f TAGS ID GTAGS GRTAGS GSYMS GPATH tags
 
 distdir: $(DISTFILES)
+	$(mkdir_p) $(distdir)/../../admin
 	@srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`; \
 	topsrcdirstrip=`echo "$(top_srcdir)" | sed 's|.|.|g'`; \
 	list='$(DISTFILES)'; for file in $$list; do \
@@ -619,9 +627,11 @@ info: info-am
 
 info-am:
 
-#>- install-data-am: install-kde_moduleLTLIBRARIES install-protocolDATA
-#>+ 1
-install-data-am:   install-protocolDATA
+#>- install-data-am: install-data-local install-kde_moduleLTLIBRARIES \
+#>- 	install-protocolDATA
+#>+ 2
+install-data-am:   install-data-local \
+	install-protocolDATA
 
 #>- install-exec-am:
 #>+ 1
@@ -652,26 +662,119 @@ ps: ps-am
 ps-am:
 
 uninstall-am: uninstall-info-am uninstall-kde_moduleLTLIBRARIES \
-	uninstall-protocolDATA
+	uninstall-local uninstall-protocolDATA
 
 .PHONY: CTAGS GTAGS all all-am check check-am clean clean-generic \
 	clean-kde_moduleLTLIBRARIES clean-libtool ctags distclean \
 	distclean-compile distclean-generic distclean-libtool \
 	distclean-tags distdir dvi dvi-am html html-am info info-am \
-	install install-am install-data install-data-am install-exec \
-	install-exec-am install-info install-info-am \
-	install-kde_moduleLTLIBRARIES install-man install-protocolDATA \
-	install-strip installcheck installcheck-am installdirs \
-	maintainer-clean maintainer-clean-generic mostlyclean \
-	mostlyclean-compile mostlyclean-generic mostlyclean-libtool \
-	pdf pdf-am ps ps-am tags uninstall uninstall-am \
-	uninstall-info-am uninstall-kde_moduleLTLIBRARIES \
+	install install-am install-data install-data-am \
+	install-data-local install-exec install-exec-am install-info \
+	install-info-am install-kde_moduleLTLIBRARIES install-man \
+	install-protocolDATA install-strip installcheck \
+	installcheck-am installdirs maintainer-clean \
+	maintainer-clean-generic mostlyclean mostlyclean-compile \
+	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
+	tags uninstall uninstall-am uninstall-info-am \
+	uninstall-kde_moduleLTLIBRARIES uninstall-local \
 	uninstall-protocolDATA
 
 
 messages: rc.cpp
 	$(EXTRACTRC) `find . -name \*.ui -o -name \*.rc` > rc.cpp
 	$(XGETTEXT) *.cpp -o $(podir)/kio_udshttp.pot
+apidox-am-yes:
+	@if test \! -d "$(top_srcdir)/doc/common/" && test -z "$$DOXDATA" ; then \
+		export DOXDATA=$(kde_libs_htmldir)/en/common ; \
+	fi ; \
+	abs_top_srcdir=`cd $(top_srcdir) && pwd` ;\
+	test -d $(top_builddir)/apidocs || \
+		( cd $(top_builddir) && sh $$abs_top_srcdir/admin/doxygen.sh \
+		--no-modulename --installdir=$(kde_libs_htmldir)/en \
+		--no-recurse $(abs_top_srcdir) . ) ; \
+	cd $(top_builddir) && sh $$abs_top_srcdir/admin/doxygen.sh \
+		--recurse --no-modulename --installdir=$(kde_libs_htmldir)/en \
+		$$abs_top_srcdir $(subdir)
+
+apidox-am-toplevel-yes:
+	@if test \! -d "$(top_srcdir)/doc/common/" && test -z "$$ADMIN" ; then \
+		export DOXDATA=$(kde_libs_htmldir)/en/common ; \
+	fi ; \
+	abs_top_srcdir=`cd $(top_srcdir) && pwd` ;\
+	cd $(top_builddir) && sh $$abs_top_srcdir/admin/doxygen.sh \
+		--no-modulename --installdir=$(kde_libs_htmldir)/en \
+		$$abs_top_srcdir
+
+apidox-am-no:
+
+apidox-am-toplevel-no:
+
+apidox:
+	@if test "$(subdir)" != "."; then \
+		$(MAKE) apidox-am-yes ;\
+	else \
+		$(MAKE) apidox-am-toplevel-yes ;\
+	fi
+
+install-data-local: install-apidox
+
+install-apidox:
+	@if test "$(subdir)" != "."; then \
+		$(mkinstalldirs) $(DESTDIR)$(kde_htmldir)/en/$(PACKAGE)-apidocs/$(subdir)/html ; \
+		if test -f $(top_builddir)/apidocs/$(subdir)/$(subdir).tag; then \
+		echo $(INSTALL_DATA) $(top_builddir)/apidocs/$(subdir)/$(subdir).tag $(DESTDIR)$(kde_htmldir)/en/$(PACKAGE)-apidocs/$(subdir); \
+		$(INSTALL_DATA) $(top_builddir)/apidocs/$(subdir)/$(subdir).tag $(DESTDIR)$(kde_htmldir)/en/$(PACKAGE)-apidocs/$(subdir); \
+		fi; \
+		if test -d $(top_builddir)/apidocs/$(subdir)/html; then \
+			list=`ls $(top_builddir)/apidocs/$(subdir)/html`; \
+			echo "installing $(top_builddir)/apidocs/$(subdir)/html" ;\
+			for file in $$list; do \
+				$(INSTALL_DATA) $(top_builddir)/apidocs/$(subdir)/html/$$file $(DESTDIR)$(kde_htmldir)/en/$(PACKAGE)-apidocs/$(subdir)/html; \
+		done; \
+		fi; \
+	else\
+		if test -d $(top_builddir)/apidocs; then \
+		$(mkinstalldirs) $(DESTDIR)$(kde_htmldir)/en/$(PACKAGE)-apidocs ;\
+		list=`cd $(top_builddir)/apidocs && ls -1`; \
+		echo "installing $(top_builddir)/apidocs/$$file" ;\
+		echo "target directory $(DESTDIR)$(kde_htmldir)/en/$(PACKAGE)-apidocs" ; \
+		for file in $$list; do \
+			if test -f $(top_builddir)/apidocs/$$file; then \
+				$(INSTALL_DATA) $(top_builddir)/apidocs/$$file $(DESTDIR)$(kde_htmldir)/en/$(PACKAGE)-apidocs; \
+			fi; \
+		done ; fi; \
+	fi
+
+uninstall-local: uninstall-apidox
+
+uninstall-apidox:
+	@if test "$(subdir)" != "."; then \
+		if test -d $(DESTDIR)$(kde_htmldir)/en/$(PACKAGE)-apidocs/$(subdir); then \
+			rm -rfv $(DESTDIR)$(kde_htmldir)/en/$(PACKAGE)-apidocs/$(subdir); \
+		fi \
+	else \
+		if test -d $(DESTDIR)$(kde_htmldir)/en/$(PACKAGE)-apidocs; then \
+			rm -rfv $(DESTDIR)$(kde_htmldir)/en/$(PACKAGE)-apidocs; \
+		fi \
+	fi
+
+install-apidox-recurse: install-apidox
+	@set fnord $(MAKEFLAGS); amf=$$2; if test -n '$(SUBDIRS)'; then \
+	    list='$(SUBDIRS)'; \
+	    for subdir in $$list; do \
+		if grep '^include .*Doxyfile.am' $(srcdir)/$$subdir/Makefile.am > /dev/null ; then \
+		echo "Installing apidox from $$subdir"; \
+		if test "$$subdir" != "."; then \
+			(cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) GENERATE_FLAG=no install-apidox-recurse) || exit 1; \
+		fi ; fi ;\
+	    done; \
+	fi
+
+.PHONY: apidox-am-yes apidox-am-no install-data-local install-apidox install-apidox uninstall-local uninstall-apidox uninstall-apidox apidox apidox-am-toplevel-no apidox-am-toplevel-yes
+
+# Local Variables:
+# mode: makefile
+# End:
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:
