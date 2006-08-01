@@ -61,7 +61,7 @@ ZmdAdvancedConfig::ZmdAdvancedConfig(ZmdUpdaterCore *_core, QWidget *parent) : Q
 
 void ZmdAdvancedConfig::initGUI() {
 
-	mainLayout = new QGridLayout(this, 4, 2);
+	mainLayout = new QGridLayout(this, 5, 2);
 	hostLabel = new QLabel(i18n("ZMD Is Listening on: "), this);
 	hostEdit = new KLineEdit(this);
 	remoteLabel = new QLabel(i18n("ZMD TCP Support: "), this);

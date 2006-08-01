@@ -22,6 +22,40 @@
 
 #include <qmap.h>
 
+
+class Identity {
+
+	public:
+
+		Identity() {}
+
+		void fromMap(const QMap<QString, QVariant> &map) {
+
+			name = map["name"].toString();
+			pass = map["password"].toString();
+			privs = map["privs"].toString();
+		}
+
+		QMap<QString, QVariant> toMap() {
+
+			QMap<QString, QVariant> map;
+
+			if (name != "")
+				map["name"] = name;
+			if (pass != "") 
+				map["password"] = pass;
+			if (privs != "") 
+				map["privs"] = privs;
+
+			return map;
+		}
+
+		QString name;
+		QString pass;
+		QString privs;
+};
+
+
 class Progress {
 
 	public:

@@ -100,7 +100,34 @@ class ZmdUpdaterCore : public QObject {
 			@param pass the password, taken from /etc/zmd in ZmdUpdater.cpp
 		**/
 		void setPass(QString pass);
-   
+  
+		/**
+			Add user to ZMD
+
+			@param id the identity to register with the backend.
+		**/
+		void addUser(Identity id);
+
+		/**
+			Remove user from ZMD
+
+			@param user the username to remove from the backend.
+		**/
+		void removeUser(QString user);
+
+		/**
+			Modify a specified user
+
+			@param id the id with updated information. 
+		**/
+		void modifyUser(Identity id);
+
+		/**
+			List all the users registered with the backend
+			Data arrives via userListing signal.
+		**/
+		void listUsers();
+
    		/**
 			Sends a request for the list of registered servers on ZMD
 			Data arrives via serviceListing signal.
@@ -224,6 +251,7 @@ class ZmdUpdaterCore : public QObject {
 
 	signals:
 
+		void userListing(QValueList<Identity>);
 		void serviceListing(QValueList<Service>);
 		void catalogListing(QValueList<Catalog>);
 		void patchListing(QValueList<Patch>);
@@ -262,6 +290,8 @@ class ZmdUpdaterCore : public QObject {
 		void catalogData(const QValueList<QVariant>&, const QVariant&);
 
 		//temp
+
+		void identityData(const QValueList<QVariant>&, const QVariant&);
 		void catalogSubData(const QValueList<QVariant>&, const QVariant&);
 
 		void serviceData(const QValueList<QVariant>&, const QVariant&);

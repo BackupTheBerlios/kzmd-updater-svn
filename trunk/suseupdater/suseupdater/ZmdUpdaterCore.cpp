@@ -59,6 +59,67 @@ void ZmdUpdaterCore::setPass(QString pass) {
 	server->setUrl(url);
 }
 
+void ZmdUpdaterCore::addUser(Identity id) {
+	IS_ZMD_BUSY;
+
+	QValueList<QVariant> data;
+	QMap<QString,QVariant> map = id.toMap();
+	data.append(QVariant(map));
+
+	server->call("zmd.system.identity_add", data,
+	this, SLOT(identityData(const QValueList<QVariant>&, const QVariant&)), 
+	this, SLOT(faultData(int, const QString&, const QVariant&)));
+}
+
+void ZmdUpdaterCore::removeUser(QString user) {
+	IS_ZMD_BUSY;
+
+	server->call("zmd.system.identity_remove", user,
+	this, SLOT(identityData(const QValueList<QVariant>&, const QVariant&)), 
+	this, SLOT(faultData(int, const QString&, const QVariant&)));
+}
+
+void ZmdUpdaterCore::modifyUser(Identity id) {
+	IS_ZMD_BUSY;
+
+	QValueList<QVariant> data;
+	QMap<QString,QVariant> map = id.toMap();
+	data.append(QVariant(map));
+
+	server->call("zmd.system.identity_modify", data,
+	this, SLOT(identityData(const QValueList<QVariant>&, const QVariant&)), 
+	this, SLOT(faultData(int, const QString&, const QVariant&)));
+}
+
+void ZmdUpdaterCore::listUsers() {
+	IS_ZMD_BUSY;
+
+	server->call("zmd.system.identity_list", QValueList<QVariant>(),
+	this, SLOT(identityData(const QValueList<QVariant>&, const QVariant&)), 
+	this, SLOT(faultData(int, const QString&, const QVariant&)));
+}
+
+void ZmdUpdaterCore::identityData(const QValueList<QVariant>& data, const QVariant& t) {
+
+	if (data.front().canCast(QVariant::List) == true) {
+		//We got a list back, is identity list
+		QValueList<QVariant> list;
+		list = (data.front().toList());
+		QValueList<QVariant>::iterator iter;
+		QValueList<Identity> identityList;
+
+		for (iter = list.begin(); iter != list.end(); iter++) {
+			QMap<QString, QVariant> map = (*iter).toMap();
+			Identity id;
+			id.fromMap(map);
+			identityList.append(id);
+		}
+		emit(userListing(identityList));
+	} 
+
+}
+
+
 /********************************************************************
  *
  *                    Server Settings 
@@ -765,6 +826,10 @@ void ZmdUpdaterCore::faultData(int code, const QString& message, const QVariant&
 			ZMD_CLEAR;
 			timer->stop();
 			temp = "";
+			break;
+		case -667:
+			//Invalid id
+			emit(generalFault(message, code));
 			break;
 		default:
 			//Things we do not handle
