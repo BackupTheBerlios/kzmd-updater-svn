@@ -83,7 +83,7 @@ void MainWindow::initGUI() {
 	mainLayout->addWidget(closeButton, 2, 3);
 	mainLayout->setSpacing(10);
 	mainLayout->setMargin(10);
-
+	setCaption(i18n("Add/Remove Users"));
 	show();
 }
 

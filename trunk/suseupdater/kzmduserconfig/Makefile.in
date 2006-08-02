@@ -700,7 +700,7 @@ clean-metasources:
 	-rm -f  EditWindow.moc.cpp ZmdUpdaterCore.moc.cpp MainWindow.moc.cpp
 
 #>+ 2
-KDE_DIST=Makefile.in kzmduserconfig tags Makefile.am 
+KDE_DIST=Makefile.in tags Makefile.am 
 
 #>+ 2
 docs-am:
@@ -744,7 +744,7 @@ bcheck-am:
 
 
 #>+ 11
-kzmduserconfig.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/main.cpp $(srcdir)/ZmdUpdaterCore.cpp $(srcdir)/MainWindow.cpp $(srcdir)/EditWindow.cpp $(srcdir)/ZmdUpdaterCore.moc.cpp EditWindow.moc.cpp $(srcdir)/MainWindow.moc.cpp 
+kzmduserconfig.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/main.cpp $(srcdir)/ZmdUpdaterCore.cpp $(srcdir)/MainWindow.cpp $(srcdir)/EditWindow.cpp ZmdUpdaterCore.moc.cpp EditWindow.moc.cpp MainWindow.moc.cpp 
 	@echo 'creating kzmduserconfig.all_cpp.cpp ...'; \
 	rm -f kzmduserconfig.all_cpp.files kzmduserconfig.all_cpp.final; \
 	echo "#define KDE_USE_FINAL 1" >> kzmduserconfig.all_cpp.final; \
