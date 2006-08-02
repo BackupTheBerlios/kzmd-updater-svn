@@ -327,8 +327,6 @@ kxmlrpcclient_SUBDIR_included_FALSE = @kxmlrpcclient_SUBDIR_included_FALSE@
 kxmlrpcclient_SUBDIR_included_TRUE = @kxmlrpcclient_SUBDIR_included_TRUE@
 kzmdauthutil_SUBDIR_included_FALSE = @kzmdauthutil_SUBDIR_included_FALSE@
 kzmdauthutil_SUBDIR_included_TRUE = @kzmdauthutil_SUBDIR_included_TRUE@
-kzmduserconfig_SUBDIR_included_FALSE = @kzmduserconfig_SUBDIR_included_FALSE@
-kzmduserconfig_SUBDIR_included_TRUE = @kzmduserconfig_SUBDIR_included_TRUE@
 libdir = @libdir@
 libexecdir = @libexecdir@
 localstatedir = @localstatedir@
@@ -850,7 +848,7 @@ bcheck-am:
 
 
 #>+ 11
-libkxmlrpcclient_la.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/kxmlrpcserver.cpp $(srcdir)/kxmlrpcquery.cpp $(srcdir)/kxmlrpcserver.moc.cpp $(srcdir)/kxmlrpcquery.moc.cpp 
+libkxmlrpcclient_la.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/kxmlrpcserver.cpp $(srcdir)/kxmlrpcquery.cpp kxmlrpcserver.moc.cpp kxmlrpcquery.moc.cpp 
 	@echo 'creating libkxmlrpcclient_la.all_cpp.cpp ...'; \
 	rm -f libkxmlrpcclient_la.all_cpp.files libkxmlrpcclient_la.all_cpp.final; \
 	echo "#define KDE_USE_FINAL 1" >> libkxmlrpcclient_la.all_cpp.final; \

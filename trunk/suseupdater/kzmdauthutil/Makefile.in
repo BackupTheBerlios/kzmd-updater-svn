@@ -306,8 +306,6 @@ kxmlrpcclient_SUBDIR_included_FALSE = @kxmlrpcclient_SUBDIR_included_FALSE@
 kxmlrpcclient_SUBDIR_included_TRUE = @kxmlrpcclient_SUBDIR_included_TRUE@
 kzmdauthutil_SUBDIR_included_FALSE = @kzmdauthutil_SUBDIR_included_FALSE@
 kzmdauthutil_SUBDIR_included_TRUE = @kzmdauthutil_SUBDIR_included_TRUE@
-kzmduserconfig_SUBDIR_included_FALSE = @kzmduserconfig_SUBDIR_included_FALSE@
-kzmduserconfig_SUBDIR_included_TRUE = @kzmduserconfig_SUBDIR_included_TRUE@
 libdir = @libdir@
 libexecdir = @libexecdir@
 localstatedir = @localstatedir@
@@ -636,7 +634,7 @@ uninstall-am: uninstall-binPROGRAMS uninstall-info-am
 .NOEXPORT:
 
 #>+ 2
-KDE_DIST=Makefile.in Makefile.am kzmdauthutil 
+KDE_DIST=Makefile.in Makefile.am 
 
 #>+ 2
 docs-am:
