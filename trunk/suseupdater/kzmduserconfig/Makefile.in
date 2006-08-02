@@ -19,7 +19,6 @@
 # there are none, comment this out
 
 
-
 srcdir = @srcdir@
 top_srcdir = @top_srcdir@
 VPATH = @srcdir@
@@ -43,10 +42,10 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 target_triplet = @target@
-bin_PROGRAMS = SUSEUpdater$(EXEEXT)
+bin_PROGRAMS = kzmduserconfig$(EXEEXT)
+subdir = kzmduserconfig
 DIST_COMMON = $(noinst_HEADERS) $(srcdir)/Makefile.am \
-	$(srcdir)/Makefile.in $(top_srcdir)/admin/Doxyfile.am
-subdir = suseupdater
+	$(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/acinclude.m4 \
 	$(top_srcdir)/configure.in
@@ -55,35 +54,21 @@ am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 mkinstalldirs = $(SHELL) $(top_srcdir)/admin/mkinstalldirs
 CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
-am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(desktopdir)"
+am__installdirs = "$(DESTDIR)$(bindir)"
 binPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
 PROGRAMS = $(bin_PROGRAMS)
-am_SUSEUpdater_OBJECTS = main.$(OBJEXT) MainWindow.$(OBJEXT) \
-	HeaderWidget.$(OBJEXT) ZmdConfigWindow.$(OBJEXT) \
-	ZmdInstallWindow.$(OBJEXT) ZmdServerDialog.$(OBJEXT) \
-	ZmdUpdaterCore.$(OBJEXT) ZmdProgressDialog.$(OBJEXT) \
-	ZmdCatalogListItem.$(OBJEXT) ZmdDependencyDialog.$(OBJEXT) \
-	ZmdUpdater.$(OBJEXT) UpdaterApplication.$(OBJEXT) \
-	GeneralConfigWindow.$(OBJEXT) UpdateListItem.$(OBJEXT) \
-	ZmdAdvancedConfig.$(OBJEXT) ZmdEditServers.$(OBJEXT) \
-	ZmdRugParser.$(OBJEXT)
-#>- SUSEUpdater_OBJECTS = $(am_SUSEUpdater_OBJECTS)
-#>+ 13
-SUSEUpdater_final_OBJECTS = SUSEUpdater.all_cpp.o 
-SUSEUpdater_nofinal_OBJECTS = main.$(OBJEXT) MainWindow.$(OBJEXT) \
-	HeaderWidget.$(OBJEXT) ZmdConfigWindow.$(OBJEXT) \
-	ZmdInstallWindow.$(OBJEXT) ZmdServerDialog.$(OBJEXT) \
-	ZmdUpdaterCore.$(OBJEXT) ZmdProgressDialog.$(OBJEXT) \
-	ZmdCatalogListItem.$(OBJEXT) ZmdDependencyDialog.$(OBJEXT) \
-	ZmdUpdater.$(OBJEXT) UpdaterApplication.$(OBJEXT) \
-	GeneralConfigWindow.$(OBJEXT) UpdateListItem.$(OBJEXT) \
-	ZmdAdvancedConfig.$(OBJEXT) ZmdEditServers.$(OBJEXT) \
-	ZmdRugParser.$(OBJEXT)\
-ZmdEditServers.moc.o ZmdDependencyDialog.moc.o ZmdInstallWindow.moc.o GeneralConfigWindow.moc.o ZmdConfigWindow.moc.o ZmdRugParser.moc.o ZmdProgressDialog.moc.o ZmdUpdaterCore.moc.o ZmdUpdater.moc.o ZmdAdvancedConfig.moc.o Updater.moc.o MainWindow.moc.o HeaderWidget.moc.o ZmdServerDialog.moc.o 
-@KDE_USE_FINAL_FALSE@SUSEUpdater_OBJECTS = $(SUSEUpdater_nofinal_OBJECTS)
-@KDE_USE_FINAL_TRUE@SUSEUpdater_OBJECTS = $(SUSEUpdater_final_OBJECTS)
+am_kzmduserconfig_OBJECTS = main.$(OBJEXT) ZmdUpdaterCore.$(OBJEXT) \
+	MainWindow.$(OBJEXT) EditWindow.$(OBJEXT)
+#>- kzmduserconfig_OBJECTS = $(am_kzmduserconfig_OBJECTS)
+#>+ 6
+kzmduserconfig_final_OBJECTS = kzmduserconfig.all_cpp.o 
+kzmduserconfig_nofinal_OBJECTS = main.$(OBJEXT) ZmdUpdaterCore.$(OBJEXT) \
+	MainWindow.$(OBJEXT) EditWindow.$(OBJEXT)\
+EditWindow.moc.o ZmdUpdaterCore.moc.o MainWindow.moc.o 
+@KDE_USE_FINAL_FALSE@kzmduserconfig_OBJECTS = $(kzmduserconfig_nofinal_OBJECTS)
+@KDE_USE_FINAL_TRUE@kzmduserconfig_OBJECTS = $(kzmduserconfig_final_OBJECTS)
 am__DEPENDENCIES_1 =
-SUSEUpdater_DEPENDENCIES = $(am__DEPENDENCIES_1) \
+kzmduserconfig_DEPENDENCIES = $(am__DEPENDENCIES_1) \
 	$(top_srcdir)/kxmlrpcclient/libkxmlrpcclient.la
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/admin/depcomp
@@ -106,16 +91,8 @@ CXXLD = $(CXX)
 #>+ 2
 CXXLINK = $(LIBTOOL) --tag=CXX --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(KDE_CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
-SOURCES = $(SUSEUpdater_SOURCES)
-DIST_SOURCES = $(SUSEUpdater_SOURCES)
-am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
-am__vpath_adj = case $$p in \
-    $(srcdir)/*) f=`echo "$$p" | sed "s|^$$srcdirstrip/||"`;; \
-    *) f=$$p;; \
-  esac;
-am__strip_dir = `echo $$p | sed -e 's|^.*/||'`;
-desktopDATA_INSTALL = $(INSTALL_DATA)
-DATA = $(desktop_DATA)
+SOURCES = $(kzmduserconfig_SOURCES)
+DIST_SOURCES = $(kzmduserconfig_SOURCES)
 HEADERS = $(noinst_HEADERS)
 ETAGS = etags
 CTAGS = ctags
@@ -384,34 +361,28 @@ xdg_directorydir = @xdg_directorydir@
 xdg_menudir = @xdg_menudir@
 
 # set the include path for X, qt and KDE
-INCLUDES = $(all_includes) $(top_srcdir)/kxmlrpcclient
+INCLUDES = $(all_includes) $(top_srcdir)/kxmlrpcclient 
 
 # the library search path. 
-SUSEUpdater_LDFLAGS = $(KDE_RPATH) $(all_libraries)
+kzmduserconfig_LDFLAGS = $(KDE_RPATH) $(all_libraries)
 
 # the libraries to link against.
-SUSEUpdater_LDADD = $(LIB_KFILE) $(top_srcdir)/kxmlrpcclient/libkxmlrpcclient.la -lkxmlrpcclient
+kzmduserconfig_LDADD = $(LIB_KFILE) $(top_srcdir)/kxmlrpcclient/libkxmlrpcclient.la -lkxmlrpcclient
 
 # which sources should be compiled for kzmdupdater
-SUSEUpdater_SOURCES = main.cpp  MainWindow.cpp HeaderWidget.cpp ZmdConfigWindow.cpp ZmdInstallWindow.cpp ZmdServerDialog.cpp ZmdUpdaterCore.cpp ZmdProgressDialog.cpp ZmdCatalogListItem.cpp ZmdDependencyDialog.cpp ZmdUpdater.cpp UpdaterApplication.cpp GeneralConfigWindow.cpp UpdateListItem.cpp ZmdAdvancedConfig.cpp ZmdEditServers.cpp ZmdRugParser.cpp
-
+kzmduserconfig_SOURCES = main.cpp ZmdUpdaterCore.cpp MainWindow.cpp EditWindow.cpp
 # these are the headers for your project that won't be installed
-noinst_HEADERS = MainWindow.h HeaderWidget.h ZmdConfigWindow.h ZmdInstallWindow.h ZmdServerDialog.h ZmdUpdaterCore.h ZmdProgressDialog.h ZmdCatalogListItem.h ZmdDependencyDialog.h Updater.h ZmdUpdater.h UpdaterApplication.h GeneralConfigWindow.h UpdateListItem.h ZmdAdvancedConfig.h ZmdEditServers.h ZmdRugParser.h
+noinst_HEADERS = ZmdUpdaterCore.h ZmdUpdaterCoreUtils.h MainWindow.h EditWindow.h
 
 # let automoc handle all of the meta source files (moc)
 #>- METASOURCES = AUTO
-KDE_ICON = AUTO
-
-# this is where the desktop file will go 
-desktopdir = $(kde_appsdir)/Utilities
-desktop_DATA = suseupdater.desktop
 #>- all: all-am
 #>+ 1
 all: docs-am  all-am
 
 .SUFFIXES:
 .SUFFIXES: .cpp .lo .o .obj
-$(srcdir)/Makefile.in:  $(srcdir)/Makefile.am $(top_srcdir)/admin/Doxyfile.am $(am__configure_deps)
+$(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 #>- 	@for dep in $?; do \
 #>- 	  case '$(am__configure_deps)' in \
 #>- 	    *$$dep*) \
@@ -420,9 +391,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am $(top_srcdir)/admin/Doxyfile.am $(
 #>- 	      exit 1;; \
 #>- 	  esac; \
 #>- 	done; \
-#>- 	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  suseupdater/Makefile'; \
+#>- 	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  kzmduserconfig/Makefile'; \
 #>- 	cd $(top_srcdir) && \
-#>- 	  $(AUTOMAKE) --gnu  suseupdater/Makefile
+#>- 	  $(AUTOMAKE) --gnu  kzmduserconfig/Makefile
 #>+ 12
 	@for dep in $?; do \
 	  case '$(am__configure_deps)' in \
@@ -432,10 +403,10 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am $(top_srcdir)/admin/Doxyfile.am $(
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  suseupdater/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  kzmduserconfig/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu  suseupdater/Makefile
-	cd $(top_srcdir) && perl admin/am_edit suseupdater/Makefile.in
+	  $(AUTOMAKE) --gnu  kzmduserconfig/Makefile
+	cd $(top_srcdir) && perl admin/am_edit kzmduserconfig/Makefile.in
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
@@ -481,9 +452,9 @@ clean-binPROGRAMS:
 	  echo " rm -f $$p $$f"; \
 	  rm -f $$p $$f ; \
 	done
-SUSEUpdater$(EXEEXT): $(SUSEUpdater_OBJECTS) $(SUSEUpdater_DEPENDENCIES) 
-	@rm -f SUSEUpdater$(EXEEXT)
-	$(CXXLINK) $(SUSEUpdater_LDFLAGS) $(SUSEUpdater_OBJECTS) $(SUSEUpdater_LDADD) $(LIBS)
+kzmduserconfig$(EXEEXT): $(kzmduserconfig_OBJECTS) $(kzmduserconfig_DEPENDENCIES) 
+	@rm -f kzmduserconfig$(EXEEXT)
+	$(CXXLINK) $(kzmduserconfig_LDFLAGS) $(kzmduserconfig_OBJECTS) $(kzmduserconfig_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -491,21 +462,8 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/GeneralConfigWindow.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/HeaderWidget.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/EditWindow.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/MainWindow.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/UpdateListItem.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/UpdaterApplication.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ZmdAdvancedConfig.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ZmdCatalogListItem.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ZmdConfigWindow.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ZmdDependencyDialog.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ZmdEditServers.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ZmdInstallWindow.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ZmdProgressDialog.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ZmdRugParser.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ZmdServerDialog.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ZmdUpdater.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ZmdUpdaterCore.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
 
@@ -539,23 +497,6 @@ clean-libtool:
 distclean-libtool:
 	-rm -f libtool
 uninstall-info-am:
-install-desktopDATA: $(desktop_DATA)
-	@$(NORMAL_INSTALL)
-	test -z "$(desktopdir)" || $(mkdir_p) "$(DESTDIR)$(desktopdir)"
-	@list='$(desktop_DATA)'; for p in $$list; do \
-	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
-	  f=$(am__strip_dir) \
-	  echo " $(desktopDATA_INSTALL) '$$d$$p' '$(DESTDIR)$(desktopdir)/$$f'"; \
-	  $(desktopDATA_INSTALL) "$$d$$p" "$(DESTDIR)$(desktopdir)/$$f"; \
-	done
-
-uninstall-desktopDATA:
-	@$(NORMAL_UNINSTALL)
-	@list='$(desktop_DATA)'; for p in $$list; do \
-	  f=$(am__strip_dir) \
-	  echo " rm -f '$(DESTDIR)$(desktopdir)/$$f'"; \
-	  rm -f "$(DESTDIR)$(desktopdir)/$$f"; \
-	done
 
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \
@@ -606,7 +547,6 @@ distclean-tags:
 	-rm -f TAGS ID GTAGS GRTAGS GSYMS GPATH tags
 
 distdir: $(DISTFILES)
-	$(mkdir_p) $(distdir)/../admin
 	@srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`; \
 	topsrcdirstrip=`echo "$(top_srcdir)" | sed 's|.|.|g'`; \
 	list='$(DISTFILES)'; for file in $$list; do \
@@ -635,9 +575,9 @@ distdir: $(DISTFILES)
 	done
 check-am: all-am
 check: check-am
-all-am: Makefile $(PROGRAMS) $(DATA) $(HEADERS)
+all-am: Makefile $(PROGRAMS) $(HEADERS)
 installdirs:
-	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(desktopdir)"; do \
+	for dir in "$(DESTDIR)$(bindir)"; do \
 	  test -z "$$dir" || $(mkdir_p) "$$dir"; \
 	done
 install: install-am
@@ -688,9 +628,7 @@ info: info-am
 
 info-am:
 
-#>- install-data-am: install-data-local install-desktopDATA
-#>+ 1
-install-data-am: install-kde-icons  install-data-local install-desktopDATA
+install-data-am:
 
 install-exec-am: install-binPROGRAMS
 
@@ -718,178 +656,30 @@ ps: ps-am
 
 ps-am:
 
-#>- uninstall-am: uninstall-binPROGRAMS uninstall-desktopDATA \
-#>- 	uninstall-info-am uninstall-local
-#>+ 2
-uninstall-am: uninstall-kde-icons  uninstall-binPROGRAMS uninstall-desktopDATA \
-	uninstall-info-am uninstall-local
+uninstall-am: uninstall-binPROGRAMS uninstall-info-am
 
 .PHONY: CTAGS GTAGS all all-am check check-am clean clean-binPROGRAMS \
 	clean-generic clean-libtool ctags distclean distclean-compile \
 	distclean-generic distclean-libtool distclean-tags distdir dvi \
 	dvi-am html html-am info info-am install install-am \
-	install-binPROGRAMS install-data install-data-am \
-	install-data-local install-desktopDATA install-exec \
+	install-binPROGRAMS install-data install-data-am install-exec \
 	install-exec-am install-info install-info-am install-man \
 	install-strip installcheck installcheck-am installdirs \
 	maintainer-clean maintainer-clean-generic mostlyclean \
 	mostlyclean-compile mostlyclean-generic mostlyclean-libtool \
 	pdf pdf-am ps ps-am tags uninstall uninstall-am \
-	uninstall-binPROGRAMS uninstall-desktopDATA uninstall-info-am \
-	uninstall-local
+	uninstall-binPROGRAMS uninstall-info-am
 
-
-messages: rc.cpp
-	$(XGETTEXT) *.cpp -o $(podir)/kzmdupdater.pot
-
-install-data-local:
-	$(mkinstalldirs) $(DESTDIR)/$(prefix)/share/autostart
-	$(INSTALL_DATA) $(srcdir)/suseupdater-start.desktop \
-		$(DESTDIR)/$(prefix)/share/autostart/suseupdater.desktop
-apidox-am-yes:
-	@if test \! -d "$(top_srcdir)/doc/common/" && test -z "$$DOXDATA" ; then \
-		export DOXDATA=$(kde_libs_htmldir)/en/common ; \
-	fi ; \
-	abs_top_srcdir=`cd $(top_srcdir) && pwd` ;\
-	test -d $(top_builddir)/apidocs || \
-		( cd $(top_builddir) && sh $$abs_top_srcdir/admin/doxygen.sh \
-		--no-modulename --installdir=$(kde_libs_htmldir)/en \
-		--no-recurse $(abs_top_srcdir) . ) ; \
-	cd $(top_builddir) && sh $$abs_top_srcdir/admin/doxygen.sh \
-		--recurse --no-modulename --installdir=$(kde_libs_htmldir)/en \
-		$$abs_top_srcdir $(subdir)
-
-apidox-am-toplevel-yes:
-	@if test \! -d "$(top_srcdir)/doc/common/" && test -z "$$ADMIN" ; then \
-		export DOXDATA=$(kde_libs_htmldir)/en/common ; \
-	fi ; \
-	abs_top_srcdir=`cd $(top_srcdir) && pwd` ;\
-	cd $(top_builddir) && sh $$abs_top_srcdir/admin/doxygen.sh \
-		--no-modulename --installdir=$(kde_libs_htmldir)/en \
-		$$abs_top_srcdir
-
-apidox-am-no:
-
-apidox-am-toplevel-no:
-
-apidox:
-	@if test "$(subdir)" != "."; then \
-		$(MAKE) apidox-am-@KDE_HAS_DOXYGEN@ ;\
-	else \
-		$(MAKE) apidox-am-toplevel-@KDE_HAS_DOXYGEN@ ;\
-	fi
-
-install-data-local: install-apidox
-
-install-apidox:
-	@if test "$(subdir)" != "."; then \
-		$(mkinstalldirs) $(DESTDIR)$(kde_htmldir)/en/$(PACKAGE)-apidocs/$(subdir)/html ; \
-		if test -f $(top_builddir)/apidocs/$(subdir)/$(subdir).tag; then \
-		echo $(INSTALL_DATA) $(top_builddir)/apidocs/$(subdir)/$(subdir).tag $(DESTDIR)$(kde_htmldir)/en/$(PACKAGE)-apidocs/$(subdir); \
-		$(INSTALL_DATA) $(top_builddir)/apidocs/$(subdir)/$(subdir).tag $(DESTDIR)$(kde_htmldir)/en/$(PACKAGE)-apidocs/$(subdir); \
-		fi; \
-		if test -d $(top_builddir)/apidocs/$(subdir)/html; then \
-			list=`ls $(top_builddir)/apidocs/$(subdir)/html`; \
-			echo "installing $(top_builddir)/apidocs/$(subdir)/html" ;\
-			for file in $$list; do \
-				$(INSTALL_DATA) $(top_builddir)/apidocs/$(subdir)/html/$$file $(DESTDIR)$(kde_htmldir)/en/$(PACKAGE)-apidocs/$(subdir)/html; \
-		done; \
-		fi; \
-	else\
-		if test -d $(top_builddir)/apidocs; then \
-		$(mkinstalldirs) $(DESTDIR)$(kde_htmldir)/en/$(PACKAGE)-apidocs ;\
-		list=`cd $(top_builddir)/apidocs && ls -1`; \
-		echo "installing $(top_builddir)/apidocs/$$file" ;\
-		echo "target directory $(DESTDIR)$(kde_htmldir)/en/$(PACKAGE)-apidocs" ; \
-		for file in $$list; do \
-			if test -f $(top_builddir)/apidocs/$$file; then \
-				$(INSTALL_DATA) $(top_builddir)/apidocs/$$file $(DESTDIR)$(kde_htmldir)/en/$(PACKAGE)-apidocs; \
-			fi; \
-		done ; fi; \
-	fi
-
-uninstall-local: uninstall-apidox
-
-uninstall-apidox:
-	@if test "$(subdir)" != "."; then \
-		if test -d $(DESTDIR)$(kde_htmldir)/en/$(PACKAGE)-apidocs/$(subdir); then \
-			rm -rfv $(DESTDIR)$(kde_htmldir)/en/$(PACKAGE)-apidocs/$(subdir); \
-		fi \
-	else \
-		if test -d $(DESTDIR)$(kde_htmldir)/en/$(PACKAGE)-apidocs; then \
-			rm -rfv $(DESTDIR)$(kde_htmldir)/en/$(PACKAGE)-apidocs; \
-		fi \
-	fi
-
-install-apidox-recurse: install-apidox
-	@set fnord $(MAKEFLAGS); amf=$$2; if test -n '$(SUBDIRS)'; then \
-	    list='$(SUBDIRS)'; \
-	    for subdir in $$list; do \
-		if grep '^include .*Doxyfile.am' $(srcdir)/$$subdir/Makefile.am > /dev/null ; then \
-		echo "Installing apidox from $$subdir"; \
-		if test "$$subdir" != "."; then \
-			(cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) GENERATE_FLAG=no install-apidox-recurse) || exit 1; \
-		fi ; fi ;\
-	    done; \
-	fi
-
-.PHONY: apidox-am-yes apidox-am-no install-data-local install-apidox install-apidox uninstall-local uninstall-apidox uninstall-apidox apidox apidox-am-toplevel-no apidox-am-toplevel-yes
-
-# Local Variables:
-# mode: makefile
-# End:
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:
 
 #>+ 3
-ZmdEditServers.moc.cpp: $(srcdir)/ZmdEditServers.h
-	$(MOC) $(srcdir)/ZmdEditServers.h -o ZmdEditServers.moc.cpp
+EditWindow.moc.cpp: $(srcdir)/EditWindow.h
+	$(MOC) $(srcdir)/EditWindow.h -o EditWindow.moc.cpp
 
 #>+ 2
-mocs: ZmdEditServers.moc.cpp
-
-#>+ 3
-ZmdDependencyDialog.moc.cpp: $(srcdir)/ZmdDependencyDialog.h
-	$(MOC) $(srcdir)/ZmdDependencyDialog.h -o ZmdDependencyDialog.moc.cpp
-
-#>+ 2
-mocs: ZmdDependencyDialog.moc.cpp
-
-#>+ 3
-ZmdInstallWindow.moc.cpp: $(srcdir)/ZmdInstallWindow.h
-	$(MOC) $(srcdir)/ZmdInstallWindow.h -o ZmdInstallWindow.moc.cpp
-
-#>+ 2
-mocs: ZmdInstallWindow.moc.cpp
-
-#>+ 3
-GeneralConfigWindow.moc.cpp: $(srcdir)/GeneralConfigWindow.h
-	$(MOC) $(srcdir)/GeneralConfigWindow.h -o GeneralConfigWindow.moc.cpp
-
-#>+ 2
-mocs: GeneralConfigWindow.moc.cpp
-
-#>+ 3
-ZmdConfigWindow.moc.cpp: $(srcdir)/ZmdConfigWindow.h
-	$(MOC) $(srcdir)/ZmdConfigWindow.h -o ZmdConfigWindow.moc.cpp
-
-#>+ 2
-mocs: ZmdConfigWindow.moc.cpp
-
-#>+ 3
-ZmdRugParser.moc.cpp: $(srcdir)/ZmdRugParser.h
-	$(MOC) $(srcdir)/ZmdRugParser.h -o ZmdRugParser.moc.cpp
-
-#>+ 2
-mocs: ZmdRugParser.moc.cpp
-
-#>+ 3
-ZmdProgressDialog.moc.cpp: $(srcdir)/ZmdProgressDialog.h
-	$(MOC) $(srcdir)/ZmdProgressDialog.h -o ZmdProgressDialog.moc.cpp
-
-#>+ 2
-mocs: ZmdProgressDialog.moc.cpp
+mocs: EditWindow.moc.cpp
 
 #>+ 3
 ZmdUpdaterCore.moc.cpp: $(srcdir)/ZmdUpdaterCore.h
@@ -899,27 +689,6 @@ ZmdUpdaterCore.moc.cpp: $(srcdir)/ZmdUpdaterCore.h
 mocs: ZmdUpdaterCore.moc.cpp
 
 #>+ 3
-ZmdUpdater.moc.cpp: $(srcdir)/ZmdUpdater.h
-	$(MOC) $(srcdir)/ZmdUpdater.h -o ZmdUpdater.moc.cpp
-
-#>+ 2
-mocs: ZmdUpdater.moc.cpp
-
-#>+ 3
-ZmdAdvancedConfig.moc.cpp: $(srcdir)/ZmdAdvancedConfig.h
-	$(MOC) $(srcdir)/ZmdAdvancedConfig.h -o ZmdAdvancedConfig.moc.cpp
-
-#>+ 2
-mocs: ZmdAdvancedConfig.moc.cpp
-
-#>+ 3
-Updater.moc.cpp: $(srcdir)/Updater.h
-	$(MOC) $(srcdir)/Updater.h -o Updater.moc.cpp
-
-#>+ 2
-mocs: Updater.moc.cpp
-
-#>+ 3
 MainWindow.moc.cpp: $(srcdir)/MainWindow.h
 	$(MOC) $(srcdir)/MainWindow.h -o MainWindow.moc.cpp
 
@@ -927,48 +696,14 @@ MainWindow.moc.cpp: $(srcdir)/MainWindow.h
 mocs: MainWindow.moc.cpp
 
 #>+ 3
-HeaderWidget.moc.cpp: $(srcdir)/HeaderWidget.h
-	$(MOC) $(srcdir)/HeaderWidget.h -o HeaderWidget.moc.cpp
-
-#>+ 2
-mocs: HeaderWidget.moc.cpp
-
-#>+ 3
-ZmdServerDialog.moc.cpp: $(srcdir)/ZmdServerDialog.h
-	$(MOC) $(srcdir)/ZmdServerDialog.h -o ZmdServerDialog.moc.cpp
-
-#>+ 2
-mocs: ZmdServerDialog.moc.cpp
-
-#>+ 3
 clean-metasources:
-	-rm -f  ZmdEditServers.moc.cpp ZmdDependencyDialog.moc.cpp ZmdInstallWindow.moc.cpp GeneralConfigWindow.moc.cpp ZmdConfigWindow.moc.cpp ZmdRugParser.moc.cpp ZmdProgressDialog.moc.cpp ZmdUpdaterCore.moc.cpp ZmdUpdater.moc.cpp ZmdAdvancedConfig.moc.cpp Updater.moc.cpp MainWindow.moc.cpp HeaderWidget.moc.cpp ZmdServerDialog.moc.cpp
+	-rm -f  EditWindow.moc.cpp ZmdUpdaterCore.moc.cpp MainWindow.moc.cpp
 
 #>+ 2
-KDE_DIST=opensuse-updater.spec hi48-app-suseupdater.png hi16-app-suseupdater.png hi32-app-suseupdater.png suseupdater.desktop hi128-app-suseupdater.png suseupdater-start.desktop Constants.h ZmdConfigWindow.cpp.mine Makefile.in ZmdUpdaterCoreUtils.h hi64-app-suseupdater.png Makefile.am 
+KDE_DIST=Makefile.in kzmduserconfig tags Makefile.am 
 
 #>+ 2
 docs-am:
-
-#>+ 19
-install-kde-icons:
-	$(mkinstalldirs) $(DESTDIR)$(kde_icondir)/hicolor/32x32/apps
-	$(INSTALL_DATA) $(srcdir)/hi32-app-suseupdater.png $(DESTDIR)$(kde_icondir)/hicolor/32x32/apps/suseupdater.png
-	$(mkinstalldirs) $(DESTDIR)$(kde_icondir)/hicolor/128x128/apps
-	$(INSTALL_DATA) $(srcdir)/hi128-app-suseupdater.png $(DESTDIR)$(kde_icondir)/hicolor/128x128/apps/suseupdater.png
-	$(mkinstalldirs) $(DESTDIR)$(kde_icondir)/hicolor/64x64/apps
-	$(INSTALL_DATA) $(srcdir)/hi64-app-suseupdater.png $(DESTDIR)$(kde_icondir)/hicolor/64x64/apps/suseupdater.png
-	$(mkinstalldirs) $(DESTDIR)$(kde_icondir)/hicolor/16x16/apps
-	$(INSTALL_DATA) $(srcdir)/hi16-app-suseupdater.png $(DESTDIR)$(kde_icondir)/hicolor/16x16/apps/suseupdater.png
-	$(mkinstalldirs) $(DESTDIR)$(kde_icondir)/hicolor/48x48/apps
-	$(INSTALL_DATA) $(srcdir)/hi48-app-suseupdater.png $(DESTDIR)$(kde_icondir)/hicolor/48x48/apps/suseupdater.png
-
-uninstall-kde-icons:
-	-rm -f $(DESTDIR)$(kde_icondir)/hicolor/32x32/apps/suseupdater.png
-	-rm -f $(DESTDIR)$(kde_icondir)/hicolor/128x128/apps/suseupdater.png
-	-rm -f $(DESTDIR)$(kde_icondir)/hicolor/64x64/apps/suseupdater.png
-	-rm -f $(DESTDIR)$(kde_icondir)/hicolor/16x16/apps/suseupdater.png
-	-rm -f $(DESTDIR)$(kde_icondir)/hicolor/48x48/apps/suseupdater.png
 
 #>+ 15
 force-reedit:
@@ -980,10 +715,10 @@ force-reedit:
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  suseupdater/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  kzmduserconfig/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu  suseupdater/Makefile
-	cd $(top_srcdir) && perl admin/am_edit suseupdater/Makefile.in
+	  $(AUTOMAKE) --gnu  kzmduserconfig/Makefile
+	cd $(top_srcdir) && perl admin/am_edit kzmduserconfig/Makefile.in
 
 
 #>+ 21
@@ -1009,36 +744,36 @@ bcheck-am:
 
 
 #>+ 11
-SUSEUpdater.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/main.cpp $(srcdir)/MainWindow.cpp $(srcdir)/HeaderWidget.cpp $(srcdir)/ZmdConfigWindow.cpp $(srcdir)/ZmdInstallWindow.cpp $(srcdir)/ZmdServerDialog.cpp $(srcdir)/ZmdUpdaterCore.cpp $(srcdir)/ZmdProgressDialog.cpp $(srcdir)/ZmdCatalogListItem.cpp $(srcdir)/ZmdDependencyDialog.cpp $(srcdir)/ZmdUpdater.cpp $(srcdir)/UpdaterApplication.cpp $(srcdir)/GeneralConfigWindow.cpp $(srcdir)/UpdateListItem.cpp $(srcdir)/ZmdAdvancedConfig.cpp $(srcdir)/ZmdEditServers.cpp $(srcdir)/ZmdRugParser.cpp ZmdEditServers.moc.cpp ZmdDependencyDialog.moc.cpp ZmdConfigWindow.moc.cpp GeneralConfigWindow.moc.cpp ZmdInstallWindow.moc.cpp ZmdProgressDialog.moc.cpp ZmdRugParser.moc.cpp ZmdUpdater.moc.cpp ZmdUpdaterCore.moc.cpp ZmdAdvancedConfig.moc.cpp Updater.moc.cpp MainWindow.moc.cpp HeaderWidget.moc.cpp ZmdServerDialog.moc.cpp 
-	@echo 'creating SUSEUpdater.all_cpp.cpp ...'; \
-	rm -f SUSEUpdater.all_cpp.files SUSEUpdater.all_cpp.final; \
-	echo "#define KDE_USE_FINAL 1" >> SUSEUpdater.all_cpp.final; \
-	for file in main.cpp MainWindow.cpp HeaderWidget.cpp ZmdConfigWindow.cpp ZmdInstallWindow.cpp ZmdServerDialog.cpp ZmdUpdaterCore.cpp ZmdProgressDialog.cpp ZmdCatalogListItem.cpp ZmdDependencyDialog.cpp ZmdUpdater.cpp UpdaterApplication.cpp GeneralConfigWindow.cpp UpdateListItem.cpp ZmdAdvancedConfig.cpp ZmdEditServers.cpp ZmdRugParser.cpp ZmdEditServers.moc.cpp ZmdDependencyDialog.moc.cpp ZmdConfigWindow.moc.cpp GeneralConfigWindow.moc.cpp ZmdInstallWindow.moc.cpp ZmdProgressDialog.moc.cpp ZmdRugParser.moc.cpp ZmdUpdater.moc.cpp ZmdUpdaterCore.moc.cpp ZmdAdvancedConfig.moc.cpp Updater.moc.cpp MainWindow.moc.cpp HeaderWidget.moc.cpp ZmdServerDialog.moc.cpp ; do \
-	  echo "#include \"$$file\"" >> SUSEUpdater.all_cpp.files; \
-	  test ! -f $(srcdir)/$$file || egrep '^#pragma +implementation' $(srcdir)/$$file >> SUSEUpdater.all_cpp.final; \
+kzmduserconfig.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/main.cpp $(srcdir)/ZmdUpdaterCore.cpp $(srcdir)/MainWindow.cpp $(srcdir)/EditWindow.cpp $(srcdir)/ZmdUpdaterCore.moc.cpp EditWindow.moc.cpp $(srcdir)/MainWindow.moc.cpp 
+	@echo 'creating kzmduserconfig.all_cpp.cpp ...'; \
+	rm -f kzmduserconfig.all_cpp.files kzmduserconfig.all_cpp.final; \
+	echo "#define KDE_USE_FINAL 1" >> kzmduserconfig.all_cpp.final; \
+	for file in main.cpp ZmdUpdaterCore.cpp MainWindow.cpp EditWindow.cpp ZmdUpdaterCore.moc.cpp EditWindow.moc.cpp MainWindow.moc.cpp ; do \
+	  echo "#include \"$$file\"" >> kzmduserconfig.all_cpp.files; \
+	  test ! -f $(srcdir)/$$file || egrep '^#pragma +implementation' $(srcdir)/$$file >> kzmduserconfig.all_cpp.final; \
 	done; \
-	cat SUSEUpdater.all_cpp.final SUSEUpdater.all_cpp.files > SUSEUpdater.all_cpp.cpp; \
-	rm -f SUSEUpdater.all_cpp.final SUSEUpdater.all_cpp.files
+	cat kzmduserconfig.all_cpp.final kzmduserconfig.all_cpp.files > kzmduserconfig.all_cpp.cpp; \
+	rm -f kzmduserconfig.all_cpp.final kzmduserconfig.all_cpp.files
 
 #>+ 3
 clean-final:
-	-rm -f SUSEUpdater.all_cpp.cpp
+	-rm -f kzmduserconfig.all_cpp.cpp
 
 #>+ 3
 final:
-	$(MAKE) SUSEUpdater_OBJECTS="$(SUSEUpdater_final_OBJECTS)" all-am
+	$(MAKE) kzmduserconfig_OBJECTS="$(kzmduserconfig_final_OBJECTS)" all-am
 
 #>+ 3
 final-install:
-	$(MAKE) SUSEUpdater_OBJECTS="$(SUSEUpdater_final_OBJECTS)" install-am
+	$(MAKE) kzmduserconfig_OBJECTS="$(kzmduserconfig_final_OBJECTS)" install-am
 
 #>+ 3
 no-final:
-	$(MAKE) SUSEUpdater_OBJECTS="$(SUSEUpdater_nofinal_OBJECTS)" all-am
+	$(MAKE) kzmduserconfig_OBJECTS="$(kzmduserconfig_nofinal_OBJECTS)" all-am
 
 #>+ 3
 no-final-install:
-	$(MAKE) SUSEUpdater_OBJECTS="$(SUSEUpdater_nofinal_OBJECTS)" install-am
+	$(MAKE) kzmduserconfig_OBJECTS="$(kzmduserconfig_nofinal_OBJECTS)" install-am
 
 #>+ 3
 kde-rpo-clean:

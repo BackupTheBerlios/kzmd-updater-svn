@@ -464,7 +464,7 @@ ac_includes_default="\
 # include <unistd.h>
 #endif"
 
-ac_subst_vars='SHELL PATH_SEPARATOR PACKAGE_NAME PACKAGE_TARNAME PACKAGE_VERSION PACKAGE_STRING PACKAGE_BUGREPORT exec_prefix prefix program_transform_name bindir sbindir libexecdir datadir sysconfdir sharedstatedir localstatedir libdir includedir oldincludedir infodir mandir build_alias host_alias target_alias DEFS ECHO_C ECHO_N ECHO_T LIBS build build_cpu build_vendor build_os host host_cpu host_vendor host_os target target_cpu target_vendor target_os INSTALL_PROGRAM INSTALL_SCRIPT INSTALL_DATA CYGPATH_W PACKAGE VERSION ACLOCAL AUTOCONF AUTOMAKE AUTOHEADER MAKEINFO install_sh STRIP ac_ct_STRIP INSTALL_STRIP_PROGRAM mkdir_p AWK SET_MAKE am__leading_dot AMTAR am__tar am__untar KDECONFIG kde_libs_prefix kde_libs_htmldir CONF_FILES CC CFLAGS LDFLAGS CPPFLAGS ac_ct_CC EXEEXT OBJEXT DEPDIR am__include am__quote AMDEP_TRUE AMDEP_FALSE AMDEPBACKSLASH CCDEPMODE am__fastdepCC_TRUE am__fastdepCC_FALSE CPP CXX CXXFLAGS ac_ct_CXX CXXDEPMODE am__fastdepCXX_TRUE am__fastdepCXX_FALSE WOVERLOADED_VIRTUAL HAVE_GCC_VISIBILITY unsermake_enable_pch_TRUE unsermake_enable_pch_FALSE USE_EXCEPTIONS USE_RTTI CXXCPP NOOPT_CXXFLAGS NOOPT_CFLAGS ENABLE_PERMISSIVE_FLAG LDFLAGS_AS_NEEDED LDFLAGS_NEW_DTAGS KDE_USE_FINAL_TRUE KDE_USE_FINAL_FALSE KDE_USE_CLOSURE_TRUE KDE_USE_CLOSURE_FALSE KDE_NO_UNDEFINED KDE_USE_NMCHECK_TRUE KDE_USE_NMCHECK_FALSE EGREP LN_S ECHO AR ac_ct_AR RANLIB ac_ct_RANLIB F77 FFLAGS ac_ct_F77 LIBTOOL KDE_PLUGIN KDE_CHECK_PLUGIN MSGFMT GMSGFMT XGETTEXT LIBUTIL LIBCOMPAT LIBCRYPT LIBRESOLV LIB_POLL FRAMEWORK_COREAUDIO LIBSOCKET X_EXTRA_LIBS LIBUCB LIBDL KDE_USE_FPIE KDE_USE_PIE include_x11_TRUE include_x11_FALSE X_PRE_LIBS LIB_X11 LIB_XRENDER LIBSM X_INCLUDES X_LDFLAGS x_includes x_libraries QTE_NORTTI LIB_XEXT LIBPTHREAD USE_THREADS KDE_MT_LDFLAGS KDE_MT_LIBS USER_INCLUDES USER_LDFLAGS LIBZ LIBPNG LIBJPEG qt_libraries qt_includes QT_INCLUDES QT_LDFLAGS PERL MOC UIC UIC_TR LIB_QT LIB_QPE kde_qtver KDE_EXTRA_RPATH KDE_RPATH X_RPATH kde_libraries kde_includes KDE_LDFLAGS KDE_INCLUDES all_includes all_libraries AUTODIRS include_ARTS_TRUE include_ARTS_FALSE MAKEKDEWIDGETS KCONFIG_COMPILER KCFG_DEPENDENCIES DCOPIDLNG DCOPIDL DCOPIDL2CPP DCOP_DEPENDENCIES MCOPIDL ARTSCCONFIG MEINPROC KDE_XSL_STYLESHEET XMLLINT kde_htmldir kde_appsdir kde_icondir kde_sounddir kde_datadir kde_locale kde_confdir kde_kcfgdir kde_mimedir kde_wallpaperdir kde_bindir xdg_appsdir xdg_menudir xdg_directorydir kde_templatesdir kde_servicesdir kde_servicetypesdir kde_moduledir kdeinitdir kde_styledir kde_widgetdir LIB_KDED LIB_KDECORE LIB_KDEUI LIB_KIO LIB_KJS LIB_SMB LIB_KAB LIB_KABC LIB_KHTML LIB_KSPELL LIB_KPARTS LIB_KDEPRINT LIB_KUTILS LIB_KDEPIM LIB_KIMPROXY LIB_KNEWSTUFF LIB_KDNSSD LIB_KUNITTEST LIB_KSYCOCA LIB_KFILE LIB_KFM QTDOCDIR KDE_HAVE_DOT DOXYGEN DOXYGEN_PROJECT_NAME DOXYGEN_PROJECT_NUMBER KDE_HAS_DOXYGEN TOPSUBDIRS admin_SUBDIR_included_TRUE admin_SUBDIR_included_FALSE images_SUBDIR_included_TRUE images_SUBDIR_included_FALSE kxmlrpcclient_SUBDIR_included_TRUE kxmlrpcclient_SUBDIR_included_FALSE kzmdauthutil_SUBDIR_included_TRUE kzmdauthutil_SUBDIR_included_FALSE po_SUBDIR_included_TRUE po_SUBDIR_included_FALSE suseupdater_SUBDIR_included_TRUE suseupdater_SUBDIR_included_FALSE udshttp_SUBDIR_included_TRUE udshttp_SUBDIR_included_FALSE LIBOBJS LTLIBOBJS'
+ac_subst_vars='SHELL PATH_SEPARATOR PACKAGE_NAME PACKAGE_TARNAME PACKAGE_VERSION PACKAGE_STRING PACKAGE_BUGREPORT exec_prefix prefix program_transform_name bindir sbindir libexecdir datadir sysconfdir sharedstatedir localstatedir libdir includedir oldincludedir infodir mandir build_alias host_alias target_alias DEFS ECHO_C ECHO_N ECHO_T LIBS build build_cpu build_vendor build_os host host_cpu host_vendor host_os target target_cpu target_vendor target_os INSTALL_PROGRAM INSTALL_SCRIPT INSTALL_DATA CYGPATH_W PACKAGE VERSION ACLOCAL AUTOCONF AUTOMAKE AUTOHEADER MAKEINFO install_sh STRIP ac_ct_STRIP INSTALL_STRIP_PROGRAM mkdir_p AWK SET_MAKE am__leading_dot AMTAR am__tar am__untar KDECONFIG kde_libs_prefix kde_libs_htmldir CONF_FILES CC CFLAGS LDFLAGS CPPFLAGS ac_ct_CC EXEEXT OBJEXT DEPDIR am__include am__quote AMDEP_TRUE AMDEP_FALSE AMDEPBACKSLASH CCDEPMODE am__fastdepCC_TRUE am__fastdepCC_FALSE CPP CXX CXXFLAGS ac_ct_CXX CXXDEPMODE am__fastdepCXX_TRUE am__fastdepCXX_FALSE WOVERLOADED_VIRTUAL HAVE_GCC_VISIBILITY unsermake_enable_pch_TRUE unsermake_enable_pch_FALSE USE_EXCEPTIONS USE_RTTI CXXCPP NOOPT_CXXFLAGS NOOPT_CFLAGS ENABLE_PERMISSIVE_FLAG LDFLAGS_AS_NEEDED LDFLAGS_NEW_DTAGS KDE_USE_FINAL_TRUE KDE_USE_FINAL_FALSE KDE_USE_CLOSURE_TRUE KDE_USE_CLOSURE_FALSE KDE_NO_UNDEFINED KDE_USE_NMCHECK_TRUE KDE_USE_NMCHECK_FALSE EGREP LN_S ECHO AR ac_ct_AR RANLIB ac_ct_RANLIB F77 FFLAGS ac_ct_F77 LIBTOOL KDE_PLUGIN KDE_CHECK_PLUGIN MSGFMT GMSGFMT XGETTEXT LIBUTIL LIBCOMPAT LIBCRYPT LIBRESOLV LIB_POLL FRAMEWORK_COREAUDIO LIBSOCKET X_EXTRA_LIBS LIBUCB LIBDL KDE_USE_FPIE KDE_USE_PIE include_x11_TRUE include_x11_FALSE X_PRE_LIBS LIB_X11 LIB_XRENDER LIBSM X_INCLUDES X_LDFLAGS x_includes x_libraries QTE_NORTTI LIB_XEXT LIBPTHREAD USE_THREADS KDE_MT_LDFLAGS KDE_MT_LIBS USER_INCLUDES USER_LDFLAGS LIBZ LIBPNG LIBJPEG qt_libraries qt_includes QT_INCLUDES QT_LDFLAGS PERL MOC UIC UIC_TR LIB_QT LIB_QPE kde_qtver KDE_EXTRA_RPATH KDE_RPATH X_RPATH kde_libraries kde_includes KDE_LDFLAGS KDE_INCLUDES all_includes all_libraries AUTODIRS include_ARTS_TRUE include_ARTS_FALSE MAKEKDEWIDGETS KCONFIG_COMPILER KCFG_DEPENDENCIES DCOPIDLNG DCOPIDL DCOPIDL2CPP DCOP_DEPENDENCIES MCOPIDL ARTSCCONFIG MEINPROC KDE_XSL_STYLESHEET XMLLINT kde_htmldir kde_appsdir kde_icondir kde_sounddir kde_datadir kde_locale kde_confdir kde_kcfgdir kde_mimedir kde_wallpaperdir kde_bindir xdg_appsdir xdg_menudir xdg_directorydir kde_templatesdir kde_servicesdir kde_servicetypesdir kde_moduledir kdeinitdir kde_styledir kde_widgetdir LIB_KDED LIB_KDECORE LIB_KDEUI LIB_KIO LIB_KJS LIB_SMB LIB_KAB LIB_KABC LIB_KHTML LIB_KSPELL LIB_KPARTS LIB_KDEPRINT LIB_KUTILS LIB_KDEPIM LIB_KIMPROXY LIB_KNEWSTUFF LIB_KDNSSD LIB_KUNITTEST LIB_KSYCOCA LIB_KFILE LIB_KFM QTDOCDIR KDE_HAVE_DOT DOXYGEN DOXYGEN_PROJECT_NAME DOXYGEN_PROJECT_NUMBER KDE_HAS_DOXYGEN TOPSUBDIRS admin_SUBDIR_included_TRUE admin_SUBDIR_included_FALSE images_SUBDIR_included_TRUE images_SUBDIR_included_FALSE kxmlrpcclient_SUBDIR_included_TRUE kxmlrpcclient_SUBDIR_included_FALSE kzmdauthutil_SUBDIR_included_TRUE kzmdauthutil_SUBDIR_included_FALSE kzmduserconfig_SUBDIR_included_TRUE kzmduserconfig_SUBDIR_included_FALSE po_SUBDIR_included_TRUE po_SUBDIR_included_FALSE suseupdater_SUBDIR_included_TRUE suseupdater_SUBDIR_included_FALSE udshttp_SUBDIR_included_TRUE udshttp_SUBDIR_included_FALSE LIBOBJS LTLIBOBJS'
 ac_subst_files=''
 
 # Initialize some variables set by options.
@@ -32821,6 +32821,16 @@ fi
 
 
 
+if test "x$kzmduserconfig_SUBDIR_included" = xyes; then
+  kzmduserconfig_SUBDIR_included_TRUE=
+  kzmduserconfig_SUBDIR_included_FALSE='#'
+else
+  kzmduserconfig_SUBDIR_included_TRUE='#'
+  kzmduserconfig_SUBDIR_included_FALSE=
+fi
+
+
+
 if test "x$po_SUBDIR_included" = xyes; then
   po_SUBDIR_included_TRUE=
   po_SUBDIR_included_FALSE='#'
@@ -32858,6 +32868,8 @@ fi
           ac_config_files="$ac_config_files kxmlrpcclient/Makefile"
 
           ac_config_files="$ac_config_files kzmdauthutil/Makefile"
+
+          ac_config_files="$ac_config_files kzmduserconfig/Makefile"
 
           ac_config_files="$ac_config_files po/Makefile"
 
@@ -33025,6 +33037,13 @@ if test -z "${kzmdauthutil_SUBDIR_included_TRUE}" && test -z "${kzmdauthutil_SUB
   { { echo "$as_me:$LINENO: error: conditional \"kzmdauthutil_SUBDIR_included\" was never defined.
 Usually this means the macro was only invoked conditionally." >&5
 echo "$as_me: error: conditional \"kzmdauthutil_SUBDIR_included\" was never defined.
+Usually this means the macro was only invoked conditionally." >&2;}
+   { (exit 1); exit 1; }; }
+fi
+if test -z "${kzmduserconfig_SUBDIR_included_TRUE}" && test -z "${kzmduserconfig_SUBDIR_included_FALSE}"; then
+  { { echo "$as_me:$LINENO: error: conditional \"kzmduserconfig_SUBDIR_included\" was never defined.
+Usually this means the macro was only invoked conditionally." >&5
+echo "$as_me: error: conditional \"kzmduserconfig_SUBDIR_included\" was never defined.
 Usually this means the macro was only invoked conditionally." >&2;}
    { (exit 1); exit 1; }; }
 fi
@@ -33498,6 +33517,7 @@ do
   "images/Makefile" ) CONFIG_FILES="$CONFIG_FILES images/Makefile" ;;
   "kxmlrpcclient/Makefile" ) CONFIG_FILES="$CONFIG_FILES kxmlrpcclient/Makefile" ;;
   "kzmdauthutil/Makefile" ) CONFIG_FILES="$CONFIG_FILES kzmdauthutil/Makefile" ;;
+  "kzmduserconfig/Makefile" ) CONFIG_FILES="$CONFIG_FILES kzmduserconfig/Makefile" ;;
   "po/Makefile" ) CONFIG_FILES="$CONFIG_FILES po/Makefile" ;;
   "suseupdater/Makefile" ) CONFIG_FILES="$CONFIG_FILES suseupdater/Makefile" ;;
   "udshttp/Makefile" ) CONFIG_FILES="$CONFIG_FILES udshttp/Makefile" ;;
@@ -33810,6 +33830,8 @@ s,@kxmlrpcclient_SUBDIR_included_TRUE@,$kxmlrpcclient_SUBDIR_included_TRUE,;t t
 s,@kxmlrpcclient_SUBDIR_included_FALSE@,$kxmlrpcclient_SUBDIR_included_FALSE,;t t
 s,@kzmdauthutil_SUBDIR_included_TRUE@,$kzmdauthutil_SUBDIR_included_TRUE,;t t
 s,@kzmdauthutil_SUBDIR_included_FALSE@,$kzmdauthutil_SUBDIR_included_FALSE,;t t
+s,@kzmduserconfig_SUBDIR_included_TRUE@,$kzmduserconfig_SUBDIR_included_TRUE,;t t
+s,@kzmduserconfig_SUBDIR_included_FALSE@,$kzmduserconfig_SUBDIR_included_FALSE,;t t
 s,@po_SUBDIR_included_TRUE@,$po_SUBDIR_included_TRUE,;t t
 s,@po_SUBDIR_included_FALSE@,$po_SUBDIR_included_FALSE,;t t
 s,@suseupdater_SUBDIR_included_TRUE@,$suseupdater_SUBDIR_included_TRUE,;t t
