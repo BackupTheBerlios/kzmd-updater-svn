@@ -1,0 +1,545 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.5.4	//
+ACLOCAL	Makefile	/^ACLOCAL = ${SHELL} \/home\/raven\/src\/trunk\/suseupdater\/admin\/missing --run aclocal-1.9$/;"	m
+ACLOCAL_M4	Makefile	/^ACLOCAL_M4 = $(top_srcdir)\/aclocal.m4$/;"	m
+AMDEP_FALSE	Makefile	/^AMDEP_FALSE = #$/;"	m
+AMDEP_TRUE	Makefile	/^AMDEP_TRUE = $/;"	m
+AMTAR	Makefile	/^AMTAR = ${SHELL} \/home\/raven\/src\/trunk\/suseupdater\/admin\/missing --run tar$/;"	m
+AR	Makefile	/^AR = ar$/;"	m
+ARTSCCONFIG	Makefile	/^ARTSCCONFIG = \/opt\/kde3\/bin\/artsc-config$/;"	m
+AUTOCONF	Makefile	/^AUTOCONF = $(SHELL) $(top_srcdir)\/admin\/cvs.sh configure || touch configure$/;"	m
+AUTODIRS	Makefile	/^AUTODIRS = $/;"	m
+AUTOHEADER	Makefile	/^AUTOHEADER = ${SHELL} \/home\/raven\/src\/trunk\/suseupdater\/admin\/missing --run autoheader$/;"	m
+AUTOMAKE	Makefile	/^AUTOMAKE = ${SHELL} \/home\/raven\/src\/trunk\/suseupdater\/admin\/missing --run automake-1.9$/;"	m
+AWK	Makefile	/^AWK = gawk$/;"	m
+CC	Makefile	/^CC = gcc$/;"	m
+CCDEPMODE	Makefile	/^CCDEPMODE = depmode=gcc3$/;"	m
+CDPATH	Makefile	/^am__cd = CDPATH="$${ZSH_VERSION+.}$(PATH_SEPARATOR)" && cd$/;"	m
+CFLAGS	Makefile	/^CFLAGS = -std=iso9899:1990 -W -Wall -Wchar-subscripts -Wshadow -Wpointer-arith -Wmissing-prototypes -Wwrite-strings -D_XOPEN_SOURCE=500 -D_BSD_SOURCE -O2   -Wformat-security -Wmissing-format-attribute$/;"	m
+CHECK_INTERVAL	ZmdUpdaterCore.h	56;"	d
+CONFIG_CLEAN_FILES	Makefile	/^CONFIG_CLEAN_FILES =$/;"	m
+CONFIG_HEADER	Makefile	/^CONFIG_HEADER = $(top_builddir)\/config.h$/;"	m
+CONF_FILES	Makefile	/^CONF_FILES =  $(top_srcdir)\/.\/admin\/configure.in.min $(top_srcdir)\/configure.in.in$/;"	m
+CPP	Makefile	/^CPP = gcc -E$/;"	m
+CPPFLAGS	Makefile	/^CPPFLAGS =  -DQT_THREAD_SUPPORT  -D_REENTRANT$/;"	m
+CTAGS	Makefile	/^CTAGS = ctags$/;"	m
+CXX	Makefile	/^CXX = g++$/;"	m
+CXXCOMPILE	Makefile	/^CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \\$/;"	m
+CXXCPP	Makefile	/^CXXCPP = g++ -E$/;"	m
+CXXDEPMODE	Makefile	/^CXXDEPMODE = depmode=gcc3$/;"	m
+CXXFLAGS	Makefile	/^CXXFLAGS = -Wno-long-long -Wundef -ansi -D_XOPEN_SOURCE=500 -D_BSD_SOURCE -Wcast-align -Wconversion -Wchar-subscripts -Wall -W -Wpointer-arith -O2 -Wformat-security -Wmissing-format-attribute -Wno-non-virtual-dtor -fno-exceptions -fno-check-new -fno-common$/;"	m
+CXXLD	Makefile	/^CXXLD = $(CXX)$/;"	m
+CXXLINK	Makefile	/^CXXLINK = $(LIBTOOL) --tag=CXX --mode=link $(CXXLD) $(AM_CXXFLAGS) \\$/;"	m
+CYGPATH_W	Makefile	/^CYGPATH_W = echo$/;"	m
+Catalog	ZmdUpdaterCoreUtils.h	/^		Catalog() : subscribed(3) {}$/;"	f	class:Catalog
+Catalog	ZmdUpdaterCoreUtils.h	/^class Catalog {$/;"	c
+DCOPIDL	Makefile	/^DCOPIDL = \/opt\/kde3\/bin\/dcopidl$/;"	m
+DCOPIDL2CPP	Makefile	/^DCOPIDL2CPP = \/opt\/kde3\/bin\/dcopidl2cpp$/;"	m
+DCOPIDLNG	Makefile	/^DCOPIDLNG = \/opt\/kde3\/bin\/dcopidlng$/;"	m
+DCOP_DEPENDENCIES	Makefile	/^DCOP_DEPENDENCIES = $(DCOPIDL) $(DCOPIDLNG)$/;"	m
+DEBUG	ZmdUpdaterCore.h	41;"	d
+DEFAULT_INCLUDES	Makefile	/^DEFAULT_INCLUDES = -I. -I$(srcdir) -I$(top_builddir)$/;"	m
+DEFS	Makefile	/^DEFS = -DHAVE_CONFIG_H$/;"	m
+DEPDIR	Makefile	/^DEPDIR = .deps$/;"	m
+DISTFILES	Makefile	/^DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST) $(KDE_DIST)$/;"	m
+DIST_COMMON	Makefile	/^DIST_COMMON = $(noinst_HEADERS) $(srcdir)\/Makefile.am \\$/;"	m
+DIST_SOURCES	Makefile	/^DIST_SOURCES = $(kzmduserconfig_SOURCES)$/;"	m
+DOXYGEN	Makefile	/^DOXYGEN = \/usr\/bin\/doxygen$/;"	m
+DOXYGEN_PROJECT_NAME	Makefile	/^DOXYGEN_PROJECT_NAME = The KDE Updater Applet API Reference$/;"	m
+DOXYGEN_PROJECT_NUMBER	Makefile	/^DOXYGEN_PROJECT_NUMBER = Version 3.5.1$/;"	m
+D_XOPEN_SOURCE	Makefile	/^CFLAGS = -std=iso9899:1990 -W -Wall -Wchar-subscripts -Wshadow -Wpointer-arith -Wmissing-prototypes -Wwrite-strings -D_XOPEN_SOURCE=500 -D_BSD_SOURCE -O2   -Wformat-security -Wmissing-format-attribute$/;"	m
+ECHO	Makefile	/^ECHO = echo$/;"	m
+ECHO_C	Makefile	/^ECHO_C = $/;"	m
+ECHO_N	Makefile	/^ECHO_N = -n$/;"	m
+ECHO_T	Makefile	/^ECHO_T = $/;"	m
+EGREP	Makefile	/^EGREP = grep -E$/;"	m
+ENABLE_PERMISSIVE_FLAG	Makefile	/^ENABLE_PERMISSIVE_FLAG = -fpermissive$/;"	m
+ERROR_AUTH_REJECT	ZmdUpdaterCore.h	/^	ERROR_AUTH_REJECT,$/;"	e
+ERROR_DEP_FAIL	ZmdUpdaterCore.h	/^	ERROR_DEP_FAIL,$/;"	e
+ERROR_INVALID	ZmdUpdaterCore.h	/^	ERROR_INVALID,$/;"	e
+ERROR_INVALID_TYPE	ZmdUpdaterCore.h	/^	ERROR_INVALID_TYPE,$/;"	e
+ERROR_NONE	ZmdUpdaterCore.h	/^	ERROR_NONE = 0,$/;"	e
+ERROR_TRANS_FAIL	ZmdUpdaterCore.h	/^	ERROR_TRANS_FAIL$/;"	e
+ETAGS	Makefile	/^ETAGS = etags$/;"	m
+EXEEXT	Makefile	/^EXEEXT = $/;"	m
+F77	Makefile	/^F77 = $/;"	m
+FFLAGS	Makefile	/^FFLAGS = $/;"	m
+FRAMEWORK_COREAUDIO	Makefile	/^FRAMEWORK_COREAUDIO = $/;"	m
+GMSGFMT	Makefile	/^GMSGFMT = \/usr\/bin\/msgfmt$/;"	m
+HAVE_GCC_VISIBILITY	Makefile	/^HAVE_GCC_VISIBILITY = 0$/;"	m
+HEADERS	Makefile	/^HEADERS = $(noinst_HEADERS)$/;"	m
+INCLUDES	Makefile	/^INCLUDES = $(all_includes) $(top_srcdir)\/kxmlrpcclient$/;"	m
+INSTALL	Makefile	/^INSTALL = \/usr\/bin\/install -c -p$/;"	m
+INSTALL_DATA	Makefile	/^INSTALL_DATA = ${INSTALL} -m 644$/;"	m
+INSTALL_HEADER	Makefile	/^INSTALL_HEADER = $(INSTALL_DATA)$/;"	m
+INSTALL_PROGRAM	Makefile	/^	$(MAKE) $(AM_MAKEFLAGS) INSTALL_PROGRAM="$(INSTALL_STRIP_PROGRAM)" \\$/;"	m
+INSTALL_PROGRAM	Makefile	/^INSTALL_PROGRAM = ${INSTALL} $(INSTALL_STRIP_FLAG)$/;"	m
+INSTALL_PROGRAM_ENV	Makefile	/^	    echo "INSTALL_PROGRAM_ENV=STRIPPROG='$(STRIP)'"` install$/;"	m
+INSTALL_SCRIPT	Makefile	/^INSTALL_SCRIPT = ${INSTALL}$/;"	m
+INSTALL_STRIP_FLAG	Makefile	/^	  install_sh_PROGRAM="$(INSTALL_STRIP_PROGRAM)" INSTALL_STRIP_FLAG=-s \\$/;"	m
+INSTALL_STRIP_PROGRAM	Makefile	/^INSTALL_STRIP_PROGRAM = ${SHELL} $(install_sh) -c -s$/;"	m
+IS_ZMD_BUSY	ZmdUpdaterCore.h	59;"	d
+Identity	ZmdUpdaterCoreUtils.h	/^		Identity() {}$/;"	f	class:Identity
+Identity	ZmdUpdaterCoreUtils.h	/^class Identity {$/;"	c
+KCFG_DEPENDENCIES	Makefile	/^KCFG_DEPENDENCIES = $(KCONFIG_COMPILER)$/;"	m
+KCONFIG_COMPILER	Makefile	/^KCONFIG_COMPILER = \/opt\/kde3\/bin\/kconfig_compiler$/;"	m
+KDECONFIG	Makefile	/^KDECONFIG = \/opt\/kde3\/bin\/kde-config$/;"	m
+KDE_CHECK_PLUGIN	Makefile	/^KDE_CHECK_PLUGIN = $(KDE_PLUGIN) -rpath $(libdir)$/;"	m
+KDE_DIST	Makefile	/^KDE_DIST=Makefile.am Makefile.in $/;"	m
+KDE_EXTRA_RPATH	Makefile	/^KDE_EXTRA_RPATH = $/;"	m
+KDE_HAS_DOXYGEN	Makefile	/^KDE_HAS_DOXYGEN = yes$/;"	m
+KDE_HAVE_DOT	Makefile	/^KDE_HAVE_DOT = YES$/;"	m
+KDE_INCLUDES	Makefile	/^KDE_INCLUDES = -I\/opt\/kde3\/include$/;"	m
+KDE_LDFLAGS	Makefile	/^KDE_LDFLAGS = -L\/opt\/kde3\/lib$/;"	m
+KDE_MT_LDFLAGS	Makefile	/^KDE_MT_LDFLAGS = $/;"	m
+KDE_MT_LIBS	Makefile	/^KDE_MT_LIBS = -lpthread$/;"	m
+KDE_NO_UNDEFINED	Makefile	/^KDE_NO_UNDEFINED = -Wl,--no-undefined -Wl,--allow-shlib-undefined$/;"	m
+KDE_PLUGIN	Makefile	/^KDE_PLUGIN = -avoid-version -module -no-undefined $(KDE_NO_UNDEFINED) $(KDE_RPATH) $(KDE_MT_LDFLAGS)$/;"	m
+KDE_RPATH	Makefile	/^KDE_RPATH = -R $(libdir) -R $(kde_libraries) -R $(qt_libraries) -R $(x_libraries)$/;"	m
+KDE_USE_CLOSURE_FALSE	Makefile	/^KDE_USE_CLOSURE_FALSE = $/;"	m
+KDE_USE_CLOSURE_TRUE	Makefile	/^KDE_USE_CLOSURE_TRUE = #$/;"	m
+KDE_USE_FINAL_FALSE	Makefile	/^KDE_USE_FINAL_FALSE = $/;"	m
+KDE_USE_FINAL_TRUE	Makefile	/^KDE_USE_FINAL_TRUE = #$/;"	m
+KDE_USE_FPIE	Makefile	/^KDE_USE_FPIE = -fPIE$/;"	m
+KDE_USE_NMCHECK_FALSE	Makefile	/^KDE_USE_NMCHECK_FALSE = $/;"	m
+KDE_USE_NMCHECK_TRUE	Makefile	/^KDE_USE_NMCHECK_TRUE = #$/;"	m
+KDE_USE_PIE	Makefile	/^KDE_USE_PIE = -pie$/;"	m
+KDE_XSL_STYLESHEET	Makefile	/^KDE_XSL_STYLESHEET = \/opt\/kde3\/share\/apps\/ksgmltools2\/customization\/kde-chunk.xsl$/;"	m
+LDFLAGS	Makefile	/^LDFLAGS = $/;"	m
+LDFLAGS_AS_NEEDED	Makefile	/^LDFLAGS_AS_NEEDED = $/;"	m
+LDFLAGS_NEW_DTAGS	Makefile	/^LDFLAGS_NEW_DTAGS = $/;"	m
+LIBCOMPAT	Makefile	/^LIBCOMPAT = $/;"	m
+LIBCRYPT	Makefile	/^LIBCRYPT = -lcrypt$/;"	m
+LIBDL	Makefile	/^LIBDL = -ldl$/;"	m
+LIBJPEG	Makefile	/^LIBJPEG = -ljpeg$/;"	m
+LIBOBJS	Makefile	/^LIBOBJS = $/;"	m
+LIBPNG	Makefile	/^LIBPNG = -lpng -lz -lm$/;"	m
+LIBPTHREAD	Makefile	/^LIBPTHREAD = -lpthread$/;"	m
+LIBRESOLV	Makefile	/^LIBRESOLV = -lresolv$/;"	m
+LIBS	Makefile	/^LIBS = $/;"	m
+LIBSM	Makefile	/^LIBSM = -lSM -lICE$/;"	m
+LIBSOCKET	Makefile	/^LIBSOCKET = $/;"	m
+LIBTOOL	Makefile	/^LIBTOOL = $(SHELL) $(top_builddir)\/libtool --silent$/;"	m
+LIBUCB	Makefile	/^LIBUCB = $/;"	m
+LIBUTIL	Makefile	/^LIBUTIL = -lutil$/;"	m
+LIBZ	Makefile	/^LIBZ = -lz$/;"	m
+LIB_KAB	Makefile	/^LIB_KAB = -lkab$/;"	m
+LIB_KABC	Makefile	/^LIB_KABC = -lkabc$/;"	m
+LIB_KDECORE	Makefile	/^LIB_KDECORE = -lkdecore$/;"	m
+LIB_KDED	Makefile	/^LIB_KDED = $/;"	m
+LIB_KDEPIM	Makefile	/^LIB_KDEPIM = -lkdepim$/;"	m
+LIB_KDEPRINT	Makefile	/^LIB_KDEPRINT = -lkdeprint$/;"	m
+LIB_KDEUI	Makefile	/^LIB_KDEUI = -lkdeui$/;"	m
+LIB_KDNSSD	Makefile	/^LIB_KDNSSD = -lkdnssd$/;"	m
+LIB_KFILE	Makefile	/^LIB_KFILE = -lkio$/;"	m
+LIB_KFM	Makefile	/^LIB_KFM = $/;"	m
+LIB_KHTML	Makefile	/^LIB_KHTML = -lkhtml$/;"	m
+LIB_KIMPROXY	Makefile	/^LIB_KIMPROXY = -lkimproxy$/;"	m
+LIB_KIO	Makefile	/^LIB_KIO = -lkio$/;"	m
+LIB_KJS	Makefile	/^LIB_KJS = -lkjs$/;"	m
+LIB_KNEWSTUFF	Makefile	/^LIB_KNEWSTUFF = -lknewstuff$/;"	m
+LIB_KPARTS	Makefile	/^LIB_KPARTS = -lkparts$/;"	m
+LIB_KSPELL	Makefile	/^LIB_KSPELL = -lkspell$/;"	m
+LIB_KSYCOCA	Makefile	/^LIB_KSYCOCA = -lkio$/;"	m
+LIB_KUNITTEST	Makefile	/^LIB_KUNITTEST = -lkunittest$/;"	m
+LIB_KUTILS	Makefile	/^LIB_KUTILS = -lkutils$/;"	m
+LIB_POLL	Makefile	/^LIB_POLL = $/;"	m
+LIB_QPE	Makefile	/^LIB_QPE = $/;"	m
+LIB_QT	Makefile	/^LIB_QT = -lqt-mt  $(LIBZ) $(LIBPNG) -lXext $(LIB_X11) $(LIBSM) -lpthread$/;"	m
+LIB_SMB	Makefile	/^LIB_SMB = -lsmb$/;"	m
+LIB_X11	Makefile	/^LIB_X11 = -lX11 $(LIBSOCKET)$/;"	m
+LIB_XEXT	Makefile	/^LIB_XEXT = -lXext$/;"	m
+LIB_XRENDER	Makefile	/^LIB_XRENDER = $/;"	m
+LN_S	Makefile	/^LN_S = ln -s$/;"	m
+LTCXXCOMPILE	Makefile	/^LTCXXCOMPILE = $(LIBTOOL) --tag=CXX --mode=compile $(CXX) $(DEFS) \\$/;"	m
+LTLIBOBJS	Makefile	/^LTLIBOBJS = $/;"	m
+MAKEINFO	Makefile	/^MAKEINFO = ${SHELL} \/home\/raven\/src\/trunk\/suseupdater\/admin\/missing --run makeinfo$/;"	m
+MAKEKDEWIDGETS	Makefile	/^MAKEKDEWIDGETS = \/opt\/kde3\/bin\/makekdewidgets$/;"	m
+MCOPIDL	Makefile	/^MCOPIDL = \/opt\/kde3\/bin\/mcopidl$/;"	m
+MEINPROC	Makefile	/^MEINPROC = \/opt\/kde3\/bin\/meinproc$/;"	m
+MOC	Makefile	/^MOC = \/usr\/lib\/qt3\/bin\/moc$/;"	m
+MSGFMT	Makefile	/^MSGFMT = \/usr\/bin\/msgfmt$/;"	m
+MainWindow	MainWindow.cpp	/^MainWindow::MainWindow(QWidget *parent) : QWidget(parent) {$/;"	f	class:MainWindow
+MainWindow	MainWindow.h	/^class MainWindow : public QWidget {$/;"	c
+NOOPT_CFLAGS	Makefile	/^NOOPT_CFLAGS = -O0$/;"	m
+NOOPT_CXXFLAGS	Makefile	/^NOOPT_CXXFLAGS = -O0$/;"	m
+NORMAL_INSTALL	Makefile	/^NORMAL_INSTALL = :$/;"	m
+NORMAL_UNINSTALL	Makefile	/^NORMAL_UNINSTALL = :$/;"	m
+OBJEXT	Makefile	/^OBJEXT = o$/;"	m
+PACKAGE	Makefile	/^PACKAGE = suseupdater$/;"	m
+PACKAGE_BUGREPORT	Makefile	/^PACKAGE_BUGREPORT = $/;"	m
+PACKAGE_NAME	Makefile	/^PACKAGE_NAME = $/;"	m
+PACKAGE_STRING	Makefile	/^PACKAGE_STRING = $/;"	m
+PACKAGE_TARNAME	Makefile	/^PACKAGE_TARNAME = $/;"	m
+PACKAGE_VERSION	Makefile	/^PACKAGE_VERSION = $/;"	m
+PATH_SEPARATOR	Makefile	/^PATH_SEPARATOR = :$/;"	m
+PERL	Makefile	/^PERL = \/usr\/bin\/perl$/;"	m
+POST_INSTALL	Makefile	/^POST_INSTALL = :$/;"	m
+POST_UNINSTALL	Makefile	/^POST_UNINSTALL = :$/;"	m
+PRE_INSTALL	Makefile	/^PRE_INSTALL = :$/;"	m
+PRE_UNINSTALL	Makefile	/^PRE_UNINSTALL = :$/;"	m
+PROGRAMS	Makefile	/^PROGRAMS = $(bin_PROGRAMS)$/;"	m
+PROGRAM_NAME	main.cpp	44;"	d	file:
+Package	ZmdUpdaterCoreUtils.h	/^		Package() : installed(3) {}$/;"	f	class:Package
+Package	ZmdUpdaterCoreUtils.h	/^class Package {$/;"	c
+PackageDetails	ZmdUpdaterCoreUtils.h	/^		PackageDetails() : installOnly(0), installSize(0) {}$/;"	f	class:PackageDetails
+PackageDetails	ZmdUpdaterCoreUtils.h	/^class PackageDetails {$/;"	c
+PackageLock	ZmdUpdaterCoreUtils.h	/^		PackageLock() {}$/;"	f	class:PackageLock
+PackageLock	ZmdUpdaterCoreUtils.h	/^class PackageLock {$/;"	c
+Patch	ZmdUpdaterCoreUtils.h	/^		Patch() : Package() {}$/;"	f	class:Patch
+Patch	ZmdUpdaterCoreUtils.h	/^class Patch : public Package {$/;"	c
+Progress	ZmdUpdaterCoreUtils.h	/^		Progress() : status(-1), expectedTime(-1), remainingTime(-1), percent(-1.0L) {}$/;"	f	class:Progress
+Progress	ZmdUpdaterCoreUtils.h	/^class Progress {$/;"	c
+QTDOCDIR	Makefile	/^QTDOCDIR = \/usr\/lib\/qt3\/doc\/html$/;"	m
+QTE_NORTTI	Makefile	/^QTE_NORTTI = $/;"	m
+QT_INCLUDES	Makefile	/^QT_INCLUDES = -I\/usr\/lib\/qt3\/include$/;"	m
+QT_LDFLAGS	Makefile	/^QT_LDFLAGS = -L\/usr\/lib\/qt3\/lib$/;"	m
+QT_NO_COMPAT	MainWindow.moc.cpp	10;"	d	file:
+QT_NO_COMPAT	ZmdUpdaterCore.moc.cpp	10;"	d	file:
+RANLIB	Makefile	/^RANLIB = ranlib$/;"	m
+SET_MAKE	Makefile	/^SET_MAKE = $/;"	m
+SHELL	Makefile	/^SHELL = \/bin\/sh$/;"	m
+SOURCES	Makefile	/^SOURCES = $(kzmduserconfig_SOURCES)$/;"	m
+STRIP	Makefile	/^STRIP = strip$/;"	m
+STRIPPROG	Makefile	/^	    echo "INSTALL_PROGRAM_ENV=STRIPPROG='$(STRIP)'"` install$/;"	m
+Service	ZmdUpdaterCoreUtils.h	/^		Service() : activated(3) {}$/;"	f	class:Service
+Service	ZmdUpdaterCoreUtils.h	/^class Service {$/;"	c
+TOPSUBDIRS	Makefile	/^TOPSUBDIRS =  images kxmlrpcclient kzmdauthutil kzmduserconfig po suseupdater udshttp$/;"	m
+UIC	Makefile	/^UIC = \/usr\/lib\/qt3\/bin\/uic -L $(kde_widgetdir) -nounload$/;"	m
+UIC_TR	Makefile	/^UIC_TR = tr2i18n$/;"	m
+USER_INCLUDES	Makefile	/^USER_INCLUDES = $/;"	m
+USER_LDFLAGS	Makefile	/^USER_LDFLAGS = $/;"	m
+USE_EXCEPTIONS	Makefile	/^USE_EXCEPTIONS = -fexceptions$/;"	m
+USE_RTTI	Makefile	/^USE_RTTI = $/;"	m
+USE_THREADS	Makefile	/^USE_THREADS = $/;"	m
+VERSION	Makefile	/^VERSION = 3.5.1$/;"	m
+VERSION	main.cpp	45;"	d	file:
+VPATH	Makefile	/^VPATH = .$/;"	m
+WOVERLOADED_VIRTUAL	Makefile	/^WOVERLOADED_VIRTUAL = $/;"	m
+XGETTEXT	Makefile	/^XGETTEXT = \/usr\/bin\/xgettext$/;"	m
+XMLLINT	Makefile	/^XMLLINT = \/usr\/bin\/xmllint$/;"	m
+X_EXTRA_LIBS	Makefile	/^X_EXTRA_LIBS = $/;"	m
+X_INCLUDES	Makefile	/^X_INCLUDES = -I\/usr\/X11R6\/include$/;"	m
+X_LDFLAGS	Makefile	/^X_LDFLAGS = -L\/usr\/X11R6\/lib$/;"	m
+X_PRE_LIBS	Makefile	/^X_PRE_LIBS = $/;"	m
+X_RPATH	Makefile	/^X_RPATH = -R $(x_libraries)$/;"	m
+ZMD_BLOCK	ZmdUpdaterCore.h	60;"	d
+ZMD_CLEAR	ZmdUpdaterCore.h	61;"	d
+ZMD_CONFIG_PATH	MainWindow.cpp	17;"	d	file:
+ZmdUpdaterCore	ZmdUpdaterCore.cpp	/^ZmdUpdaterCore::ZmdUpdaterCore(QObject *parent) : QObject(parent) {$/;"	f	class:ZmdUpdaterCore
+ZmdUpdaterCore	ZmdUpdaterCore.h	/^class ZmdUpdaterCore : public QObject {$/;"	c
+_USER_EDIT_MAIN_WINDOW_H_	MainWindow.h	3;"	d
+_ZMD_UPDATER_CORE_H_	ZmdUpdaterCore.h	21;"	d
+_ZMD_UPDATER_CORE_UTILS_H_	ZmdUpdaterCoreUtils.h	21;"	d
+abortData	ZmdUpdaterCore.cpp	/^void ZmdUpdaterCore::abortData(const QValueList<QVariant>& data, const QVariant& t) {$/;"	f	class:ZmdUpdaterCore
+ac_ct_AR	Makefile	/^ac_ct_AR = ar$/;"	m
+ac_ct_CC	Makefile	/^ac_ct_CC = gcc$/;"	m
+ac_ct_CXX	Makefile	/^ac_ct_CXX = g++$/;"	m
+ac_ct_F77	Makefile	/^ac_ct_F77 = $/;"	m
+ac_ct_RANLIB	Makefile	/^ac_ct_RANLIB = ranlib$/;"	m
+ac_ct_STRIP	Makefile	/^ac_ct_STRIP = strip$/;"	m
+activated	ZmdUpdaterCoreUtils.h	/^		bool activated;$/;"	m	class:Service
+addButton	MainWindow.h	/^		KPushButton *addButton;$/;"	m	class:MainWindow
+addButtonClicked	MainWindow.cpp	/^void MainWindow::addButtonClicked() {$/;"	f	class:MainWindow
+addService	ZmdUpdaterCore.cpp	/^void ZmdUpdaterCore::addService(Service serv) {$/;"	f	class:ZmdUpdaterCore
+addUser	ZmdUpdaterCore.cpp	/^void ZmdUpdaterCore::addUser(Identity id) {$/;"	f	class:ZmdUpdaterCore
+admin_SUBDIR_included_FALSE	Makefile	/^admin_SUBDIR_included_FALSE = $/;"	m
+admin_SUBDIR_included_TRUE	Makefile	/^admin_SUBDIR_included_TRUE = #$/;"	m
+all_includes	Makefile	/^all_includes = -I\/opt\/kde3\/include -I\/usr\/lib\/qt3\/include -I\/usr\/X11R6\/include $/;"	m
+all_libraries	Makefile	/^all_libraries = -L\/opt\/kde3\/lib -L\/usr\/lib\/qt3\/lib -L\/usr\/X11R6\/lib   $/;"	m
+am__DEPENDENCIES_1	Makefile	/^am__DEPENDENCIES_1 =$/;"	m
+am__aclocal_m4_deps	Makefile	/^am__aclocal_m4_deps = $(top_srcdir)\/acinclude.m4 \\$/;"	m
+am__cd	Makefile	/^am__cd = CDPATH="$${ZSH_VERSION+.}$(PATH_SEPARATOR)" && cd$/;"	m
+am__configure_deps	Makefile	/^am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \\$/;"	m
+am__depfiles_maybe	Makefile	/^am__depfiles_maybe = depfiles$/;"	m
+am__fastdepCC_FALSE	Makefile	/^am__fastdepCC_FALSE = #$/;"	m
+am__fastdepCC_TRUE	Makefile	/^am__fastdepCC_TRUE = $/;"	m
+am__fastdepCXX_FALSE	Makefile	/^am__fastdepCXX_FALSE = #$/;"	m
+am__fastdepCXX_TRUE	Makefile	/^am__fastdepCXX_TRUE = $/;"	m
+am__include	Makefile	/^am__include = include$/;"	m
+am__installdirs	Makefile	/^am__installdirs = "$(DESTDIR)$(bindir)"$/;"	m
+am__leading_dot	Makefile	/^am__leading_dot = .$/;"	m
+am__quote	Makefile	/^am__quote = $/;"	m
+am__tar	Makefile	/^am__tar = ${AMTAR} chof - "$$tardir"$/;"	m
+am__untar	Makefile	/^am__untar = ${AMTAR} xf -$/;"	m
+am_kzmduserconfig_OBJECTS	Makefile	/^am_kzmduserconfig_OBJECTS = main.$(OBJEXT) ZmdUpdaterCore.$(OBJEXT) \\$/;"	m
+authorizeCore	MainWindow.cpp	/^void MainWindow::authorizeCore() {$/;"	f	class:MainWindow
+binPROGRAMS_INSTALL	Makefile	/^binPROGRAMS_INSTALL = $(INSTALL_PROGRAM)$/;"	m
+bin_PROGRAMS	Makefile	/^bin_PROGRAMS = kzmduserconfig$(EXEEXT)$/;"	m
+bindir	Makefile	/^bindir = ${exec_prefix}\/bin$/;"	m
+build	Makefile	/^build = i686-pc-linux-gnu$/;"	m
+build_alias	Makefile	/^build_alias = $/;"	m
+build_cpu	Makefile	/^build_cpu = i686$/;"	m
+build_os	Makefile	/^build_os = linux-gnu$/;"	m
+build_triplet	Makefile	/^build_triplet = i686-pc-linux-gnu$/;"	m
+build_vendor	Makefile	/^build_vendor = pc$/;"	m
+cancelTransaction	ZmdUpdaterCore.cpp	/^void ZmdUpdaterCore::cancelTransaction() {$/;"	f	class:ZmdUpdaterCore
+catalog	ZmdUpdaterCoreUtils.h	/^		QString catalog;$/;"	m	class:Package
+catalog	ZmdUpdaterCoreUtils.h	/^		QString catalog;$/;"	m	class:PackageLock
+catalogData	ZmdUpdaterCore.cpp	/^void ZmdUpdaterCore::catalogData(const QValueList<QVariant>& data, const QVariant& t) {$/;"	f	class:ZmdUpdaterCore
+catalogID	ZmdUpdaterCore.h	/^		QString catalogID;$/;"	m	class:ZmdUpdaterCore
+catalogListing	ZmdUpdaterCore.moc.cpp	/^void ZmdUpdaterCore::catalogListing( QValueList<Catalog> t0 )$/;"	f	class:ZmdUpdaterCore
+catalogStatus	ZmdUpdaterCore.h	/^		bool catalogStatus;$/;"	m	class:ZmdUpdaterCore
+catalogSubData	ZmdUpdaterCore.cpp	/^void ZmdUpdaterCore::catalogSubData(const QValueList<QVariant>& data, const QVariant& t) {$/;"	f	class:ZmdUpdaterCore
+category	ZmdUpdaterCoreUtils.h	/^		QString category;$/;"	m	class:Patch
+className	MainWindow.moc.cpp	/^const char *MainWindow::className() const$/;"	f	class:MainWindow
+className	ZmdUpdaterCore.moc.cpp	/^const char *ZmdUpdaterCore::className() const$/;"	f	class:ZmdUpdaterCore
+closeButton	MainWindow.h	/^		KPushButton *closeButton;$/;"	m	class:MainWindow
+core	MainWindow.h	/^		ZmdUpdaterCore *core;$/;"	m	class:MainWindow
+datadir	Makefile	/^datadir = ${prefix}\/share$/;"	m
+depcomp	Makefile	/^depcomp = $(SHELL) $(top_srcdir)\/admin\/depcomp$/;"	m
+depmode	Makefile	/^CCDEPMODE = depmode=gcc3$/;"	m
+depmode	Makefile	/^CXXDEPMODE = depmode=gcc3$/;"	m
+description	ZmdUpdaterCoreUtils.h	/^		QString description;$/;"	m	class:Package
+description	ZmdUpdaterCoreUtils.h	/^		QString description;$/;"	m	class:PackageDetails
+dir	Makefile	/^	    dir="\/$$dir"; \\$/;"	m
+dir	Makefile	/^	    dir=''; \\$/;"	m
+dir	Makefile	/^	  dir=`echo "$$file" | sed -e 's,\/[^\/]*$$,,'`; \\$/;"	m
+displayName	ZmdUpdaterCoreUtils.h	/^		QString displayName;$/;"	m	class:Catalog
+downloadID	ZmdUpdaterCore.h	/^		QString downloadID; \/\/special pollID just for the download$/;"	m	class:ZmdUpdaterCore
+downloadProgress	ZmdUpdaterCore.moc.cpp	/^void ZmdUpdaterCore::downloadProgress( Progress t0 )$/;"	f	class:ZmdUpdaterCore
+exec_prefix	Makefile	/^exec_prefix = ${prefix}$/;"	m
+expectedTime	ZmdUpdaterCoreUtils.h	/^		int expectedTime;$/;"	m	class:Progress
+f	Makefile	/^	    f=`echo "$$p1" | sed 's,^.*\/,,;$(transform);s\/$$\/$(EXEEXT)\/'`; \\$/;"	m
+f	Makefile	/^	  f=`echo "$$p" | sed 's,^.*\/,,;s\/$(EXEEXT)$$\/\/;$(transform);s\/$$\/$(EXEEXT)\/'`; \\$/;"	m
+f	Makefile	/^	  f=`echo $$p|sed 's\/$(EXEEXT)$$\/\/'`; \\$/;"	m
+fault	MainWindow.cpp	/^void MainWindow::fault(QString message, int code) {$/;"	f	class:MainWindow
+faultData	ZmdUpdaterCore.cpp	/^void ZmdUpdaterCore::faultData(int code, const QString& message, const QVariant&t) {$/;"	f	class:ZmdUpdaterCore
+file	Makefile	/^	    $(srcdir)\/*) file=`echo "$$file" | sed "s|^$$srcdirstrip\/||"`;; \\$/;"	m
+file	Makefile	/^	    $(top_srcdir)\/*) file=`echo "$$file" | sed "s|^$$topsrcdirstrip\/|$(top_builddir)\/|"`;; \\$/;"	m
+fromMap	ZmdUpdaterCoreUtils.h	/^		void fromMap(const QMap<QString, QVariant> &map) {$/;"	f	class:Identity
+fromMap	ZmdUpdaterCoreUtils.h	/^		void fromMap(const QMap<QString, QVariant> &map) {$/;"	f	class:PackageDetails
+fromMap	ZmdUpdaterCoreUtils.h	/^		void fromMap(const QMap<QString, QVariant> &map) {$/;"	f	class:PackageLock
+fromMap	ZmdUpdaterCoreUtils.h	/^		void fromMap(const QMap<QString,QVariant> &map) {$/;"	f	class:Catalog
+fromMap	ZmdUpdaterCoreUtils.h	/^		void fromMap(const QMap<QString,QVariant> &map) {$/;"	f	class:Package
+fromMap	ZmdUpdaterCoreUtils.h	/^		void fromMap(const QMap<QString,QVariant> &map) {$/;"	f	class:Patch
+fromMap	ZmdUpdaterCoreUtils.h	/^		void fromMap(const QMap<QString,QVariant> &map) {$/;"	f	class:Progress
+fromMap	ZmdUpdaterCoreUtils.h	/^		void fromMap(const QMap<QString,QVariant> &map) {$/;"	f	class:Service
+generalFault	ZmdUpdaterCore.moc.cpp	/^void ZmdUpdaterCore::generalFault( QString t0, int t1 )$/;"	f	class:ZmdUpdaterCore
+getCatalogs	ZmdUpdaterCore.cpp	/^void ZmdUpdaterCore::getCatalogs() {$/;"	f	class:ZmdUpdaterCore
+getDetails	ZmdUpdaterCore.cpp	/^void ZmdUpdaterCore::getDetails(Package pack) {$/;"	f	class:ZmdUpdaterCore
+getInfo	ZmdUpdaterCore.cpp	/^void ZmdUpdaterCore::getInfo(QString packageName) {$/;"	f	class:ZmdUpdaterCore
+getLocks	ZmdUpdaterCore.cpp	/^void ZmdUpdaterCore::getLocks() {$/;"	f	class:ZmdUpdaterCore
+getPatches	ZmdUpdaterCore.cpp	/^void ZmdUpdaterCore::getPatches(Catalog cat) {$/;"	f	class:ZmdUpdaterCore
+getServices	ZmdUpdaterCore.cpp	/^void ZmdUpdaterCore::getServices() {$/;"	f	class:ZmdUpdaterCore
+getUpdates	ZmdUpdaterCore.cpp	/^void ZmdUpdaterCore::getUpdates(Catalog cat) {$/;"	f	class:ZmdUpdaterCore
+glob	ZmdUpdaterCoreUtils.h	/^		QString glob; $/;"	m	class:PackageLock
+here	Makefile	/^	here=`$(am__cd) $(top_builddir) && pwd` \\$/;"	m
+here	Makefile	/^	here=`pwd`; \\$/;"	m
+host	Makefile	/^host = i686-pc-linux-gnu$/;"	m
+host_alias	Makefile	/^host_alias = $/;"	m
+host_cpu	Makefile	/^host_cpu = i686$/;"	m
+host_os	Makefile	/^host_os = linux-gnu$/;"	m
+host_triplet	Makefile	/^host_triplet = i686-pc-linux-gnu$/;"	m
+host_vendor	Makefile	/^host_vendor = pc$/;"	m
+id	ZmdUpdaterCoreUtils.h	/^		QString id;$/;"	m	class:Catalog
+id	ZmdUpdaterCoreUtils.h	/^		QString id;$/;"	m	class:Package
+id	ZmdUpdaterCoreUtils.h	/^		QString id;$/;"	m	class:PackageDetails
+id	ZmdUpdaterCoreUtils.h	/^		QString id;$/;"	m	class:PackageLock
+id	ZmdUpdaterCoreUtils.h	/^		QString id;$/;"	m	class:Service
+identityData	ZmdUpdaterCore.cpp	/^void ZmdUpdaterCore::identityData(const QValueList<QVariant>& data, const QVariant& t) {$/;"	f	class:ZmdUpdaterCore
+images_SUBDIR_included_FALSE	Makefile	/^images_SUBDIR_included_FALSE = #$/;"	m
+images_SUBDIR_included_TRUE	Makefile	/^images_SUBDIR_included_TRUE = $/;"	m
+include_ARTS_FALSE	Makefile	/^include_ARTS_FALSE = #$/;"	m
+include_ARTS_TRUE	Makefile	/^include_ARTS_TRUE = $/;"	m
+include_x11_FALSE	Makefile	/^include_x11_FALSE = #$/;"	m
+include_x11_TRUE	Makefile	/^include_x11_TRUE = $/;"	m
+includedir	Makefile	/^includedir = ${prefix}\/include$/;"	m
+infoData	ZmdUpdaterCore.cpp	/^void ZmdUpdaterCore::infoData(const QValueList<QVariant>& data, const QVariant& t) {$/;"	f	class:ZmdUpdaterCore
+infodir	Makefile	/^infodir = ${prefix}\/info$/;"	m
+initGUI	MainWindow.cpp	/^void MainWindow::initGUI() {$/;"	f	class:MainWindow
+installOnly	ZmdUpdaterCoreUtils.h	/^		bool installOnly;$/;"	m	class:PackageDetails
+installSize	ZmdUpdaterCoreUtils.h	/^		int installSize;$/;"	m	class:PackageDetails
+install_sh	Makefile	/^install_sh = \/home\/raven\/src\/trunk\/suseupdater\/admin\/install-sh$/;"	m
+install_sh_DATA	Makefile	/^install_sh_DATA = $(install_sh) -c -m 644$/;"	m
+install_sh_PROGRAM	Makefile	/^	  install_sh_PROGRAM="$(INSTALL_STRIP_PROGRAM)" INSTALL_STRIP_FLAG=-s \\$/;"	m
+install_sh_PROGRAM	Makefile	/^install_sh_PROGRAM = $(install_sh) -c$/;"	m
+install_sh_SCRIPT	Makefile	/^install_sh_SCRIPT = $(install_sh) -c$/;"	m
+installed	ZmdUpdaterCoreUtils.h	/^		bool installed;	$/;"	m	class:Package
+kde_appsdir	Makefile	/^kde_appsdir = ${datadir}\/applnk$/;"	m
+kde_bindir	Makefile	/^kde_bindir = ${exec_prefix}\/bin$/;"	m
+kde_confdir	Makefile	/^kde_confdir = ${datadir}\/config$/;"	m
+kde_datadir	Makefile	/^kde_datadir = ${datadir}\/apps$/;"	m
+kde_htmldir	Makefile	/^kde_htmldir = ${datadir}\/doc\/HTML$/;"	m
+kde_icondir	Makefile	/^kde_icondir = ${datadir}\/icons$/;"	m
+kde_includes	Makefile	/^kde_includes = \/opt\/kde3\/include$/;"	m
+kde_kcfgdir	Makefile	/^kde_kcfgdir = ${datadir}\/config.kcfg$/;"	m
+kde_libraries	Makefile	/^kde_libraries = \/opt\/kde3\/lib$/;"	m
+kde_libs_htmldir	Makefile	/^kde_libs_htmldir = \/opt\/kde3\/share\/doc\/HTML$/;"	m
+kde_libs_prefix	Makefile	/^kde_libs_prefix = \/opt\/kde3$/;"	m
+kde_locale	Makefile	/^kde_locale = ${datadir}\/locale$/;"	m
+kde_mimedir	Makefile	/^kde_mimedir = ${datadir}\/mimelnk$/;"	m
+kde_moduledir	Makefile	/^kde_moduledir = ${libdir}\/kde3$/;"	m
+kde_qtver	Makefile	/^kde_qtver = 3$/;"	m
+kde_servicesdir	Makefile	/^kde_servicesdir = ${datadir}\/services$/;"	m
+kde_servicetypesdir	Makefile	/^kde_servicetypesdir = ${datadir}\/servicetypes$/;"	m
+kde_sounddir	Makefile	/^kde_sounddir = ${datadir}\/sounds$/;"	m
+kde_styledir	Makefile	/^kde_styledir = ${libdir}\/kde3\/plugins\/styles$/;"	m
+kde_templatesdir	Makefile	/^kde_templatesdir = ${datadir}\/templates$/;"	m
+kde_wallpaperdir	Makefile	/^kde_wallpaperdir = ${datadir}\/wallpapers$/;"	m
+kde_widgetdir	Makefile	/^kde_widgetdir = \/opt\/kde3\/lib\/kde3\/plugins\/designer$/;"	m
+kdeinitdir	Makefile	/^kdeinitdir = $(kde_moduledir)$/;"	m
+kxmlrpcclient_SUBDIR_included_FALSE	Makefile	/^kxmlrpcclient_SUBDIR_included_FALSE = #$/;"	m
+kxmlrpcclient_SUBDIR_included_TRUE	Makefile	/^kxmlrpcclient_SUBDIR_included_TRUE = $/;"	m
+kzmdauthutil_SUBDIR_included_FALSE	Makefile	/^kzmdauthutil_SUBDIR_included_FALSE = #$/;"	m
+kzmdauthutil_SUBDIR_included_TRUE	Makefile	/^kzmdauthutil_SUBDIR_included_TRUE = $/;"	m
+kzmduserconfig_DEPENDENCIES	Makefile	/^kzmduserconfig_DEPENDENCIES = $(am__DEPENDENCIES_1) \\$/;"	m
+kzmduserconfig_LDADD	Makefile	/^kzmduserconfig_LDADD = $(LIB_KFILE) $(top_srcdir)\/kxmlrpcclient\/libkxmlrpcclient.la -lkxmlrpcclient$/;"	m
+kzmduserconfig_LDFLAGS	Makefile	/^kzmduserconfig_LDFLAGS = $(KDE_RPATH) $(all_libraries)$/;"	m
+kzmduserconfig_OBJECTS	Makefile	/^	$(MAKE) kzmduserconfig_OBJECTS="$(kzmduserconfig_final_OBJECTS)" all-am$/;"	m
+kzmduserconfig_OBJECTS	Makefile	/^	$(MAKE) kzmduserconfig_OBJECTS="$(kzmduserconfig_final_OBJECTS)" install-am$/;"	m
+kzmduserconfig_OBJECTS	Makefile	/^	$(MAKE) kzmduserconfig_OBJECTS="$(kzmduserconfig_nofinal_OBJECTS)" all-am$/;"	m
+kzmduserconfig_OBJECTS	Makefile	/^	$(MAKE) kzmduserconfig_OBJECTS="$(kzmduserconfig_nofinal_OBJECTS)" install-am$/;"	m
+kzmduserconfig_OBJECTS	Makefile	/^kzmduserconfig_OBJECTS = $(kzmduserconfig_nofinal_OBJECTS)$/;"	m
+kzmduserconfig_SOURCES	Makefile	/^kzmduserconfig_SOURCES = main.cpp ZmdUpdaterCore.cpp MainWindow.cpp$/;"	m
+kzmduserconfig_SUBDIR_included_FALSE	Makefile	/^kzmduserconfig_SUBDIR_included_FALSE = #$/;"	m
+kzmduserconfig_SUBDIR_included_TRUE	Makefile	/^kzmduserconfig_SUBDIR_included_TRUE = $/;"	m
+kzmduserconfig_final_OBJECTS	Makefile	/^kzmduserconfig_final_OBJECTS = kzmduserconfig.all_cpp.o $/;"	m
+kzmduserconfig_nofinal_OBJECTS	Makefile	/^kzmduserconfig_nofinal_OBJECTS = main.$(OBJEXT) ZmdUpdaterCore.$(OBJEXT) \\$/;"	m
+libdir	Makefile	/^libdir = ${exec_prefix}\/lib$/;"	m
+libexecdir	Makefile	/^libexecdir = ${exec_prefix}\/libexec$/;"	m
+list	MainWindow.h	/^		QListView *list;$/;"	m	class:MainWindow
+list	Makefile	/^	list='$(DISTFILES)'; for file in $$list; do \\$/;"	m
+list	Makefile	/^	list='$(SOURCES) $(HEADERS)  $(LISP) $(TAGS_FILES)'; \\$/;"	m
+list	Makefile	/^	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \\$/;"	m
+listUsers	ZmdUpdaterCore.cpp	/^void ZmdUpdaterCore::listUsers() {$/;"	f	class:ZmdUpdaterCore
+localstatedir	Makefile	/^localstatedir = ${prefix}\/var$/;"	m
+lockData	ZmdUpdaterCore.cpp	/^void ZmdUpdaterCore::lockData(const QValueList<QVariant>& data, const QVariant &t) {$/;"	f	class:ZmdUpdaterCore
+lockListing	ZmdUpdaterCore.moc.cpp	/^void ZmdUpdaterCore::lockListing( QValueList<PackageLock> t0 )$/;"	f	class:ZmdUpdaterCore
+lockPackage	ZmdUpdaterCore.cpp	/^void ZmdUpdaterCore::lockPackage(PackageLock lock) {$/;"	f	class:ZmdUpdaterCore
+main	main.cpp	/^int main(int argc, char **argv) {$/;"	f
+mainLayout	MainWindow.h	/^		QGridLayout *mainLayout;$/;"	m	class:MainWindow
+mandir	Makefile	/^mandir = ${prefix}\/man$/;"	m
+mapListToPackageList	ZmdUpdaterCore.cpp	/^QValueList<Package> ZmdUpdaterCore::mapListToPackageList(QValueList<QVariant> data) {$/;"	f	class:ZmdUpdaterCore
+messages	ZmdUpdaterCoreUtils.h	/^		QValueList<QString> messages;$/;"	m	class:Progress
+metaObj	MainWindow.moc.cpp	/^QMetaObject *MainWindow::metaObj = 0;$/;"	m	class:MainWindow	file:
+metaObj	ZmdUpdaterCore.moc.cpp	/^QMetaObject *ZmdUpdaterCore::metaObj = 0;$/;"	m	class:ZmdUpdaterCore	file:
+mkdir_p	Makefile	/^mkdir_p = mkdir -p --$/;"	m
+mkinstalldirs	Makefile	/^mkinstalldirs = $(SHELL) $(top_srcdir)\/admin\/mkinstalldirs$/;"	m
+modifyButton	MainWindow.h	/^		KPushButton *modifyButton;$/;"	m	class:MainWindow
+modifyButtonClicked	MainWindow.cpp	/^void MainWindow::modifyButtonClicked() {$/;"	f	class:MainWindow
+modifyUser	ZmdUpdaterCore.cpp	/^void ZmdUpdaterCore::modifyUser(Identity id) {$/;"	f	class:ZmdUpdaterCore
+name	ZmdUpdaterCoreUtils.h	/^		QString name;$/;"	m	class:Catalog
+name	ZmdUpdaterCoreUtils.h	/^		QString name;$/;"	m	class:Identity
+name	ZmdUpdaterCoreUtils.h	/^		QString name;$/;"	m	class:Package
+name	ZmdUpdaterCoreUtils.h	/^		QString name;$/;"	m	class:Progress
+name	ZmdUpdaterCoreUtils.h	/^		QString name;$/;"	m	class:Service
+noinst_HEADERS	Makefile	/^noinst_HEADERS = ZmdUpdaterCore.h ZmdUpdaterCoreUtils.h MainWindow.h$/;"	m
+oldincludedir	Makefile	/^oldincludedir = \/usr\/include$/;"	m
+options	main.cpp	/^static KCmdLineOptions options[] = $/;"	v	file:
+p1	Makefile	/^	  p1=`echo $$p|sed 's\/$(EXEEXT)$$\/\/'`; \\$/;"	m
+pack	ZmdUpdaterCoreUtils.h	/^		Package pack;$/;"	m	class:PackageLock
+packageDetails	ZmdUpdaterCore.moc.cpp	/^void ZmdUpdaterCore::packageDetails( PackageDetails t0 )$/;"	f	class:ZmdUpdaterCore
+packageInfo	ZmdUpdaterCore.moc.cpp	/^void ZmdUpdaterCore::packageInfo( Package t0 )$/;"	f	class:ZmdUpdaterCore
+packagesToInstall	ZmdUpdaterCore.h	/^		QValueList<QVariant> packagesToInstall;$/;"	m	class:ZmdUpdaterCore
+packagesToRemove	ZmdUpdaterCore.h	/^		QValueList<QVariant> packagesToRemove;$/;"	m	class:ZmdUpdaterCore
+packagesToUpdate	ZmdUpdaterCore.h	/^		QValueList<QVariant> packagesToUpdate;$/;"	m	class:ZmdUpdaterCore
+pass	ZmdUpdaterCoreUtils.h	/^		QString pass;$/;"	m	class:Identity
+password	ZmdUpdaterCore.h	/^		QString password;$/;"	m	class:ZmdUpdaterCore
+patchData	ZmdUpdaterCore.cpp	/^void ZmdUpdaterCore::patchData(const QValueList<QVariant>& data, const QVariant& t) {$/;"	f	class:ZmdUpdaterCore
+patchListing	ZmdUpdaterCore.moc.cpp	/^void ZmdUpdaterCore::patchListing( QValueList<Patch> t0 )$/;"	f	class:ZmdUpdaterCore
+percent	ZmdUpdaterCoreUtils.h	/^		double percent;	$/;"	m	class:Progress
+pkgdatadir	Makefile	/^pkgdatadir = $(datadir)\/suseupdater$/;"	m
+pkgincludedir	Makefile	/^pkgincludedir = $(includedir)\/suseupdater$/;"	m
+pkglibdir	Makefile	/^pkglibdir = $(libdir)\/suseupdater$/;"	m
+po_SUBDIR_included_FALSE	Makefile	/^po_SUBDIR_included_FALSE = #$/;"	m
+po_SUBDIR_included_TRUE	Makefile	/^po_SUBDIR_included_TRUE = $/;"	m
+pollID	ZmdUpdaterCore.h	/^		QString pollID;$/;"	m	class:ZmdUpdaterCore
+prefix	Makefile	/^prefix = \/opt\/kde3$/;"	m
+privs	ZmdUpdaterCoreUtils.h	/^		QString privs;$/;"	m	class:Identity
+program_transform_name	Makefile	/^program_transform_name = s,x,x,$/;"	m
+progress	ZmdUpdaterCore.moc.cpp	/^void ZmdUpdaterCore::progress( Progress t0 )$/;"	f	class:ZmdUpdaterCore
+qt_cast	MainWindow.moc.cpp	/^void* MainWindow::qt_cast( const char* clname )$/;"	f	class:MainWindow
+qt_cast	ZmdUpdaterCore.moc.cpp	/^void* ZmdUpdaterCore::qt_cast( const char* clname )$/;"	f	class:ZmdUpdaterCore
+qt_emit	MainWindow.moc.cpp	/^bool MainWindow::qt_emit( int _id, QUObject* _o )$/;"	f	class:MainWindow
+qt_emit	ZmdUpdaterCore.moc.cpp	/^bool ZmdUpdaterCore::qt_emit( int _id, QUObject* _o )$/;"	f	class:ZmdUpdaterCore
+qt_includes	Makefile	/^qt_includes = \/usr\/lib\/qt3\/include$/;"	m
+qt_invoke	MainWindow.moc.cpp	/^bool MainWindow::qt_invoke( int _id, QUObject* _o )$/;"	f	class:MainWindow
+qt_invoke	ZmdUpdaterCore.moc.cpp	/^bool ZmdUpdaterCore::qt_invoke( int _id, QUObject* _o )$/;"	f	class:ZmdUpdaterCore
+qt_libraries	Makefile	/^qt_libraries = \/usr\/lib\/qt3\/lib$/;"	m
+qt_property	MainWindow.moc.cpp	/^bool MainWindow::qt_property( int id, int f, QVariant* v)$/;"	f	class:MainWindow
+qt_property	ZmdUpdaterCore.moc.cpp	/^bool ZmdUpdaterCore::qt_property( int id, int f, QVariant* v)$/;"	f	class:ZmdUpdaterCore
+qt_static_property	MainWindow.moc.cpp	/^bool MainWindow::qt_static_property( QObject* , int , int , QVariant* ){ return FALSE; }$/;"	f	class:MainWindow
+qt_static_property	ZmdUpdaterCore.moc.cpp	/^bool ZmdUpdaterCore::qt_static_property( QObject* , int , int , QVariant* ){ return FALSE; }$/;"	f	class:ZmdUpdaterCore
+realPackages	ZmdUpdaterCore.moc.cpp	/^void ZmdUpdaterCore::realPackages( QValueList<Package> t0, QValueList<Package> t1, QValueList<Package> t2 )$/;"	f	class:ZmdUpdaterCore
+remainingTime	ZmdUpdaterCoreUtils.h	/^		int remainingTime;$/;"	m	class:Progress
+removeButton	MainWindow.h	/^		KPushButton *removeButton;$/;"	m	class:MainWindow
+removeButtonClicked	MainWindow.cpp	/^void MainWindow::removeButtonClicked() {$/;"	f	class:MainWindow
+removeService	ZmdUpdaterCore.cpp	/^void ZmdUpdaterCore::removeService(Service serv) {$/;"	f	class:ZmdUpdaterCore
+removeUser	ZmdUpdaterCore.cpp	/^void ZmdUpdaterCore::removeUser(QString user) {$/;"	f	class:ZmdUpdaterCore
+runTransaction	ZmdUpdaterCore.cpp	/^void ZmdUpdaterCore::runTransaction() {$/;"	f	class:ZmdUpdaterCore
+sbindir	Makefile	/^sbindir = ${exec_prefix}\/sbin$/;"	m
+server	ZmdUpdaterCore.h	/^		KXmlRpcServer *server; $/;"	m	class:ZmdUpdaterCore
+service	ZmdUpdaterCoreUtils.h	/^		QString service;$/;"	m	class:Catalog
+serviceAdded	ZmdUpdaterCore.moc.cpp	/^void ZmdUpdaterCore::serviceAdded( QString t0, int t1, QString t2 )$/;"	f	class:ZmdUpdaterCore
+serviceData	ZmdUpdaterCore.cpp	/^void ZmdUpdaterCore::serviceData(const QValueList<QVariant>& data, const QVariant& t) {$/;"	f	class:ZmdUpdaterCore
+serviceListing	ZmdUpdaterCore.moc.cpp	/^void ZmdUpdaterCore::serviceListing( QValueList<Service> t0 )$/;"	f	class:ZmdUpdaterCore
+setPass	ZmdUpdaterCore.cpp	/^void ZmdUpdaterCore::setPass(QString pass) {$/;"	f	class:ZmdUpdaterCore
+setServer	ZmdUpdaterCore.cpp	/^void ZmdUpdaterCore::setServer(KURL url) {$/;"	f	class:ZmdUpdaterCore
+setUser	ZmdUpdaterCore.cpp	/^void ZmdUpdaterCore::setUser(QString user) {$/;"	f	class:ZmdUpdaterCore
+sharedstatedir	Makefile	/^sharedstatedir = ${prefix}\/com$/;"	m
+srcdir	Makefile	/^srcdir = .$/;"	m
+startTransaction	ZmdUpdaterCore.cpp	/^void ZmdUpdaterCore::startTransaction(QValueList<Package> installList, $/;"	f	class:ZmdUpdaterCore
+staticMetaObject	MainWindow.moc.cpp	/^QMetaObject* MainWindow::staticMetaObject()$/;"	f	class:MainWindow
+staticMetaObject	ZmdUpdaterCore.moc.cpp	/^QMetaObject* ZmdUpdaterCore::staticMetaObject()$/;"	f	class:ZmdUpdaterCore
+status	ZmdUpdaterCoreUtils.h	/^		int status;$/;"	m	class:Progress
+subdir	Makefile	/^subdir = kzmduserconfig$/;"	m
+subscribeCatalog	ZmdUpdaterCore.cpp	/^void ZmdUpdaterCore::subscribeCatalog(Catalog cat) {$/;"	f	class:ZmdUpdaterCore
+subscribed	ZmdUpdaterCoreUtils.h	/^		bool subscribed;$/;"	m	class:Catalog
+summary	ZmdUpdaterCoreUtils.h	/^		QString summary;$/;"	m	class:PackageDetails
+suseupdater_SUBDIR_included_FALSE	Makefile	/^suseupdater_SUBDIR_included_FALSE = #$/;"	m
+suseupdater_SUBDIR_included_TRUE	Makefile	/^suseupdater_SUBDIR_included_TRUE = $/;"	m
+sysconfdir	Makefile	/^sysconfdir = ${prefix}\/etc$/;"	m
+tags	Makefile	/^	tags=; \\$/;"	m
+target	Makefile	/^target = i686-pc-linux-gnu$/;"	m
+target_alias	Makefile	/^target_alias = $/;"	m
+target_cpu	Makefile	/^target_cpu = i686$/;"	m
+target_os	Makefile	/^target_os = linux-gnu$/;"	m
+target_triplet	Makefile	/^target_triplet = i686-pc-linux-gnu$/;"	m
+target_vendor	Makefile	/^target_vendor = pc$/;"	m
+temp	ZmdUpdaterCore.h	/^		QString temp;$/;"	m	class:ZmdUpdaterCore
+timeoutCount	ZmdUpdaterCore.h	/^		int timeoutCount;$/;"	m	class:ZmdUpdaterCore
+timer	ZmdUpdaterCore.h	/^		QTimer *timer;$/;"	m	class:ZmdUpdaterCore
+timerData	ZmdUpdaterCore.cpp	/^void ZmdUpdaterCore::timerData(const QValueList<QVariant>& data, const QVariant &t) {$/;"	f	class:ZmdUpdaterCore
+timerSlot	ZmdUpdaterCore.cpp	/^void ZmdUpdaterCore::timerSlot() {$/;"	f	class:ZmdUpdaterCore
+toMap	ZmdUpdaterCoreUtils.h	/^		QMap<QString, QVariant> toMap() {$/;"	f	class:Catalog
+toMap	ZmdUpdaterCoreUtils.h	/^		QMap<QString, QVariant> toMap() {$/;"	f	class:Identity
+toMap	ZmdUpdaterCoreUtils.h	/^		QMap<QString, QVariant> toMap() {$/;"	f	class:Package
+toMap	ZmdUpdaterCoreUtils.h	/^		QMap<QString, QVariant> toMap() {$/;"	f	class:PackageLock
+toMap	ZmdUpdaterCoreUtils.h	/^		QMap<QString, QVariant> toMap() {$/;"	f	class:Service
+top_builddir	Makefile	/^top_builddir = ..$/;"	m
+top_srcdir	Makefile	/^top_srcdir = ..$/;"	m
+topsrcdirstrip	Makefile	/^	topsrcdirstrip=`echo "$(top_srcdir)" | sed 's|.|.|g'`; \\$/;"	m
+tr	MainWindow.moc.cpp	/^QString MainWindow::tr( const char *s, const char *c )$/;"	f	class:MainWindow
+tr	ZmdUpdaterCore.moc.cpp	/^QString ZmdUpdaterCore::tr( const char *s, const char *c )$/;"	f	class:ZmdUpdaterCore
+trUtf8	MainWindow.moc.cpp	/^QString MainWindow::trUtf8( const char *s, const char *c )$/;"	f	class:MainWindow
+trUtf8	ZmdUpdaterCore.moc.cpp	/^QString ZmdUpdaterCore::trUtf8( const char *s, const char *c )$/;"	f	class:ZmdUpdaterCore
+transactData	ZmdUpdaterCore.cpp	/^void ZmdUpdaterCore::transactData(const QValueList<QVariant>& data, const QVariant &t) {$/;"	f	class:ZmdUpdaterCore
+transactionFinished	ZmdUpdaterCore.moc.cpp	/^void ZmdUpdaterCore::transactionFinished( int t0, QString t1 )$/;"	f	class:ZmdUpdaterCore
+transform	Makefile	/^transform = $(program_transform_name)$/;"	m
+type	ZmdUpdaterCoreUtils.h	/^		QString type;$/;"	m	class:Service
+udshttp_SUBDIR_included_FALSE	Makefile	/^udshttp_SUBDIR_included_FALSE = #$/;"	m
+udshttp_SUBDIR_included_TRUE	Makefile	/^udshttp_SUBDIR_included_TRUE = $/;"	m
+unique	Makefile	/^	  test -n "$$unique" || unique=$$empty_fix; \\$/;"	m
+unique	Makefile	/^	unique=`for i in $$list; do \\$/;"	m
+unlockPackage	ZmdUpdaterCore.cpp	/^void ZmdUpdaterCore::unlockPackage(PackageLock lock) {$/;"	f	class:ZmdUpdaterCore
+unsermake_enable_pch_FALSE	Makefile	/^unsermake_enable_pch_FALSE = $/;"	m
+unsermake_enable_pch_TRUE	Makefile	/^unsermake_enable_pch_TRUE = #$/;"	m
+unsubscribeCatalog	ZmdUpdaterCore.cpp	/^void ZmdUpdaterCore::unsubscribeCatalog(Catalog cat) {$/;"	f	class:ZmdUpdaterCore
+updateData	ZmdUpdaterCore.cpp	/^void ZmdUpdaterCore::updateData(const QValueList<QVariant>& data, const QVariant&t) {$/;"	f	class:ZmdUpdaterCore
+updateListing	ZmdUpdaterCore.moc.cpp	/^void ZmdUpdaterCore::updateListing( QValueList<Package> t0 )$/;"	f	class:ZmdUpdaterCore
+uri	ZmdUpdaterCoreUtils.h	/^		QString uri;$/;"	m	class:Service
+userListing	ZmdUpdaterCore.moc.cpp	/^void ZmdUpdaterCore::userListing( QValueList<Identity> t0 )$/;"	f	class:ZmdUpdaterCore
+username	ZmdUpdaterCore.h	/^		QString username;$/;"	m	class:ZmdUpdaterCore
+vendor	ZmdUpdaterCoreUtils.h	/^		QString vendor;$/;"	m	class:PackageDetails
+version	ZmdUpdaterCoreUtils.h	/^		QString version;$/;"	m	class:Package
+x_includes	Makefile	/^x_includes = \/usr\/X11R6\/include$/;"	m
+x_libraries	Makefile	/^x_libraries = \/usr\/X11R6\/lib$/;"	m
+xdg_appsdir	Makefile	/^xdg_appsdir = ${datadir}\/applications\/kde$/;"	m
+xdg_directorydir	Makefile	/^xdg_directorydir = ${datadir}\/desktop-directories$/;"	m
+xdg_menudir	Makefile	/^xdg_menudir = ${sysconfdir}\/xdg\/menus$/;"	m
+~ZmdUpdaterCore	ZmdUpdaterCore.cpp	/^ZmdUpdaterCore::~ZmdUpdaterCore() {$/;"	f	class:ZmdUpdaterCore
