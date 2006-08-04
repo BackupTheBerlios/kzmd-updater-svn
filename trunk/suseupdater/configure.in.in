@@ -1,3 +1,0 @@
-#MIN_CONFIG
-
-KDE_INIT_DOXYGEN([The KDE Updater Applet API Reference], [Version $VERSION])
