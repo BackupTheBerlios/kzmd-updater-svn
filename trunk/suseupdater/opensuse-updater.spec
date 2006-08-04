@@ -54,7 +54,13 @@ rm -rf $RPM_BUILD_ROOT
 /opt/kde3/share/applnk/*
 /opt/kde3/share/autostart/*.desktop
 /opt/kde3/share/applications/kde/suseupdater.desktop
-
+/opt/kde3/lib/libkxmlrpcclient.la
+/opt/kde3/lib/libkxmlrpcclient.so
+/opt/kde3/lib/libkxmlrpcclient.so.0
+/opt/kde3/lib/libkxmlrpcclient.so.0.0.0
+/opt/kde3/share/doc/HTML/en/suseupdater/common
+/opt/kde3/share/doc/HTML/en/suseupdater/index.cache.bz2
+/opt/kde3/share/doc/HTML/en/suseupdater/index.docbook
 
 %changelog -n opensuse-updater
 * Wed Jul 5 2006 - dmacvicar@suse.de
