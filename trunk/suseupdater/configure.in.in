@@ -3,4 +3,5 @@
 AM_INIT_AUTOMAKE(suseupdater, 0.1)
 AC_C_BIGENDIAN
 AC_CHECK_KDEMAXPATHLEN
+KDE_INIT_DOXYGEN([The KDE Updater Applet API Reference], [Version $VERSION])
 

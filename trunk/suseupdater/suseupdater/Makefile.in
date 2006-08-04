@@ -81,7 +81,7 @@ SUSEUpdater_nofinal_OBJECTS = main.$(OBJEXT) MainWindow.$(OBJEXT) \
 	GeneralConfigWindow.$(OBJEXT) UpdateListItem.$(OBJEXT) \
 	ZmdAdvancedConfig.$(OBJEXT) ZmdEditServers.$(OBJEXT) \
 	ZmdRugParser.$(OBJEXT)\
-ZmdEditServers.moc.o ZmdDependencyDialog.moc.o ZmdInstallWindow.moc.o GeneralConfigWindow.moc.o ZmdConfigWindow.moc.o ZmdRugParser.moc.o ZmdProgressDialog.moc.o ZmdUpdaterCore.moc.o ZmdUpdater.moc.o ZmdAdvancedConfig.moc.o Updater.moc.o MainWindow.moc.o HeaderWidget.moc.o ZmdServerDialog.moc.o 
+ZmdEditServers.moc.o ZmdDependencyDialog.moc.o ZmdConfigWindow.moc.o ZmdInstallWindow.moc.o GeneralConfigWindow.moc.o ZmdRugParser.moc.o ZmdProgressDialog.moc.o ZmdUpdaterCore.moc.o ZmdUpdater.moc.o ZmdAdvancedConfig.moc.o Updater.moc.o MainWindow.moc.o HeaderWidget.moc.o ZmdServerDialog.moc.o 
 @KDE_USE_FINAL_FALSE@SUSEUpdater_OBJECTS = $(SUSEUpdater_nofinal_OBJECTS)
 @KDE_USE_FINAL_TRUE@SUSEUpdater_OBJECTS = $(SUSEUpdater_final_OBJECTS)
 am__DEPENDENCIES_1 =
@@ -107,7 +107,7 @@ am__depfiles_maybe = depfiles
 #>- @AMDEP_TRUE@	./$(DEPDIR)/ZmdUpdater.Po \
 #>- @AMDEP_TRUE@	./$(DEPDIR)/ZmdUpdaterCore.Po ./$(DEPDIR)/main.Po
 #>+ 32
-@AMDEP_TRUE@@KDE_USE_FINAL_TRUE@DEP_FILES =  $(DEPDIR)/ZmdEditServers.moc.P $(DEPDIR)/ZmdDependencyDialog.moc.P $(DEPDIR)/ZmdInstallWindow.moc.P $(DEPDIR)/GeneralConfigWindow.moc.P $(DEPDIR)/ZmdConfigWindow.moc.P $(DEPDIR)/ZmdRugParser.moc.P $(DEPDIR)/ZmdProgressDialog.moc.P $(DEPDIR)/ZmdUpdaterCore.moc.P $(DEPDIR)/ZmdUpdater.moc.P $(DEPDIR)/ZmdAdvancedConfig.moc.P $(DEPDIR)/MainWindow.moc.P $(DEPDIR)/HeaderWidget.moc.P $(DEPDIR)/ZmdServerDialog.moc.P  $(DEPDIR)/SUSEUpdater.all_cpp.P ./$(DEPDIR)/GeneralConfigWindow.Po \
+@AMDEP_TRUE@@KDE_USE_FINAL_TRUE@DEP_FILES =  $(DEPDIR)/ZmdEditServers.moc.P $(DEPDIR)/ZmdDependencyDialog.moc.P $(DEPDIR)/ZmdConfigWindow.moc.P $(DEPDIR)/ZmdInstallWindow.moc.P $(DEPDIR)/GeneralConfigWindow.moc.P $(DEPDIR)/ZmdRugParser.moc.P $(DEPDIR)/ZmdProgressDialog.moc.P $(DEPDIR)/ZmdUpdaterCore.moc.P $(DEPDIR)/ZmdUpdater.moc.P $(DEPDIR)/ZmdAdvancedConfig.moc.P $(DEPDIR)/MainWindow.moc.P $(DEPDIR)/HeaderWidget.moc.P $(DEPDIR)/ZmdServerDialog.moc.P  $(DEPDIR)/SUSEUpdater.all_cpp.P ./$(DEPDIR)/GeneralConfigWindow.Po \
 @AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/HeaderWidget.Po \
 @AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/MainWindow.Po \
 @AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/UpdateListItem.Po \
@@ -123,7 +123,7 @@ am__depfiles_maybe = depfiles
 @AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/ZmdServerDialog.Po \
 @AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/ZmdUpdater.Po \
 @AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/ZmdUpdaterCore.Po ./$(DEPDIR)/main.Po
-@AMDEP_TRUE@@KDE_USE_FINAL_FALSE@DEP_FILES =  $(DEPDIR)/ZmdEditServers.moc.P $(DEPDIR)/ZmdDependencyDialog.moc.P $(DEPDIR)/ZmdInstallWindow.moc.P $(DEPDIR)/GeneralConfigWindow.moc.P $(DEPDIR)/ZmdConfigWindow.moc.P $(DEPDIR)/ZmdRugParser.moc.P $(DEPDIR)/ZmdProgressDialog.moc.P $(DEPDIR)/ZmdUpdaterCore.moc.P $(DEPDIR)/ZmdUpdater.moc.P $(DEPDIR)/ZmdAdvancedConfig.moc.P $(DEPDIR)/MainWindow.moc.P $(DEPDIR)/HeaderWidget.moc.P $(DEPDIR)/ZmdServerDialog.moc.P ./$(DEPDIR)/GeneralConfigWindow.Po \
+@AMDEP_TRUE@@KDE_USE_FINAL_FALSE@DEP_FILES =  $(DEPDIR)/ZmdEditServers.moc.P $(DEPDIR)/ZmdDependencyDialog.moc.P $(DEPDIR)/ZmdConfigWindow.moc.P $(DEPDIR)/ZmdInstallWindow.moc.P $(DEPDIR)/GeneralConfigWindow.moc.P $(DEPDIR)/ZmdRugParser.moc.P $(DEPDIR)/ZmdProgressDialog.moc.P $(DEPDIR)/ZmdUpdaterCore.moc.P $(DEPDIR)/ZmdUpdater.moc.P $(DEPDIR)/ZmdAdvancedConfig.moc.P $(DEPDIR)/MainWindow.moc.P $(DEPDIR)/HeaderWidget.moc.P $(DEPDIR)/ZmdServerDialog.moc.P ./$(DEPDIR)/GeneralConfigWindow.Po \
 @AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/HeaderWidget.Po \
 @AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/MainWindow.Po \
 @AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/UpdateListItem.Po \
@@ -866,7 +866,6 @@ install-apidox-recurse: install-apidox
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:
 
-
 #>+ 3
 ZmdEditServers.moc.cpp: $(srcdir)/ZmdEditServers.h
 	$(MOC) $(srcdir)/ZmdEditServers.h -o ZmdEditServers.moc.cpp
@@ -882,6 +881,13 @@ ZmdDependencyDialog.moc.cpp: $(srcdir)/ZmdDependencyDialog.h
 mocs: ZmdDependencyDialog.moc.cpp
 
 #>+ 3
+ZmdConfigWindow.moc.cpp: $(srcdir)/ZmdConfigWindow.h
+	$(MOC) $(srcdir)/ZmdConfigWindow.h -o ZmdConfigWindow.moc.cpp
+
+#>+ 2
+mocs: ZmdConfigWindow.moc.cpp
+
+#>+ 3
 ZmdInstallWindow.moc.cpp: $(srcdir)/ZmdInstallWindow.h
 	$(MOC) $(srcdir)/ZmdInstallWindow.h -o ZmdInstallWindow.moc.cpp
 
@@ -894,13 +900,6 @@ GeneralConfigWindow.moc.cpp: $(srcdir)/GeneralConfigWindow.h
 
 #>+ 2
 mocs: GeneralConfigWindow.moc.cpp
-
-#>+ 3
-ZmdConfigWindow.moc.cpp: $(srcdir)/ZmdConfigWindow.h
-	$(MOC) $(srcdir)/ZmdConfigWindow.h -o ZmdConfigWindow.moc.cpp
-
-#>+ 2
-mocs: ZmdConfigWindow.moc.cpp
 
 #>+ 3
 ZmdRugParser.moc.cpp: $(srcdir)/ZmdRugParser.h
@@ -967,33 +966,33 @@ mocs: ZmdServerDialog.moc.cpp
 
 #>+ 3
 clean-metasources:
-	-rm -f  ZmdEditServers.moc.cpp ZmdDependencyDialog.moc.cpp ZmdInstallWindow.moc.cpp GeneralConfigWindow.moc.cpp ZmdConfigWindow.moc.cpp ZmdRugParser.moc.cpp ZmdProgressDialog.moc.cpp ZmdUpdaterCore.moc.cpp ZmdUpdater.moc.cpp ZmdAdvancedConfig.moc.cpp Updater.moc.cpp MainWindow.moc.cpp HeaderWidget.moc.cpp ZmdServerDialog.moc.cpp
+	-rm -f  ZmdEditServers.moc.cpp ZmdDependencyDialog.moc.cpp ZmdConfigWindow.moc.cpp ZmdInstallWindow.moc.cpp GeneralConfigWindow.moc.cpp ZmdRugParser.moc.cpp ZmdProgressDialog.moc.cpp ZmdUpdaterCore.moc.cpp ZmdUpdater.moc.cpp ZmdAdvancedConfig.moc.cpp Updater.moc.cpp MainWindow.moc.cpp HeaderWidget.moc.cpp ZmdServerDialog.moc.cpp
 
 #>+ 2
-KDE_DIST=opensuse-updater.spec hi48-app-suseupdater.png hi16-app-suseupdater.png hi32-app-suseupdater.png suseupdater.desktop hi128-app-suseupdater.png suseupdater-start.desktop Constants.h ZmdConfigWindow.cpp.mine SUSEUpdater Makefile.in ZmdUpdaterCoreUtils.h hi64-app-suseupdater.png Makefile.am 
+KDE_DIST=opensuse-updater.spec hi48-app-suseupdater.png hi16-app-suseupdater.png hi32-app-suseupdater.png suseupdater.desktop hi128-app-suseupdater.png suseupdater-start.desktop Constants.h ZmdConfigWindow.cpp.mine Makefile.in ZmdUpdaterCoreUtils.h hi64-app-suseupdater.png Makefile.am 
 
 #>+ 2
 docs-am:
 
 #>+ 19
 install-kde-icons:
-	$(mkinstalldirs) $(DESTDIR)$(kde_icondir)/hicolor/32x32/apps
-	$(INSTALL_DATA) $(srcdir)/hi32-app-suseupdater.png $(DESTDIR)$(kde_icondir)/hicolor/32x32/apps/suseupdater.png
 	$(mkinstalldirs) $(DESTDIR)$(kde_icondir)/hicolor/128x128/apps
 	$(INSTALL_DATA) $(srcdir)/hi128-app-suseupdater.png $(DESTDIR)$(kde_icondir)/hicolor/128x128/apps/suseupdater.png
-	$(mkinstalldirs) $(DESTDIR)$(kde_icondir)/hicolor/64x64/apps
-	$(INSTALL_DATA) $(srcdir)/hi64-app-suseupdater.png $(DESTDIR)$(kde_icondir)/hicolor/64x64/apps/suseupdater.png
-	$(mkinstalldirs) $(DESTDIR)$(kde_icondir)/hicolor/16x16/apps
-	$(INSTALL_DATA) $(srcdir)/hi16-app-suseupdater.png $(DESTDIR)$(kde_icondir)/hicolor/16x16/apps/suseupdater.png
 	$(mkinstalldirs) $(DESTDIR)$(kde_icondir)/hicolor/48x48/apps
 	$(INSTALL_DATA) $(srcdir)/hi48-app-suseupdater.png $(DESTDIR)$(kde_icondir)/hicolor/48x48/apps/suseupdater.png
+	$(mkinstalldirs) $(DESTDIR)$(kde_icondir)/hicolor/32x32/apps
+	$(INSTALL_DATA) $(srcdir)/hi32-app-suseupdater.png $(DESTDIR)$(kde_icondir)/hicolor/32x32/apps/suseupdater.png
+	$(mkinstalldirs) $(DESTDIR)$(kde_icondir)/hicolor/16x16/apps
+	$(INSTALL_DATA) $(srcdir)/hi16-app-suseupdater.png $(DESTDIR)$(kde_icondir)/hicolor/16x16/apps/suseupdater.png
+	$(mkinstalldirs) $(DESTDIR)$(kde_icondir)/hicolor/64x64/apps
+	$(INSTALL_DATA) $(srcdir)/hi64-app-suseupdater.png $(DESTDIR)$(kde_icondir)/hicolor/64x64/apps/suseupdater.png
 
 uninstall-kde-icons:
-	-rm -f $(DESTDIR)$(kde_icondir)/hicolor/32x32/apps/suseupdater.png
 	-rm -f $(DESTDIR)$(kde_icondir)/hicolor/128x128/apps/suseupdater.png
-	-rm -f $(DESTDIR)$(kde_icondir)/hicolor/64x64/apps/suseupdater.png
-	-rm -f $(DESTDIR)$(kde_icondir)/hicolor/16x16/apps/suseupdater.png
 	-rm -f $(DESTDIR)$(kde_icondir)/hicolor/48x48/apps/suseupdater.png
+	-rm -f $(DESTDIR)$(kde_icondir)/hicolor/32x32/apps/suseupdater.png
+	-rm -f $(DESTDIR)$(kde_icondir)/hicolor/16x16/apps/suseupdater.png
+	-rm -f $(DESTDIR)$(kde_icondir)/hicolor/64x64/apps/suseupdater.png
 
 #>+ 15
 force-reedit:
@@ -1034,11 +1033,11 @@ bcheck-am:
 
 
 #>+ 11
-SUSEUpdater.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/main.cpp $(srcdir)/MainWindow.cpp $(srcdir)/HeaderWidget.cpp $(srcdir)/ZmdConfigWindow.cpp $(srcdir)/ZmdInstallWindow.cpp $(srcdir)/ZmdServerDialog.cpp $(srcdir)/ZmdUpdaterCore.cpp $(srcdir)/ZmdProgressDialog.cpp $(srcdir)/ZmdCatalogListItem.cpp $(srcdir)/ZmdDependencyDialog.cpp $(srcdir)/ZmdUpdater.cpp $(srcdir)/UpdaterApplication.cpp $(srcdir)/GeneralConfigWindow.cpp $(srcdir)/UpdateListItem.cpp $(srcdir)/ZmdAdvancedConfig.cpp $(srcdir)/ZmdEditServers.cpp $(srcdir)/ZmdRugParser.cpp $(srcdir)/ZmdEditServers.moc.cpp $(srcdir)/ZmdDependencyDialog.moc.cpp $(srcdir)/ZmdConfigWindow.moc.cpp $(srcdir)/GeneralConfigWindow.moc.cpp $(srcdir)/ZmdInstallWindow.moc.cpp $(srcdir)/ZmdProgressDialog.moc.cpp $(srcdir)/ZmdRugParser.moc.cpp $(srcdir)/ZmdUpdater.moc.cpp $(srcdir)/ZmdUpdaterCore.moc.cpp $(srcdir)/ZmdAdvancedConfig.moc.cpp $(srcdir)/Updater.moc.cpp $(srcdir)/MainWindow.moc.cpp $(srcdir)/HeaderWidget.moc.cpp $(srcdir)/ZmdServerDialog.moc.cpp 
+SUSEUpdater.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/main.cpp $(srcdir)/MainWindow.cpp $(srcdir)/HeaderWidget.cpp $(srcdir)/ZmdConfigWindow.cpp $(srcdir)/ZmdInstallWindow.cpp $(srcdir)/ZmdServerDialog.cpp $(srcdir)/ZmdUpdaterCore.cpp $(srcdir)/ZmdProgressDialog.cpp $(srcdir)/ZmdCatalogListItem.cpp $(srcdir)/ZmdDependencyDialog.cpp $(srcdir)/ZmdUpdater.cpp $(srcdir)/UpdaterApplication.cpp $(srcdir)/GeneralConfigWindow.cpp $(srcdir)/UpdateListItem.cpp $(srcdir)/ZmdAdvancedConfig.cpp $(srcdir)/ZmdEditServers.cpp $(srcdir)/ZmdRugParser.cpp ZmdEditServers.moc.cpp ZmdDependencyDialog.moc.cpp GeneralConfigWindow.moc.cpp ZmdInstallWindow.moc.cpp ZmdConfigWindow.moc.cpp ZmdProgressDialog.moc.cpp ZmdRugParser.moc.cpp ZmdUpdater.moc.cpp ZmdUpdaterCore.moc.cpp ZmdAdvancedConfig.moc.cpp Updater.moc.cpp MainWindow.moc.cpp HeaderWidget.moc.cpp ZmdServerDialog.moc.cpp 
 	@echo 'creating SUSEUpdater.all_cpp.cpp ...'; \
 	rm -f SUSEUpdater.all_cpp.files SUSEUpdater.all_cpp.final; \
 	echo "#define KDE_USE_FINAL 1" >> SUSEUpdater.all_cpp.final; \
-	for file in main.cpp MainWindow.cpp HeaderWidget.cpp ZmdConfigWindow.cpp ZmdInstallWindow.cpp ZmdServerDialog.cpp ZmdUpdaterCore.cpp ZmdProgressDialog.cpp ZmdCatalogListItem.cpp ZmdDependencyDialog.cpp ZmdUpdater.cpp UpdaterApplication.cpp GeneralConfigWindow.cpp UpdateListItem.cpp ZmdAdvancedConfig.cpp ZmdEditServers.cpp ZmdRugParser.cpp ZmdEditServers.moc.cpp ZmdDependencyDialog.moc.cpp ZmdConfigWindow.moc.cpp GeneralConfigWindow.moc.cpp ZmdInstallWindow.moc.cpp ZmdProgressDialog.moc.cpp ZmdRugParser.moc.cpp ZmdUpdater.moc.cpp ZmdUpdaterCore.moc.cpp ZmdAdvancedConfig.moc.cpp Updater.moc.cpp MainWindow.moc.cpp HeaderWidget.moc.cpp ZmdServerDialog.moc.cpp ; do \
+	for file in main.cpp MainWindow.cpp HeaderWidget.cpp ZmdConfigWindow.cpp ZmdInstallWindow.cpp ZmdServerDialog.cpp ZmdUpdaterCore.cpp ZmdProgressDialog.cpp ZmdCatalogListItem.cpp ZmdDependencyDialog.cpp ZmdUpdater.cpp UpdaterApplication.cpp GeneralConfigWindow.cpp UpdateListItem.cpp ZmdAdvancedConfig.cpp ZmdEditServers.cpp ZmdRugParser.cpp ZmdEditServers.moc.cpp ZmdDependencyDialog.moc.cpp GeneralConfigWindow.moc.cpp ZmdInstallWindow.moc.cpp ZmdConfigWindow.moc.cpp ZmdProgressDialog.moc.cpp ZmdRugParser.moc.cpp ZmdUpdater.moc.cpp ZmdUpdaterCore.moc.cpp ZmdAdvancedConfig.moc.cpp Updater.moc.cpp MainWindow.moc.cpp HeaderWidget.moc.cpp ZmdServerDialog.moc.cpp ; do \
 	  echo "#include \"$$file\"" >> SUSEUpdater.all_cpp.files; \
 	  test ! -f $(srcdir)/$$file || egrep '^#pragma +implementation' $(srcdir)/$$file >> SUSEUpdater.all_cpp.final; \
 	done; \

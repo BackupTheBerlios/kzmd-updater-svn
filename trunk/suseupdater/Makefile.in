@@ -888,7 +888,7 @@ install-apidox-recurse: install-apidox
 .NOEXPORT:
 
 #>+ 2
-KDE_DIST=stamp-h.in subdirs Makefile.in configure.files config.h.in configure.in Makefile.cvs aclocal.m4 Doxyfile configure Makefile.am acinclude.m4 
+KDE_DIST=stamp-h.in subdirs Makefile.in configure.files config.h.in configure.in Makefile.cvs aclocal.m4 Doxyfile configure acinclude.m4 Makefile.am 
 
 #>+ 2
 docs-am:
