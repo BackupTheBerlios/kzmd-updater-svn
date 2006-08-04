@@ -6030,17 +6030,37 @@ m4trace:configure.in:70: -1- AC_CHECK_KDEMAXPATHLEN
 m4trace:configure.in:70: -1- AC_DEFINE_TRACE_LITERAL([KDEMAXPATHLEN])
 m4trace:configure.in:70: -1- AH_OUTPUT([KDEMAXPATHLEN], [/* Define a safe value for MAXPATHLEN */
 #undef KDEMAXPATHLEN])
-m4trace:configure.in:72: -1- KDE_CREATE_SUBDIRSLIST
-m4trace:configure.in:72: -1- AC_SUBST([TOPSUBDIRS])
-m4trace:configure.in:73: -1- AC_CONFIG_FILES([ Makefile ])
-m4trace:configure.in:74: -1- AC_CONFIG_FILES([ doc/Makefile ])
-m4trace:configure.in:75: -1- AC_CONFIG_FILES([ doc/en/Makefile ])
-m4trace:configure.in:76: -1- AC_CONFIG_FILES([ images/Makefile ])
-m4trace:configure.in:77: -1- AC_CONFIG_FILES([ kxmlrpcclient/Makefile ])
-m4trace:configure.in:78: -1- AC_CONFIG_FILES([ kzmdauthutil/Makefile ])
-m4trace:configure.in:79: -1- AC_CONFIG_FILES([ po/Makefile ])
-m4trace:configure.in:80: -1- AC_CONFIG_FILES([ suseupdater/Makefile ])
-m4trace:configure.in:81: -1- AC_SUBST([LIB@&t@OBJS], [$ac_libobjs])
-m4trace:configure.in:81: -1- AC_SUBST([LTLIBOBJS], [$ac_ltlibobjs])
-m4trace:configure.in:81: -1- _AC_AM_CONFIG_HEADER_HOOK([$ac_file])
-m4trace:configure.in:81: -1- _AM_OUTPUT_DEPENDENCY_COMMANDS
+m4trace:configure.in:71: -1- KDE_INIT_DOXYGEN([The KDE Updater Applet API Reference], [Version $VERSION])
+m4trace:configure.in:71: -1- AC_FIND_FILE([qsql.html], [ $kde_qtdir/doc/html $QTDIR/doc/html /usr/share/doc/packages/qt3/html /usr/lib/qt/doc /usr/lib/qt3/doc /usr/lib/qt3/doc/html /usr/doc/qt3/html /usr/doc/qt3 /usr/share/doc/qt3-doc /usr/share/qt3/doc/html /usr/X11R6/share/doc/qt/html ], [QTDOCDIR])
+m4trace:configure.in:71: -1- _m4_warn([obsolete], [The macro `AC_FD_CC' is obsolete.
+You should run autoupdate.], [autoconf/general.m4:376: AC_FD_CC is expanded from...
+acinclude.m4:174: AC_FIND_FILE is expanded from...
+acinclude.m4:5566: KDE_INIT_DOXYGEN is expanded from...
+configure.in:71: the top level])
+m4trace:configure.in:71: -1- _m4_warn([obsolete], [The macro `AC_FD_CC' is obsolete.
+You should run autoupdate.], [autoconf/general.m4:376: AC_FD_CC is expanded from...
+acinclude.m4:174: AC_FIND_FILE is expanded from...
+acinclude.m4:5566: KDE_INIT_DOXYGEN is expanded from...
+configure.in:71: the top level])
+m4trace:configure.in:71: -1- AC_SUBST([QTDOCDIR])
+m4trace:configure.in:71: -1- KDE_FIND_PATH([dot], [DOT], [], [])
+m4trace:configure.in:71: -1- AC_SUBST([KDE_HAVE_DOT])
+m4trace:configure.in:71: -1- KDE_FIND_PATH([doxygen], [DOXYGEN], [], [])
+m4trace:configure.in:71: -1- AC_SUBST([DOXYGEN])
+m4trace:configure.in:71: -1- AC_SUBST([DOXYGEN_PROJECT_NAME])
+m4trace:configure.in:71: -1- AC_SUBST([DOXYGEN_PROJECT_NUMBER])
+m4trace:configure.in:71: -1- AC_SUBST([KDE_HAS_DOXYGEN])
+m4trace:configure.in:73: -1- KDE_CREATE_SUBDIRSLIST
+m4trace:configure.in:73: -1- AC_SUBST([TOPSUBDIRS])
+m4trace:configure.in:74: -1- AC_CONFIG_FILES([ Makefile ])
+m4trace:configure.in:75: -1- AC_CONFIG_FILES([ doc/Makefile ])
+m4trace:configure.in:76: -1- AC_CONFIG_FILES([ doc/en/Makefile ])
+m4trace:configure.in:77: -1- AC_CONFIG_FILES([ images/Makefile ])
+m4trace:configure.in:78: -1- AC_CONFIG_FILES([ kxmlrpcclient/Makefile ])
+m4trace:configure.in:79: -1- AC_CONFIG_FILES([ kzmdauthutil/Makefile ])
+m4trace:configure.in:80: -1- AC_CONFIG_FILES([ po/Makefile ])
+m4trace:configure.in:81: -1- AC_CONFIG_FILES([ suseupdater/Makefile ])
+m4trace:configure.in:82: -1- AC_SUBST([LIB@&t@OBJS], [$ac_libobjs])
+m4trace:configure.in:82: -1- AC_SUBST([LTLIBOBJS], [$ac_ltlibobjs])
+m4trace:configure.in:82: -1- _AC_AM_CONFIG_HEADER_HOOK([$ac_file])
+m4trace:configure.in:82: -1- _AM_OUTPUT_DEPENDENCY_COMMANDS

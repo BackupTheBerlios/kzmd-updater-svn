@@ -68,6 +68,7 @@ dnl =======================================================
 dnl PACKAGE set before
 AC_C_BIGENDIAN
 AC_CHECK_KDEMAXPATHLEN
+KDE_INIT_DOXYGEN([The KDE Updater Applet API Reference], [Version $VERSION])
 
 KDE_CREATE_SUBDIRSLIST
 AC_CONFIG_FILES([ Makefile ])
