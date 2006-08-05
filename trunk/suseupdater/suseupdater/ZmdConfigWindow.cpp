@@ -37,6 +37,10 @@ ZmdConfigWindow::ZmdConfigWindow(ZmdUpdaterCore *_core, QWidget *parent) : QWidg
 	initGUI();
 }
 
+ZmdConfigWindow::~ZmdConfigWindow() {
+	emit(refreshUpdates());
+}
+
 void ZmdConfigWindow::initGUI() {
 
 	mainLayout = new QVBoxLayout(this);
@@ -54,7 +58,6 @@ void ZmdConfigWindow::initGUI() {
 
 	header->setDescription(i18n("<b>Add/Remove Package Servers:</b><br> You may add or remove update servers below or change your software catalog subscriptions.<br> <u>Make whatever changes you wish and press close.</u>"));
 
-	connect(editServers, SIGNAL(refreshUpdates()), this, SLOT(serverChange()));
 	connect(tabs, SIGNAL(currentChanged(QWidget *)), this, SLOT(tabChanged(QWidget *)));
 	connect(closeButton, SIGNAL(clicked()), this, SLOT(close()));
 	
@@ -62,10 +65,6 @@ void ZmdConfigWindow::initGUI() {
 	mainLayout->setMargin(10);
 	setCaption(i18n("Add/Remove Servers"));
 	resize(250,500);
-}
-
-void ZmdConfigWindow::serverChange() {
-	emit(refreshUpdates());
 }
 
 void ZmdConfigWindow::tabChanged(QWidget *tab) {

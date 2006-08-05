@@ -39,11 +39,6 @@ class ZmdEditServers : public QWidget {
 
 		ZmdEditServers(ZmdUpdaterCore *_core, QWidget *parent=0);
 
-	signals:
-
-		//We are going to fire this off after an add/remove to update the list
-		void refreshUpdates();
-
 	private slots:
 
 		void addButtonClicked();

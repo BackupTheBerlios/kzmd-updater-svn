@@ -33,9 +33,6 @@
 #include "ZmdInstallWindow.h"
 #include "ZmdDependencyDialog.h"
 
-#define DOWNLOAD_BUG_FIX  //When defined we use the workaround for the bug in zmd. 
-
-
 ZmdInstallWindow::ZmdInstallWindow(ZmdUpdaterCore *_core, QWidget *parent) : 
 	QWidget(parent,0,Qt::WDestructiveClose | Qt::WShowModal) {
 	core = _core;
@@ -133,37 +130,27 @@ void ZmdInstallWindow::gotDepInfo(QValueList<Package> installs,
 
 void ZmdInstallWindow::download(Progress status) {
 
-	if (status.status > 0) {
-
-#ifndef DOWNLOAD_BUG_FIX
-// Disable our download progress until the bug in ZMD that reports progress as 100% constantly is fixed
-		progressBar->setValue((int)status.percent);
-#endif
+	//If the following is true, we are starting at 100%...this is a Zypp bug
+	if (status.status == 2 && watchingDownload == false) {
+		transactionList->setText(transactionList->text() + "\nWe are currently unable to show the progress for the download. This is caused by a bug in ZMD, which should be fixed soon. We apologize for any inconvenience this may cause." + "\nPackages Are Downloading...");	
 		progressBar->setDisabled(true);
-		if (watchingDownload == false && status.status >= 1) {
+		watchingDownload = true; //So we will be dropping into the real code on the next progress drop
 
-#ifdef DOWNLOAD_BUG_FIX
-			transactionList->setText(transactionList->text() + "\nWe are currently unable to show the progress for the download. This is caused by a bug in ZMD, which should be fixed soon. We apologize for any inconvenience this may cause." + "\nPackages Are Downloading...");	
-#else
+	} else if (status.status < 4) {
+		progressBar->setValue((int)status.percent);
+
+		if (watchingDownload == false) { //if this is the first time we are watching a package
 			transactionList->setText(transactionList->text() + "\n" + "Packages Are Downloading...");
-#endif
-	
 			watchingDownload = true;
 			downloadDone = false;
 		}
 
-#ifndef DOWNLOAD_BUG_FIX		
-	//We set the download as done in the progress function currently, since the download starts off as done
-	//BUG workaround
-		
 		if (status.status == 2 && downloadDone == false) {
 			transactionList->setText(transactionList->text() + "Done");
-			//Re-enable when download is really done
-			progressBar->setDisabled(false);
 			downloadDone = true;
 		}
-#endif
-
+	} else {
+		KMessageBox::error(this, i18n("Download failed"));
 	}
 }
 
@@ -171,14 +158,13 @@ void ZmdInstallWindow::progress(Progress status) {
 
 	if (status.status > 0 && status.status != 4) {
 
-#ifdef DOWNLOAD_BUG_FIX
+		//if we get here and download Done is falt, we are encountering the zypp bug
 		if (downloadDone == false) { //we have just started the transaction, download is now done
 			transactionList->setText(transactionList->text() + "Done");
 			//Re-enable when download is really done
 			progressBar->setDisabled(false);
 			downloadDone = true;
 		}
-#endif
 
 		progressBar->setValue((int)status.percent);
 		if (watchingPackage == false && status.status == 1) {

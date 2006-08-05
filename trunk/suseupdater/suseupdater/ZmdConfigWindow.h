@@ -41,6 +41,7 @@ class ZmdConfigWindow : public QWidget {
 	public:
 
 		ZmdConfigWindow(ZmdUpdaterCore *_core=0, QWidget *parent=0);
+		~ZmdConfigWindow();
 
 	signals:
 
@@ -48,7 +49,6 @@ class ZmdConfigWindow : public QWidget {
 
 	private slots:
 
-		void serverChange();
 		void tabChanged(QWidget *);
 
 	private:

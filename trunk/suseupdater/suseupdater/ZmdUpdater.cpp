@@ -172,8 +172,7 @@ void ZmdUpdater::startRefresh() {
 
 void ZmdUpdater::configureUpdater() {
 	ZmdConfigWindow *win = new ZmdConfigWindow(core);
-	//FIX
-//	connect(win, SIGNAL(refreshUpdates()), this, SLOT(startRefresh()));
+	connect(win, SIGNAL(refreshUpdates()), this, SLOT(startRefresh()));
 	win->show();
 }
 
