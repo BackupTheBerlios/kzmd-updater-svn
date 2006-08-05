@@ -77,7 +77,7 @@ void ZmdProgressDialog::setDescription(QString text) {
 }
 
 void ZmdProgressDialog::progress(Progress prog) {
-	progressBar->advance((int)prog.percent);
+	progressBar->setValue((int)prog.percent);
 }
 
 void ZmdProgressDialog::finished(QString name, int status, QString error) {
