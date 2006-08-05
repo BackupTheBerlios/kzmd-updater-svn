@@ -61,6 +61,9 @@ rm -rf $RPM_BUILD_ROOT
 /opt/kde3/share/doc/HTML/en/suseupdater/common
 /opt/kde3/share/doc/HTML/en/suseupdater/index.cache.bz2
 /opt/kde3/share/doc/HTML/en/suseupdater/index.docbook
+/opt/kde3/lib/kde3/kio_udshttp.la
+/opt/kde3/lib/kde3/kio_udshttp.so
+/opt/kde3/share/services/udshttp.protocol
 
 %changelog -n opensuse-updater
 * Wed Jul 5 2006 - dmacvicar@suse.de
