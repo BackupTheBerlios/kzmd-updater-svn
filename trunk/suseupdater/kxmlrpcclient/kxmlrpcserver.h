@@ -36,21 +36,20 @@ class KXmlRpcServer;
 
 
 /**
-		KXmlRpcServer is a class that represents the xmlrpc server we are
-		communicating with. This is the main (only) class you
-		need to worry about for building an xml-rpc client.
-		This class has one main method, "call", which is overloaded extensively
-		to handle different arguments.
-
-		@author Narayan Newton <narayannewton@gmail.com>
+		KXmlRpcServer is a class that represents an xml-rpc server
+		This is the main (only) class you need to worry about for building an 
+		xml-rpc client. This class has one main method, "call", which is overloaded 
+		extensively to handle different arguments.
 
 		@code
-			KXmlRpcServer *serv = new KXmlRpcServer(KURL("http://localhost"), this);
-			serv->setUserAgent("Test/1.0");
-			serv->call("xmlrpc.command1", "Hi!", 
-					   this, SLOT(gotData(const QValueList<QVariant>&, const QVariant)),
-					   this, SLOT(gotError(const QString&, const QVariant&)));
+	KXmlRpcServer *serv = new KXmlRpcServer(KURL("http://localhost"), this);
+	serv->setUserAgent("Test/1.0");
+	serv->call("xmlrpc.command1", "Hi!", 
+			   this, SLOT(gotData(const QValueList<QVariant>&, const QVariant)),
+			   this, SLOT(gotError(const QString&, const QVariant&)));
 		@endcode
+
+		@author Narayan Newton <narayannewton@gmail.com>
 
 **/
 
@@ -83,8 +82,13 @@ class KXmlRpcServer : public QObject {
 
 		KXmlRpcServer( const KURL &url, QObject *parent = 0, const char *name = 0 );
 
-		~KXmlRpcServer();
+		/**
 
+			Standard destructor.
+
+		**/
+
+		~KXmlRpcServer();
 
 		/**
 			Gets the current url of the xml-rpc server.
@@ -126,31 +130,37 @@ class KXmlRpcServer : public QObject {
 
 
 		/**
-			The main function for KXMLRPC. This make a xml-rpc call to the server set via
-			the constructor or via setUrl. You pass in the method, the argument list and
+			The main function for this class. This make a xml-rpc call to the server set via
+			the constructor or via setUrl. You pass in the method, the argument list, 
 			a slot for data arrival and a slot for possible errors.
 
 			This method is HIGHLY over-loaded and relies heavily on QValueLists and QVariants.
 
-			The following are the types of arguments supported as arguments:
+			The following are the types of arguments supported:
 
-				QValueList<QVariant>
-				QVariant
-				QString
-				QCString
-				QByteArray
-				QDateTime
-				QStringList
-				int
-				bool
+				QValueList<QVariant>, 
+				QVariant, 
+				QString, 
+				QCString, 
+				QByteArray, 
+				QDateTime, 
+				QStringList, 
+				int, 
+				bool, 
 				double
+
+			@code
+	serv->call("xmlrpc.command1", "Hi!", 
+			   this, SLOT(gotData(const QValueList<QVariant>&, const QVariant)),
+			   this, SLOT(gotError(const QString&, const QVariant&)));
+			@endcode
 
 			@param method the method on the server we are going to be calling
 			@param arg the argument or arguments you will be passing to the method
 			@param obj the QObject of the error slot
 			@param faultSlot the error slot itself
 			@param obj the QObject of the data slot
-			@param messageSlot the slot receiving the data
+			@param messageSlot the data slot itself
 			@param id the id for our KXmlRpcServer object, defaults to empty
 
 		**/
