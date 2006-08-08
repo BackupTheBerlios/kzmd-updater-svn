@@ -45,7 +45,7 @@ void ZmdEditServers::initGUI() {
 	addButton = new KPushButton(i18n("Add Server"), this);
 	removeButton = new KPushButton(i18n("Remove Server"), this);
 
-	serverList->addColumn(i18n("Services/Catalogs"), 400);
+	serverList->addColumn(i18n("Services/Catalogs"), -1);
 	serverList->setTreeStepSize(30);
 	serverList->setRootIsDecorated(true);
 
