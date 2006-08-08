@@ -130,7 +130,6 @@ class kio_udshttpProtocol : public KIO::SlaveBase {
 		QString m_realSocketUrl;
 		QString m_realPath;
 
-		QString m_userAgent;
 		QString m_fromLine;
 
 		//Data, we split into 3 parts
@@ -140,6 +139,8 @@ class kio_udshttpProtocol : public KIO::SlaveBase {
 
 		//Metadata info from job, if there is any
 		QString m_contentType;
+		QString m_userAgent;
+		unsigned int m_connectTimeout;
 
 		//Holds the response
 		QString m_outputData;

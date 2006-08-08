@@ -69,6 +69,7 @@ kio_udshttpProtocol::kio_udshttpProtocol(const QCString &pool_socket, const QCSt
 	m_httpVersion = HTTP_1_1;
 	m_userAgent = "kio_udshttp/1.0";
 	m_connectionDone = false;
+	m_connectTimeout = SOCKET_TIMEOUT;
 }
 
 
@@ -267,7 +268,9 @@ void kio_udshttpProtocol::getSocketResponse() {
 	//clear any data we had sitting around
 	m_outputData.truncate(0);
 
-	if (poll(&fd, 1, SOCKET_TIMEOUT) > 0) {
+	kdWarning(DEBUGCODE) << "Connect timeout: " << m_connectTimeout << endl;
+
+	if (poll(&fd, 1, m_connectTimeout) > 0) {
 		while ((count = recv(m_socket->socket(), buffer, 1024, MSG_DONTWAIT)) > 0) {
 			buffer[count] = '\0';
 			m_outputData += buffer;
@@ -308,6 +311,11 @@ void kio_udshttpProtocol::fetchMeta() {
 	if (hasMetaData("UserAgent") == true) {
 		m_userAgent = metaData("UserAgent");
 	}
+
+	if (hasMetaData("ConnectTimeout") == true) {
+		m_connectTimeout = QString(metaData("ConnectTimeout")).toInt() * 100;
+	}
+
 }
 
 
