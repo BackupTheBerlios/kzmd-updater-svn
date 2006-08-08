@@ -28,6 +28,8 @@ class QLabel;
 class QHButtonGroup;
 class KLineEdit;
 class QGridLayout;
+class QVGroupBox;
+class QSpinBox;
 class ZmdRugParser;
 class ZmdUpdaterCore;
 
@@ -45,20 +47,29 @@ class ZmdAdvancedConfig : public QWidget {
 		void stdinReady();		
 		void settingsChange();
 		void settingsChange(int id);
-		void settingsChange(const QString&);
+		void logLevelChange(const QString&);
+		void securityLevelChange(const QString&);
+		void maxDownloadsValueChange(int);
 		void errorReady();
 
 	private:
 	
 		void initGUI();
+		void saveSettings(QString setting, QString value);
 		
 		QGridLayout *mainLayout;
+		QVGroupBox *securityBox;
+		QVGroupBox *connectionBox;
+		QVGroupBox *otherBox;
 
 		QLabel *hostLabel;
 		KLineEdit *hostEdit;
 
 		QLabel *remoteLabel;
 		QHButtonGroup *remoteButtons;
+
+		QLabel *securityLevelLabel;
+		QComboBox *securityLevelBox;
 
 		QLabel *certLabel;
 		QHButtonGroup *certButtons;
@@ -69,12 +80,15 @@ class ZmdAdvancedConfig : public QWidget {
 		QLabel *rollbackLabel;
 		QHButtonGroup *rollbackButtons;
 
+		QLabel *maxDownloadsLabel;
+		QSpinBox *maxDownloadsSpinner;
+
 		//proc to fetch current settings
 		QProcess *proc;
-
 		//proc to save settings
 		QProcess *saveProc;
 
+		//Our  parser for actually "reading" the settings
 		ZmdRugParser *parser;
 
 		//backend and variable to watch for required backend restart.

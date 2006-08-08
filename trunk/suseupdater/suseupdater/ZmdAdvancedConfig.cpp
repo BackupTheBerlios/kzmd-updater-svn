@@ -28,9 +28,12 @@
 #include <qradiobutton.h>
 #include <qprocess.h>
 #include <qcombobox.h>
+#include <qspinbox.h>
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qhbuttongroup.h>
+#include <qhbox.h>
+#include <qvgroupbox.h>
 
 #include "ZmdRugParser.h"
 #include "ZmdUpdaterCore.h"
@@ -61,17 +64,43 @@ ZmdAdvancedConfig::ZmdAdvancedConfig(ZmdUpdaterCore *_core, QWidget *parent) : Q
 
 void ZmdAdvancedConfig::initGUI() {
 
-	mainLayout = new QGridLayout(this, 5, 2);
-	hostLabel = new QLabel(i18n("ZMD Is Listening on: "), this);
-	hostEdit = new KLineEdit(this);
-	remoteLabel = new QLabel(i18n("ZMD TCP Support: "), this);
-	remoteButtons = new QHButtonGroup(this);
-	certLabel = new QLabel(i18n("Require GPG Certificates For Servers: "), this);
-	certButtons = new QHButtonGroup(this);
-	logLabel = new QLabel(i18n("ZMD Logging Level: "), this);
-	logBox = new QComboBox(false, this);
-	rollbackLabel = new QLabel(i18n("Rollback Support: "), this);
-	rollbackButtons = new QHButtonGroup(this);
+	mainLayout = new QGridLayout(this, 2, 2);
+	securityBox = new QVGroupBox(this);
+	securityBox->setTitle(i18n("Security Options"));
+
+	connectionBox = new QVGroupBox(this);
+	connectionBox->setTitle(i18n("Connection Options"));
+
+	otherBox = new QVGroupBox(this);
+	otherBox->setTitle(i18n("Other Options"));
+
+	QHBox *hostBox = new QHBox(connectionBox);
+	hostLabel = new QLabel(i18n("ZMD Is Listening on: "), hostBox);
+	hostEdit = new KLineEdit(hostBox);
+	
+	QHBox *remoteBox = new QHBox(connectionBox);
+	remoteLabel = new QLabel(i18n("ZMD TCP Support: "), remoteBox);
+	remoteButtons = new QHButtonGroup(remoteBox);
+
+	QHBox *certBox = new QHBox(securityBox);
+	certLabel = new QLabel(i18n("Require GPG Certificates For Servers: "), certBox);
+	certButtons = new QHButtonGroup(certBox);
+
+	QHBox *secLevBox = new QHBox(securityBox);
+	securityLevelLabel = new QLabel(i18n("Security Level: "), secLevBox);
+	securityLevelBox = new QComboBox(false, secLevBox);
+
+	QHBox *logLevelBox = new QHBox(otherBox);
+	logLabel = new QLabel(i18n("ZMD Logging Level: "), logLevelBox);
+	logBox = new QComboBox(false, logLevelBox);
+
+	QHBox *rollbackBox = new QHBox(otherBox);
+	rollbackLabel = new QLabel(i18n("Rollback Support: "), rollbackBox);
+	rollbackButtons = new QHButtonGroup(rollbackBox);
+
+	QHBox *downloadsBox = new QHBox(otherBox);
+	maxDownloadsLabel = new QLabel(i18n("Max Simultaneous Downloads"), downloadsBox);
+	maxDownloadsSpinner = new QSpinBox(downloadsBox);
 
 	QRadioButton *onButton = new QRadioButton(i18n("On"), remoteButtons);
 	QRadioButton *offButton = new QRadioButton(i18n("Off"), remoteButtons);
@@ -103,16 +132,17 @@ void ZmdAdvancedConfig::initGUI() {
 	logBox->insertItem("debug",-1);
 	logBox->setCurrentText("false");
 
-	mainLayout->addWidget(hostLabel, 0, 0);
-	mainLayout->addWidget(hostEdit, 0, 1);
-	mainLayout->addWidget(remoteLabel, 1, 0);
-	mainLayout->addWidget(remoteButtons, 1, 1, Qt::AlignLeft | Qt::AlignVCenter);
-	mainLayout->addWidget(certLabel, 2, 0);
-	mainLayout->addWidget(certButtons, 2, 1, Qt::AlignLeft | Qt::AlignVCenter);
-	mainLayout->addWidget(rollbackLabel, 4, 0);
-	mainLayout->addWidget(rollbackButtons, 4, 1, Qt::AlignLeft | Qt::AlignVCenter);
-	mainLayout->addWidget(logLabel, 3, 0);
-	mainLayout->addWidget(logBox, 3, 1);
+	securityLevelBox->insertItem("signature", -1);
+	securityLevelBox->insertItem("checksum", -1);
+	securityLevelBox->insertItem("none", -1);
+	securityLevelBox->setCurrentText("signature");
+
+	maxDownloadsSpinner->setMinValue(1);
+
+	mainLayout->addWidget(connectionBox, 0, 0);
+	mainLayout->addWidget(securityBox, 1, 0);
+	mainLayout->addWidget(otherBox, 0, 1);
+
 	mainLayout->setSpacing(10);
 	mainLayout->setMargin(10);
 
@@ -122,6 +152,7 @@ void ZmdAdvancedConfig::initGUI() {
 	certButtons->setDisabled(true);
 	remoteButtons->setDisabled(true);
 	rollbackButtons->setDisabled(true);
+	maxDownloadsSpinner->setDisabled(true);
 
 	show();
 }
@@ -129,6 +160,7 @@ void ZmdAdvancedConfig::initGUI() {
 void ZmdAdvancedConfig::stdinReady() {
 	QString data;
 	QByteArray byteData;
+	int maxDownloads = 0;
 
 	byteData = proc->readStdout();
 	parser->setData(byteData);
@@ -161,50 +193,66 @@ void ZmdAdvancedConfig::stdinReady() {
 	} else {
 		rollbackButtons->setButton(ROLLBACK_BUTTON_OFF);
 	}
+
+	if ((maxDownloads = QString(parser->getProperty("max-downloads")).toInt()) > 0) {
+		maxDownloadsSpinner->setValue(maxDownloads);
+	} else {
+		maxDownloadsSpinner->setValue(1);
+	}
+
+	data = "";
+	data = parser->getProperty("security-level");
+	if (data.isEmpty() == false) {
+		securityLevelBox->setCurrentText(data);
+	}
+
 	logBox->setDisabled(false);
 	hostEdit->setDisabled(false);
 	certButtons->setDisabled(false);
 	remoteButtons->setDisabled(false);
 	rollbackButtons->setDisabled(false);
+	maxDownloadsSpinner->setDisabled(false);
 
 	connect(remoteButtons, SIGNAL(clicked(int)), this, SLOT(settingsChange(int)));		
 	connect(certButtons, SIGNAL(clicked(int)), this, SLOT(settingsChange(int)));	
 	connect(rollbackButtons, SIGNAL(clicked(int)), this, SLOT(settingsChange(int)));
 	connect(hostEdit, SIGNAL(returnPressed()), this, SLOT(settingsChange()));
-	connect(logBox, SIGNAL(activated(const QString&)), this, SLOT(settingsChange(const QString&)));
+	connect(logBox, SIGNAL(activated(const QString&)), this, SLOT(logLevelChange(const QString&)));
+	connect(securityLevelBox, SIGNAL(activated(const QString&)), this, SLOT(securityLevelChange(const QString&)));
+	connect(maxDownloadsSpinner, SIGNAL(valueChanged(int)), this, SLOT(maxDownloadsValueChange(int)));
+}
+
+void ZmdAdvancedConfig::saveSettings(QString setting, QString value) {
+
+	kdWarning() << "Setting changed" << endl;
+	saveProc = new QProcess(QString("rug"), this);
+	saveProc->addArgument("set-prefs");
+	saveProc->addArgument(setting);
+	saveProc->addArgument(value);
+	if (!saveProc->start()) {
+		KMessageBox::error(this, i18n("Rug must be installed to configure ZMD, is it in your path?"));
+		return;
+	}
+	connect(saveProc, SIGNAL(readyReadStderr()), this, SLOT(errorReady()));
 }
 
 void ZmdAdvancedConfig::settingsChange() {
-	kdWarning() << "Setting changed" << endl;
-	saveProc = new QProcess(QString("rug"), this);
-	saveProc->addArgument("set-prefs");
-	saveProc->addArgument("bind-ip");
-	saveProc->addArgument(hostEdit->text());
-	if (!saveProc->start()) {
-		KMessageBox::error(this, i18n("Rug must be installed to configure ZMD, is it in your path?"));
-		return;
-	}
-	connect(saveProc, SIGNAL(readyReadStderr()), this, SLOT(errorReady()));
+	saveSettings("bind-ip", hostEdit->text());
 }
 
-void ZmdAdvancedConfig::settingsChange(const QString &newText) {
-	kdWarning() << "Setting changed" << endl;
-	saveProc = new QProcess(QString("rug"), this);
-	saveProc->addArgument("set-prefs");
-	saveProc->addArgument("log-level");
-	saveProc->addArgument(logBox->currentText());
-	if (!saveProc->start()) {
-		KMessageBox::error(this, i18n("Rug must be installed to configure ZMD, is it in your path?"));
-		return;
-	}
-	connect(saveProc, SIGNAL(readyReadStderr()), this, SLOT(errorReady()));
+void ZmdAdvancedConfig::logLevelChange(const QString &newText) {
+	saveSettings("log-level", logBox->currentText());
+}
+
+void ZmdAdvancedConfig::securityLevelChange(const QString &newText) {
+	saveSettings("security-level", securityLevelBox->currentText());
 }
 
 void ZmdAdvancedConfig::settingsChange(int id) {
 
 	//note: since 0 = REMOTE_BUTTON_ON and 1 = REMOTE_BUTTON_OFF, the opposite matches our bool
 	QString settingName;
-	bool settingValue;
+	bool settingValue = false;
 
 	switch (id) {
 
@@ -234,16 +282,9 @@ void ZmdAdvancedConfig::settingsChange(int id) {
 			break;
 	}
 	if (settingName.isEmpty() == false) {
-		saveProc = new QProcess(QString("rug"), this);
-		saveProc->addArgument("set-prefs");
-		saveProc->addArgument(settingName);
-		saveProc->addArgument((settingValue == true) ? "True" : "False");
-		kdWarning() << saveProc->arguments().join(" ") << endl;
-		if (!saveProc->start()) {
-			KMessageBox::error(this, i18n("Rug must be installed to configure ZMD, is it in your path?"));
-			return;
-		}
-		connect(saveProc, SIGNAL(readyReadStderr()), this, SLOT(errorReady()));
+
+		saveSettings(settingName, (settingValue == true) ? "True" : "False");
+
 		if (settingName == "remote-enabled") {
 			KConfig *config = kapp->config();
 			config->setGroup("General");
@@ -256,6 +297,10 @@ void ZmdAdvancedConfig::settingsChange(int id) {
 			}
 		}
 	}
+}
+
+void ZmdAdvancedConfig::maxDownloadsValueChange(int value) {
+	saveSettings("max-downloads", QString().setNum(maxDownloadsSpinner->value()));
 }
 
 void ZmdAdvancedConfig::errorReady() {
