@@ -39,8 +39,7 @@ using namespace KIO;
 
 //This is the timeout we wait for new connections and how long we hold
 //the connection open
-#define KEEP_ALIVE_TIMEOUT (60*3) //3 minutes to keepalive
-
+#define KEEP_ALIVE_TIMEOUT (60*1) //listen for more requests for 1 min before shutting down
 extern "C"
 {
     int kdemain(int argc, char **argv)
