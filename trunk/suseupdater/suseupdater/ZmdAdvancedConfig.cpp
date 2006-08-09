@@ -153,6 +153,7 @@ void ZmdAdvancedConfig::initGUI() {
 	remoteButtons->setDisabled(true);
 	rollbackButtons->setDisabled(true);
 	maxDownloadsSpinner->setDisabled(true);
+	securityLevelBox->setDisabled(true);
 
 	show();
 }
@@ -212,6 +213,7 @@ void ZmdAdvancedConfig::stdinReady() {
 	remoteButtons->setDisabled(false);
 	rollbackButtons->setDisabled(false);
 	maxDownloadsSpinner->setDisabled(false);
+	securityLevelBox->setDisabled(false);
 
 	connect(remoteButtons, SIGNAL(clicked(int)), this, SLOT(settingsChange(int)));		
 	connect(certButtons, SIGNAL(clicked(int)), this, SLOT(settingsChange(int)));	
