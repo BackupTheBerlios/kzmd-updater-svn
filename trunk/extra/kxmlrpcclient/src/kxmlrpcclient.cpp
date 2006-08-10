@@ -19,20 +19,20 @@
 
 #include <qvariant.h>
 
-#include "kxmlrpcserver.h"
+#include "kxmlrpcclient.h"
 #include "kxmlrpcquery.h"
 
 /**
 
 	@file
 
-	The implementation of KXmlRpcServer
+	The implementation of KXmlRpcClient
 
 **/
 
 
 
-KXmlRpcServer::KXmlRpcServer( const KURL &url, QObject *parent, const char *name ) : QObject( parent, name ) {
+KXmlRpcClient::KXmlRpcClient( const KURL &url, QObject *parent, const char *name ) : QObject( parent, name ) {
 
 	if ( url.isValid() )
 		m_url = url;
@@ -40,7 +40,7 @@ KXmlRpcServer::KXmlRpcServer( const KURL &url, QObject *parent, const char *name
 	m_userAgent = "KDE XMLRPC resources";
 }
 
-KXmlRpcServer::~KXmlRpcServer() {
+KXmlRpcClient::~KXmlRpcClient() {
 
 	QValueList<KXmlRpcQuery*>::Iterator it;
 	for ( it = mPendingQueries.begin(); it !=mPendingQueries.end(); ++it )
@@ -49,18 +49,18 @@ KXmlRpcServer::~KXmlRpcServer() {
 	mPendingQueries.clear();
 }
 
-void KXmlRpcServer::queryFinished( KXmlRpcQuery *query ) {
+void KXmlRpcClient::queryFinished( KXmlRpcQuery *query ) {
 
 	mPendingQueries.remove( query );
 	query->deleteLater();
 }
 
-void KXmlRpcServer::setUrl( const KURL &url ) {
+void KXmlRpcClient::setUrl( const KURL &url ) {
 
 	m_url = url.isValid() ? url : KURL();
 }
 
-void KXmlRpcServer::call( const QString &method, const QValueList<QVariant> &args,
+void KXmlRpcClient::call( const QString &method, const QValueList<QVariant> &args,
                    QObject* msgObj, const char* messageSlot,
                    QObject* faultObj, const char* faultSlot, const QVariant &id ) {
 
@@ -76,7 +76,7 @@ void KXmlRpcServer::call( const QString &method, const QValueList<QVariant> &arg
 	query->call( m_url.url(), method, args, m_userAgent );
 }
 
-void KXmlRpcServer::call( const QString &method, const QVariant &arg,
+void KXmlRpcClient::call( const QString &method, const QVariant &arg,
                    QObject* msgObj, const char* messageSlot,
                    QObject* faultObj, const char* faultSlot,
                    const QVariant &id ) {
@@ -86,7 +86,7 @@ void KXmlRpcServer::call( const QString &method, const QVariant &arg,
 	call( method, args, msgObj, messageSlot, faultObj, faultSlot, id );
 }
 
-void KXmlRpcServer::call( const QString &method, int arg,
+void KXmlRpcClient::call( const QString &method, int arg,
                    QObject* msgObj, const char* messageSlot,
                    QObject* faultObj, const char* faultSlot,
                    const QVariant &id ) {
@@ -96,7 +96,7 @@ void KXmlRpcServer::call( const QString &method, int arg,
 	call( method, args, msgObj, messageSlot, faultObj, faultSlot, id );
 }
 
-void KXmlRpcServer::call( const QString &method, bool arg,
+void KXmlRpcClient::call( const QString &method, bool arg,
                    QObject* msgObj, const char* messageSlot,
                    QObject* faultObj, const char* faultSlot,
                    const QVariant &id ) {
@@ -106,7 +106,7 @@ void KXmlRpcServer::call( const QString &method, bool arg,
 	call( method, args, msgObj, messageSlot, faultObj, faultSlot, id );
 }
 
-void KXmlRpcServer::call( const QString &method, double arg ,
+void KXmlRpcClient::call( const QString &method, double arg ,
                    QObject* msgObj, const char* messageSlot,
                    QObject* faultObj, const char* faultSlot,
                    const QVariant &id ) {
@@ -116,7 +116,7 @@ void KXmlRpcServer::call( const QString &method, double arg ,
 	call( method, args, msgObj, messageSlot, faultObj, faultSlot, id );
 }
 
-void KXmlRpcServer::call( const QString &method, const QString &arg ,
+void KXmlRpcClient::call( const QString &method, const QString &arg ,
                    QObject* msgObj, const char* messageSlot,
                    QObject* faultObj, const char* faultSlot,
                    const QVariant &id ) {
@@ -126,7 +126,7 @@ void KXmlRpcServer::call( const QString &method, const QString &arg ,
 	call( method, args, msgObj, messageSlot, faultObj, faultSlot, id );
 }
 
-void KXmlRpcServer::call( const QString &method, const QCString &arg,
+void KXmlRpcClient::call( const QString &method, const QCString &arg,
                    QObject* msgObj, const char* messageSlot,
                    QObject* faultObj, const char* faultSlot,
                    const QVariant &id ) {
@@ -136,7 +136,7 @@ void KXmlRpcServer::call( const QString &method, const QCString &arg,
 	call( method, args, msgObj, messageSlot, faultObj, faultSlot, id );
 }
 
-void KXmlRpcServer::call( const QString &method, const QByteArray &arg ,
+void KXmlRpcClient::call( const QString &method, const QByteArray &arg ,
                    QObject* msgObj, const char* messageSlot,
                    QObject* faultObj, const char* faultSlot,
                    const QVariant &id ) {
@@ -146,7 +146,7 @@ void KXmlRpcServer::call( const QString &method, const QByteArray &arg ,
 	call( method, args, faultObj, faultSlot, msgObj, messageSlot, id );
 }
 
-void KXmlRpcServer::call( const QString &method, const QDateTime &arg,
+void KXmlRpcClient::call( const QString &method, const QDateTime &arg,
                    QObject* msgObj, const char* messageSlot,
                    QObject* faultObj, const char* faultSlot,
                    const QVariant &id ) {
@@ -156,7 +156,7 @@ void KXmlRpcServer::call( const QString &method, const QDateTime &arg,
 	call( method, args, msgObj, messageSlot, faultObj, faultSlot, id );
 }
 
-void KXmlRpcServer::call( const QString &method, const QStringList &arg,
+void KXmlRpcClient::call( const QString &method, const QStringList &arg,
                    QObject* msgObj, const char* messageSlot,
                    QObject* faultObj, const char* faultSlot,
                    const QVariant &id ) {

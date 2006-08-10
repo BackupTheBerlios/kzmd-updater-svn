@@ -9,8 +9,8 @@
 *   (at your option) any later version.                                   *
 ***************************************************************************/
 
-#ifndef _KXML_RPC_SERVER_H_
-#define _KXML_RPC_SERVER_H_
+#ifndef _KXML_RPC_CLIENT_H_
+#define _KXML_RPC_CLIENT_H_
 
 #include <kurl.h>
 
@@ -21,7 +21,7 @@
 /**   
    @file
   
-  	This file defines KXmlRpcServer, our main class.
+  	This file defines KXmlRpcClient, our main class.
 	It is the primary method of interaction with the library and is the object which represents the xml-rpc server.
 
 	@author Narayan Newton <narayannewton@gmail.com>
@@ -32,17 +32,17 @@
 
 //pre-decls
 class KXmlRpcQuery;
-class KXmlRpcServer;
+class KXmlRpcClient;
 
 
 /**
-		KXmlRpcServer is a class that represents an xml-rpc server
+		KXmlRpcClient 
 		This is the main (only) class you need to worry about for building an 
 		xml-rpc client. This class has one main method, "call", which is overloaded 
 		extensively to handle different arguments.
 
 		@code
-	KXmlRpcServer *serv = new KXmlRpcServer(KURL("http://localhost"), this);
+	KXmlRpcClient *serv = new KXmlRpcClient(KURL("http://localhost"), this);
 	serv->setUserAgent("Test/1.0");
 	serv->call("xmlrpc.command1", "Hi!", 
 			   this, SLOT(gotData(const QValueList<QVariant>&, const QVariant)),
@@ -53,7 +53,7 @@ class KXmlRpcServer;
 
 **/
 
-class KXmlRpcServer : public QObject {
+class KXmlRpcClient : public QObject {
 
 	Q_OBJECT
 	
@@ -68,7 +68,7 @@ class KXmlRpcServer : public QObject {
 
 		**/
 
-		KXmlRpcServer( QObject *parent = 0, const char *name = 0 );
+		KXmlRpcClient( QObject *parent = 0, const char *name = 0 );
 
 		/**
 				The not so standard init function that takes a server url 
@@ -80,7 +80,7 @@ class KXmlRpcServer : public QObject {
 
 		**/
 
-		KXmlRpcServer( const KURL &url, QObject *parent = 0, const char *name = 0 );
+		KXmlRpcClient( const KURL &url, QObject *parent = 0, const char *name = 0 );
 
 		/**
 
@@ -88,7 +88,7 @@ class KXmlRpcServer : public QObject {
 
 		**/
 
-		~KXmlRpcServer();
+		~KXmlRpcClient();
 
 		/**
 			Gets the current url of the xml-rpc server.
@@ -161,7 +161,7 @@ class KXmlRpcServer : public QObject {
 			@param faultSlot the error slot itself
 			@param obj the QObject of the data slot
 			@param messageSlot the data slot itself
-			@param id the id for our KXmlRpcServer object, defaults to empty
+			@param id the id for our KXmlRpcClient object, defaults to empty
 
 		**/
 
@@ -237,7 +237,7 @@ class KXmlRpcServer : public QObject {
 };
 
 template <typename T>
-void KXmlRpcServer::call( const QString &method, const QValueList<T> &arg,
+void KXmlRpcClient::call( const QString &method, const QValueList<T> &arg,
 						QObject* msgObj, const char* messageSlot, 							
 						QObject* faultObj, const char* faultSlot,
 						const QVariant &id ) {
