@@ -213,10 +213,13 @@ void ZmdEditServers::removeButtonClicked() {
 		serv.uri = serverList->currentItem()->text(CONFW_URI);
 
 		core->removeService(serv);
-		//Re-init the list after removal, we get no return from the removal
-		KMessageBox::information(this, i18n("Service Removed")); 
-		initList();
+		QTimer::singleShot(1000, this, SLOT(removedServer())); //We wait 1 second to let zmd really delete the service 
 	}
+}
+
+void ZmdEditServers::removedServer() {
+	KMessageBox::information(this, i18n("Service Removed")); 
+	initList();
 }
 
 void ZmdEditServers::serverFault(QString message, int errorCode) {

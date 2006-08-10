@@ -49,6 +49,7 @@ class ZmdEditServers : public QWidget {
 		void gotServiceList(QValueList<Service>);
 		void gotCatalogList(QValueList<Catalog>);
 		void addedServer(QString, int, QString);
+		void removedServer();
 		void serverFault(QString, int);
 
 	private:
