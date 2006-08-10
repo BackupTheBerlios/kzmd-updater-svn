@@ -52,8 +52,11 @@ int main(int argc, char **argv) {
 	KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
 	MainWindow *main = new MainWindow();
 
-	app->setMainWidget(main);
+	if (args->getOption("basic-auth") != "none") {
+		main->basicAuth(args->getOption("basic-auth"));
+	}
 
+	app->setMainWidget(main);
 	return app->exec();
 }
 

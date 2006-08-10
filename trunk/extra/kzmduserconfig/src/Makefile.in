@@ -64,7 +64,7 @@ am_kzmduserconfig_OBJECTS = main.$(OBJEXT) ZmdUpdaterCore.$(OBJEXT) \
 kzmduserconfig_final_OBJECTS = kzmduserconfig.all_cpp.o 
 kzmduserconfig_nofinal_OBJECTS = main.$(OBJEXT) ZmdUpdaterCore.$(OBJEXT) \
 	MainWindow.$(OBJEXT) EditWindow.$(OBJEXT)\
-EditWindow.moc.o ZmdUpdaterCore.moc.o MainWindow.moc.o 
+ZmdUpdaterCore.moc.o EditWindow.moc.o MainWindow.moc.o 
 @KDE_USE_FINAL_FALSE@kzmduserconfig_OBJECTS = $(kzmduserconfig_nofinal_OBJECTS)
 @KDE_USE_FINAL_TRUE@kzmduserconfig_OBJECTS = $(kzmduserconfig_final_OBJECTS)
 am__DEPENDENCIES_1 =
@@ -653,18 +653,18 @@ uninstall-am: uninstall-binPROGRAMS uninstall-info-am
 .NOEXPORT:
 
 #>+ 3
-EditWindow.moc.cpp: $(srcdir)/EditWindow.h
-	$(MOC) $(srcdir)/EditWindow.h -o EditWindow.moc.cpp
-
-#>+ 2
-mocs: EditWindow.moc.cpp
-
-#>+ 3
 ZmdUpdaterCore.moc.cpp: $(srcdir)/ZmdUpdaterCore.h
 	$(MOC) $(srcdir)/ZmdUpdaterCore.h -o ZmdUpdaterCore.moc.cpp
 
 #>+ 2
 mocs: ZmdUpdaterCore.moc.cpp
+
+#>+ 3
+EditWindow.moc.cpp: $(srcdir)/EditWindow.h
+	$(MOC) $(srcdir)/EditWindow.h -o EditWindow.moc.cpp
+
+#>+ 2
+mocs: EditWindow.moc.cpp
 
 #>+ 3
 MainWindow.moc.cpp: $(srcdir)/MainWindow.h
@@ -675,10 +675,10 @@ mocs: MainWindow.moc.cpp
 
 #>+ 3
 clean-metasources:
-	-rm -f  EditWindow.moc.cpp ZmdUpdaterCore.moc.cpp MainWindow.moc.cpp
+	-rm -f  ZmdUpdaterCore.moc.cpp EditWindow.moc.cpp MainWindow.moc.cpp
 
 #>+ 2
-KDE_DIST=Makefile.in tags Makefile.am 
+KDE_DIST=Makefile.in Makefile.am 
 
 #>+ 2
 docs-am:
@@ -722,11 +722,11 @@ bcheck-am:
 
 
 #>+ 11
-kzmduserconfig.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/main.cpp $(srcdir)/ZmdUpdaterCore.cpp $(srcdir)/MainWindow.cpp $(srcdir)/EditWindow.cpp ZmdUpdaterCore.moc.cpp EditWindow.moc.cpp MainWindow.moc.cpp 
+kzmduserconfig.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/main.cpp $(srcdir)/ZmdUpdaterCore.cpp $(srcdir)/MainWindow.cpp $(srcdir)/EditWindow.cpp EditWindow.moc.cpp ZmdUpdaterCore.moc.cpp MainWindow.moc.cpp 
 	@echo 'creating kzmduserconfig.all_cpp.cpp ...'; \
 	rm -f kzmduserconfig.all_cpp.files kzmduserconfig.all_cpp.final; \
 	echo "#define KDE_USE_FINAL 1" >> kzmduserconfig.all_cpp.final; \
-	for file in main.cpp ZmdUpdaterCore.cpp MainWindow.cpp EditWindow.cpp ZmdUpdaterCore.moc.cpp EditWindow.moc.cpp MainWindow.moc.cpp ; do \
+	for file in main.cpp ZmdUpdaterCore.cpp MainWindow.cpp EditWindow.cpp EditWindow.moc.cpp ZmdUpdaterCore.moc.cpp MainWindow.moc.cpp ; do \
 	  echo "#include \"$$file\"" >> kzmduserconfig.all_cpp.files; \
 	  test ! -f $(srcdir)/$$file || egrep '^#pragma +implementation' $(srcdir)/$$file >> kzmduserconfig.all_cpp.final; \
 	done; \
