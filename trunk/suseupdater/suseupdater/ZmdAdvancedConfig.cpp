@@ -239,7 +239,11 @@ void ZmdAdvancedConfig::saveSettings(QString setting, QString value) {
 }
 
 void ZmdAdvancedConfig::settingsChange() {
+	KConfig *config = kapp->config();
+	config->setGroup("General");
+
 	saveSettings("bind-ip", hostEdit->text());
+	config->writeEntry("ZmdServer", hostEdit->text());
 }
 
 void ZmdAdvancedConfig::logLevelChange(const QString &newText) {
@@ -290,9 +294,9 @@ void ZmdAdvancedConfig::settingsChange(int id) {
 		if (settingName == "remote-enabled") {
 			KConfig *config = kapp->config();
 			config->setGroup("General");
-			config->writeEntry("ZmdProc", ((settingValue == true) ? ZMD_TCP : ZMD_UDS));
+			config->writeEntry("ZmdProto", ((settingValue == true) ? ZMD_TCP : ZMD_UDS));
 			if (settingValue == true) {
-				core->setServer(TCP_SERVER_ADDY);
+				core->setServer(QString("http://") + QString(TCP_SERVER_ADDY) + QString(TCP_SERVER_POSTFIX));
 				restartZMDOnExit = true; //we only restart when enabling. Restarting to disable is too unstable
 			} else {
 				core->setServer(UDS_SERVER_ADDY);

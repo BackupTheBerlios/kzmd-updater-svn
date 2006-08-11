@@ -74,7 +74,7 @@ void ZmdConfigWindow::tabChanged(QWidget *tab) {
 	if (QString(tab->name()) == QString("EditTab")) {
 		header->setDescription(i18n("<b>Add/Remove Package Servers:</b><br> You may add or remove update servers below or change your software catalog subscriptions.<br> <u>Make whatever changes you wish and press close.</u>"));
 	} else if (QString(tab->name()) == QString("AdvancedTab")) {
-		header->setDescription(i18n("<b>Configure ZMD:</b><br>The following are advanced options for ZMD. Only change these if you know what you are doing. Some options require you to restart ZMD to take effect.<br><u>Be aware, disabling TCP support will disable this updater</u>"));
+		header->setDescription(i18n("<b>Configure ZMD:</b><br>The following are advanced options for ZMD. Only change these if you know what you are doing.<br><u>Be aware, disabling TCP support will disable this updater</u>"));
 	}
 }
 

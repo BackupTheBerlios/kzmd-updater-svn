@@ -347,20 +347,21 @@ void ZmdUpdater::error(QString message, int errorCode) {
 
 void ZmdUpdater::readConfig() {
 
+	QString serverIP;
 	KConfig *config = kapp->config();
 	config->setGroup("General");
-
 
 	switch (config->readEntry("ZmdProto").toInt()) {
 
 		case ZMD_TCP:
-			core->setServer(TCP_SERVER_ADDY);
+			serverIP = config->readEntry("ZmdServer", TCP_SERVER_ADDY);
+			core->setServer(QString("http://") + serverIP + QString(TCP_SERVER_POSTFIX));
 			break;
 		case ZMD_UDS:
 			core->setServer(UDS_SERVER_ADDY);
 			break;
 		default:
-			core->setServer(TCP_SERVER_ADDY);
+			core->setServer(QString("http://") + TCP_SERVER_ADDY + QString(TCP_SERVER_POSTFIX));
 			config->writeEntry("ZmdProto", ZMD_TCP);
 			break;
 	}

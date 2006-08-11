@@ -35,7 +35,8 @@ enum { BACKEND_ZMD, BACKEND_ZYPP, BACKEND_SMART };
 enum { ZMD_TCP, ZMD_UDS };
 
 /* The TCP and UDS address of the local zmd server */
-#define TCP_SERVER_ADDY "http://127.0.0.1:2544/zmd/RPC2"
+#define TCP_SERVER_ADDY "127.0.0.1"
+#define TCP_SERVER_POSTFIX ":2544/zmd/RPC2"
 #define UDS_SERVER_ADDY "udshttp:/var/tmp/kzmd-http"
 
 //Program Options
