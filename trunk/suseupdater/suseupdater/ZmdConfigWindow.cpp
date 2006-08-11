@@ -46,7 +46,7 @@ void ZmdConfigWindow::initGUI() {
 	mainLayout = new QVBoxLayout(this);
 	header = new HeaderWidget(this);
 	tabs = new QTabWidget(this);
-	closeButton = new KPushButton(i18n("Close"), this);
+	closeButton = new KPushButton(KStdGuiItem::close(), this);
 	editServers = new ZmdEditServers(core, tabs);
 	advancedConfig = new ZmdAdvancedConfig(core, tabs);
 

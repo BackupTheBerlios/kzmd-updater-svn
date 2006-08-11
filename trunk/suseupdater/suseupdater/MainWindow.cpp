@@ -92,7 +92,7 @@ void MainWindow::initGUI() {
 	updateList = new QListView(this);
 	packageDescription = new KTextEdit(this);
 	configureButton = new KPushButton(i18n("Add/Remove Servers"),this);
-	cancelButton = new KPushButton(i18n("Cancel"),this);
+	cancelButton = new KPushButton(KStdGuiItem::cancel(), this);
 	installButton = new KPushButton(i18n("Install"),this);
 	selectAllButton = new KPushButton(i18n("Select All"),this);
 	clearSelectionButton = new KPushButton(i18n("Clear Selection"), this);
@@ -109,9 +109,9 @@ void MainWindow::initGUI() {
 	buttonsLayout = new QHBoxLayout(mainBox);
 	buttonsLayout->addWidget(configureButton,false, Qt::AlignLeft);
 	buttonsLayout->insertSpacing(1, 250);
-	buttonsLayout->addWidget(cancelButton,false, Qt::AlignRight);
-	buttonsLayout->addSpacing(10);
 	buttonsLayout->addWidget(installButton,false, Qt::AlignRight);
+	buttonsLayout->addSpacing(10);
+	buttonsLayout->addWidget(cancelButton,false, Qt::AlignRight);
 
 	connect(configureButton, SIGNAL(clicked()), this, SLOT(serverButtonClicked()));
 	connect(installButton, SIGNAL(clicked()), this, SLOT(installButtonClicked()));
@@ -124,17 +124,24 @@ void MainWindow::initGUI() {
 	packageDescription->setReadOnly(true);
 	updateList->addColumn(i18n("Name"));
 	updateList->addColumn(i18n("New Version"));
-	updateList->addColumn(i18n("Catalog")); //Obvious (not hidden for the moment)
+	updateList->addColumn(i18n("Catalog"), 10000); //cover the rest of the window
+	updateList->setHScrollBarMode(QListView::AlwaysOff);
 
 	/*
 		Hidden Columns, we use these to store data about the packages/patches
 	*/
 	updateList->addColumn("ID", 0); // This is a hidden column to hold the ID of the patch/package
+	updateList->setColumnWidthMode(COLUMN_ID, QListView::Manual);
 	updateList->addColumn("Description", 0); // The Package/Patch description
+	updateList->setColumnWidthMode(COLUMN_DESC, QListView::Manual);
 	updateList->addColumn("Installed?", 0); // Is it installed? (Is it an update)
+	updateList->setColumnWidthMode(COLUMN_INSTALLED, QListView::Manual);
 	updateList->addColumn("Size", 0); //This is hidden for the moment, but it shouldn't be
+	updateList->setColumnWidthMode(COLUMN_SIZE, QListView::Manual);
 	updateList->addColumn("Misc", 0); //This is used to store misc info (patch name for zmd)
+	updateList->setColumnWidthMode(COLUMN_MISC, QListView::Manual);
 	updateList->addColumn("LockID", 0); //Stores our lock id
+	updateList->setColumnWidthMode(COLUMN_LOCK, QListView::Manual);
 
 	connect(updateList, SIGNAL(selectionChanged(QListViewItem*)), this, SLOT(slotPackageSelected(QListViewItem*)));
 	connect(updateList, SIGNAL(clicked(QListViewItem*)), this, SLOT(slotPackageClicked(QListViewItem*)));

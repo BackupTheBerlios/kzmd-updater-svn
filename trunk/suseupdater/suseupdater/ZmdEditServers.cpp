@@ -45,16 +45,22 @@ void ZmdEditServers::initGUI() {
 	addButton = new KPushButton(i18n("Add Server"), this);
 	removeButton = new KPushButton(i18n("Remove Server"), this);
 
-	serverList->addColumn(i18n("Services/Catalogs"), -1);
+	serverList->addColumn(i18n("Services/Catalogs"), 10000); //make it cover the window
+	serverList->setColumnWidthMode(0, QListView::Manual);
 	serverList->setTreeStepSize(30);
 	serverList->setRootIsDecorated(true);
+	serverList->setHScrollBarMode(QScrollView::AlwaysOff);
 
 	/*
 		Hidden Columns - We use these to store info about the services/catalogs
 	*/
 	serverList->addColumn("URI", 0); // Holds catalog and service URI
+	serverList->setColumnWidthMode(1, QListView::Manual);
 	serverList->addColumn("ID", 0); //Holds catalog and service ID
+	serverList->setColumnWidthMode(2, QListView::Manual);
 	serverList->addColumn("Subscribed", 0); //Holds subscription status for catalogs
+	serverList->setColumnWidthMode(3, QListView::Manual);
+
 
 	mainLayout->addWidget(serverList);
 	mainLayout->setSpacing(10);

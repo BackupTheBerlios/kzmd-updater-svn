@@ -48,8 +48,8 @@ void GeneralConfigWindow::initGUI() {
 	header = new HeaderWidget(this);
 	intervalSpin = new QSpinBox(this);
 	backendGroup = new QVButtonGroup(i18n("Select Your Preferred Updater"), this);
-	cancelButton = new KPushButton(i18n("Cancel"), this);
-	okButton = new KPushButton(i18n("Okay"), this);
+	cancelButton = new KPushButton(KStdGuiItem::cancel(), this);
+	okButton = new KPushButton(KStdGuiItem::ok(), this);
 	autostartButton = new QCheckBox(i18n("Automatically start updater on login"), this);
 
 	header->setDescription(i18n("<b>Configure The Updater:</b><br> Below you can select the updater you would  like to use and when we should check for updates<br><u>After switching backends, this applet must be restarted</u>"));
@@ -68,8 +68,8 @@ void GeneralConfigWindow::initGUI() {
 	mainLayout->addWidget(backendGroup, false, 0);
 
 	buttonLayout = new QHBoxLayout(mainLayout);
-	buttonLayout->addWidget(cancelButton, false, Qt::AlignLeft);
-	buttonLayout->addWidget(okButton, false, Qt::AlignRight);
+	buttonLayout->addWidget(okButton, false, Qt::AlignLeft);
+	buttonLayout->addWidget(cancelButton, false, Qt::AlignRight);
 
 	connect(cancelButton, SIGNAL(clicked()), this, SLOT(close()));
 	connect(okButton, SIGNAL(clicked()), this, SLOT(okButtonClicked()));
