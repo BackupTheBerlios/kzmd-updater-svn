@@ -127,7 +127,6 @@ void ZmdEditServers::gotCatalogList(QValueList<Catalog> catalogs) {
 	QValueList<Catalog>::iterator iter;
 	ZmdCatalogListItem *item;
 	QListViewItem *parentItem;
-	bool alreadyShownOrphanWarning = false;
 
 	//Disconnect this signal. If this doesn't happen, the same thing as with services happens
 	disconnect(core, SIGNAL(catalogListing(QValueList<Catalog>)), this, 
@@ -141,10 +140,6 @@ void ZmdEditServers::gotCatalogList(QValueList<Catalog> catalogs) {
 	for (iter = catalogs.begin(); iter != catalogs.end(); iter++) {
 		parentItem = serverList->findItem((*iter).service,CONFW_URI);
 		if (parentItem == NULL) {
-			if (alreadyShownOrphanWarning == false) {
-				KMessageBox::error(this, "Catalog " + (*iter).displayName + i18n(" has no service attached to it. This is is strange and you may want to restart ZMD."));
-				alreadyShownOrphanWarning = true;
-			}
 			continue;
 		} else {
 			if (parentItem->firstChild() != NULL)
@@ -220,11 +215,11 @@ void ZmdEditServers::removeButtonClicked() {
 
 		core->removeService(serv);
 		QTimer::singleShot(1000, this, SLOT(removedServer())); //We wait 1 second to let zmd really delete the service 
+		KMessageBox::information(this, i18n("Service Removed")); 
 	}
 }
 
 void ZmdEditServers::removedServer() {
-	KMessageBox::information(this, i18n("Service Removed")); 
 	initList();
 }
 
