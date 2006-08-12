@@ -34,20 +34,25 @@ ZmdDependencyDialog::ZmdDependencyDialog(QWidget *parent) : QDialog(parent) {
 void ZmdDependencyDialog::initGUI() {
 
 	mainLayout = new QVBoxLayout(this);
-	okButton = new KPushButton(i18n("Ok"), this);
-	cancelButton = new KPushButton(i18n("Cancel"), this);
+	okButton = new KPushButton(KStdGuiItem::ok(), this);
+	cancelButton = new KPushButton(KStdGuiItem::cancel(), this);
 	packages = new KTextEdit(this);
 
 	mainLayout->addWidget(packages);
 	packages->setReadOnly(true);
-	mainLayout->setMargin(10);
-	mainLayout->setSpacing(10);
 
 	buttonLayout = new QHBoxLayout(mainLayout);
-	buttonLayout->addWidget(okButton,0,Qt::AlignRight);
-	buttonLayout->addWidget(cancelButton,0,Qt::AlignLeft);
+	buttonLayout->setSpacing(5);
+	buttonLayout->addWidget(okButton,0,Qt::AlignCenter);
+	buttonLayout->addWidget(cancelButton,0,Qt::AlignCenter);
+	cancelButton->setDefault(true);
+	cancelButton->setFocus();
+
 	connect(okButton, SIGNAL(clicked()), this, SLOT(accept()));
 	connect(cancelButton, SIGNAL(clicked()), this, SLOT(reject()));
+
+	mainLayout->setMargin(10);
+	mainLayout->setSpacing(10);
 	resize(400,200);
 }
 

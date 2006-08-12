@@ -55,6 +55,7 @@ class ZmdEditServers : public QWidget {
 	private:
 
 		void initGUI();
+		void clearList();
 		void initList();
 
 		QVBoxLayout	*mainLayout;

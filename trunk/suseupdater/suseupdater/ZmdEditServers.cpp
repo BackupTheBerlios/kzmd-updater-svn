@@ -76,22 +76,25 @@ void ZmdEditServers::initGUI() {
 	mainLayout->setMargin(10);	
 }
 
-void ZmdEditServers::initList() {
-
+void ZmdEditServers::clearList() {
 	QListViewItem *item;
 
-	//Clear the list and re-populate it
+	//Clear the list 
 	serverList->clear();
 	removeButton->setDisabled(true); //We don't try to remove things from an empty list
 	addButton->setDisabled(true); //Don't allow the user to add a server until we get the data drop
 
+	//Tell the user what is going on
 	item = new QListViewItem(serverList, i18n("Fetching service list..."));
+}
+
+void ZmdEditServers::initList() {
+	clearList();
 
 	//Connect the signals and call the backend
 	connect(core, SIGNAL(serviceListing(QValueList<Service>)), this, 
 	SLOT(gotServiceList(QValueList<Service>)));
 	core->getServices();
-
 }
 
 void ZmdEditServers::gotServiceList(QValueList<Service> servers) {
@@ -214,8 +217,10 @@ void ZmdEditServers::removeButtonClicked() {
 		serv.uri = serverList->currentItem()->text(CONFW_URI);
 
 		core->removeService(serv);
-		QTimer::singleShot(1000, this, SLOT(removedServer())); //We wait 1 second to let zmd really delete the service 
+		//We wait 1 second to let zmd really delete the service 
+		QTimer::singleShot(1500, this, SLOT(removedServer())); 		
 		KMessageBox::information(this, i18n("Service Removed")); 
+		clearList();
 	}
 }
 
