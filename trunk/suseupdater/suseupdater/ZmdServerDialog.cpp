@@ -72,8 +72,6 @@ void ZmdServerDialog::initGUI() {
 	serverLabel = new QLabel(i18n("Please enter server URL below"), this);
 	nameEdit = new KLineEdit(this);
 	serverEdit = new KLineEdit(this);
-	cancelButton = new KPushButton(KStdGuiItem::cancel(), this);
-	addButton = new KPushButton(KStdGuiItem::add(), this);
 	typeGroup = new QButtonGroup(2, Qt::Vertical, i18n("Server Type"), this);
 	QRadioButton *zButton = new QRadioButton("ZYPP", typeGroup);
 	QRadioButton *yButton = new QRadioButton("YUM", typeGroup);
@@ -81,6 +79,8 @@ void ZmdServerDialog::initGUI() {
 	QRadioButton *mButton = new QRadioButton("Mount", typeGroup);
 	QRadioButton *nButton = new QRadioButton("NU Server", typeGroup);
 	QRadioButton *rButton = new QRadioButton("RCE Server", typeGroup);
+	cancelButton = new KPushButton(KStdGuiItem::cancel(), this);
+	addButton = new KPushButton(KStdGuiItem::add(), this);
 
 	layout->addWidget(nameLabel,0,0);
 	layout->addWidget(nameEdit,0,0);

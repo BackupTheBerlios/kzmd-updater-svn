@@ -65,14 +65,10 @@ ZmdAdvancedConfig::ZmdAdvancedConfig(ZmdUpdaterCore *_core, QWidget *parent) : Q
 void ZmdAdvancedConfig::initGUI() {
 
 	mainLayout = new QGridLayout(this, 2, 2);
-	securityBox = new QVGroupBox(this);
-	securityBox->setTitle(i18n("Security Options"));
 
+	//Connection stuff
 	connectionBox = new QVGroupBox(this);
 	connectionBox->setTitle(i18n("Connection Options"));
-
-	otherBox = new QVGroupBox(this);
-	otherBox->setTitle(i18n("Other Options"));
 
 	QHBox *hostBox = new QHBox(connectionBox);
 	hostLabel = new QLabel(i18n("ZMD Is Listening on: "), hostBox);
@@ -82,13 +78,33 @@ void ZmdAdvancedConfig::initGUI() {
 	remoteLabel = new QLabel(i18n("ZMD TCP Support: "), remoteBox);
 	remoteButtons = new QHButtonGroup(remoteBox);
 
+	QRadioButton *onButton = new QRadioButton(i18n("On"), remoteButtons);
+	QRadioButton *offButton = new QRadioButton(i18n("Off"), remoteButtons);
+	remoteButtons->insert(onButton, REMOTE_BUTTON_ON);
+	remoteButtons->insert(offButton, REMOTE_BUTTON_OFF);
+	onButton = offButton = 0;
+
+	//Security stuff
+	securityBox = new QVGroupBox(this);
+	securityBox->setTitle(i18n("Security Options"));
+
 	QHBox *certBox = new QHBox(securityBox);
 	certLabel = new QLabel(i18n("Require GPG Certificates For Servers: "), certBox);
 	certButtons = new QHButtonGroup(certBox);
 
+	onButton = new QRadioButton(i18n("Yes"), certButtons);
+	offButton = new QRadioButton(i18n("No"), certButtons);
+	certButtons->insert(onButton,CERT_BUTTON_YES);
+	certButtons->insert(offButton,CERT_BUTTON_NO);
+	onButton = offButton = 0;
+
 	QHBox *secLevBox = new QHBox(securityBox);
 	securityLevelLabel = new QLabel(i18n("Security Level: "), secLevBox);
 	securityLevelBox = new QComboBox(false, secLevBox);
+
+	//"Other" stuff
+	otherBox = new QVGroupBox(this);
+	otherBox->setTitle(i18n("Other Options"));
 
 	QHBox *logLevelBox = new QHBox(otherBox);
 	logLabel = new QLabel(i18n("ZMD Logging Level: "), logLevelBox);
@@ -98,24 +114,15 @@ void ZmdAdvancedConfig::initGUI() {
 	rollbackLabel = new QLabel(i18n("Rollback Support: "), rollbackBox);
 	rollbackButtons = new QHButtonGroup(rollbackBox);
 
-	QHBox *downloadsBox = new QHBox(otherBox);
-	maxDownloadsLabel = new QLabel(i18n("Max Simultaneous Downloads"), downloadsBox);
-	maxDownloadsSpinner = new QSpinBox(downloadsBox);
-
-	QRadioButton *onButton = new QRadioButton(i18n("On"), remoteButtons);
-	QRadioButton *offButton = new QRadioButton(i18n("Off"), remoteButtons);
-	remoteButtons->insert(onButton, REMOTE_BUTTON_ON);
-	remoteButtons->insert(offButton, REMOTE_BUTTON_OFF);
-
-	onButton = new QRadioButton(i18n("Yes"), certButtons);
-	offButton = new QRadioButton(i18n("No"), certButtons);
-	certButtons->insert(onButton,CERT_BUTTON_YES);
-	certButtons->insert(offButton,CERT_BUTTON_NO);
-
 	onButton = new QRadioButton(i18n("On"), rollbackButtons);
 	offButton = new QRadioButton(i18n("Off"), rollbackButtons);
 	rollbackButtons->insert(onButton, ROLLBACK_BUTTON_ON);
 	rollbackButtons->insert(offButton, ROLLBACK_BUTTON_OFF);
+	onButton = offButton = 0;
+
+	QHBox *downloadsBox = new QHBox(otherBox);
+	maxDownloadsLabel = new QLabel(i18n("Max Simultaneous Downloads"), downloadsBox);
+	maxDownloadsSpinner = new QSpinBox(downloadsBox);
 
 	certButtons->setExclusive(true);
 	certButtons->setButton(CERT_BUTTON_NO);
