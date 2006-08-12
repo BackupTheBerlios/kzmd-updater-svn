@@ -104,6 +104,8 @@ void MainWindow::initGUI() {
 	selectionButtonsLayout->addWidget(selectAllButton, false, Qt::AlignLeft);
 	selectionButtonsLayout->addWidget(clearSelectionButton, false, Qt::AlignRight);
 
+	packageDescription->setReadOnly(true);
+	packageDescription->setMinimumHeight(125);
 	mainBox->addWidget(packageDescription,0,0);
 
 	buttonsLayout = new QHBoxLayout(mainBox);
@@ -121,7 +123,6 @@ void MainWindow::initGUI() {
 
 	header->setDescription(i18n("<b>Available Updates:</b><br> The following are software upgrades and patches to add features and fix bugs.<br> <u>Select those you would like and press install.</u>"));
 
-	packageDescription->setReadOnly(true);
 	updateList->addColumn(i18n("Name"));
 	updateList->addColumn(i18n("New Version"));
 	updateList->addColumn(i18n("Catalog"), 10000); //cover the rest of the window
