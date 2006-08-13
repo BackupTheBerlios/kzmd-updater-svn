@@ -35,9 +35,6 @@ ZmdServerDialog::ZmdServerDialog(QWidget *parent) : QDialog(parent,0,Qt::WShowMo
 	initGUI();
 }
 
-ZmdServerDialog::~ZmdServerDialog() {
-}
-
 QValueList<QString> ZmdServerDialog::getServerInfo() {
 	QValueList<QString> list;
 	list.append(name);

@@ -80,8 +80,9 @@ class ZmdUpdaterCore : public QObject {
 		~ZmdUpdaterCore();
 
 		/**
-			This method sets the url for the server, this also decides whether it uses the
-			http ioslave or the uds ioslave.
+			This method sets the url for the server, this 
+			also decides whether it uses the http ioslave 
+			or the uds ioslave.
 
 			@param url the address of the server
 		**/
@@ -135,56 +136,61 @@ class ZmdUpdaterCore : public QObject {
 		void getServices();
 
 		/**
-			Sends a request for an addition of the service specified. Type, URI and Name
-			required. Data arrives via serviceAdded.
+			Sends a request for an addition of the service specified. 
+			Type, URI and Name required. Data arrives via serviceAdded.
 
-			@param serv the server to add, really we only need the type and uri to be set.
+			@param serv the server to add, really we only need the 
+			type and uri to be set.
 		**/
 		void addService(Service serv);
 
 		/**
-			Sends a request to delete the specified service. No data return, this is problematic.
-			I would love there to be a return, but there isn't. A general fault maybe fired from 
-			this.
+			Sends a request to delete the specified service. No 
+			data return, this is problematic. I would love there 
+			to be a return, but there isn't. A general fault maybe 
+			fired from this.
 
 			@param serv the service to remove, we only need the id.
 		**/
 		void removeService(Service serv);
 
 		/**
-			Send a request for the list of catalogs currently provided by the service on ZMD. 
-			Note, these are all the catalogs, not all the subscribed catalogs. Returns data via
+			Send a request for the list of catalogs currently provided 
+			by the service on ZMD. Note, these are all the catalogs, 
+			not all the subscribed catalogs. Returns data via 
 			catalogListing signal.
 		**/
 		void getCatalogs();
 
 		/**
-			Send a request to subscribe to the specified catalog. Catalog ID is required.
-			Has no return data.
+			Send a request to subscribe to the specified catalog. 
+			Catalog ID is required. Has no return data.
 
-			@param cat the catalog to which we will be subscribing. We only need the ID.
+			@param cat the catalog to which we will be subscribing. 
+			We only need the ID.
 		**/
 		void subscribeCatalog(Catalog cat);
 
 		/**
-			Send a request to unsubscribe to the specified catalog. Catalog ID is required.
-			Has no return data.
+			Send a request to unsubscribe to the specified catalog. 
+			Catalog ID is required. Has no return data.
 
-			@param cat the catalog to which we will be unsubscribing. We only need the ID.
+			@param cat the catalog to which we will be unsubscribing. 
+			We only need the ID.
 		**/
 		void unsubscribeCatalog(Catalog cat);
 
 		/**
-			Get the Patches available for a specified catalog. Catalog ID is required.
-			Data returns via patchListing.
+			Get the Patches available for a specified catalog. 
+			Catalog ID is required. Data returns via patchListing.
 
 			@param cat the catalog to check for patches. Only ID needs to be set.
 		**/
 		void getPatches(Catalog cat);
 
 		/**
-			Get the updates available for a specified catalog. Catalog ID is required.
-			Data returns via updateListing.
+			Get the updates available for a specified catalog. 
+			Catalog ID is required. Data returns via updateListing.
 
 			@param cat the catalog to check for updates. Only ID needs to bet set.
 		**/
@@ -194,7 +200,8 @@ class ZmdUpdaterCore : public QObject {
 			Get the info for an installed package. Searches via package name.
 			Data returns iva packageInfo.
 
-			@param packageName the name we will be using to execute a search through the packageDB.
+			@param packageName the name we will be using to execute 
+			a search through the packageDB.
 		**/
 		void getInfo(QString packageName);
 
@@ -226,8 +233,9 @@ class ZmdUpdaterCore : public QObject {
 		void getLocks();
 
 		/**
-			Start a package transaction, sends requests for dep tree verification and 
-			dep resolution. Data returns via signal realPackages.
+			Start a package transaction, sends requests for dep 
+			tree verification and dep resolution. Data returns 
+			via signal realPackages.
 
 			@param installList packages we will be installing.
 			@param updateList packages we will be updating.
@@ -238,14 +246,16 @@ class ZmdUpdaterCore : public QObject {
 							  QValueList<Package> removeList);
 
 		/**
-			Actually run the transaction you have just started. startTransaction MUST
-			be run before runTransaction. Data returns via transactionFinished and progress
+			Actually run the transaction you have just started. 
+			startTransaction MUST be run before runTransaction. 
+			Data returns via transactionFinished and progress 
 			and downloadProgress.
 		**/
 		void runTransaction();
 
 		/**
-			Cancels the current transaction. Currently, only stops it in our backend, not in ZMD.
+			Cancels the current transaction. Currently, only 
+			stops it in our backend, not in ZMD.
 		**/
 		void cancelTransaction();
 

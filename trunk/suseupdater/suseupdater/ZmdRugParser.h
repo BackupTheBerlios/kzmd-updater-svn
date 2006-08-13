@@ -48,8 +48,6 @@ class ZmdRugParser : public QObject {
 		QString getProperty(QString);
 		QString getDescription(QString);
 
-		//QStringList getPropertyList();
-	
 	private:
 
 		void parse();

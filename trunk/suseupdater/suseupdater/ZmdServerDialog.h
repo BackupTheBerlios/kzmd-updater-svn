@@ -37,7 +37,6 @@ class ZmdServerDialog : public QDialog {
 	public:
 
 		ZmdServerDialog(QWidget *parent=0);
-		~ZmdServerDialog();
 
 		QValueList<QString> getServerInfo();
 

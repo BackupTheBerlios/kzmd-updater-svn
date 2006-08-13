@@ -260,11 +260,12 @@ void ZmdUpdaterCore::unsubscribeCatalog(Catalog cat) {
 #endif
 }
 
-/***************************************************************************************** */
+/*******************************************************************/
 
-//Temp data function, I hate this thing, but we need it because ZMD has unstable catalog handling
+//Temp data function, I hate this thing, but we need it 
+//because ZMD has unstable catalog handling
 
-/***************************************************************************************** */
+/*******************************************************************/
 
 void ZmdUpdaterCore::catalogSubData(const QValueList<QVariant>& data, const QVariant& t) {
 	if (data.front().canCast(QVariant::List) == true) {
