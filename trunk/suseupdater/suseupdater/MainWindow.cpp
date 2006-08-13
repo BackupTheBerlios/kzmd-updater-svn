@@ -164,9 +164,12 @@ void MainWindow::initMenu() {
 	menu->insertItem(i18n("Add/Remove Servers"), this, SLOT(serverButtonClicked()),0,-1,1);
 }
 
-//Button logic for mainWindow: 
-//If disable is true, we disable select/install buttons. If false, we make decisions based
-//on whether we have updates and if they are selected
+/*
+	Button logic for mainWindow: 
+	If disable is true, we disable select/install buttons. 
+	If false, we make decisions based on whether we have 
+	updates and if they are selected
+*/
 void MainWindow::disableButtons(bool disable) {
 
 	if (disable) { //If true, we just disable the buttons
@@ -319,7 +322,8 @@ void MainWindow::checkUpdates() {
 //Selection/Fetch Description slots
 void MainWindow::slotPackageSelected(QListViewItem *packageSelected) {
 	if (selectAllButton != NULL) {
-		disableButtons(false); //We have to enable the select buttons here, if they exist
+		//We have to enable the select buttons here, if they exist
+		disableButtons(false); 	
 	} 
 	emit(updateSelected(packageSelected));
 }

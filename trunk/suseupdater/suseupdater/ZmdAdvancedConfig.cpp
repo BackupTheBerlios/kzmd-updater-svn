@@ -263,7 +263,12 @@ void ZmdAdvancedConfig::securityLevelChange(const QString &newText) {
 
 void ZmdAdvancedConfig::settingsChange(int id) {
 
-	//note: since 0 = REMOTE_BUTTON_ON and 1 = REMOTE_BUTTON_OFF, the opposite matches our bool
+	/*	note: since: 
+		0 = REMOTE_BUTTON_ON 
+		1 = REMOTE_BUTTON_OFF, 
+		the opposite matches our bool
+	*/
+
 	QString settingName;
 	bool settingValue = false;
 
@@ -304,7 +309,9 @@ void ZmdAdvancedConfig::settingsChange(int id) {
 			config->writeEntry("ZmdProto", ((settingValue == true) ? ZMD_TCP : ZMD_UDS));
 			if (settingValue == true) {
 				core->setServer(QString("http://") + QString(TCP_SERVER_ADDY) + QString(TCP_SERVER_POSTFIX));
-				restartZMDOnExit = true; //we only restart when enabling. Restarting to disable is too unstable
+				//we only restart when enabling. 
+				//Restarting to disable is too unstable
+				restartZMDOnExit = true;
 			} else {
 				core->setServer(UDS_SERVER_ADDY);
 			}

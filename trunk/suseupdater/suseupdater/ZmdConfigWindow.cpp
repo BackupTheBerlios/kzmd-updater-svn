@@ -32,7 +32,10 @@
 #include "ZmdUpdaterCore.h"
 #include "Constants.h"
 
-ZmdConfigWindow::ZmdConfigWindow(ZmdUpdaterCore *_core, QWidget *parent) : QWidget(parent, 0, Qt::WDestructiveClose | Qt::WShowModal) {
+ZmdConfigWindow::ZmdConfigWindow(ZmdUpdaterCore *_core, QWidget *parent) : 
+						QWidget(parent, 
+								0, 
+								Qt::WDestructiveClose | Qt::WShowModal) {
 	core = _core;
 	initGUI();
 }

@@ -28,7 +28,9 @@ class ZmdCatalogListItem : public QCheckListItem {
 
 	public:
 
-		ZmdCatalogListItem(QListViewItem *parent, const QString &, ZmdUpdaterCore *_core);
+		ZmdCatalogListItem(	QListViewItem *parent, 
+							const QString &text, 
+							ZmdUpdaterCore *_core);
 
 	private:
 

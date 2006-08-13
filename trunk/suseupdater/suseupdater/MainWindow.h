@@ -37,19 +37,21 @@ class HeaderWidget;
 /**
 	@file
 
-	This file defines our MainWindow class, which also controls the applet itself. This is
-	where much of the GUI logic that is non-backend specific lives.
+	This file defines our MainWindow class, which also controls the 
+	applet itself. This is where much of the GUI logic that is 
+	non-backend specific lives.
 
 	@author Narayan Newton <narayannewton@gmail.com>
 */
 
 
 /**
-	Represnts the various columns, some hidden and some not, which hold our package info
+	Represnts the various columns, some hidden and some not, which hold 
+	our package info
 */
 enum { 	COLUMN_NAME, //Note, patches store the summary here ...this is for ZMD
 		COLUMN_NEW_VERSION,
-		COLUMN_CATALOG, //Note, for ZMD this is the displayName. If you try to search for something via the backend using this name all will go very badly for you
+		COLUMN_CATALOG, //Note, for ZMD this is the displayName. 
 		COLUMN_ID,
 		COLUMN_DESC,
 		COLUMN_INSTALLED,
@@ -84,31 +86,33 @@ class MainWindow : public QWidget {
 		void populateUpdateList(QListView* updateList);
 
 		/**
-			Signal we send to our current backend requesting the start of an installation. 
-			Note we don't pass a package list, the backend must take the info from the QListView
-			we passed it.
+			Signal we send to our current backend requesting the start of 
+			an installation.  Note we don't pass a package list, the backend 
+			must take the info from the QListView we passed it.
 		*/
 		void startInstall();
 
 		/**
-			Signal we send to our current backend when the user has requested to config the server
-			list. Implementation is entirely backend specific.
+			Signal we send to our current backend when the user has requested
+			to config the server list. Implementation is entirely backend 
+			specific.
 		*/
 		void configureUpdater();
 
 		/**
-			Signal we send to our current backend when the user has selected a particular update. 
-			We fully expect to backend to build a package description for us, but that is not 
-			technically required.
+			Signal we send to our current backend when the user has selected
+			a particular update. We fully expect to backend to build a package
+			description for us, but that is not technically required.
 
 			@param updateSelected the recently selected update.
 		*/
 		void updateSelected(QListViewItem* updateSelected);
 
 		/**
-			Signal we send to our current backend when the user has right clicked an update.
-			We expect a menu to be shown allowing the user to configure package locking, but
-			that is entirely up to the backend author.
+			Signal we send to our current backend when the user has right
+			clicked an update. We expect a menu to be shown allowing the
+			user to configure package locking, but that is entirely up
+			to the backend author.
 
 			@param updateClicked clicked the update the user right clicked.
 			@param point where to display the menu
@@ -135,22 +139,22 @@ class MainWindow : public QWidget {
 		void readConfig();
 
 		/**
-			Hides and deletes the "Select All" and "Clear Selection" buttons. This is for backends which
-			do not QCheckListItems.
+			Hides and deletes the "Select All" and "Clear Selection" 
+			buttons. This is for backends which do not QCheckListItems.
 		*/
 		void disableSelectButtons();
 
 		/**
-			Gets the description from the backend. We probably just sent an "updateSelected" signal
-			to signal for the description.
+			Gets the description from the backend. We probably just sent
+			an "updateSelected" signal to signal for the description.
 
 			@param desc the description itself.
 		*/
 		void gotDescription(QString desc);
 
 		/**
-			Informs us that the backend has finished populating the update list. We do some house
-			keeping at this point.
+			Informs us that the backend has finished populating the update
+			list. We do some house keeping at this point.
 		*/
 		void populateDone();
 
@@ -174,7 +178,9 @@ class MainWindow : public QWidget {
 		void initGUI();
 		void initMenu();
 
-		//Decides which buttons to disable, if arg is true, we disable all the buttons. 
+		//Decides which buttons to disable, if arg is true, 
+		//we disable all the buttons. 
+
 		//If false the logic runs
 		void disableButtons(bool);
 

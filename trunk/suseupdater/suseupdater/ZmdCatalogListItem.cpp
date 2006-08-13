@@ -20,7 +20,13 @@
 #include "ZmdCatalogListItem.h"
 #include "ZmdConfigWindow.h" 
 
-ZmdCatalogListItem::ZmdCatalogListItem(QListViewItem *parent, const QString &text, ZmdUpdaterCore *_core) : QCheckListItem(parent, text, QCheckListItem::CheckBoxController), core(_core) {
+ZmdCatalogListItem::ZmdCatalogListItem(	QListViewItem *parent, 
+										const QString &text, 
+										ZmdUpdaterCore *_core) : 
+					QCheckListItem(	parent, 
+									text, 
+									QCheckListItem::CheckBoxController), 
+					core(_core) {
 
 	//Make sure this isn't a tristate
 	setTristate(false);
