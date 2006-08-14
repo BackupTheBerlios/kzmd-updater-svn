@@ -49,7 +49,8 @@ class HeaderWidget;
 	Represnts the various columns, some hidden and some not, which hold 
 	our package info
 */
-enum { 	COLUMN_NAME, //Note, patches store the summary here ...this is for ZMD
+enum { 	
+		COLUMN_NAME, //Note, patches store the summary here ...this is for ZMD
 		COLUMN_NEW_VERSION,
 		COLUMN_CATALOG, //Note, for ZMD this is the displayName. 
 		COLUMN_ID,
