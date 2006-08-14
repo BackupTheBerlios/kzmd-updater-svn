@@ -22,7 +22,7 @@
 
 #include <qwidget.h>
 
-class KSystemTray;
+class TrayIcon;
 class KTextEdit;
 class KPushButton;
 class QListView;
@@ -185,7 +185,7 @@ class MainWindow : public QWidget {
 		//If false the logic runs
 		void disableButtons(bool);
 
-		KSystemTray *applet;
+		TrayIcon *applet;
 		QListView *updateList;
 		KTextEdit *packageDescription;
 		HeaderWidget *header;

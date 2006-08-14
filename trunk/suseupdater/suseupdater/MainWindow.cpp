@@ -39,15 +39,14 @@
 #include "GeneralConfigWindow.h"
 #include "Updater.h"
 #include "UpdateListItem.h"
+#include "TrayIcon.h"
 
 
 MainWindow::MainWindow(QWidget *parent) : QWidget(parent) {
 
 	KIconLoader iconLoader(PROGRAM_NAME);
 
-	applet = new KSystemTray(this);
-	applet->setPixmap(UserIcon(TRAY_ICON_GREEN));
-	applet->setScaledContents(true);
+	applet = new TrayIcon(this);
 	applet->show();
 	connect(applet, SIGNAL(quitSelected()), this, SLOT(slotExit()));
 
@@ -199,16 +198,8 @@ void MainWindow::disableButtons(bool disable) {
 */
 
 void MainWindow::appletState(int state) {
-
-	switch (state) {
-		case APPLET_CHECKING: //We do not have a special icon for checking updates
-		case APPLET_NO_UPDATES:
-			applet->setPixmap(UserIcon(TRAY_ICON_GREEN));
-			break;
-		case APPLET_UPDATES:
-			applet->setPixmap(UserIcon(TRAY_ICON_RED));
-			break;
-	}
+	applet->setUpdates(updateList->childCount());
+	applet->setState(state);
 }
 
 void MainWindow::populateDone() {
@@ -228,6 +219,7 @@ void MainWindow::populateDone() {
 			item = item->nextSibling();
 		}
 	}
+	applet->setUpdates(updateList->childCount());
 }
 
 void MainWindow::disableSelectButtons() {
