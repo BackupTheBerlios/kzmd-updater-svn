@@ -39,6 +39,7 @@ class TrayIcon : public KSystemTray {
 	private:
 
 		int updateCount; 
+		int appletState;
 
 };
 

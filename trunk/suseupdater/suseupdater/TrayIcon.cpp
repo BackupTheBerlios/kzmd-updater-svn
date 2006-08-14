@@ -25,16 +25,19 @@
 #include "TrayIcon.h"
 #include "Updater.h"
 
-TrayIcon::TrayIcon(QWidget *parent) : KSystemTray(parent), updateCount(0) {
+TrayIcon::TrayIcon(QWidget *parent) : KSystemTray(parent), 
+																			updateCount(0),
+																			appletState(APPLET_NO_UPDATES) {
 	KIconLoader iconLoader(PROGRAM_NAME);
 
 	setPixmap(UserIcon(TRAY_ICON_GREEN));
 	setScaledContents(true);
-	QToolTip::add(this, i18n("No Updates Available"));
+	setState(APPLET_NO_UPDATES);
 }
 
 void TrayIcon::setState(int state) {
 	QToolTip::remove(this);
+	appletState = state;
 	switch (state) {
 		case APPLET_CHECKING: //We do not have a special icon for checking updates
 		case APPLET_NO_UPDATES:
@@ -54,4 +57,5 @@ void TrayIcon::setUpdates(int count) {
 		updateCount = count;
 	else
 		updateCount = 0;
+	setState(appletState);
 }
