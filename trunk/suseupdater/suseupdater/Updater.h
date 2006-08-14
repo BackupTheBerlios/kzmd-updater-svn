@@ -30,9 +30,11 @@
 	Currently APPLET_CHECKING is a useless constant.
 */
 
-enum { 	APPLET_NO_UPDATES,
-		APPLET_UPDATES,
-		APPLET_CHECKING };
+enum { 
+		APPLET_NO_UPDATES, /** No updates **/
+		APPLET_UPDATES,		 /** Updates available **/
+		APPLET_CHECKING 	 /** Checking for updates **/
+};
 
 /**
 	@file
