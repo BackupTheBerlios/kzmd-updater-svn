@@ -37,14 +37,17 @@
 
 #include "ZmdRugParser.h"
 #include "ZmdUpdaterCore.h"
-#include "Constants.h"
+#include "ZmdUpdater.h"
 
-enum { 	REMOTE_BUTTON_ON, 
-		REMOTE_BUTTON_OFF,
-		CERT_BUTTON_YES, 
-		CERT_BUTTON_NO, 
-		ROLLBACK_BUTTON_ON, 
-		ROLLBACK_BUTTON_OFF, };
+/** Buttons **/
+enum { 	
+		REMOTE_BUTTON_ON, 	/** ZMD TCP ON **/
+		REMOTE_BUTTON_OFF, 	/** ZMD TCP OFF **/
+		CERT_BUTTON_YES, 		/** Certificate On **/
+		CERT_BUTTON_NO,			/** Certificate Off **/ 
+		ROLLBACK_BUTTON_ON, /** Rollbacks On **/
+		ROLLBACK_BUTTON_OFF,/** Rollbacks Off **/ 
+};
 
 ZmdAdvancedConfig::ZmdAdvancedConfig(ZmdUpdaterCore *_core, QWidget *parent) : QWidget(parent, "AdvancedTab", 0) {
 

@@ -25,10 +25,6 @@
 #include "Updater.h"
 #include "ZmdUpdaterCore.h"
 
-//This is where the secret and deviceid files are stored
-//These hold the username and password for zmd
-#define ZMD_CONFIG_PATH "/etc/zmd"
-
 /**
 	@file
 
@@ -38,11 +34,29 @@
 */
 
 
+//This is where the secret and deviceid files are stored
+//These hold the username and password for zmd
+#define ZMD_CONFIG_PATH "/etc/zmd"
+
+/** Enum to represent the two protocols for ZMD **/
+enum { 
+				ZMD_TCP,	/** TCP **/
+				ZMD_UDS,	/** Unix Domain Sockets **/ 
+};
+
+/* The TCP and UDS address of the local zmd server */
+#define TCP_SERVER_ADDY "127.0.0.1"
+#define TCP_SERVER_POSTFIX ":2544/zmd/RPC2"
+#define UDS_SERVER_ADDY "udshttp:/var/tmp/kzmd-http"
+
+//Program Options
+#define BUGGY_ZMD //turns on bug workarounds for ZMD
+#define NO_PACKAGE_LOCKS //turns off support for locking packages
+
 /**
-
-	Our ZMD Backend class. Is connected to the MainWindow class via UpdaterApp
-*/
-
+		Our ZMD Backend class. Is connected to the 
+		MainWindow class via UpdaterApp
+	*/
 class ZmdUpdater : public Updater {
 
 	Q_OBJECT
@@ -61,21 +75,23 @@ class ZmdUpdater : public Updater {
 		void configureUpdater();
 
 		/**
-			Slot which gets called when we need to start an update. Collect our update info
-			from the list we got passed in populateList and go. 
+			Slot which gets called when we need to start an update. 
+			Collect our update info from the list we got passed 
+			in populateList and go. 
 		*/
 		void startInstall();
 
 		/**
-			Slot which gets called when we need to check for updates and load up the list. 
+			Slot which gets called when we need to check for updates 
+			and load up the list. 
 
 			@param updateList the list on the main window
 		*/
 		void populateUpdateList(QListView* updateList);
 
 		/**
-			Slot which gets called when the user selects an update. We are expected to 
-			write a description of the update and pass it back.
+			Slot which gets called when the user selects an update. 
+			We are expected to write a description of the update and pass it back.
 
 			@param item the update itself
 
@@ -110,8 +126,10 @@ class ZmdUpdater : public Updater {
 	private:
 
 		/**
-			Does the auth routine for the core ZMD functions. Basically, just gets the user/pass
-			and gives it to the backend. This will change later when we get a real auth routine.
+			Does the auth routine for the core ZMD functions. 
+			Basically, just gets the user/pass and gives it to 
+			the backend. This will change later when we get a real 
+			auth routine.
 		*/
 		void authorizeCore();
 
