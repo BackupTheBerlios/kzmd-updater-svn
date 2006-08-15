@@ -55,8 +55,6 @@ class ZmdRugParser : public QObject {
 		QString data;
 		QDict<QString> propertyMap;
 		QDict<QString> descriptionMap;
-
-		
 };
 
 #endif

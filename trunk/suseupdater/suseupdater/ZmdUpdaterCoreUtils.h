@@ -91,7 +91,6 @@ class Service {
 
 		Service() : activated(3) {}
 
-
 		void fromMap(const QMap<QString,QVariant> &map) {
 			name = map["name"].toString();
 			id = map["id"].toString();
@@ -191,7 +190,6 @@ class Package {
 				map["installed"] = installed;
 			return map;
 		}
-
 
 		QString name;
 		QString id;
