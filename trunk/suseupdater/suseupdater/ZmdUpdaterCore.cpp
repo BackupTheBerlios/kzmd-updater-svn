@@ -42,7 +42,12 @@ ZmdUpdaterCore::ZmdUpdaterCore(QObject *parent) : QObject(parent) {
 ZmdUpdaterCore::~ZmdUpdaterCore() {
 }
 
-/* User and Pass functions */
+/********************************************************************
+ *
+ *                   	User/Pass Functions 
+ *
+ ********************************************************************/
+
 void ZmdUpdaterCore::setUser(QString user) {
 	KURL url(server->url());
 	username = user;
@@ -118,7 +123,6 @@ void ZmdUpdaterCore::identityData(const QValueList<QVariant>& data, const QVaria
 	} 
 
 }
-
 
 /********************************************************************
  *
@@ -199,7 +203,14 @@ void ZmdUpdaterCore::serviceData(const QValueList<QVariant>& data, const QVarian
 			serviceList.append(serv);
 		}
 		emit(serviceListing(serviceList));
-	} 
+	} else if (data.front().canCast(QVariant::String) == true) {
+		if (data.front().toString() == "") {
+#ifdef DEBUG
+			kdWarning() << "Service Removed" << endl;
+#endif
+			emit(serviceRemoved());
+		}
+	}
 }
 
 /********************************************************************
@@ -223,19 +234,9 @@ void ZmdUpdaterCore::subscribeCatalog(Catalog cat) {
 	argList.append(cat.id);
 	argList.append(true);
 
-	catalogID = cat.id;
-	catalogStatus = true;
-
 	server->call("zmd.system.catalog_subscribe", argList, 
 	this, SLOT(catalogData(const QValueList<QVariant>&, const QVariant&)),
 	this, SLOT(faultData(int, const QString&, const QVariant&)));
-
-#ifdef BUGGY_ZMD
-	//temp call
-	server->call("zmd.system.catalog_list", QValueList<QVariant>(), 
-	this, SLOT(catalogSubData(const QValueList<QVariant>&, const QVariant&)),
-	this, SLOT(faultData(int, const QString&, const QVariant&)));
-#endif
 }
 
 void ZmdUpdaterCore::unsubscribeCatalog(Catalog cat) {
@@ -245,56 +246,9 @@ void ZmdUpdaterCore::unsubscribeCatalog(Catalog cat) {
 	argList.append(cat.id);
 	argList.append(false);
 
-	catalogID = cat.id;
-	catalogStatus = false;
-
 	server->call("zmd.system.catalog_subscribe", argList, 
 	this, SLOT(catalogData(const QValueList<QVariant>&, const QVariant&)),
 	this, SLOT(faultData(int, const QString&, const QVariant&)));
-
-#ifdef BUGGY_ZMD
-	//temp call
-	server->call("zmd.system.catalog_list", QValueList<QVariant>(), 
-	this, SLOT(catalogSubData(const QValueList<QVariant>&, const QVariant&)),
-	this, SLOT(faultData(int, const QString&, const QVariant&)));
-#endif
-}
-
-/*******************************************************************/
-
-//Temp data function, I hate this thing, but we need it 
-//because ZMD has unstable catalog handling
-
-/*******************************************************************/
-
-void ZmdUpdaterCore::catalogSubData(const QValueList<QVariant>& data, const QVariant& t) {
-	if (data.front().canCast(QVariant::List) == true) {
-		QValueList<QVariant> list;
-		list = (data.front().toList());
-		QValueList<QVariant>::iterator iter;
-		Catalog cat;
-
-		for (iter = list.begin(); iter != list.end(); iter++) {
-			QMap<QString, QVariant> map = (*iter).toMap();
-			if (map["id"].toString() == catalogID) {
-				if (map["subscribed"].toBool() != catalogStatus) {
-#ifdef DEBUG
-					kdWarning() << "We got a bad catalog subscription change, trying to correct" << endl;
-#endif
-					switch (catalogStatus) {
-						case true:
-							cat.id = catalogID;
-							subscribeCatalog(cat);
-							break;
-						case false:
-							cat.id = catalogID;
-							unsubscribeCatalog(cat);
-							break;
-					}	
-				}
-			}
-		}
-	}
 }
 
 void ZmdUpdaterCore::catalogData(const QValueList<QVariant>& data, const QVariant& t) {
@@ -302,8 +256,11 @@ void ZmdUpdaterCore::catalogData(const QValueList<QVariant>& data, const QVarian
 	if (data.front().canCast(QVariant::String) == true) {
 		/*
 			If we get a string back, it is from a catalog sub/unsub
-			No need to do anything else.
 		*/
+#ifdef DEBUG
+		kdWarning() << "Catalog Sub Changed" << endl;
+#endif
+		emit(catalogSubscriptionChanged());
 	} else if (data.front().canCast(QVariant::List) == true) {
 		//If we get a list, it is because we got a catalog listing
 		QValueList<QVariant> list;

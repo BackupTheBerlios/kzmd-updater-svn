@@ -20,12 +20,14 @@
 #include "ZmdCatalogListItem.h"
 #include "ZmdConfigWindow.h" 
 
+#include <kdebug.h>
+
 ZmdCatalogListItem::ZmdCatalogListItem(	QListViewItem *parent, 
 										const QString &text, 
 										ZmdUpdaterCore *_core) : 
 					QCheckListItem(	parent, 
 									text, 
-									QCheckListItem::CheckBoxController), 
+									QCheckListItem::CheckBox), 
 					core(_core) {
 
 	//Make sure this isn't a tristate
@@ -44,8 +46,6 @@ void ZmdCatalogListItem::stateChange(bool state) {
 	//Deal with tristate, even when we disable this
 	switch (this->state()) {
 		case QCheckListItem::Off:
-		case QCheckListItem::NoChange:
-			setOn(false);
 			core->unsubscribeCatalog(cat);
 			break;
 		case QCheckListItem::On:

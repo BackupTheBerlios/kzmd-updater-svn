@@ -35,6 +35,7 @@ ZmdEditServers::ZmdEditServers(ZmdUpdaterCore *_core, QWidget *parent) : QWidget
 
 	initGUI();
 	initList();
+	connect(core, SIGNAL(serviceRemoved()), this, SLOT(removedServer()));
 	connect(core, SIGNAL(generalFault(QString, int)), this, SLOT(serverFault(QString, int)));
 }
 
@@ -60,7 +61,6 @@ void ZmdEditServers::initGUI() {
 	serverList->setColumnWidthMode(2, QListView::Manual);
 	serverList->addColumn("Subscribed", 0); //Holds subscription status for catalogs
 	serverList->setColumnWidthMode(3, QListView::Manual);
-
 
 	mainLayout->addWidget(serverList);
 	mainLayout->setSpacing(10);
@@ -217,14 +217,12 @@ void ZmdEditServers::removeButtonClicked() {
 		serv.uri = serverList->currentItem()->text(CONFW_URI);
 
 		core->removeService(serv);
-		//We wait 1 second to let zmd really delete the service 
-		QTimer::singleShot(1500, this, SLOT(removedServer())); 		
-		KMessageBox::information(this, i18n("Service Removed")); 
 		clearList();
 	}
 }
 
 void ZmdEditServers::removedServer() {
+	KMessageBox::information(this, i18n("Service Removed")); 
 	initList();
 }
 

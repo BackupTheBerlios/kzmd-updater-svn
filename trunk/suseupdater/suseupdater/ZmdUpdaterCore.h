@@ -281,7 +281,12 @@ class ZmdUpdaterCore : public QObject {
 		//Signals that end transactions
 		void transactionFinished(int flags, QString errorMessage);
 
+		//Service signals
 		void serviceAdded(QString serviceName, int flags, QString errorMessage);
+		void serviceRemoved();
+
+		//Catalog signal -- sub/unsub by context
+		void catalogSubscriptionChanged();
 
 		//General Fault Signal - For non-specific faults
 		void generalFault(QString faultMessage, int errorCode);
@@ -299,10 +304,7 @@ class ZmdUpdaterCore : public QObject {
 
 		void catalogData(const QValueList<QVariant>&, const QVariant&);
 
-		//temp
-
 		void identityData(const QValueList<QVariant>&, const QVariant&);
-		void catalogSubData(const QValueList<QVariant>&, const QVariant&);
 
 		void serviceData(const QValueList<QVariant>&, const QVariant&);
 
@@ -338,10 +340,6 @@ class ZmdUpdaterCore : public QObject {
 
 		//How many times have we timed out? If this gets above 4, we need to throw a fault.
 		int timeoutCount;
-
-		//Watch variables, temporary...we use these to get around a zmd bug with catalog subscription.
-		QString catalogID;
-		bool catalogStatus;
 
 		//Obvious, we cannot save these from signal to signal, so we store them here
 		QValueList<QVariant> packagesToInstall;
