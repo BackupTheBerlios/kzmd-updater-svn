@@ -123,7 +123,6 @@ void ZmdAdvancedConfig::initGUI() {
 	QHBox *passBox = new QHBox(proxyBox);
 	proxyPasswordLabel = new QLabel(i18n("Password:"), passBox);
 	proxyPasswordEdit = new KLineEdit(passBox);
-	
 
 	//"Other" stuff
 	otherBox = new QVGroupBox(this);
@@ -272,10 +271,10 @@ void ZmdAdvancedConfig::stdinReady() {
 		proxyPasswordEdit->setDisabled(false);
 	}
 
-	connect(remoteButtons, SIGNAL(clicked(int)), this, SLOT(settingsChange(int)));		
-	connect(certButtons, SIGNAL(clicked(int)), this, SLOT(settingsChange(int)));	
-	connect(rollbackButtons, SIGNAL(clicked(int)), this, SLOT(settingsChange(int)));
-	connect(hostEdit, SIGNAL(returnPressed()), this, SLOT(settingsChange()));
+	connect(remoteButtons, SIGNAL(clicked(int)), this, SLOT(radioButtonsChange(int)));		
+	connect(certButtons, SIGNAL(clicked(int)), this, SLOT(radioButtonsChange(int)));	
+	connect(rollbackButtons, SIGNAL(clicked(int)), this, SLOT(radioButtonsChange(int)));
+	connect(hostEdit, SIGNAL(returnPressed()), this, SLOT(hostUrlChange()));
 	connect(logBox, SIGNAL(activated(const QString&)), this, SLOT(logLevelChange(const QString&)));
 	connect(securityLevelBox, SIGNAL(activated(const QString&)), this, SLOT(securityLevelChange(const QString&)));
 	connect(maxDownloadsSpinner, SIGNAL(valueChanged(int)), this, SLOT(maxDownloadsValueChange(int)));
@@ -283,6 +282,12 @@ void ZmdAdvancedConfig::stdinReady() {
 	connect(proxyUsernameEdit, SIGNAL(returnPressed()), this, SLOT(proxyUsernameChange()));
 	connect(proxyPasswordEdit, SIGNAL(returnPressed()), this, SLOT(proxyPasswordChange()));
 }
+
+/*******************************************************************
+ *
+ *							The General Settings Change Method 
+ *
+ ******************************************************************/
 
 void ZmdAdvancedConfig::saveSettings(QString setting, QString value) {
 
@@ -302,7 +307,13 @@ void ZmdAdvancedConfig::saveSettings(QString setting, QString value) {
 	connect(saveProc, SIGNAL(readyReadStderr()), this, SLOT(errorReady()));
 }
 
-void ZmdAdvancedConfig::settingsChange() {
+/*******************************************************************
+ *
+ *						The Actual Settings Change Slots
+ *
+ ******************************************************************/
+
+void ZmdAdvancedConfig::hostUrlChange() {
 	KConfig *config = kapp->config();
 	config->setGroup("General");
 
@@ -318,7 +329,7 @@ void ZmdAdvancedConfig::securityLevelChange(const QString &newText) {
 	saveSettings("security-level", securityLevelBox->currentText());
 }
 
-void ZmdAdvancedConfig::settingsChange(int id) {
+void ZmdAdvancedConfig::radioButtonsChange(int id) {
 
 	/*	note: since: 
 		0 = REMOTE_BUTTON_ON 
@@ -380,21 +391,6 @@ void ZmdAdvancedConfig::maxDownloadsValueChange(int value) {
 	saveSettings("max-downloads", QString().setNum(maxDownloadsSpinner->value()));
 }
 
-void ZmdAdvancedConfig::errorReady() {
-	QByteArray byteData;
-	QString *data;
-
-	if (saveProc != NULL)
-		byteData = saveProc->readStderr();
-	else  // the else case here is really only going to be true once
-		byteData = proc->readStderr();
-	data = new QString(byteData);
-	if (data->stripWhiteSpace() != "") {
-		KMessageBox::error(this, *data);
-	}
-	delete data;
-}
-
 void ZmdAdvancedConfig::proxyUrlChange() {
 	saveSettings("proxy-url", (	proxyUrlEdit->text().isEmpty() ? 
 															" " : 
@@ -417,7 +413,34 @@ void ZmdAdvancedConfig::proxyPasswordChange() {
 																		proxyPasswordEdit->text()));
 }
 
+//Error slot
+void ZmdAdvancedConfig::errorReady() {
+	QByteArray byteData;
+	QString *data;
+
+	if (saveProc != NULL)
+		byteData = saveProc->readStderr();
+	else  // the else case here is really only going to be true once
+		byteData = proc->readStderr();
+	data = new QString(byteData);
+	if (data->stripWhiteSpace() != "") {
+		KMessageBox::error(this, *data);
+	}
+	delete data;
+}
+
 ZmdAdvancedConfig::~ZmdAdvancedConfig() {
+
+	//Make sure someone hasn't change something
+	//without pressing enter
+	if (hostEdit->isModified() == true)
+		hostUrlChange();
+	if (proxyUrlEdit->isModified() == true)
+		proxyUrlChange();
+	if (proxyUsernameEdit->isModified() == true)
+		proxyUsernameChange();
+	if (proxyPasswordEdit->isModified() == true)
+		proxyPasswordChange();
 
 	if (restartZMDOnExit == true) {
 		proc = new QProcess(QString("rug"), this);

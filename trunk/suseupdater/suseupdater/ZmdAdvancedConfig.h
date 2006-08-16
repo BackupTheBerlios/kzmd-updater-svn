@@ -45,8 +45,8 @@ class ZmdAdvancedConfig : public QWidget {
 	private slots:
 
 		void stdinReady();		
-		void settingsChange();
-		void settingsChange(int id);
+		void radioButtonsChange(int id);
+		void hostUrlChange();
 		void logLevelChange(const QString&);
 		void securityLevelChange(const QString&);
 		void maxDownloadsValueChange(int);
