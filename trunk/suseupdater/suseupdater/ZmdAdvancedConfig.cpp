@@ -22,6 +22,7 @@
 #include <kdebug.h>
 #include <kmessagebox.h>
 #include <klineedit.h>
+#include <kpassdlg.h>
 #include <kapp.h>
 #include <kconfig.h>
 
@@ -38,6 +39,8 @@
 #include "ZmdRugParser.h"
 #include "ZmdUpdaterCore.h"
 #include "ZmdUpdater.h"
+
+#define DEBUG
 
 /** Buttons **/
 enum { 	
@@ -105,6 +108,23 @@ void ZmdAdvancedConfig::initGUI() {
 	securityLevelLabel = new QLabel(i18n("Security Level: "), secLevBox);
 	securityLevelBox = new QComboBox(false, secLevBox);
 
+	//Proxy stuff
+	proxyBox = new QVGroupBox(this);
+	proxyBox->setTitle(i18n("ZMD Proxy Options"));
+
+	QHBox *urlBox = new QHBox(proxyBox);
+	proxyUrlLabel = new QLabel(i18n("Proxy Server:"), urlBox);
+	proxyUrlEdit = new KLineEdit(urlBox);
+
+	QHBox *userBox = new QHBox(proxyBox);
+	proxyUsernameLabel = new QLabel(i18n("User Name:"), userBox);
+	proxyUsernameEdit = new KLineEdit(userBox);
+
+	QHBox *passBox = new QHBox(proxyBox);
+	proxyPasswordLabel = new QLabel(i18n("Password:"), passBox);
+	proxyPasswordEdit = new KLineEdit(passBox);
+	
+
 	//"Other" stuff
 	otherBox = new QVGroupBox(this);
 	otherBox->setTitle(i18n("Other Options"));
@@ -151,7 +171,8 @@ void ZmdAdvancedConfig::initGUI() {
 
 	mainLayout->addWidget(connectionBox, 0, 0);
 	mainLayout->addWidget(securityBox, 1, 0);
-	mainLayout->addWidget(otherBox, 0, 1);
+	mainLayout->addWidget(proxyBox, 0, 1);
+	mainLayout->addWidget(otherBox, 1, 1);
 
 	mainLayout->setSpacing(10);
 	mainLayout->setMargin(10);
@@ -164,6 +185,9 @@ void ZmdAdvancedConfig::initGUI() {
 	rollbackButtons->setDisabled(true);
 	maxDownloadsSpinner->setDisabled(true);
 	securityLevelBox->setDisabled(true);
+	proxyUrlEdit->setDisabled(true);
+	proxyUsernameEdit->setDisabled(true);
+	proxyPasswordEdit->setDisabled(true);
 
 	show();
 }
@@ -217,6 +241,24 @@ void ZmdAdvancedConfig::stdinReady() {
 		securityLevelBox->setCurrentText(data);
 	}
 
+	data = "";
+	data = parser->getProperty("proxy-url");
+	if (data.isEmpty() == false) {
+		proxyUrlEdit->setText(data);
+	}
+
+	data = "";
+	data = parser->getProperty("proxy-username");
+	if (data.isEmpty() == false) {
+		proxyUsernameEdit->setText(data);
+	}
+
+	data = "";
+	data = parser->getProperty("proxy-password");
+	if (data.isEmpty() == false) {
+		proxyPasswordEdit->setText(data);
+	}
+
 	logBox->setDisabled(false);
 	hostEdit->setDisabled(false);
 	certButtons->setDisabled(false);
@@ -224,6 +266,11 @@ void ZmdAdvancedConfig::stdinReady() {
 	rollbackButtons->setDisabled(false);
 	maxDownloadsSpinner->setDisabled(false);
 	securityLevelBox->setDisabled(false);
+	proxyUrlEdit->setDisabled(false);
+	if (proxyUrlEdit->text().isEmpty() == false) {
+		proxyUsernameEdit->setDisabled(false);
+		proxyPasswordEdit->setDisabled(false);
+	}
 
 	connect(remoteButtons, SIGNAL(clicked(int)), this, SLOT(settingsChange(int)));		
 	connect(certButtons, SIGNAL(clicked(int)), this, SLOT(settingsChange(int)));	
@@ -232,11 +279,18 @@ void ZmdAdvancedConfig::stdinReady() {
 	connect(logBox, SIGNAL(activated(const QString&)), this, SLOT(logLevelChange(const QString&)));
 	connect(securityLevelBox, SIGNAL(activated(const QString&)), this, SLOT(securityLevelChange(const QString&)));
 	connect(maxDownloadsSpinner, SIGNAL(valueChanged(int)), this, SLOT(maxDownloadsValueChange(int)));
+	connect(proxyUrlEdit, SIGNAL(returnPressed()), this, SLOT(proxyUrlChange()));
+	connect(proxyUsernameEdit, SIGNAL(returnPressed()), this, SLOT(proxyUsernameChange()));
+	connect(proxyPasswordEdit, SIGNAL(returnPressed()), this, SLOT(proxyPasswordChange()));
 }
 
 void ZmdAdvancedConfig::saveSettings(QString setting, QString value) {
 
+#ifdef DEBUG
 	kdWarning() << "Setting changed" << endl;
+	kdWarning() << setting << " " << value << endl;
+#endif
+
 	saveProc = new QProcess(QString("rug"), this);
 	saveProc->addArgument("set-prefs");
 	saveProc->addArgument(setting);
@@ -339,6 +393,28 @@ void ZmdAdvancedConfig::errorReady() {
 		KMessageBox::error(this, *data);
 	}
 	delete data;
+}
+
+void ZmdAdvancedConfig::proxyUrlChange() {
+	saveSettings("proxy-url", (	proxyUrlEdit->text().isEmpty() ? 
+															" " : 
+															proxyUrlEdit->text()));
+	if (proxyUrlEdit->text().isEmpty() == false) {
+		proxyUsernameEdit->setDisabled(false);
+		proxyPasswordEdit->setDisabled(false);
+	}
+}
+
+void ZmdAdvancedConfig::proxyUsernameChange() {
+	saveSettings("proxy-username", (	proxyUsernameEdit->text().isEmpty() ? 
+																		" " : 
+																		proxyUsernameEdit->text()));
+}
+
+void ZmdAdvancedConfig::proxyPasswordChange() {
+	saveSettings("proxy-password", (	proxyPasswordEdit->text().isEmpty() ? 
+																		" " : 
+																		proxyPasswordEdit->text()));
 }
 
 ZmdAdvancedConfig::~ZmdAdvancedConfig() {

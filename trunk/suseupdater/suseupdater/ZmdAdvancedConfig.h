@@ -50,6 +50,9 @@ class ZmdAdvancedConfig : public QWidget {
 		void logLevelChange(const QString&);
 		void securityLevelChange(const QString&);
 		void maxDownloadsValueChange(int);
+		void proxyUrlChange();
+		void proxyUsernameChange();
+		void proxyPasswordChange();
 		void errorReady();
 
 	private:
@@ -60,6 +63,7 @@ class ZmdAdvancedConfig : public QWidget {
 		QGridLayout *mainLayout;
 		QVGroupBox *securityBox;
 		QVGroupBox *connectionBox;
+		QVGroupBox *proxyBox;
 		QVGroupBox *otherBox;
 
 		QLabel *hostLabel;
@@ -82,6 +86,15 @@ class ZmdAdvancedConfig : public QWidget {
 
 		QLabel *maxDownloadsLabel;
 		QSpinBox *maxDownloadsSpinner;
+
+		QLabel *proxyUrlLabel;
+		KLineEdit *proxyUrlEdit;
+
+		QLabel *proxyUsernameLabel;
+		KLineEdit *proxyUsernameEdit;
+
+		QLabel *proxyPasswordLabel;
+		KLineEdit *proxyPasswordEdit;
 
 		//proc to fetch current settings
 		QProcess *proc;
