@@ -110,7 +110,7 @@ void ZmdAdvancedConfig::initGUI() {
 
 	//Proxy stuff
 	proxyBox = new QVGroupBox(this);
-	proxyBox->setTitle(i18n("ZMD Proxy Options"));
+	proxyBox->setTitle(i18n("Proxy Options"));
 
 	QHBox *urlBox = new QHBox(proxyBox);
 	proxyUrlLabel = new QLabel(i18n("Proxy Server:"), urlBox);
