@@ -672,8 +672,13 @@ void ZmdUpdaterCore::timerData(const QValueList<QVariant>& data, const QVariant 
 #endif
 		if (status.name == "Downloading Packages") {
 			emit(downloadProgress(status)); 
-			if (map["percent"].toDouble() > 99) {
+			if (status.percent > 99) {
 				downloadID = "";
+			} else if (status.status == 4) {
+				ZMD_CLEAR;
+				timer->stop();
+				downloadID = "";
+				emit(transactionFinished(ERROR_TRANS_FAIL, status.messages.front()));
 			}
 		} else {
 			if (status.messages.front() == "Preparing..." && status.status == 4) {

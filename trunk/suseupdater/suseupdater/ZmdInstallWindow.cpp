@@ -150,7 +150,7 @@ void ZmdInstallWindow::download(Progress status) {
 			downloadDone = true;
 		}
 	} else {
-		KMessageBox::error(this, i18n("Download failed"));
+		KMessageBox::error(this, i18n("Download failed: ") + status.messages.front());
 	}
 }
 
