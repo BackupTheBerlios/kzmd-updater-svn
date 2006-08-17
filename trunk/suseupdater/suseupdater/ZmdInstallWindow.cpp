@@ -150,6 +150,7 @@ void ZmdInstallWindow::download(Progress status) {
 			downloadDone = true;
 		}
 	} else {
+		//This should never run 
 		KMessageBox::error(this, i18n("Download failed: ") + status.messages.front());
 	}
 }
@@ -179,6 +180,7 @@ void ZmdInstallWindow::progress(Progress status) {
 			packageDone = true;
 		}	
 	} else if (status.status == 4) {
+		//This should never run
 		KMessageBox::error(this, status.messages.front());
 	}
 }
@@ -186,6 +188,8 @@ void ZmdInstallWindow::progress(Progress status) {
 void ZmdInstallWindow::finished(int status, QString error) {
 	if (status == ERROR_DEP_FAIL) {
 		KMessageBox::error(this, i18n("Sorry, we couldn't resolve the dependencies for this update:\n")+error);
+	} else if (status == ERROR_TRANS_FAIL) {
+		KMessageBox::error(this, i18n("Upgrade Failed: ") + error);
 	} else {
 		transactionList->setText("Done!");
 	}
