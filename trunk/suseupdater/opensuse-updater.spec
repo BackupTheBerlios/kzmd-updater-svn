@@ -5,7 +5,7 @@ License:      GPL
 Group:        System
 Summary:      Updater applet for OpenSUSE / ZMD
 Version:      0.1
-Release:      2.1
+Release:      3.0
 URL:          http://en.opensuse.org/KDE_Updater_Applet
 BuildRoot:    %{_tmppath}/%{name}-%{version}-build
 Source0:      suseupdater-%{version}.tar.gz
@@ -70,4 +70,5 @@ rm -rf $RPM_BUILD_ROOT
 - revision 179
 * Mon Jul 3 2006 - dmacvicar@suse.de
 - initial package from svn
-  
+* Thu Aug 17 2006 - narayannewton@gmail.com
+- Update for uds ioslave
