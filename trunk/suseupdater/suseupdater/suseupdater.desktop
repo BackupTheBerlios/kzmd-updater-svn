@@ -6,3 +6,4 @@ Icon=suseupdater
 Type=Application
 Terminal=0
 GenericName=SUSE Updater Applet
+Categories=Qt;KDE;System;Desktop Applet
