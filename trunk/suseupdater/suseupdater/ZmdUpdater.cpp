@@ -336,7 +336,7 @@ void ZmdUpdater::error(QString message, int errorCode) {
 		showGeneralFaultError = false;
 		KMessageBox::error(NULL, "We could not connect to ZMD, you may need to go into 'Add/Remove Servers'"
 			" and the 'Advanced Options' tab to enable TCP support for ZMD. You will then have to restart ZMD."); 
-	}
+	} 
 }
 
 /*
