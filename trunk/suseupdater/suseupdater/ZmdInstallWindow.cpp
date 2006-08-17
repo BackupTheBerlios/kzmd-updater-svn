@@ -151,8 +151,6 @@ void ZmdInstallWindow::download(Progress status) {
 		}
 	} else {
 		KMessageBox::error(this, i18n("Download failed: ") + status.messages.front());
-		disconnect(core, SIGNAL(downloadProgress(Progress)), this, SLOT(download(Progress)));
-
 	}
 }
 
@@ -182,7 +180,6 @@ void ZmdInstallWindow::progress(Progress status) {
 		}	
 	} else if (status.status == 4) {
 		KMessageBox::error(this, status.messages.front());
-		disconnect(core, SIGNAL(progress(Progress)), this, SLOT(progress(Progress)));
 	}
 }
 

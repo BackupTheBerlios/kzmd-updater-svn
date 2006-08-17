@@ -671,20 +671,21 @@ void ZmdUpdaterCore::timerData(const QValueList<QVariant>& data, const QVariant 
 		kdWarning() << "Message: " << status.messages.front() << endl;
 #endif
 		if (status.name == "Downloading Packages") {
-			emit(downloadProgress(status)); 
 			if (status.percent > 99) {
 				downloadID = "";
-			} else if (status.status == 4) {
+			} 
+			if (status.status == 4) {
 				ZMD_CLEAR;
 				timer->stop();
 				downloadID = "";
 				emit(transactionFinished(ERROR_TRANS_FAIL, status.messages.front()));
+			} else {
+				emit(downloadProgress(status)); 
 			}
 		} else {
 			if (status.messages.front() == "Preparing..." && status.status == 4) {
 				status.status = 1; //this is a bug in ZMD, somehow it transmits this as an error
 			}
-			emit(progress(status));
 			if (downloadID.isEmpty() && map["status"].toInt() > 1) {
 				ZMD_CLEAR;
 				timer->stop();
@@ -702,6 +703,8 @@ void ZmdUpdaterCore::timerData(const QValueList<QVariant>& data, const QVariant 
 					else
 						emit(transactionFinished(ERROR_NONE, QString()));
 				}
+			} else {
+				emit(progress(status));
 			}
 		}
 	}
