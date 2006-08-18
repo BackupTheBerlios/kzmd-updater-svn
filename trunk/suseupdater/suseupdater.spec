@@ -66,9 +66,10 @@ rm -rf $RPM_BUILD_ROOT
 /opt/kde3/share/services/udshttp.protocol
 
 %changelog -n opensuse-updater
+* Thu Aug 17 2006 - narayannewton@gmail.com
+- Update for uds ioslave
 * Wed Jul 5 2006 - dmacvicar@suse.de
 - revision 179
 * Mon Jul 3 2006 - dmacvicar@suse.de
 - initial package from svn
-* Thu Aug 17 2006 - narayannewton@gmail.com
-- Update for uds ioslave
+
