@@ -43,13 +43,12 @@
 
 /** Our error codes. These are handled in the ZMD backend GUI **/
 enum {
-
-	ERROR_NONE = 0,
-	ERROR_DEP_FAIL,
-	ERROR_INVALID,
-	ERROR_INVALID_TYPE,
-	ERROR_AUTH_REJECT,
-	ERROR_TRANS_FAIL
+	ERROR_NONE = 0,			/** No Error **/
+	ERROR_DEP_FAIL,			/** Dependency Resolve Failure **/
+	ERROR_INVALID,			/** Invalid URI/Invalid Repo **/
+	ERROR_INVALID_TYPE,	/** Invalid Repo Type **/
+	ERROR_AUTH_REJECT,	/** Authorization Incorrect/Wrong Permissions **/
+	ERROR_TRANS_FAIL,		/** Transaction Failure **/
 };
 
 //We poll the server ever 1 second on transactions

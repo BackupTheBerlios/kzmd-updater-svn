@@ -26,17 +26,6 @@
 #include "Constants.h"
 
 /**
-	Constants that define the various states our applet can be in. 
-	Currently APPLET_CHECKING is a useless constant.
-*/
-
-enum { 
-		APPLET_NO_UPDATES, /** No updates **/
-		APPLET_UPDATES,		 /** Updates available **/
-		APPLET_CHECKING 	 /** Checking for updates **/
-};
-
-/**
 	@file
 
 	This is the base class for all updater backends. 
@@ -46,6 +35,15 @@ enum {
 
 **/
 
+/**
+	Constants that define the various states our applet can be in. 
+	Currently APPLET_CHECKING is a useless constant.
+**/
+enum { 
+		APPLET_NO_UPDATES, /** No updates **/
+		APPLET_UPDATES,		 /** Updates available **/
+		APPLET_CHECKING 	 /** Checking for updates **/
+};
 
 /**
 	Parent class for all updater backends

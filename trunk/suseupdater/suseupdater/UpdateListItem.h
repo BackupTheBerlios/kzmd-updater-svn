@@ -22,6 +22,18 @@
 
 #include <qlistview.h>
 
+/**
+	@file
+
+	Defines UpdateListItem.
+**/
+
+/**
+	UpdateListItem basically just allows for special "refcounting."
+	It keeps track of user clicks and increments/decrements a counter
+
+	@author Narayan Newton <narayannewton@gmail.com>
+**/
 class UpdateListItem : public QCheckListItem {
 
 	public:

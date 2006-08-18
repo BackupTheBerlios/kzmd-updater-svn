@@ -34,9 +34,9 @@ HeaderWidget::HeaderWidget(QWidget *parent) : QWidget(parent) {
 	pic->setOptimization(QPixmap::BestOptim);
 	suseLogo->setPixmap(*pic);
 
-	layout->addWidget(suseLogo,false,Qt::AlignLeft);
-	layout->addWidget(text,true,Qt::AlignRight);
-	layout->insertSpacing(1,30);
+	layout->addWidget(suseLogo, false, Qt::AlignLeft);
+	layout->addWidget(text, true, Qt::AlignRight);
+	layout->insertSpacing(1, 30);
 
 	text->setText("<b>Default</b><br>");
 	text->setMinimumWidth(400);
@@ -48,5 +48,6 @@ void HeaderWidget::setDescription(QString description) {
 }
 
 HeaderWidget::~HeaderWidget() {
+	delete pic;
 }
 

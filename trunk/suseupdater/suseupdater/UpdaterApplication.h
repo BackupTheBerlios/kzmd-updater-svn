@@ -22,6 +22,9 @@
 
 #include <kuniqueapplication.h>
 
+class MainWindow;
+class Updater;
+
 /**
 	@file
 
@@ -29,9 +32,6 @@
 
 	@author Narayan Newton <narayannewton@gmail.com>
 */
-
-class MainWindow;
-class Updater;
 
 /**
 

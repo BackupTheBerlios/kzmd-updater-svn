@@ -53,7 +53,7 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent) {
 	timer = new QTimer(this);
 	readConfig();
 	connect(timer, SIGNAL(timeout()), this, SLOT(checkUpdates()));
-	//timerInterval is read in from readConfig
+	//timerInterval is read in by readConfig
 	timer->start(timerInterval,false);
 
 	initGUI();
@@ -63,11 +63,11 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent) {
 	updatesSelected = 0;
 }
 
-/*
+/*************************************************************
 
-	INIT Methods
+												INIT Methods
 
-*/
+**************************************************************/
 
 // Read in the config, just the interval really as we cannot deal with the updater itself
 void MainWindow::readConfig() {
@@ -90,14 +90,14 @@ void MainWindow::initGUI() {
 	header = new HeaderWidget(this);
 	updateList = new QListView(this);
 	packageDescription = new KTextEdit(this);
-	configureButton = new KPushButton(i18n("Add/Remove Servers"),this);
+	configureButton = new KPushButton(i18n("Add/Remove Servers"), this);
 	cancelButton = new KPushButton(KStdGuiItem::cancel(), this);
-	installButton = new KPushButton(i18n("Install"),this);
-	selectAllButton = new KPushButton(i18n("Select All"),this);
+	installButton = new KPushButton(i18n("Install"), this);
+	selectAllButton = new KPushButton(i18n("Select All"), this);
 	clearSelectionButton = new KPushButton(i18n("Clear Selection"), this);
 	
-	mainBox->addWidget(header,0,0);
-	mainBox->addWidget(updateList,0,0);
+	mainBox->addWidget(header, 0, 0);
+	mainBox->addWidget(updateList, 0, 0);
 	
 	selectionButtonsLayout = new QHBoxLayout(mainBox);
 	selectionButtonsLayout->addWidget(selectAllButton, false, Qt::AlignLeft);
@@ -105,14 +105,14 @@ void MainWindow::initGUI() {
 
 	packageDescription->setReadOnly(true);
 	packageDescription->setMinimumHeight(125);
-	mainBox->addWidget(packageDescription,0,0);
+	mainBox->addWidget(packageDescription, 0, 0);
 
 	buttonsLayout = new QHBoxLayout(mainBox);
-	buttonsLayout->addWidget(configureButton,false, Qt::AlignLeft);
+	buttonsLayout->addWidget(configureButton, false, Qt::AlignLeft);
 	buttonsLayout->insertSpacing(1, 250);
-	buttonsLayout->addWidget(installButton,false, Qt::AlignRight);
+	buttonsLayout->addWidget(installButton, false, Qt::AlignRight);
 	buttonsLayout->addSpacing(10);
-	buttonsLayout->addWidget(cancelButton,false, Qt::AlignRight);
+	buttonsLayout->addWidget(cancelButton, false, Qt::AlignRight);
 
 	connect(configureButton, SIGNAL(clicked()), this, SLOT(serverButtonClicked()));
 	connect(installButton, SIGNAL(clicked()), this, SLOT(installButtonClicked()));
@@ -143,10 +143,14 @@ void MainWindow::initGUI() {
 	updateList->addColumn("LockID", 0); //Stores our lock id
 	updateList->setColumnWidthMode(COLUMN_LOCK, QListView::Manual);
 
-	connect(updateList, SIGNAL(selectionChanged(QListViewItem*)), this, SLOT(slotPackageSelected(QListViewItem*)));
-	connect(updateList, SIGNAL(clicked(QListViewItem*)), this, SLOT(slotPackageClicked(QListViewItem*)));
-	connect(updateList, SIGNAL(contextMenuRequested(QListViewItem*, const QPoint&, int)), this,
-			SLOT(slotPackageRightClicked(QListViewItem*, const QPoint&, int)));
+	connect(updateList, SIGNAL(selectionChanged(QListViewItem*)), 
+					this, SLOT(slotPackageSelected(QListViewItem*)));
+
+	connect(updateList, SIGNAL(clicked(QListViewItem*)), 
+					this, SLOT(slotPackageClicked(QListViewItem*)));
+
+	connect(updateList, SIGNAL(contextMenuRequested(QListViewItem*, const QPoint&, int)), 
+					this, SLOT(slotPackageRightClicked(QListViewItem*, const QPoint&, int)));
 
 	mainBox->setSpacing(10);
 	mainBox->setMargin(10);
@@ -191,11 +195,11 @@ void MainWindow::disableButtons(bool disable) {
 	}
 }
 
-/*
+/*********************************************************************
 
 	Slots recieving signals from the updater 
 
-*/
+*********************************************************************/
 
 void MainWindow::appletState(int state) {
 	applet->setUpdates(updateList->childCount());
@@ -203,7 +207,8 @@ void MainWindow::appletState(int state) {
 }
 
 void MainWindow::populateDone() {
-	
+
+	//if selectAllButton is not NULL, then we have check boxes
 	if (selectAllButton != NULL) {
 		//UpdateListItems we have (yoda am I in this comment)
 		QListViewItem *item = updateList->firstChild();
@@ -223,6 +228,8 @@ void MainWindow::populateDone() {
 }
 
 void MainWindow::disableSelectButtons() {
+
+	//if selectAllButton is not NULL, we have not yet disabled it
 	if (selectAllButton != NULL) {
 		selectionButtonsLayout->remove(selectAllButton);
 		selectionButtonsLayout->remove(clearSelectionButton);
@@ -241,11 +248,11 @@ void MainWindow::gotDescription(QString description) {
 	packageDescription->setText(description);
 }
 
-/*
+/***************************************************************
 	
 	Internal slots, recieving signals from GUI events and timers
 
-*/
+***************************************************************/
 
 void MainWindow::serverButtonClicked() {
 	//Fire the configure signal to the backend
@@ -253,7 +260,7 @@ void MainWindow::serverButtonClicked() {
 }
 
 void MainWindow::configButtonClicked() {
-	GeneralConfigWindow *win = new GeneralConfigWindow();
+	GeneralConfigWindow *win = new GeneralConfigWindow(); //deletes itself
 	connect(win, SIGNAL(configChanged()), this, SLOT(readConfig()));
 	win->show();
 }
@@ -269,11 +276,12 @@ void MainWindow::closeEvent(QCloseEvent *e) {
 	hide();
 }
 
-/*
+/*************************************************************************
 	NOTE: These two functions assume we pack the list with QCheckListItems.
 	If this is not the case, the Updater class needs to disable these buttons. 
 	You do this by emitting the "disableSelectButtons" signal. 
-*/
+*************************************************************************/
+
 void MainWindow::selectButtonClicked() {
 	QCheckListItem *item = (QCheckListItem*)updateList->firstChild();
 	

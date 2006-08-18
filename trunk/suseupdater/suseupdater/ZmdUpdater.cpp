@@ -48,31 +48,40 @@ ZmdUpdater::ZmdUpdater() : Updater() {
 	authorizeCore();
 
 	//Connect core signals
-	connect(core, SIGNAL(updateListing(QValueList<Package>)), this, SLOT(gotUpdateListing(QValueList<Package>)));
-	connect(core, SIGNAL(patchListing(QValueList<Patch>)), this, SLOT(gotPatchListing(QValueList<Patch>)));
-	connect(core, SIGNAL(packageInfo(Package)), this, SLOT(gotPackageInfo(Package)));
-	connect(core, SIGNAL(generalFault(QString, int)), this, SLOT(error(QString, int)));
+	connect(core, SIGNAL(updateListing(QValueList<Package>)), 
+					this, SLOT(gotUpdateListing(QValueList<Package>)));
+
+	connect(core, SIGNAL(patchListing(QValueList<Patch>)), 
+					this, SLOT(gotPatchListing(QValueList<Patch>)));
+
+	connect(core, SIGNAL(packageInfo(Package)), 
+					this, SLOT(gotPackageInfo(Package)));
+
+	connect(core, SIGNAL(generalFault(QString, int)), 
+					this, SLOT(error(QString, int)));
 
 #ifndef NO_PACKAGE_LOCKS
-	connect(core, SIGNAL(lockListing(QValueList<PackageLock>)), this, SLOT(gotLockListing(QValueList<PackageLock>)));
+	connect(core, SIGNAL(lockListing(QValueList<PackageLock>)), 
+					this, SLOT(gotLockListing(QValueList<PackageLock>)));
 #endif
 
 }
 
-/*
+/********************************************************************
 
 	Slots recieving signals from the mainwindow 
 
-*/
+*********************************************************************/
 
 void ZmdUpdater::populateUpdateList(QListView *updateList) {
 
 	tempList = updateList;
 	emit(updateApplet(APPLET_NO_UPDATES));
 	
-	connect(core, SIGNAL(serviceListing(QValueList<Service>)), this, SLOT(gotServiceListing(QValueList<Service>)));
-	core->getServices();
+	connect(core, SIGNAL(serviceListing(QValueList<Service>)), 
+					this, SLOT(gotServiceListing(QValueList<Service>)));
 
+	core->getServices();
 }
 
 void ZmdUpdater::updateSelected(QListViewItem *item) {
@@ -98,6 +107,10 @@ void ZmdUpdater::updateMenu(QListViewItem *item, const QPoint& point) {
 #endif
 }
 
+/*****************************************************************************
+									These are all noops because we do not support
+									package holds yet
+*****************************************************************************/
 void ZmdUpdater::holdPackage() {
 	QListViewItem *item;
 	PackageLock lock;
@@ -122,6 +135,8 @@ void ZmdUpdater::removeHold() {
 
 //This does nothing, since locking support is not available in ZMD as of yet
 }
+/******************************************************************************
+******************************************************************************/
 
 void ZmdUpdater::startInstall() {
 
@@ -156,11 +171,15 @@ void ZmdUpdater::startInstall() {
 		/* From reading the ZMD source, we only need name and ID for packages or patches. This may change in the future, was not in the API */
 
 		if (instList.size() > 0 || upList.size() > 0) {
-			ZmdInstallWindow *win = new ZmdInstallWindow(core);
+			ZmdInstallWindow *win = new ZmdInstallWindow(core); //deletes itself
 
 			win->setPackageList(instList, upList, QValueList<Package>());
 			win->startUpdate();
-			connect(win, SIGNAL(refreshUpdates()), this, SLOT(startRefresh()));
+
+			//Allow the install window to signal an update refresh
+			connect(win, SIGNAL(refreshUpdates()), 
+							this, SLOT(startRefresh()));
+
 			win->show();
 		}
 	}
@@ -171,8 +190,12 @@ void ZmdUpdater::startRefresh() {
 }
 
 void ZmdUpdater::configureUpdater() {
-	ZmdConfigWindow *win = new ZmdConfigWindow(core);
-	connect(win, SIGNAL(refreshUpdates()), this, SLOT(startRefresh()));
+	ZmdConfigWindow *win = new ZmdConfigWindow(core); //deletes itself
+
+	//Allow the configure window to signal an update refresh
+	connect(win, SIGNAL(refreshUpdates()), 
+					this, SLOT(startRefresh()));
+
 	win->show();
 }
 
@@ -216,8 +239,11 @@ void ZmdUpdater::gotLockListing(QValueList<PackageLock> locks) {
 
 void ZmdUpdater::gotServiceListing(QValueList<Service> list) {
 
-	disconnect(core, SIGNAL(serviceListing(QValueList<Service>)), this, SLOT(gotServiceListing(QValueList<Service>)));
-	connect(core, SIGNAL(catalogListing(QValueList<Catalog>)), this, SLOT(gotCatalogListing(QValueList<Catalog>)));
+	disconnect(core, SIGNAL(serviceListing(QValueList<Service>)), 
+						this, SLOT(gotServiceListing(QValueList<Service>)));
+
+	connect(core, SIGNAL(catalogListing(QValueList<Catalog>)), 
+					this, SLOT(gotCatalogListing(QValueList<Catalog>)));
 
 	//Ok, we communicated with zmd, don't show the error on failure now
 	showGeneralFaultError = false;
@@ -229,7 +255,8 @@ void ZmdUpdater::gotServiceListing(QValueList<Service> list) {
 void ZmdUpdater::gotCatalogListing(QValueList<Catalog> catalogs) {
 	QValueList<Catalog>::iterator iter;
 
-	disconnect(core, SIGNAL(catalogListing(QValueList<Catalog>)), this, SLOT(gotCatalogListing(QValueList<Catalog>)));
+	disconnect(core, SIGNAL(catalogListing(QValueList<Catalog>)), 
+						this, SLOT(gotCatalogListing(QValueList<Catalog>)));
 
 	if (catalogs.size() <= 0)
 		return;
@@ -308,7 +335,10 @@ void ZmdUpdater::gotPackageInfo(Package pack) {
 	item = tempList->findItem(pack.name, COLUMN_NAME);
 	if (item != NULL) {
 		currentDescription = pack.version;
-		connect(core, SIGNAL(packageDetails(PackageDetails)), this, SLOT(gotPackageDetails(PackageDetails)));
+
+		connect(core, SIGNAL(packageDetails(PackageDetails)), 
+						this, SLOT(gotPackageDetails(PackageDetails)));
+
 		core->getDetails(pack);
 	}
 }		
@@ -316,12 +346,14 @@ void ZmdUpdater::gotPackageInfo(Package pack) {
 void ZmdUpdater::gotPackageDetails(PackageDetails details) {
 
 	QString version = currentDescription;
-	disconnect(core, SIGNAL(packageDetails(PackageDetails)), this, SLOT(gotPackageDetails(PackageDetails)));
+	disconnect(core, SIGNAL(packageDetails(PackageDetails)), 
+						this, SLOT(gotPackageDetails(PackageDetails)));
 
 	currentDescription = "<b>" + i18n("Description: ") + "</b><br>";
 	currentDescription += details.description + "<br>";
 	currentDescription += i18n("<b>Upgrading from old version:</b> ");
 	currentDescription += version;
+
 	emit(returnDescription(currentDescription));
 }
 

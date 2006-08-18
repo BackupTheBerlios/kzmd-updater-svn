@@ -61,3 +61,4 @@ void TrayIcon::setUpdates(int count) {
 		updateCount = 0;
 	setState(appletState);
 }
+

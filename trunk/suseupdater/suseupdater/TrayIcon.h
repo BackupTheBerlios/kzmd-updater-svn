@@ -21,8 +21,19 @@
 #define _TRAY_ICON_H_
 
 #include <ksystemtray.h>
-#include <qobject.h>
 
+/**
+	@file
+
+	Defines TrayIcon, our tray icon. Shocking.
+**/
+
+/**
+	TrayIcon is our tray icon, which exists basically just to allow
+	us to show tool tips.
+
+	@author Narayan Newton <narayannewton@gmail.com>
+**/
 class TrayIcon : public KSystemTray {
 
 	Q_OBJECT
@@ -40,7 +51,6 @@ class TrayIcon : public KSystemTray {
 
 		int updateCount; 
 		int appletState;
-
 };
 
 #endif

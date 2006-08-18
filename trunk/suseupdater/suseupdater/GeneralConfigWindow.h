@@ -31,7 +31,19 @@ class QVButtonGroup;
 class QHBoxLayout;
 class QVBoxLayout;
 
+/**
+	@file
 
+	Defines our global configuration window
+
+	@author Narayan Newton <narayannewton@gmail.com>
+**/
+
+/**
+	Global Configuration Window
+
+	@author Narayan Newton <narayannewton@gmail.com>
+**/
 class GeneralConfigWindow : public QWidget {
 
 	Q_OBJECT

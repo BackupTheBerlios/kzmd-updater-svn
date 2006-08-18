@@ -40,6 +40,7 @@ ZmdUpdaterCore::ZmdUpdaterCore(QObject *parent) : QObject(parent) {
 }
 
 ZmdUpdaterCore::~ZmdUpdaterCore() {
+	delete server;
 }
 
 /********************************************************************
@@ -50,7 +51,7 @@ ZmdUpdaterCore::~ZmdUpdaterCore() {
 
 void ZmdUpdaterCore::setUser(QString user) {
 	KURL url(server->url());
-	username = user;
+	username = user; //we never actually use this
 
 	url.setUser(user);
 	server->setUrl(url);
@@ -58,7 +59,7 @@ void ZmdUpdaterCore::setUser(QString user) {
 
 void ZmdUpdaterCore::setPass(QString pass) {
 	KURL url(server->url());
-	password = pass;
+	password = pass; //we never actually use this
 
 	url.setPass(pass);
 	server->setUrl(url);

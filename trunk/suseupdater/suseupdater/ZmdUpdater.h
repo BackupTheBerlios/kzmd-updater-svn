@@ -47,7 +47,7 @@ enum {
 /* The TCP and UDS address of the local zmd server */
 #define TCP_SERVER_ADDY "127.0.0.1"
 #define TCP_SERVER_POSTFIX ":2544/zmd/RPC2"
-#define UDS_SERVER_ADDY "udshttp:/var/tmp/kzmd-http"
+#define UDS_SERVER_ADDY "udshttp:/var/tmp/kzmd-http" //temp in reality this is totally different
 
 //Program Options
 #define BUGGY_ZMD //turns on bug workarounds for ZMD

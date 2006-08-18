@@ -26,6 +26,19 @@ class QLabel;
 class QPixmap;
 class QHBoxLayout;
 
+/**
+	@file
+
+	Defines our universal header widget
+
+**/
+
+/**
+	Our universal header widget, with the SUSE graphic and
+	window description
+
+	@author Narayan Newton <narayannewton@gmail.com>
+**/
 class HeaderWidget : public QWidget {
 
 	Q_OBJECT
