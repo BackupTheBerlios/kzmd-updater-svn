@@ -1,6 +1,6 @@
 BuildRequires: kdelibs3-devel update-desktop-files
 
-Name:         opensuse-updater
+Name:         suseupdater
 License:      GPL
 Group:        System
 Summary:      Updater applet for OpenSUSE / ZMD
