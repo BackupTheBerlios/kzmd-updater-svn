@@ -25,7 +25,8 @@
 #include <qlayout.h>
 #include <qlabel.h>
 
-ZmdProgressDialog::ZmdProgressDialog(bool progressGUI, QWidget *parent) : QDialog(parent) {
+ZmdProgressDialog::ZmdProgressDialog(bool progressGUI, QWidget *parent) : 
+									QDialog(parent) {
 
 	if (progressGUI)
 		initProgressGUI();
@@ -35,9 +36,6 @@ ZmdProgressDialog::ZmdProgressDialog(bool progressGUI, QWidget *parent) : QDialo
 
 	//Don't close on closeEvent
 	reallyDone = false;
-}
-
-ZmdProgressDialog::~ZmdProgressDialog() {
 }
 
 void ZmdProgressDialog::initProgressGUI() {

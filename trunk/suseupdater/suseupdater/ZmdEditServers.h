@@ -25,12 +25,23 @@
 
 #include "ZmdUpdaterCore.h"
 
+/**
+	@file
+
+	Defines ZmdEditServers, the add/remove servers widget
+
+	@author Narayan Newton <narayannewton@gmail.com>
+**/
+
 class KPushButton;
 class QListView;
 class QVBoxLayout;
 class QHBoxLayout;
 class QString;
 
+/**
+	Allows users to add and remove servers from ZMD
+**/
 class ZmdEditServers : public QWidget {
 
 	Q_OBJECT

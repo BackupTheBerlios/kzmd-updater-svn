@@ -24,21 +24,26 @@
 
 #include "ZmdUpdaterCore.h"
 
+/**
+	@file
+
+	Defines ZmdProgressDialog, our custom status dialog
+
+	@author Narayan Newton <narayannewton@gmail.com>
+**/
+
 class QDialog;
 class QLabel;
 class QVBoxLayout;
 class QString;
 class KProgress;
 
-/*
-
+/**
 	A "custom" progress dialog. It can either show a progress bar and respond
 	to a progress signal sent from updater core or it can show a text message
 	and wait for a finished signal from updater core. In either mode, we are
 	going to be modal.
-
-*/
-
+**/
 class ZmdProgressDialog : public QDialog {
 
 	Q_OBJECT
@@ -47,7 +52,6 @@ class ZmdProgressDialog : public QDialog {
 
 		//first argument true for a progress bar, false for text only.
 		ZmdProgressDialog(bool progressGUI, QWidget *parent=0);
-		~ZmdProgressDialog();
 
 		void setTitle(QString);
 		void setDescription(QString);

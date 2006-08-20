@@ -23,6 +23,14 @@
 #include <qwidget.h>
 #include "ZmdUpdaterCore.h"
 
+/**
+	@file
+
+	Defines our installation status window
+
+	@author Narayan Newton <narayannewton@gmail.com>
+**/
+
 class KProgress;
 class KPushButton;
 class KTextEdit;
@@ -31,6 +39,10 @@ class QLabel;
 class QVBoxLayout;
 class HeaderWidget;
 
+/**
+	The installation status window, shows download 
+	and transaction progress.
+**/
 class ZmdInstallWindow : public QWidget {
 
 	Q_OBJECT
@@ -38,14 +50,17 @@ class ZmdInstallWindow : public QWidget {
 	public:
 
 		ZmdInstallWindow(ZmdUpdaterCore *_core, QWidget *parent=0);
-		~ZmdInstallWindow();
 
-		void setPackageList(QValueList<Package> installs, QValueList<Package> updates, QValueList<Package> removals);
+		void setPackageList(QValueList<Package> installs, 
+												QValueList<Package> updates, 
+												QValueList<Package> removals);
+
 		void startUpdate();
 
 	signals:
 
-		//We fire this to refresh the update list after we install some packages/patches
+		//We fire this to refresh the update list after 
+		//we install some packages/patches
 		void refreshUpdates();
 
 	private slots:
@@ -57,7 +72,9 @@ class ZmdInstallWindow : public QWidget {
 		void progress(Progress);
 		void download(Progress);
 		void finished(int, QString);
-		void gotDepInfo(QValueList<Package>, QValueList<Package>, QValueList<Package>);
+		void gotDepInfo(QValueList<Package>, 
+										QValueList<Package>, 
+										QValueList<Package>);
 		void generalFault(QString, int);
 
 	private:

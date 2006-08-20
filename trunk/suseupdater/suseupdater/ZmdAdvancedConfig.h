@@ -22,6 +22,14 @@
 
 #include <qwidget.h>
 
+/**
+	@file
+
+	Defines the widget that allows for user configuration of zmd
+
+	@author Narayan Newton <narayannewton@gmail.com>
+**/
+
 class QProcess;
 class QComboBox;
 class QLabel;
@@ -33,6 +41,10 @@ class QSpinBox;
 class ZmdRugParser;
 class ZmdUpdaterCore;
 
+/**
+	A widget that gives users control over security, connection,
+	proxy and download options for ZMD.
+**/
 class ZmdAdvancedConfig : public QWidget {
 
 	Q_OBJECT

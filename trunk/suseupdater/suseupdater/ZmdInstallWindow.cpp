@@ -46,15 +46,19 @@ ZmdInstallWindow::ZmdInstallWindow(ZmdUpdaterCore *_core, QWidget *parent) :
 	reallyDone = false;
 
 	//connect our signals
-	connect(core, SIGNAL(downloadProgress(Progress)), this, SLOT(download(Progress)));
-	connect(core, SIGNAL(progress(Progress)), this, SLOT(progress(Progress)));
-	connect(core, SIGNAL(transactionFinished(int,QString)), this, SLOT(finished(int,QString)));	
-	connect(core, SIGNAL(generalFault(QString, int)), this, SLOT(generalFault(QString, int)));
+	connect(core, SIGNAL(downloadProgress(Progress)), 
+					this, SLOT(download(Progress)));
 
-	lastError = 0;
-}
+	connect(core, SIGNAL(progress(Progress)), 
+					this, SLOT(progress(Progress)));
 
-ZmdInstallWindow::~ZmdInstallWindow() {
+	connect(core, SIGNAL(transactionFinished(int,QString)), 
+					this, SLOT(finished(int,QString)));	
+
+	connect(core, SIGNAL(generalFault(QString, int)), 
+					this, SLOT(generalFault(QString, int)));
+
+	lastError = -1; //This cannot be 0, as we have a 0 error code
 }
 
 void ZmdInstallWindow::initGUI() {
@@ -67,7 +71,8 @@ void ZmdInstallWindow::initGUI() {
 	header->setDescription("<b>Installing updates and patches:</b><br> Below is a description of the transaction and its progress.<br>");
 
 #ifdef _ABORT_SUPPORTED_
-	abortButton = new KPushButton(i18n("Abort Upgrade"), this); // we can't yet abort an upgrade
+	// we can't yet abort an upgrade
+	abortButton = new KPushButton(i18n("Abort Upgrade"), this); 
 	mainLayout->addWidget(abortButton, false, Qt::AlignRight);
 	connect(abortButton, SIGNAL(clicked()), this, SLOT(abortButtonClicked()));
 #endif
@@ -96,8 +101,8 @@ void ZmdInstallWindow::abortButtonClicked() {
 }
 
 void ZmdInstallWindow::gotDepInfo(QValueList<Package> installs,
-							   QValueList<Package> updates,
-							   QValueList<Package> removals) {
+							   									QValueList<Package> updates,
+																  QValueList<Package> removals) {
 	QString text;
 	QValueList<Package>::iterator iter;
 	ZmdDependencyDialog diag;
@@ -208,8 +213,8 @@ void ZmdInstallWindow::generalFault(QString message, int errorCode) {
 }
 
 void ZmdInstallWindow::setPackageList(QValueList<Package> installs, 
-								   QValueList<Package> updates,
-								   QValueList<Package> removals) {
+																		  QValueList<Package> updates,
+								   										QValueList<Package> removals) {
 	installList = installs;
 	updateList = updates;
 	removeList = removals;
@@ -217,9 +222,13 @@ void ZmdInstallWindow::setPackageList(QValueList<Package> installs,
 
 void ZmdInstallWindow::startUpdate() {
 	core->startTransaction(installList, updateList, removeList);	
-	connect(core, SIGNAL(realPackages(QValueList<Package>, QValueList<Package>, 
-			QValueList<Package>)), this, SLOT(gotDepInfo(QValueList<Package>,
-			QValueList<Package>, QValueList<Package>)));
+	connect(core, SIGNAL(realPackages(QValueList<Package>, 
+																		QValueList<Package>, 
+																		QValueList<Package>)), 
+					this, SLOT(gotDepInfo(QValueList<Package>,
+																QValueList<Package>, 
+																QValueList<Package>)));
+
 	transactionList->setText(i18n("Resolving Dependencies..."));
 }
 

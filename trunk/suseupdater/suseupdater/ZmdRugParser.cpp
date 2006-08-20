@@ -31,7 +31,8 @@ ZmdRugParser::ZmdRugParser(QObject *parent) : QObject(parent) {
 	descriptionMap.setAutoDelete(true);
 }
 
-ZmdRugParser::ZmdRugParser(const QString rugOutput, QObject *parent) : QObject(parent) {
+ZmdRugParser::ZmdRugParser(const QString rugOutput, QObject *parent) : 
+							QObject(parent) {
 	data = rugOutput;
 	parse();
 }

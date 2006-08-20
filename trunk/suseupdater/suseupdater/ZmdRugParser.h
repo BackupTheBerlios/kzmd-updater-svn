@@ -23,17 +23,22 @@
 #include <qobject.h>
 #include <qdict.h>
 
+/**
+	@file
+
+	Defines ZmdRugParser, our options parser
+
+	@author Narayan Newton <narayannewton@gmail.com>
+**/
+
 class QVariant;
 class QString;
 class QStringList;
 
 /**
-
 	Class that parses the preferences output from rug. Stores the properties and
 	allows you to fetch them from the class.
-
 **/
-
 class ZmdRugParser : public QObject {
 
 	Q_OBJECT

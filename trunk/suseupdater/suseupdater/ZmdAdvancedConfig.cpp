@@ -52,7 +52,8 @@ enum {
 		ROLLBACK_BUTTON_OFF,/** Rollbacks Off **/ 
 };
 
-ZmdAdvancedConfig::ZmdAdvancedConfig(ZmdUpdaterCore *_core, QWidget *parent) : QWidget(parent, "AdvancedTab", 0) {
+ZmdAdvancedConfig::ZmdAdvancedConfig(ZmdUpdaterCore *_core, QWidget *parent) : 
+									QWidget(parent, "AdvancedTab", 0) {
 
 	core = _core;
 	restartZMDOnExit = false;
@@ -62,8 +63,13 @@ ZmdAdvancedConfig::ZmdAdvancedConfig(ZmdUpdaterCore *_core, QWidget *parent) : Q
 	saveProc = NULL;
 	proc = new QProcess(QString("rug"), this);
 	proc->addArgument("get-prefs");
-	connect(proc, SIGNAL(processExited()), this, SLOT(stdinReady()));
-	connect(proc, SIGNAL(readyReadStderr()), this, SLOT(errorReady()));
+
+	connect(proc, SIGNAL(processExited()), 
+					this, SLOT(stdinReady()));
+
+	connect(proc, SIGNAL(readyReadStderr()), 
+					this, SLOT(errorReady()));
+
 	if (!proc->start())
 		KMessageBox::error(this, i18n("To use this part of the updater, rug must be in your path"));
 }
@@ -153,12 +159,12 @@ void ZmdAdvancedConfig::initGUI() {
 	rollbackButtons->setExclusive(true);
 	rollbackButtons->setButton(ROLLBACK_BUTTON_OFF);
 
-	logBox->insertItem("off",-1);
-	logBox->insertItem("fatal",-1);
-	logBox->insertItem("error",-1);
-	logBox->insertItem("warn",-1);
-	logBox->insertItem("info",-1);
-	logBox->insertItem("debug",-1);
+	logBox->insertItem("off", -1);
+	logBox->insertItem("fatal", -1);
+	logBox->insertItem("error", -1);
+	logBox->insertItem("warn", -1);
+	logBox->insertItem("info", -1);
+	logBox->insertItem("debug", -1);
 	logBox->setCurrentText("false");
 
 	securityLevelBox->insertItem("signature", -1);
@@ -271,16 +277,35 @@ void ZmdAdvancedConfig::stdinReady() {
 		proxyPasswordEdit->setDisabled(false);
 	}
 
-	connect(remoteButtons, SIGNAL(clicked(int)), this, SLOT(radioButtonsChange(int)));		
-	connect(certButtons, SIGNAL(clicked(int)), this, SLOT(radioButtonsChange(int)));	
-	connect(rollbackButtons, SIGNAL(clicked(int)), this, SLOT(radioButtonsChange(int)));
-	connect(hostEdit, SIGNAL(returnPressed()), this, SLOT(hostUrlChange()));
-	connect(logBox, SIGNAL(activated(const QString&)), this, SLOT(logLevelChange(const QString&)));
-	connect(securityLevelBox, SIGNAL(activated(const QString&)), this, SLOT(securityLevelChange(const QString&)));
-	connect(maxDownloadsSpinner, SIGNAL(valueChanged(int)), this, SLOT(maxDownloadsValueChange(int)));
-	connect(proxyUrlEdit, SIGNAL(returnPressed()), this, SLOT(proxyUrlChange()));
-	connect(proxyUsernameEdit, SIGNAL(returnPressed()), this, SLOT(proxyUsernameChange()));
-	connect(proxyPasswordEdit, SIGNAL(returnPressed()), this, SLOT(proxyPasswordChange()));
+	connect(remoteButtons, SIGNAL(clicked(int)), 
+					this, SLOT(radioButtonsChange(int)));		
+
+	connect(certButtons, SIGNAL(clicked(int)), 
+					this, SLOT(radioButtonsChange(int)));	
+
+	connect(rollbackButtons, SIGNAL(clicked(int)), 
+					this, SLOT(radioButtonsChange(int)));
+
+	connect(hostEdit, SIGNAL(returnPressed()), 
+					this, SLOT(hostUrlChange()));
+
+	connect(logBox, SIGNAL(activated(const QString&)), 
+					this, SLOT(logLevelChange(const QString&)));
+
+	connect(securityLevelBox, SIGNAL(activated(const QString&)), 
+					this, SLOT(securityLevelChange(const QString&)));
+
+	connect(maxDownloadsSpinner, SIGNAL(valueChanged(int)), 
+					this, SLOT(maxDownloadsValueChange(int)));
+
+	connect(proxyUrlEdit, SIGNAL(returnPressed()), 
+					this, SLOT(proxyUrlChange()));
+
+	connect(proxyUsernameEdit, SIGNAL(returnPressed()), 
+					this, SLOT(proxyUsernameChange()));
+
+	connect(proxyPasswordEdit, SIGNAL(returnPressed()), 
+					this, SLOT(proxyPasswordChange()));
 }
 
 /*******************************************************************
@@ -304,7 +329,8 @@ void ZmdAdvancedConfig::saveSettings(QString setting, QString value) {
 		KMessageBox::error(this, i18n("Rug must be installed to configure ZMD, is it in your path?"));
 		return;
 	}
-	connect(saveProc, SIGNAL(readyReadStderr()), this, SLOT(errorReady()));
+	connect(saveProc, SIGNAL(readyReadStderr()), 
+					this, SLOT(errorReady()));
 }
 
 /*******************************************************************

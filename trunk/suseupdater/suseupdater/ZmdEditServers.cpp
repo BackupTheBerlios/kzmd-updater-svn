@@ -30,13 +30,18 @@
 #include "ZmdProgressDialog.h"
 #include "ZmdCatalogListItem.h"
 
-ZmdEditServers::ZmdEditServers(ZmdUpdaterCore *_core, QWidget *parent) : QWidget(parent, "EditTab", 0) {
+ZmdEditServers::ZmdEditServers(ZmdUpdaterCore *_core, QWidget *parent) : 
+								QWidget(parent, "EditTab", 0) {
 	core = _core;
 
 	initGUI();
 	initList();
-	connect(core, SIGNAL(serviceRemoved()), this, SLOT(removedServer()));
-	connect(core, SIGNAL(generalFault(QString, int)), this, SLOT(serverFault(QString, int)));
+
+	connect(core, SIGNAL(serviceRemoved()), 
+					this, SLOT(removedServer()));
+
+	connect(core, SIGNAL(generalFault(QString, int)), 
+					this, SLOT(serverFault(QString, int)));
 }
 
 void ZmdEditServers::initGUI() {
@@ -81,8 +86,11 @@ void ZmdEditServers::clearList() {
 
 	//Clear the list 
 	serverList->clear();
-	removeButton->setDisabled(true); //We don't try to remove things from an empty list
-	addButton->setDisabled(true); //Don't allow the user to add a server until we get the data drop
+
+	//We don't try to remove things from an empty list
+	removeButton->setDisabled(true); 	
+	//Don't allow the user to add a server until we get the data drop
+	addButton->setDisabled(true); 
 
 	//Tell the user what is going on
 	item = new QListViewItem(serverList, i18n("Fetching service list..."));
@@ -92,8 +100,9 @@ void ZmdEditServers::initList() {
 	clearList();
 
 	//Connect the signals and call the backend
-	connect(core, SIGNAL(serviceListing(QValueList<Service>)), this, 
-	SLOT(gotServiceList(QValueList<Service>)));
+	connect(core, SIGNAL(serviceListing(QValueList<Service>)), 
+					this, SLOT(gotServiceList(QValueList<Service>)));
+
 	core->getServices();
 }
 
@@ -101,17 +110,25 @@ void ZmdEditServers::gotServiceList(QValueList<Service> servers) {
 	QValueList<Service>::iterator iter;
 	QListViewItem *item;
 
-	//Disconnect this signal. If this doesn't happen we will connect it again on each iteration and end up adding many copies of each service to the list
-	disconnect(core, SIGNAL(serviceListing(QValueList<Service>)), this, SLOT(gotServiceList(QValueList<Service>)));
+	/*
+		Disconnect this signal. If this doesn't happen we will 
+		connect it again on each iteration and end up adding 
+		many copies of each service to the list
+	*/
+	disconnect(core, SIGNAL(serviceListing(QValueList<Service>)), 
+						this, SLOT(gotServiceList(QValueList<Service>)));
 
-	serverList->clear(); //get rid of the preparing item and anything else that has lingered (multiple signals)
+	//get rid of the preparing item and anything else 
+	//that has lingered (multiple signals)
+	serverList->clear(); 
+
 	//Got data, re-enable the add button
 	addButton->setDisabled(false);
 
 	for (iter = servers.begin(); iter != servers.end(); iter++) {
 		item = new QListViewItem(serverList, (*iter).name);
-		item->setText(CONFW_URI,(*iter).uri);
-		item->setText(CONFW_ID,(*iter).id);
+		item->setText(CONFW_URI, (*iter).uri);
+		item->setText(CONFW_ID, (*iter).id);
 
 		//Inform the user that we have not got the catalogs yet
 		item->setOpen(true);
@@ -120,8 +137,10 @@ void ZmdEditServers::gotServiceList(QValueList<Service> servers) {
 
 	if (servers.size() > 0) {
 		removeButton->setDisabled(false); //re-enable the remove button
-		connect(core, SIGNAL(catalogListing(QValueList<Catalog>)), this, 
-		SLOT(gotCatalogList(QValueList<Catalog>)));
+
+		connect(core, SIGNAL(catalogListing(QValueList<Catalog>)), 
+						this, SLOT(gotCatalogList(QValueList<Catalog>)));
+
 		core->getCatalogs();
 	}
 }
@@ -131,9 +150,10 @@ void ZmdEditServers::gotCatalogList(QValueList<Catalog> catalogs) {
 	ZmdCatalogListItem *item;
 	QListViewItem *parentItem;
 
-	//Disconnect this signal. If this doesn't happen, the same thing as with services happens
-	disconnect(core, SIGNAL(catalogListing(QValueList<Catalog>)), this, 
-				SLOT(gotCatalogList(QValueList<Catalog>)));
+	//Disconnect this signal. If this doesn't happen, 
+	//the same thing as with services happens
+	disconnect(core, SIGNAL(catalogListing(QValueList<Catalog>)), 
+						this, SLOT(gotCatalogList(QValueList<Catalog>)));
 
 	if (serverList->firstChild()->childCount() != 1) {
 		kdWarning() << "ERROR: We are trying to add catalogs to a list that already has them or has not had a service drop yet" << endl;
@@ -141,7 +161,7 @@ void ZmdEditServers::gotCatalogList(QValueList<Catalog> catalogs) {
 	}
 
 	for (iter = catalogs.begin(); iter != catalogs.end(); iter++) {
-		parentItem = serverList->findItem((*iter).service,CONFW_URI);
+		parentItem = serverList->findItem((*iter).service, CONFW_URI);
 		if (parentItem == NULL) {
 			continue;
 		} else {
@@ -174,7 +194,9 @@ void ZmdEditServers::addButtonClicked() {
 		newServ.type = list[2];
 
 		//Connect the signal and start the adding of a service
-		connect(core, SIGNAL(serviceAdded(QString,int,QString)), this, SLOT(addedServer(QString,int,QString)));
+		connect(core, SIGNAL(serviceAdded(QString,int,QString)), 
+						this, SLOT(addedServer(QString,int,QString)));
+
 		core->addService(newServ);
 	
 		//Tell the user what is going on, this takes a long long time
@@ -182,19 +204,22 @@ void ZmdEditServers::addButtonClicked() {
 		prog.setDescription(i18n("We are adding a server to the updater, this may take a long time. \nPlease be patient"));
 
 		//Connect the progress dialog signals
-		connect(core, SIGNAL(progress(Progress)), &prog, SLOT(progress(Progress)));
-		connect(core, SIGNAL(serviceAdded(QString,int,QString)), &prog, SLOT(finished(QString,int,QString)));
+		connect(core, SIGNAL(progress(Progress)), 
+						&prog, SLOT(progress(Progress)));
+		connect(core, SIGNAL(serviceAdded(QString,int,QString)), 
+						&prog, SLOT(finished(QString,int,QString)));
 		prog.exec();
 	} else {
 		//We don't say you need to have a type, because the groupbox takes care of that
 		KMessageBox::error(this, i18n("You need to specify a name and URL to add a server"));
 	}
-
 }
 
 void ZmdEditServers::addedServer(QString server, int status, QString error) {
 	//Got a server added, we disconnect and re-init the list or show error
-	disconnect(core, SIGNAL(serviceAdded(QString,int,QString)), this, SLOT(addedServer(QString,int,QString)));
+	disconnect(core, SIGNAL(serviceAdded(QString,int,QString)), 
+						this, SLOT(addedServer(QString,int,QString)));
+
 	switch (status) {
 		
 		case ERROR_NONE:
@@ -217,6 +242,7 @@ void ZmdEditServers::removeButtonClicked() {
 	if (serverList->currentItem() == NULL)
 		return;
 
+	//if the parent of the current item is non-null, we have a catalog
 	if (serverList->currentItem()->parent() == NULL) {
 		Service serv;
 

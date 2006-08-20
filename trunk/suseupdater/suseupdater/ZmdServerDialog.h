@@ -22,6 +22,14 @@
 
 #include <qdialog.h>
 
+/**
+	@file
+
+	Defines our ZmdServerDialog
+
+	@author Narayan Newton <narayannewton@gmail.com>
+**/
+
 class KLineEdit;
 class KPushButton;
 class QLabel;
@@ -30,6 +38,10 @@ class QVBoxLayout;
 class QHBoxLayout;
 class QButtonGroup;
 
+/**
+	Our add/remove server dialog, fetches name, uri and type
+	from the user.
+**/
 class ZmdServerDialog : public QDialog {
 
 	Q_OBJECT
@@ -51,6 +63,7 @@ class ZmdServerDialog : public QDialog {
 
 		QVBoxLayout	*layout;
 		QHBoxLayout	*buttonLayout;
+
 		QLabel *nameLabel;
 		QLabel *serverLabel;
 		KLineEdit *nameEdit;

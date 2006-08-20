@@ -22,12 +22,24 @@
 
 #include <qdialog.h>
 
+/**
+	@file
+
+	Defines our dependency dialog
+
+	@author Narayan Newton <narayannewton@gmail.com>
+**/
+
 class KPushButton;
 class KTextEdit;
 class QLabel;
 class QVBoxLayout;
 class QHBoxLayout;
 
+/**
+	A window that prompts the user to approve a dep resolve.
+	This is the last chance for a user to stop a transaction.
+**/
 class ZmdDependencyDialog : public QDialog {
 
 	Q_OBJECT

@@ -22,8 +22,19 @@
 
 #include <qwidget.h>
 
-//Column IDs for the configure window
-enum { CONFW_NAME=0, CONFW_URI, CONFW_ID };
+/**
+	@file
+
+	Defines the ZMD Configuration Window (ZmdConfigWindow)
+
+	@author Narayan Newton <narayannewton@gmail.com>
+**/
+
+/** Enum for the various columns in the server list **/
+enum { 	CONFW_NAME=0, 		/** Name **/
+				CONFW_URI, 				/** URI **/
+				CONFW_ID, 				/** ID **/
+};
 
 //Forward declare so we can compile a bit faster
 class ZmdUpdaterCore;
@@ -34,6 +45,11 @@ class HeaderWidget;
 class QTabWidget;
 class KPushButton;
 
+/**
+	The ZMD Configuration Window, holds two tabs currently:
+	The ZmdEditWindow, for adding/removing servers
+	The ZmdAdvancedConfig, for configuring ZMD itself
+**/
 class ZmdConfigWindow : public QWidget {
 
 	Q_OBJECT
