@@ -1,3 +1,4 @@
+Requires: zmd >= 7.1.1.0-66 
 BuildRequires: kdelibs3-devel update-desktop-files
 
 Name:         suseupdater
