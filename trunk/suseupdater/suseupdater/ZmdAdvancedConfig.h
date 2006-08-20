@@ -63,6 +63,7 @@ class ZmdAdvancedConfig : public QWidget {
 		void securityLevelChange(const QString&);
 		void maxDownloadsValueChange(int);
 		void proxyUrlChange();
+		void proxyEnableUserPass();
 		void proxyUsernameChange();
 		void proxyPasswordChange();
 		void errorReady();

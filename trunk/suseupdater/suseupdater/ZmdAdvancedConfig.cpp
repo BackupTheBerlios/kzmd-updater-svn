@@ -301,6 +301,9 @@ void ZmdAdvancedConfig::stdinReady() {
 	connect(proxyUrlEdit, SIGNAL(returnPressed()), 
 					this, SLOT(proxyUrlChange()));
 
+	connect(proxyUrlEdit, SIGNAL(textChanged(const QString &)), 
+					this, SLOT(proxyEnableUserPass()));
+
 	connect(proxyUsernameEdit, SIGNAL(returnPressed()), 
 					this, SLOT(proxyUsernameChange()));
 
@@ -422,6 +425,15 @@ void ZmdAdvancedConfig::proxyUrlChange() {
 															" " : 
 															proxyUrlEdit->text()));
 	if (proxyUrlEdit->text().isEmpty() == false) {
+		proxyEnableUserPass();
+	}
+}
+
+void ZmdAdvancedConfig::proxyEnableUserPass() {
+	if (proxyUrlEdit->text().isEmpty()) {
+		proxyUsernameEdit->setDisabled(true);
+		proxyPasswordEdit->setDisabled(true);
+	} else {
 		proxyUsernameEdit->setDisabled(false);
 		proxyPasswordEdit->setDisabled(false);
 	}
