@@ -29,6 +29,7 @@ struct Repo {
 	QString title;
 	QString description;
 	QString url;
+	QString type;
 };
 
 class RepoFeed : public QObject {

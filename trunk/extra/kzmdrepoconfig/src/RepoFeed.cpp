@@ -22,9 +22,6 @@
 #include <kurl.h>
 
 RepoFeed::RepoFeed(QObject *parent) : QObject(parent) {
-	rssLoader = Loader::create();
-	connect(rssLoader, SIGNAL(loadingComplete(Loader*, Document, Status)),
-					this, SLOT(loadComplete(Loader*, Document, Status)));
 }
 
 QString RepoFeed::url() {
@@ -38,16 +35,18 @@ void RepoFeed::fetch() {
 	if (rssUrl.isEmpty())
 		return;
 
+	rssLoader = Loader::create();
+	connect(rssLoader, SIGNAL(loadingComplete(Loader*, Document, Status)),
+					this, SLOT(loadComplete(Loader*, Document, Status)));
+
 	rssLoader->loadFrom(KURL(rssUrl), new FileRetriever);
 }
 
 void RepoFeed::loadComplete(Loader *ld, Document doc, Status stat) {
-	if (stat == Success) 
+	if (stat == Success) {
 		rssDocument = doc;
-	else
-		return; //FIXME: lame
-
-	parse();
+		parse();
+	}
 }
 
 /*
@@ -64,10 +63,12 @@ void RepoFeed::parse() {
 	Article::List::iterator iter;
 	Article::List articleList = rssDocument.articles();
 
+	repoList.clear();
+
 	for (iter = articleList.begin(); iter != articleList.end(); iter++) {
 		Repo rep;
-		rep.title = (*iter).title();
-		rep.description = (*iter).description();
+		rep.title = (*iter).title().simplifyWhiteSpace();
+		rep.description = (*iter).description().simplifyWhiteSpace();
 		rep.url = (*iter).link().prettyURL();
 		repoList.append(rep);
 	}

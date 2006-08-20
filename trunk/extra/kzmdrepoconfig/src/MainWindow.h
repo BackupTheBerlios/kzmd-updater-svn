@@ -40,7 +40,9 @@ class MainWindow : public QWidget {
 	private slots:
 
 		void addButtonClicked();
+		void serviceAdded(QString, int, QString);
 		void removeButtonClicked();
+		void serviceRemoved();
 		void feedButtonClicked();
 		void fetchDone();
 		void services(QValueList<Service>);

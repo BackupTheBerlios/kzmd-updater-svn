@@ -163,6 +163,10 @@ void ZmdUpdaterCore::addService(Service serv) {
 	data.append(QVariant(map));
 	temp = serv.name;
 
+	kdWarning() << "Service Name: " << serv.name << endl
+							<< "Service url: " << serv.uri << endl
+							<< "Service type: " << serv.type << endl;
+
 	server->call("zmd.system.service_add", data,
 	this, SLOT(serviceData(const QValueList<QVariant>&, const QVariant&)), 
 	this, SLOT(faultData(int, const QString&, const QVariant&)));
@@ -170,6 +174,9 @@ void ZmdUpdaterCore::addService(Service serv) {
 
 void ZmdUpdaterCore::removeService(Service serv) {
 	IS_ZMD_BUSY;
+
+	kdWarning() << "Service Name: " << serv.name << endl
+							<< "Service id: " << serv.id << endl;
 
 	server->call("zmd.system.service_remove", serv.id,
 	this, SLOT(serviceData(const QValueList<QVariant>&, const QVariant&)), 

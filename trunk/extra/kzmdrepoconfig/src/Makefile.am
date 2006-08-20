@@ -5,7 +5,7 @@
 # of the other Makefile.am variables
 bin_PROGRAMS = kzmdrepoconfig
 # set the include path for X, qt and KDE
-INCLUDES = $(all_includes) $(top_srcdir)/kxmlrpcclient 
+INCLUDES = $(all_includes) -I$(top_srcdir)/kxmlrpcclient 
 
 # the library search path. 
 kzmdrepoconfig_LDFLAGS = $(KDE_RPATH) $(all_libraries)

@@ -48,6 +48,7 @@ void FeedDialog::initGUI() {
 	layout->setSpacing(10);
 	layout->setMargin(10);
 	setCaption(i18n("Add Package Server Feed"));
+	resize(350,50);
 	show();
 }
 

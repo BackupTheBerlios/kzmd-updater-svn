@@ -21,7 +21,7 @@
 #define _ZMD_UPDATER_CORE_UTILS_H_
 
 #include <qmap.h>
-
+#include <qvariant.h>
 
 class Identity {
 

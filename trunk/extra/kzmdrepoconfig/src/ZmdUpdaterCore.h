@@ -23,7 +23,7 @@
 #include <qvaluelist.h>
 #include <qtimer.h>
 
-#include <kxmlrpcserver.h>
+#include "kxmlrpcserver.h"
 #include "ZmdUpdaterCoreUtils.h"
 
 

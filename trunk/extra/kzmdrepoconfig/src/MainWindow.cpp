@@ -44,7 +44,9 @@ using namespace std;
 
 enum {
 	COLUMN_NAME,
-	};
+	COLUMN_SUB,
+	COLUMN_URI, 
+};
 
 
 MainWindow::MainWindow(QWidget *parent) : QWidget(parent) {
@@ -59,9 +61,9 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent) {
 	connect(core, SIGNAL(generalFault(QString, int)), this, SLOT(fault(QString, int)));
 
 	feed = new RepoFeed();
-	feed->setUrl("http://www.osnews.com/files/recent.xml");
-	feed->fetch();
 	connect(feed, SIGNAL(fetchDone()), this, SLOT(fetchDone()));
+
+	core->getServices();
 }
 
 void MainWindow::initGUI() {
@@ -73,12 +75,19 @@ void MainWindow::initGUI() {
 	feedButton = new KPushButton(i18n("Set RSS Feed"), this);
 	closeButton = new KPushButton(KStdGuiItem::close(), this);
 
-	list->addColumn(i18n("Repositories"));
+	list->addColumn(i18n("Repository Name"));
+	list->addColumn(i18n("Subscribed"));
+	list->addColumn(i18n("Uri"));
+	list->setRootIsDecorated(true);
 
-	connect(addButton, SIGNAL(clicked()), this, SLOT(addButtonClicked()));
-	connect(removeButton, SIGNAL(clicked()), this, SLOT(removeButtonClicked()));
-	connect(closeButton, SIGNAL(clicked()), this, SLOT(close()));
-	connect(feedButton, SIGNAL(clicked()), this, SLOT(feedButtonClicked()));
+	connect(addButton, SIGNAL(clicked()), 
+					this, SLOT(addButtonClicked()));
+	connect(removeButton, SIGNAL(clicked()), 
+					this, SLOT(removeButtonClicked()));
+	connect(closeButton, SIGNAL(clicked()), 
+					this, SLOT(close()));
+	connect(feedButton, SIGNAL(clicked()), 
+					this, SLOT(feedButtonClicked()));
 
 	mainLayout->addMultiCellWidget(list, 0, 0, 0, 2);
 	mainLayout->addWidget(addButton, 1, 0);
@@ -93,18 +102,67 @@ void MainWindow::initGUI() {
 }
 
 void MainWindow::addButtonClicked() {
+	Service serv;
+	QListViewItem *item;
 
+	kdWarning() << "Add Button Clicked" << endl;
+
+	if ((item = list->currentItem()) == NULL)
+		return;
+
+	if (list->currentItem()->parent() == NULL)
+		item = list->currentItem();
+	else
+		item = list->currentItem()->parent();
+
+	serv.name = item->text(COLUMN_NAME);
+	serv.uri = item->text(COLUMN_URI);
+	serv.type = "zypp";
+	core->addService(serv);
+
+	connect(core, SIGNAL(serviceAdded(QString,int,QString)),
+					this, SLOT(serviceAdded(QString,int,QString)));
+}
+
+void MainWindow::serviceAdded(QString service, int flags, QString error) {
+	if (flags == ERROR_NONE) {
+		core->getServices();
+	}
 }
 
 void MainWindow::removeButtonClicked() {
+	QListViewItem *item;
+	QValueList<Service>::iterator iter;
+	QString uri;
 
+	if ((item = list->currentItem()) == NULL)
+		return;
+
+	if (list->currentItem()->parent() == NULL)
+		item = list->currentItem();
+	else
+		item = list->currentItem()->parent();
+
+	uri = item->text(COLUMN_URI);
+	for (iter = currentServices.begin(); iter != currentServices.end(); iter++) {
+			if ((*iter).uri == uri) {
+				core->removeService((*iter));
+				connect(core, SIGNAL(serviceRemoved()), 
+								this, SLOT(serviceRemoved()));
+				break;
+			}
+		}
+}
+
+void MainWindow::serviceRemoved() {
+	core->getServices();
 }
 
 void MainWindow::feedButtonClicked() {
 	FeedDialog *diag = new FeedDialog();
 	if (diag->exec() == QDialog::Accepted) {
 		if (diag->url().isEmpty() == false)
-			feed->setUrl(diag->url());
+			feed->setUrl(QString(diag->url()));
 			feed->fetch();
 	}
 	delete diag;
@@ -113,14 +171,29 @@ void MainWindow::feedButtonClicked() {
 void MainWindow::fetchDone() {
 	QValueList<Repo> rlist = feed->repos();
 	QValueList<Repo>::iterator iter;
+	QValueList<Service>::iterator sIter;
+
+	list->clear();
 
 	for (iter = rlist.begin(); iter != rlist.end(); iter++) {
-		QListViewItem *item = new QListViewItem(list, (*iter).title);
+		QListViewItem *item = new QListViewItem(list);
+		item->setText(COLUMN_NAME, (*iter).title);
+		item->setText(COLUMN_URI, (*iter).url);
+		QListViewItem *itemDescription = new QListViewItem(item);
+		itemDescription->setText(0, (*iter).description);
+
+		for (sIter = currentServices.begin(); sIter != currentServices.end(); sIter++) {
+			if ((*sIter).name == (*iter).title) {
+				item->setText(COLUMN_SUB, "Yes");
+				break;
+			}
+		}
 	}
 }
 
-void MainWindow::services(QValueList<Service>) {
-
+void MainWindow::services(QValueList<Service> services) {
+	currentServices = services;
+	feed->fetch();
 }
 
 void MainWindow::fault(QString message, int code) {
