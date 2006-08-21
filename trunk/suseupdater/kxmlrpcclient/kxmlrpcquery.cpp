@@ -39,7 +39,6 @@ void KXmlRpcQuery::call( const QString &server, const QString &method,
                   const QValueList<QVariant> &args, const QString &userAgent ) {
 
 	const QString xmlMarkup = markupCall( method, args );
-
 	QByteArray postData;
 	QDataStream stream( postData, IO_WriteOnly );
 	stream.writeRawBytes( xmlMarkup.utf8(), xmlMarkup.utf8().length() );
