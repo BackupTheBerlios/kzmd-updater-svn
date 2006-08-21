@@ -21,6 +21,7 @@
 #define _ZMD_UPDATER_CORE_H_
 
 #include <qvaluelist.h>
+#include <qmap.h>
 #include <qtimer.h>
 
 #include "kxmlrpcserver.h"
@@ -341,9 +342,12 @@ class ZmdUpdaterCore : public QObject {
 		int timeoutCount;
 
 		//Obvious, we cannot save these from signal to signal, so we store them here
-		QValueList<QVariant> packagesToInstall;
-		QValueList<QVariant> packagesToUpdate;
-		QValueList<QVariant> packagesToRemove;
+		//QValueList<QVariant> packagesToInstall;
+		//QValueList<QVariant> packagesToUpdate;
+		//QValueList<QVariant> packagesToRemove;
+		QMap<QString, QVariant> packagesToInstall;
+		QMap<QString, QVariant> packagesToUpdate;
+		QMap<QString, QVariant> packagesToRemove;
 
 		KXmlRpcServer *server; 
 		QTimer *timer;
