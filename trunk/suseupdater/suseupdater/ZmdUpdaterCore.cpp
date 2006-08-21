@@ -344,6 +344,7 @@ void ZmdUpdaterCore::patchData(const QValueList<QVariant>& data, const QVariant&
 		patchList.append(patch);
 #ifdef DEBUG
 		kdWarning() << "Patch drop: " << patch.name << endl;
+		kdWarning() << "Patch ID: " << patch.id << endl;
 #endif
 	}
 	emit(patchListing(patchList));

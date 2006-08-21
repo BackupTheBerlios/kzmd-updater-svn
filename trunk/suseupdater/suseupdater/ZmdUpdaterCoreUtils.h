@@ -166,6 +166,30 @@ class Package {
 		Package() : installed(3) {}
 
 		void fromMap(const QMap<QString,QVariant> &map) {
+			int rawType = 0;
+
+			rawType = map["type"].toInt();
+			switch(rawType) {
+				case 0: 
+					type = "package";
+					break;
+				case 1:
+					type = "script";
+					break;
+				case 2: 
+					type = "message";
+					break;
+				case 3:
+					type = "patch";
+					break;
+				case 4:
+					type = "pattern";
+					break;
+				case 5:
+					type = "product";
+					break;
+			}
+
 			name = map["name"].toString();
 			id = map["id"].toString();
 			version = map["version"].toString();
@@ -176,10 +200,17 @@ class Package {
 
 		QMap<QString, QVariant> toMap() {
 			QMap<QString,QVariant> map;
+
+			if (type == "patch") {
+				map["type"] = 3;
+			} else if (type == "package") {
+				map["type"] = 0;
+			}
+
 			if (name != "")
 				map["name"] = name;
 			if (id != "")
-				map["id"] = id;
+				map["id"] = id.toInt();
 			if (version != "")
 				map["version"] = version;
 			if (catalog != "")
@@ -190,7 +221,8 @@ class Package {
 				map["installed"] = installed;
 			return map;
 		}
-
+		
+		QString type;
 		QString name;
 		QString id;
 		QString version;
