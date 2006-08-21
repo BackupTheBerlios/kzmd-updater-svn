@@ -560,6 +560,8 @@ void ZmdUpdaterCore::runTransaction() {
 void ZmdUpdaterCore::transactData(const QValueList<QVariant>& data, const QVariant &t) {
 	static bool verification = true;
 	QValueList<QVariant> argList;
+	
+	kdWarning() << "Data size: " << data.count() << endl;
 
 	// Is the first member of the arg list a map? If so, we just got verification/dep info
 	if ((data.front()).canCast(QVariant::Map) == true) {
@@ -574,20 +576,23 @@ void ZmdUpdaterCore::transactData(const QValueList<QVariant>& data, const QVaria
 			//In all these cases, we get a struct (QMAP) with an array explaining
 			//the reason for including a package and then the package itself
 			//we only want the package
-			packagesToInstall.append(((*listIter).toMap())["resolveable"]);
+			QMap<QString, QVariant> tempMap = (*listIter).toMap()["resolvable"].toMap();
+			tempMap.erase("catalog");
+			packagesToInstall.append(QVariant(tempMap));
 		}
 		list = map["upgrades"].toList();
 		for (QValueList<QVariant>::iterator listIter = list.begin();
 			 listIter != list.end(); listIter++) {
-
-			packagesToUpdate.append(((*listIter).toMap())["resolveable"]);
-			
+			QMap<QString, QVariant> tempMap = (*listIter).toMap()["resolvable"].toMap();
+			tempMap.erase("catalog");
+			packagesToUpdate.append(QVariant(tempMap));
 		}
 		list = map["removals"].toList();
 		for (QValueList<QVariant>::iterator listIter = list.begin();
 			 listIter != list.end(); listIter++) {
-
-			packagesToRemove.append(((*listIter).toMap())["resolveable"]);
+			QMap<QString, QVariant> tempMap = (*listIter).toMap()["resolvable"].toMap();
+			tempMap.erase("catalog");
+			packagesToRemove.append(QVariant(tempMap));
 		}
 
 		argList.append(packagesToInstall);
@@ -595,17 +600,21 @@ void ZmdUpdaterCore::transactData(const QValueList<QVariant>& data, const QVaria
 		argList.append(packagesToRemove);
 
 		if (verification) { //If this is true, the info we just got is verification info 
-
 			server->call("zmd.packsys.resolve_dependencies", argList, 
 			this, SLOT(transactData(const QValueList<QVariant>&, const QVariant&)),
 			this, SLOT(faultData(int, const QString&, const QVariant&))); 
 			verification = false; //next time through we do the transact
+
+			packagesToInstall.clear();
+			packagesToRemove.clear();
+			packagesToUpdate.clear();
 		} else {
 
 			QValueList<Package> installs;
 			QValueList<Package> removals;
 			QValueList<Package> updates;
 
+			
 			installs = mapListToPackageList(packagesToInstall);
 			removals = mapListToPackageList(packagesToRemove);
 			updates = mapListToPackageList(packagesToUpdate);
