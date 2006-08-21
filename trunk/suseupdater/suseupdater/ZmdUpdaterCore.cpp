@@ -515,19 +515,19 @@ void ZmdUpdaterCore::startTransaction(QValueList<Package> installList,
 		 iter != installList.end(); iter++) {
 		 QMap<QString, QVariant> map;
 		 map = (*iter).toMap();
-		 packagesToInstall.append(map);
+		 packagesToInstall.append(QVariant(map));
 	}
 	for (QValueList<Package>::iterator iter = updateList.begin();
 		 iter != updateList.end(); iter++) {
 		 QMap<QString, QVariant> map;
 		 map = (*iter).toMap();
-		 packagesToUpdate.append(map);
+		 packagesToUpdate.append(QVariant(map));
 	}
 	for (QValueList<Package>::iterator iter = removeList.begin();
 		 iter != removeList.end(); iter++) {
 		 QMap<QString, QVariant> map;
 		 map = (*iter).toMap();
-		 packagesToRemove.append(map);
+		 packagesToRemove.append(QVariant(map));
 	}
 
 #ifdef DEBUG
@@ -561,8 +561,6 @@ void ZmdUpdaterCore::transactData(const QValueList<QVariant>& data, const QVaria
 	static bool verification = true;
 	QValueList<QVariant> argList;
 	
-	kdWarning() << "Data size: " << data.count() << endl;
-
 	// Is the first member of the arg list a map? If so, we just got verification/dep info
 	if ((data.front()).canCast(QVariant::Map) == true) {
 
@@ -577,22 +575,50 @@ void ZmdUpdaterCore::transactData(const QValueList<QVariant>& data, const QVaria
 			//the reason for including a package and then the package itself
 			//we only want the package
 			QMap<QString, QVariant> tempMap = (*listIter).toMap()["resolvable"].toMap();
-			tempMap.erase("catalog");
-			packagesToInstall.append(QVariant(tempMap));
+
+			bool containsAlready = false;
+
+			for (QValueList<QVariant>::iterator iter = packagesToInstall.begin();
+					 iter != packagesToInstall.end(); iter++) {
+				if ((*iter).toMap()["name"].toString() == tempMap["name"].toString())	
+					containsAlready = true;
+			}
+			if (containsAlready == false) {
+				tempMap.erase("catalog");
+				packagesToInstall.append(QVariant(tempMap));
+			}
 		}
 		list = map["upgrades"].toList();
 		for (QValueList<QVariant>::iterator listIter = list.begin();
 			 listIter != list.end(); listIter++) {
+			bool containsAlready = false;
 			QMap<QString, QVariant> tempMap = (*listIter).toMap()["resolvable"].toMap();
-			tempMap.erase("catalog");
-			packagesToUpdate.append(QVariant(tempMap));
+
+			for (QValueList<QVariant>::iterator iter = packagesToUpdate.begin();
+					 iter != packagesToUpdate.end(); iter++) {
+				if ((*iter).toMap()["name"].toString() == tempMap["name"].toString())	
+					containsAlready = true;
+			}
+			if (containsAlready == false) {
+				tempMap.erase("catalog");
+				packagesToUpdate.append(QVariant(tempMap));
+			}
 		}
 		list = map["removals"].toList();
 		for (QValueList<QVariant>::iterator listIter = list.begin();
 			 listIter != list.end(); listIter++) {
+			bool containsAlready = false;
 			QMap<QString, QVariant> tempMap = (*listIter).toMap()["resolvable"].toMap();
-			tempMap.erase("catalog");
-			packagesToRemove.append(QVariant(tempMap));
+
+			for (QValueList<QVariant>::iterator iter = packagesToRemove.begin();
+					 iter != packagesToRemove.end(); iter++) {
+				if ((*iter).toMap()["name"].toString() == tempMap["name"].toString())	
+					containsAlready = true;
+			}
+			if (containsAlready == false) {
+				tempMap.erase("catalog");
+				packagesToRemove.append(QVariant(tempMap));
+			}
 		}
 
 		argList.append(packagesToInstall);
@@ -605,9 +631,6 @@ void ZmdUpdaterCore::transactData(const QValueList<QVariant>& data, const QVaria
 			this, SLOT(faultData(int, const QString&, const QVariant&))); 
 			verification = false; //next time through we do the transact
 
-			packagesToInstall.clear();
-			packagesToRemove.clear();
-			packagesToUpdate.clear();
 		} else {
 
 			QValueList<Package> installs;
