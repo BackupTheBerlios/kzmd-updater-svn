@@ -50,15 +50,17 @@ class HeaderWidget;
 	our package info
 */
 enum { 	
-		COLUMN_NAME, //Note, patches store the summary here ...this is for ZMD
-		COLUMN_NEW_VERSION,
-		COLUMN_CATALOG, //Note, for ZMD this is the displayName. 
-		COLUMN_ID,
-		COLUMN_DESC,
-		COLUMN_INSTALLED,
-		COLUMN_SIZE,
-		COLUMN_MISC, //Exactly what it sounds like, for ZMD this ends up being the patch name
-		COLUMN_LOCK };  //Stores the lock id, if its blank the package is not locked
+		COLUMN_NAME, 						/** The Package Name or Patch Description **/
+		COLUMN_NEW_VERSION,			/** The Version We Are Upgrading To **/
+		COLUMN_CATALOG,					/** The Catalog **/ 
+		COLUMN_ID,							/** The ID of the Package/Patch **/
+		COLUMN_DESC,						/** The Description **/
+		COLUMN_INSTALLED,				/** Is it installed? **/
+		COLUMN_SIZE,						/** The size, that we cannot fetch at the moment **/
+		COLUMN_MISC, 						/** Only used for patches, the real name **/
+		COLUMN_LOCK,						/** The unused magic lock variable... **/
+		COLUMN_CATEGORY,				/** The category of a patch, only used for patches **/
+};  
 
 /**
 	Class to represent our MainWindow, init the applet itself and hold much of

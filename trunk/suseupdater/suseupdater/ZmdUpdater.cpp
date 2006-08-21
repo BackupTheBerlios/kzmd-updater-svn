@@ -89,7 +89,9 @@ void ZmdUpdater::updateSelected(QListViewItem *item) {
 	currentUpdate = item;
 	//Ok, so...if MISC is empty, that means we have a package and use COLUMN_NAME
 	//if MISC is not empty, we have a patch and we use COLUMN_MISC as the name
-	core->getInfo(item->text( (COLUMN_MISC == "") ? COLUMN_NAME : COLUMN_MISC));
+	core->getInfo((item->text(COLUMN_MISC) == "" ) ? 
+								(item->text(COLUMN_NAME)) : 
+								(item->text(COLUMN_MISC)));
 }
 
 void ZmdUpdater::updateMenu(QListViewItem *item, const QPoint& point) {
@@ -318,6 +320,7 @@ void ZmdUpdater::gotPatchListing(QValueList<Patch> patchList) {
 		newItem->setText(COLUMN_INSTALLED, ((*iter).installed == true) ? "Yes" : "No");
 		newItem->setText(COLUMN_CATALOG, catalogNames[(*iter).catalog]);
 		newItem->setText(COLUMN_MISC, (*iter).name);
+		newItem->setText(COLUMN_CATEGORY, (*iter).category);
 	}
 
 	if (patchList.size() > 0) {

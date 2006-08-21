@@ -142,6 +142,9 @@ void MainWindow::initGUI() {
 	updateList->setColumnWidthMode(COLUMN_MISC, QListView::Manual);
 	updateList->addColumn("LockID", 0); //Stores our lock id
 	updateList->setColumnWidthMode(COLUMN_LOCK, QListView::Manual);
+	updateList->addColumn("PatchCategory", 0); //Stores our lock id
+	updateList->setColumnWidthMode(COLUMN_CATEGORY, QListView::Manual);
+
 
 	connect(updateList, SIGNAL(selectionChanged(QListViewItem*)), 
 					this, SLOT(slotPackageSelected(QListViewItem*)));
