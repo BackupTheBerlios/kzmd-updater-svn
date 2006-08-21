@@ -313,7 +313,7 @@ void ZmdUpdater::gotPatchListing(QValueList<Patch> patchList) {
 	}
 
 	for (iter = patchList.begin(); iter != patchList.end(); iter++) {
-		if ((*iter).status == 2)
+		if ((*iter).status == 3)
 			continue;
 
 		newItem = new UpdateListItem(tempList, (*iter).description, QCheckListItem::CheckBox);
