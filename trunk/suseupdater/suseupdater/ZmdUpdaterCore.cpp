@@ -725,7 +725,12 @@ void ZmdUpdaterCore::faultData(int code, const QString& message, const QVariant&
 			emit(generalFault("We just had some communication trouble with ZMD, it is likely this will not impact your current operation", code));
 			break;
 		case 0:
-			//Thread dies
+			//Thread dies or transaction in progress or many other things
+			if (message.contains("transaction") == true) 
+				emit(transactionFinished(ERROR_TRANS_FAIL, message));
+			else
+				emit(generalFault(message, code));
+			break;
 		case 23:
 			//Could not connection to host
 			emit(generalFault(message, code));
