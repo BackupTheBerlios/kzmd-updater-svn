@@ -580,6 +580,7 @@ void ZmdUpdaterCore::transactData(const QValueList<QVariant>& data, const QVaria
 
 			for (QValueList<QVariant>::iterator iter = packagesToInstall.begin();
 					 iter != packagesToInstall.end(); iter++) {
+
 				if ((*iter).toMap()["name"].toString() == tempMap["name"].toString())	
 					containsAlready = true;
 			}
@@ -596,6 +597,7 @@ void ZmdUpdaterCore::transactData(const QValueList<QVariant>& data, const QVaria
 
 			for (QValueList<QVariant>::iterator iter = packagesToUpdate.begin();
 					 iter != packagesToUpdate.end(); iter++) {
+
 				if ((*iter).toMap()["name"].toString() == tempMap["name"].toString())	
 					containsAlready = true;
 			}
@@ -612,6 +614,7 @@ void ZmdUpdaterCore::transactData(const QValueList<QVariant>& data, const QVaria
 
 			for (QValueList<QVariant>::iterator iter = packagesToRemove.begin();
 					 iter != packagesToRemove.end(); iter++) {
+
 				if ((*iter).toMap()["name"].toString() == tempMap["name"].toString())	
 					containsAlready = true;
 			}

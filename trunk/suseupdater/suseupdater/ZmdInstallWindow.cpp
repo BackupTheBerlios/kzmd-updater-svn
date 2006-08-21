@@ -107,11 +107,12 @@ void ZmdInstallWindow::gotDepInfo(QValueList<Package> installs,
 	QValueList<Package>::iterator iter;
 	ZmdDependencyDialog diag;
 	
-	text = i18n("The following packages will be installed/updated:\n");
+	text = i18n("The following packages will be installed:\n");
 	for (iter = installs.begin(); iter != installs.end(); iter++) {
 		text += (*iter).name;
 		text += "\n";
 	}
+	text = i18n("The following packages will be updated:\n");
 	for (iter = updates.begin(); iter != updates.end(); iter++) {
 		text += (*iter).name;
 		text += "\n";
