@@ -252,9 +252,11 @@ class Patch : public Package {
 			description = map["summary"].toString();
 			installed = map["installed"].toBool();
 			category = map["category"].toString();
+			status = map["status"].toInt();
 		}
 
 		QString category;
+		int status;
 };
 
 class PackageDetails {
