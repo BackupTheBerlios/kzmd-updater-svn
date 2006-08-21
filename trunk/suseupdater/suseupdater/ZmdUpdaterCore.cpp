@@ -603,6 +603,7 @@ void ZmdUpdaterCore::transactData(const QValueList<QVariant>& data, const QVaria
 			}
 			if (containsAlready == false) {
 				tempMap.erase("catalog");
+				kdWarning() << "Adding: " << tempMap["name"].toString() << endl;
 				packagesToUpdate.append(QVariant(tempMap));
 			}
 		}

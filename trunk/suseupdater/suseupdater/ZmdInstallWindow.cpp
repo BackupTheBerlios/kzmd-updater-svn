@@ -106,16 +106,20 @@ void ZmdInstallWindow::gotDepInfo(QValueList<Package> installs,
 	QString text;
 	QValueList<Package>::iterator iter;
 	ZmdDependencyDialog diag;
-	
-	text = i18n("The following packages will be installed:\n");
-	for (iter = installs.begin(); iter != installs.end(); iter++) {
-		text += (*iter).name;
-		text += "\n";
+
+	if (installs.size() > 0) {	
+		text = i18n("The following packages will be installed:\n");
+		for (iter = installs.begin(); iter != installs.end(); iter++) {
+			text += (*iter).name;
+			text += "\n";
+		}
 	}
-	text = i18n("The following packages will be updated:\n");
-	for (iter = updates.begin(); iter != updates.end(); iter++) {
-		text += (*iter).name;
-		text += "\n";
+	if (updates.size() > 0) {
+		text += i18n("The following packages will be updated:\n");
+		for (iter = updates.begin(); iter != updates.end(); iter++) {
+			text += (*iter).name;
+			text += "\n";
+		}
 	}
 	if (removals.size() > 0) {
 		text += i18n("\nThe following packages must also be removed:\n");
