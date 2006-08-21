@@ -250,6 +250,13 @@ class ZmdUpdaterCore : public QObject {
 		void getLocks();
 
 		/**
+			Get the dependency information for a package or patch
+
+			@param pack The package or patch to search for
+		**/
+		void getDepInfo(Package pack);
+
+		/**
 			Start a package transaction, sends requests for dep 
 			tree verification and dep resolution. Data returns 
 			via signal realPackages.
@@ -289,6 +296,10 @@ class ZmdUpdaterCore : public QObject {
 		void patchInfo(Patch);
 		void packageDetails(PackageDetails);
 		void patchDetails(PatchDetails);
+		void depInfo(QString id, QValueList<Package> provides,
+								 QValueList<Package> requires,
+								 QValueList<Package> conflicts,
+								 QValueList<Package> obsoletes);
 
 		//Signal sent to the GUI
 		//to inform of packages required to resolve
@@ -333,6 +344,7 @@ class ZmdUpdaterCore : public QObject {
 
 		void infoPackageData(const QValueList<QVariant>&, const QVariant&);
 		void infoPatchData(const QValueList<QVariant>&, const QVariant&);
+		void depData(const QValueList<QVariant>&, const QVariant&);
 
 
 		void faultData(int, const QString&, const QVariant&);

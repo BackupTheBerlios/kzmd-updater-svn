@@ -468,6 +468,47 @@ void ZmdUpdaterCore::infoPatchData(const QValueList<QVariant>& data, const QVari
 
 /*******************************************************************
  *
+ *           	Get Dependency Information 
+ *
+ ******************************************************************/
+
+void ZmdUpdaterCore::getDepInfo(Package pack) {
+	IS_ZMD_BUSY;
+
+	QMap<QString, QVariant> map;
+	QValueList<QVariant> wrapper;
+
+	map = pack.toMap();
+	wrapper.append(QVariant(map));
+	temp = pack.id;
+
+  server->call("zmd.packsys.resolvable_dependencies", wrapper, 
+  this, SLOT(depData(const QValueList<QVariant>&, const QVariant&)),
+  this, SLOT(faultData(int, const QString&, const QVariant&)));
+}
+
+void ZmdUpdaterCore::depData(const QValueList<QVariant> &data, const QVariant &t) {
+
+	if (data.front().canCast(QVariant::Map) == true) {
+		QValueList<Package> providesList;
+		QValueList<Package> requiresList;
+		QValueList<Package> conflictsList;
+		QValueList<Package> obsoletesList;
+
+		QMap<QString, QVariant> outerMap = data.front().toMap();
+		
+		providesList = mapListToPackageList(outerMap["provides"].toList());
+		requiresList = mapListToPackageList(outerMap["requires"].toList());
+		conflictsList = mapListToPackageList(outerMap["conflicts"].toList());
+		obsoletesList = mapListToPackageList(outerMap["obsoletes"].toList());
+
+		emit(depInfo(temp, providesList, requiresList, conflictsList, obsoletesList));
+		temp = "";
+	}
+}
+
+/*******************************************************************
+ *
  *            Add/Remove/List Locks
  *
  ******************************************************************/

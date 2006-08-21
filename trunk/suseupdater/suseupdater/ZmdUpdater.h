@@ -117,6 +117,10 @@ class ZmdUpdater : public Updater {
 		void gotPackageInfo(Package);
 		void gotPatchInfo(Patch);
 		void gotPackageDetails(PackageDetails);
+		void gotDepInfo(QString, QValueList<Package>,
+										QValueList<Package>,
+										QValueList<Package>,
+										QValueList<Package>);
 		void holdPackage();
 		void removeHold();
 
@@ -153,6 +157,9 @@ class ZmdUpdater : public Updater {
 
 		//Holds a mapping of the catalog name to the catalog display name.
 		QMap<QString, QString> catalogNames;
+
+		//Experimental patch handling
+		QMap<QString, QValueList<Package> > patchDeps;
 
 		//The core updater functionality
 		ZmdUpdaterCore *core;

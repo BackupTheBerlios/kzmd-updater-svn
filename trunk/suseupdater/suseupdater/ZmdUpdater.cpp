@@ -60,6 +60,16 @@ ZmdUpdater::ZmdUpdater() : Updater() {
 	connect(core, SIGNAL(patchInfo(Patch)), 
 					this, SLOT(gotPatchInfo(Patch)));
 
+	connect(core, SIGNAL(depInfo(QString, 
+															 QValueList<Package>,
+															 QValueList<Package>,
+															 QValueList<Package>,
+															 QValueList<Package>)), 
+					this, SLOT(gotDepInfo(QString, 
+																QValueList<Package>,
+																QValueList<Package>,
+																QValueList<Package>,
+																QValueList<Package>)));
 
 	connect(core, SIGNAL(generalFault(QString, int)), 
 					this, SLOT(error(QString, int)));
@@ -326,6 +336,10 @@ void ZmdUpdater::gotPatchListing(QValueList<Patch> patchList) {
 		newItem->setText(COLUMN_CATALOG, catalogNames[(*iter).catalog]);
 		newItem->setText(COLUMN_MISC, (*iter).name);
 		newItem->setText(COLUMN_CATEGORY, (*iter).category);
+
+		//build our dep tree
+		core->getDepInfo(*iter);
+		patchDeps[(*iter).id] = QValueList<Package>();
 	}
 
 	if (patchList.size() > 0) {
@@ -375,6 +389,14 @@ void ZmdUpdater::gotPatchInfo(Patch patch) {
 	currentDescription += "<b>" + i18n("Description: ") + "</b><br>";
 	currentDescription += patch.description + "<br>";
 	currentDescription += i18n("<b>Upgrading to version:</b> ") + patch.version + "<br>";
+	if (patchDeps.find(patch.id) != patchDeps.end()) {
+		QValueList<Package> reqs = patchDeps[patch.id];
+		QValueList<Package>::iterator iter;
+
+		currentDescription += "<b>" + i18n("Requires: ") + "</b><br>";
+		for (iter = reqs.begin(); iter != reqs.end(); iter++) 
+			currentDescription += (*iter).name + " " + (*iter).version + "<br>";
+	}
 
 	if (patch.rebootRequired == true) {
 		currentDescription += i18n("<b>Reboot Required</b>");
@@ -384,6 +406,16 @@ void ZmdUpdater::gotPatchInfo(Patch patch) {
 		currentDescription += i18n("<b>ZMD Restart Required</b>");
 	}
 	emit(returnDescription(currentDescription));
+}
+
+void ZmdUpdater::gotDepInfo(QString id, QValueList<Package> provides,
+														QValueList<Package> requires,
+														QValueList<Package> conflicts,
+														QValueList<Package> obsoletes) {
+	patchDeps[id] = requires;
+	kdWarning() << "Dep info" << endl;
+	kdWarning() << id << endl;
+	kdWarning() << requires.front().name << endl;
 }
 
 /*
