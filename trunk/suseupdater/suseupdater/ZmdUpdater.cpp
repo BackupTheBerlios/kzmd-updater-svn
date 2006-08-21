@@ -155,19 +155,15 @@ void ZmdUpdater::startInstall() {
 			if (item->state() == QCheckListItem::On) {
 				Package p;
 
-				if (COLUMN_MISC == "")
+				if (item->text(COLUMN_MISC) == "")
 					p.name = item->text(COLUMN_NAME); //gets the name
 				else 
 					p.name = item->text(COLUMN_MISC); //gets the patch name
 
 				p.id = item->text(COLUMN_ID); //gets the id
-				p.version = item->text(COLUMN_NEW_VERSION);
 				p.installed = (item->text(COLUMN_INSTALLED) == "Yes") ? true : false;
 
-				if (p.installed == true)
-					upList.append(p);
-				else
-					instList.append(p);
+				upList.append(p);
 			}
 		} while ((item = (UpdateListItem*)(item->nextSibling())) != 0);
 		/* From reading the ZMD source, we only need name and ID for packages or patches. This may change in the future, was not in the API */
@@ -333,17 +329,22 @@ void ZmdUpdater::gotPatchListing(QValueList<Patch> patchList) {
 void ZmdUpdater::gotPackageInfo(Package pack) {
 	QListViewItem *item;
 
-	if (pack.installed == false)
-		return;
 	item = tempList->findItem(pack.name, COLUMN_NAME);
 	if (item != NULL) {
-		currentDescription = pack.version;
-
-		connect(core, SIGNAL(packageDetails(PackageDetails)), 
-						this, SLOT(gotPackageDetails(PackageDetails)));
-
-		core->getDetails(pack);
+		if (pack.installed == false)
+			return;
+	} else {
+		item = tempList->findItem(pack.name, COLUMN_MISC);
+		if (item == NULL)
+			return;
 	}
+
+	currentDescription = pack.version;
+
+	connect(core, SIGNAL(packageDetails(PackageDetails)), 
+		this, SLOT(gotPackageDetails(PackageDetails)));
+
+	core->getDetails(pack);
 }		
 
 void ZmdUpdater::gotPackageDetails(PackageDetails details) {
