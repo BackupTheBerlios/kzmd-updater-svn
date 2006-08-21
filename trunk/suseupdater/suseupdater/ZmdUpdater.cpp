@@ -350,7 +350,7 @@ void ZmdUpdater::gotPackageInfo(Package pack) {
 	currentDescription = pack.version;
 
 	connect(core, SIGNAL(packageDetails(PackageDetails)), 
-		this, SLOT(gotPackageDetails(PackageDetails)));
+					this, SLOT(gotPackageDetails(PackageDetails)));
 
 	core->getDetails(pack);
 }		
