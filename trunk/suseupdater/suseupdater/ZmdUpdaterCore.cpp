@@ -761,10 +761,7 @@ void ZmdUpdaterCore::faultData(int code, const QString& message, const QVariant&
 			break;
 		case 0:
 			//Thread dies or transaction in progress or many other things
-			if (message.contains("transaction") == true) 
-				emit(transactionFinished(ERROR_TRANS_FAIL, message));
-			else
-				emit(generalFault(message, code));
+			emit(transactionFinished(ERROR_TRANS_FAIL, message));
 			break;
 		case 23:
 			//Could not connection to host

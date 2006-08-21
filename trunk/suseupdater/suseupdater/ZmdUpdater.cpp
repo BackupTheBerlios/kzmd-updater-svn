@@ -165,8 +165,6 @@ void ZmdUpdater::startInstall() {
 				}
 
 				p.id = item->text(COLUMN_ID); //gets the id
-				p.installed = (item->text(COLUMN_INSTALLED) == "Yes") ? true : false;
-
 				upList.append(p);
 			}
 		} while ((item = (UpdateListItem*)(item->nextSibling())) != 0);
