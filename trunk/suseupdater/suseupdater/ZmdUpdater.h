@@ -115,6 +115,7 @@ class ZmdUpdater : public Updater {
 		void gotUpdateListing(QValueList<Package>);
 		void gotPatchListing(QValueList<Patch>);
 		void gotPackageInfo(Package);
+		void gotPatchInfo(Patch);
 		void gotPackageDetails(PackageDetails);
 		void holdPackage();
 		void removeHold();

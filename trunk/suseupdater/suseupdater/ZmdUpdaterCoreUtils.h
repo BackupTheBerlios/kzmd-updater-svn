@@ -286,10 +286,32 @@ class Patch : public Package {
 			installed = map["installed"].toBool();
 			category = map["category"].toString();
 			status = map["status"].toInt();
+			rebootRequired = map["reboot_req"].toBool();
+			restartRequired = map["restart_req"].toBool();
+		}
+
+		QMap<QString, QVariant> toMap() {
+			QMap<QString,QVariant> map;
+
+			if (name != "")
+				map["name"] = name;
+			if (id != "")
+				map["id"] = id.toInt();
+			if (version != "")
+				map["version"] = version;
+			if (description != "")
+				map["summary"] = description;
+			if (installed != 3)
+				map["installed"] = installed;
+			if (category  != "")
+				map["category"] = category;
+			return map;
 		}
 
 		QString category;
 		int status;
+		bool rebootRequired;
+		bool restartRequired;
 };
 
 class PackageDetails {
@@ -312,6 +334,29 @@ class PackageDetails {
 		QString vendor;
 		bool installOnly;
 		int installSize;
+};
+
+class PatchDetails {
+
+	public:
+
+		PatchDetails() : creationTime(0), 
+										 rebootRequired(false),
+										 restartRequired(false),
+										 interactive(false) {}
+
+		void fromMap(const QMap<QString, QVariant> &map) {
+			creationTime = map["creation_time"].toInt();
+			rebootRequired = map["reboot_req"].toBool();
+			restartRequired = map["restart_req"].toBool();
+			interactive = map["interactive"].toBool();
+		}
+
+		QString id;
+		int creationTime;
+		bool rebootRequired;
+		bool restartRequired;
+		bool interactive;
 };
 
 

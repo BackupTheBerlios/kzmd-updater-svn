@@ -198,12 +198,21 @@ class ZmdUpdaterCore : public QObject {
 
 		/**
 			Get the info for an installed package. Searches via package name.
-			Data returns iva packageInfo.
+			Data returns via packageInfo.
 
 			@param packageName the name we will be using to execute 
 			a search through the packageDB.
 		**/
-		void getInfo(QString packageName);
+		void getPackageInfo(QString packageName);
+
+		/**
+			Get the info for a patch. Searches via patch name.
+			Data returns via patchInfo.
+
+			@param patchName the name we will be using to execute 
+			a search through the patchDB.
+		**/
+		void getPatchInfo(QString patchName);
 
 		/**
 			Get the details for an installed package.
@@ -211,7 +220,15 @@ class ZmdUpdaterCore : public QObject {
 
 			@param pack the package we will fetch details for. 
 		**/
-		void getDetails(Package pack);
+		void getPackageDetails(Package pack);
+
+		/**
+			Get the details for a patch.
+			Returns via patchDetails.
+
+			@param patch the patch we will fetch details for. 
+		**/
+		void getPatchDetails(Patch patch);
 
 		/**
 			Lock package (hold back from being upgraded)
@@ -269,7 +286,9 @@ class ZmdUpdaterCore : public QObject {
 		void lockListing(QValueList<PackageLock>);
 
 		void packageInfo(Package);
+		void patchInfo(Patch);
 		void packageDetails(PackageDetails);
+		void patchDetails(PatchDetails);
 
 		//Signal sent to the GUI
 		//to inform of packages required to resolve
@@ -312,7 +331,9 @@ class ZmdUpdaterCore : public QObject {
 		void patchData(const QValueList<QVariant>&, const QVariant&);
 		void lockData(const QValueList<QVariant>&, const QVariant&);
 
-		void infoData(const QValueList<QVariant>&, const QVariant&);
+		void infoPackageData(const QValueList<QVariant>&, const QVariant&);
+		void infoPatchData(const QValueList<QVariant>&, const QVariant&);
+
 
 		void faultData(int, const QString&, const QVariant&);
 
@@ -342,9 +363,6 @@ class ZmdUpdaterCore : public QObject {
 		int timeoutCount;
 
 		//Obvious, we cannot save these from signal to signal, so we store them here
-		//QValueList<QVariant> packagesToInstall;
-		//QValueList<QVariant> packagesToUpdate;
-		//QValueList<QVariant> packagesToRemove;
 		QMap<QString, QVariant> packagesToInstall;
 		QMap<QString, QVariant> packagesToUpdate;
 		QMap<QString, QVariant> packagesToRemove;

@@ -57,6 +57,10 @@ ZmdUpdater::ZmdUpdater() : Updater() {
 	connect(core, SIGNAL(packageInfo(Package)), 
 					this, SLOT(gotPackageInfo(Package)));
 
+	connect(core, SIGNAL(patchInfo(Patch)), 
+					this, SLOT(gotPatchInfo(Patch)));
+
+
 	connect(core, SIGNAL(generalFault(QString, int)), 
 					this, SLOT(error(QString, int)));
 
@@ -89,9 +93,10 @@ void ZmdUpdater::updateSelected(QListViewItem *item) {
 	currentUpdate = item;
 	//Ok, so...if MISC is empty, that means we have a package and use COLUMN_NAME
 	//if MISC is not empty, we have a patch and we use COLUMN_MISC as the name
-	core->getInfo((item->text(COLUMN_MISC) == "" ) ? 
-								(item->text(COLUMN_NAME)) : 
-								(item->text(COLUMN_MISC)));
+	if (item->text(COLUMN_MISC) == "")
+		core->getPackageInfo(item->text(COLUMN_NAME));
+	else
+		core->getPatchInfo(item->text(COLUMN_MISC));
 }
 
 void ZmdUpdater::updateMenu(QListViewItem *item, const QPoint& point) {
@@ -330,26 +335,23 @@ void ZmdUpdater::gotPatchListing(QValueList<Patch> patchList) {
 	}
 }
 
-void ZmdUpdater::gotPackageInfo(Package pack) {
-	QListViewItem *item;
+/* Info/Details routines for packages */
 
-	item = tempList->findItem(pack.name, COLUMN_NAME);
-	if (item != NULL) {
+void ZmdUpdater::gotPackageInfo(Package pack) {
+
+	if (currentUpdate->text(COLUMN_MISC) == "") {
 		if (pack.installed == false)
 			return;
+		currentDescription = pack.version;
+
+		connect(core, SIGNAL(packageDetails(PackageDetails)), 
+						this, SLOT(gotPackageDetails(PackageDetails)));
+
+		core->getPackageDetails(pack);
 	} else {
-		item = tempList->findItem(pack.name, COLUMN_MISC);
-		if (item == NULL)
-			return;
+
 	}
-
-	currentDescription = pack.version;
-
-	connect(core, SIGNAL(packageDetails(PackageDetails)), 
-					this, SLOT(gotPackageDetails(PackageDetails)));
-
-	core->getDetails(pack);
-}		
+}
 
 void ZmdUpdater::gotPackageDetails(PackageDetails details) {
 
@@ -365,6 +367,24 @@ void ZmdUpdater::gotPackageDetails(PackageDetails details) {
 	emit(returnDescription(currentDescription));
 }
 
+/* Info/Details routines for patches */
+
+void ZmdUpdater::gotPatchInfo(Patch patch) {
+
+	currentDescription = "<b>" + i18n("Patch Type: ") + "</b>" + patch.category + "<br>";
+	currentDescription += "<b>" + i18n("Description: ") + "</b><br>";
+	currentDescription += patch.description + "<br>";
+	currentDescription += i18n("<b>Upgrading to version:</b> ") + patch.version + "<br>";
+
+	if (patch.rebootRequired == true) {
+		currentDescription += i18n("<b>Reboot Required</b>");
+	} 
+
+	if (patch.restartRequired == true) {
+		currentDescription += i18n("<b>ZMD Restart Required</b>");
+	}
+	emit(returnDescription(currentDescription));
+}
 
 /*
 

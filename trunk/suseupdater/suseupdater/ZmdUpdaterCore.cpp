@@ -352,11 +352,11 @@ void ZmdUpdaterCore::patchData(const QValueList<QVariant>& data, const QVariant&
 }
 /********************************************************************
  *
- *                     Get Package Info/Details
+ *                     Get Package/Patch Info/Details
  *
  ********************************************************************/
 
-void ZmdUpdaterCore::getInfo(QString packageName) {
+void ZmdUpdaterCore::getPackageInfo(QString packageName) {
 
   QValueList<QVariant> wrapper;
   QValueList<QVariant> args;
@@ -368,11 +368,27 @@ void ZmdUpdaterCore::getInfo(QString packageName) {
   wrapper.append(args);
 
   server->call("zmd.packsys.query", wrapper, 
-  this, SLOT(infoData(const QValueList<QVariant>&, const QVariant&)),
+  this, SLOT(infoPackageData(const QValueList<QVariant>&, const QVariant&)),
   this, SLOT(faultData(int, const QString&, const QVariant&)));
 }
 
-void ZmdUpdaterCore::getDetails(Package pack) {
+void ZmdUpdaterCore::getPatchInfo(QString patchName) {
+
+  QValueList<QVariant> wrapper;
+  QValueList<QVariant> args;
+
+  args.append("Name");
+  args.append("is");
+  args.append(patchName);
+
+  wrapper.append(args);
+
+  server->call("zmd.packsys.query_patches", wrapper, 
+  this, SLOT(infoPatchData(const QValueList<QVariant>&, const QVariant&)),
+  this, SLOT(faultData(int, const QString&, const QVariant&)));
+}
+
+void ZmdUpdaterCore::getPackageDetails(Package pack) {
   QMap<QString, QVariant> map;
   QValueList<QVariant> args;
 
@@ -383,12 +399,28 @@ void ZmdUpdaterCore::getDetails(Package pack) {
   temp = pack.id;
 
   server->call("zmd.packsys.package_details", args, 
-  this, SLOT(infoData(const QValueList<QVariant>&, const QVariant&)),
+  this, SLOT(infoPackageData(const QValueList<QVariant>&, const QVariant&)),
   this, SLOT(faultData(int, const QString&, const QVariant&)));
 
 }
 
-void ZmdUpdaterCore::infoData(const QValueList<QVariant>& data, const QVariant& t) {
+void ZmdUpdaterCore::getPatchDetails(Patch patch) {
+  QMap<QString, QVariant> map;
+  QValueList<QVariant> args;
+
+  map = patch.toMap();
+  args.append(map);
+
+  //We need an id in patchDetails, but it does not return it
+  temp = patch.id;
+
+  server->call("zmd.packsys.patch_details", args, 
+  this, SLOT(infoPatchData(const QValueList<QVariant>&, const QVariant&)),
+  this, SLOT(faultData(int, const QString&, const QVariant&)));
+
+}
+
+void ZmdUpdaterCore::infoPackageData(const QValueList<QVariant>& data, const QVariant& t) {
 
   //We either get a List or a Map in this return. If its a list, then we just called getInfo
   if (data.front().canCast(QVariant::List) == true) {
@@ -411,6 +443,28 @@ void ZmdUpdaterCore::infoData(const QValueList<QVariant>& data, const QVariant& 
   }
 }
 
+void ZmdUpdaterCore::infoPatchData(const QValueList<QVariant>& data, const QVariant& t) {
+
+  //We either get a List or a Map in this return. If its a list, then we just called getInfo
+  if (data.front().canCast(QVariant::List) == true) {
+
+    QValueList<QVariant>::const_iterator iter;
+    for (iter = (data.front().toList().begin()); iter != (data.front().toList().end()); iter++) {
+      Patch patch;
+      patch.fromMap((*iter).toMap());
+
+      emit(patchInfo(patch));
+    }
+  } else {
+  //And if its a map, we just called getDetails
+    PatchDetails patchDet;
+
+    patchDet.fromMap(data.front().toMap());
+    patchDet.id = temp;
+    temp = "";
+    emit(patchDetails(patchDet));
+  }
+}
 
 /*******************************************************************
  *
@@ -685,12 +739,14 @@ void ZmdUpdaterCore::timerData(const QValueList<QVariant>& data, const QVariant 
     QMap<QString, QVariant> map = data.front().toMap();
     Progress status;
     status.fromMap(map);
+
 #ifdef DEBUG
     kdWarning() << "Status: " << status.status << endl;
     kdWarning() << "Name: " << status.name << endl;
     kdWarning() << "Percent: " << status.percent << endl;
     kdWarning() << "Message: " << status.messages.front() << endl;
 #endif
+
     if (status.name == "Downloading Packages") {
       if (status.percent > 99) {
         downloadID = "";
