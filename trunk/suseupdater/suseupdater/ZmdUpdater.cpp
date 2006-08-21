@@ -165,7 +165,7 @@ void ZmdUpdater::startInstall() {
 					p.version = item->text(COLUMN_NEW_VERSION);
 					p.type = "package";
 				} else {
-					p.name = item->text(COLUMN_MISC); //gets the patch name
+//					p.name = item->text(COLUMN_MISC); //gets the patch name
 					p.type = "patch";
 				}
 
