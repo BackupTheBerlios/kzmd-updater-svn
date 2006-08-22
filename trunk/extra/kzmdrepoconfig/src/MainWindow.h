@@ -52,6 +52,7 @@ class MainWindow : public QWidget {
 
 		void initGUI();
 		void authorizeCore();
+		void refreshList();
 
 		QGridLayout *mainLayout;
 		QListView *list;

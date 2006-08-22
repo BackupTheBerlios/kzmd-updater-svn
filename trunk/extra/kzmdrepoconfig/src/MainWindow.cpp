@@ -62,8 +62,6 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent) {
 
 	feed = new RepoFeed();
 	connect(feed, SIGNAL(fetchDone()), this, SLOT(fetchDone()));
-
-	core->getServices();
 }
 
 void MainWindow::initGUI() {
@@ -158,12 +156,18 @@ void MainWindow::serviceRemoved() {
 	core->getServices();
 }
 
+void MainWindow::refreshList() {
+	currentServices.clear();
+	list->clear();
+	core->getServices();
+}
+
 void MainWindow::feedButtonClicked() {
 	FeedDialog *diag = new FeedDialog();
 	if (diag->exec() == QDialog::Accepted) {
 		if (diag->url().isEmpty() == false)
 			feed->setUrl(QString(diag->url()));
-			feed->fetch();
+			refreshList();
 	}
 	delete diag;
 }
@@ -182,8 +186,12 @@ void MainWindow::fetchDone() {
 		QListViewItem *itemDescription = new QListViewItem(item);
 		itemDescription->setText(0, (*iter).description);
 
+		cout << "About to service service list of: " << endl
+								<< currentServices.count() << endl;
+
 		for (sIter = currentServices.begin(); sIter != currentServices.end(); sIter++) {
-			if ((*sIter).name == (*iter).title) {
+			cout << (*sIter).uri << " " << (*iter).url << endl;
+			if ( (*sIter).uri.stripWhiteSpace() == (*iter).url.stripWhiteSpace() ) {
 				item->setText(COLUMN_SUB, "Yes");
 				break;
 			}
@@ -192,6 +200,7 @@ void MainWindow::fetchDone() {
 }
 
 void MainWindow::services(QValueList<Service> services) {
+	cout << "Got Service Drop" << endl;
 	currentServices = services;
 	feed->fetch();
 }
