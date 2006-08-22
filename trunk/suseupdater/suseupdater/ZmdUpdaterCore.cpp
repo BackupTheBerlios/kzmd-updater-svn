@@ -615,14 +615,14 @@ void ZmdUpdaterCore::startTransaction(QValueList<Package> installList,
      QMap<QString, QVariant> map;
      map = (*iter).toMap();
      packagesToUpdate[map["id"].toString()] = QVariant(map);
-     //packagesToUpdate.append(QVariant(map));
+     packagesToUpdate.append(QVariant(map));
   }
   for (QValueList<Package>::iterator iter = removeList.begin();
      iter != removeList.end(); iter++) {
      QMap<QString, QVariant> map;
      map = (*iter).toMap();
      packagesToRemove[map["id"].toString()] = QVariant(map);
-     //packagesToRemove.append(QVariant(map));
+     packagesToRemove.append(QVariant(map));
   }
 
 #ifdef DEBUG
