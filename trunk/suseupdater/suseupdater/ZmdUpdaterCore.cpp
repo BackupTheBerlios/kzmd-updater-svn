@@ -615,14 +615,12 @@ void ZmdUpdaterCore::startTransaction(QValueList<Package> installList,
      QMap<QString, QVariant> map;
      map = (*iter).toMap();
      packagesToUpdate[map["id"].toString()] = QVariant(map);
-     packagesToUpdate.append(QVariant(map));
   }
   for (QValueList<Package>::iterator iter = removeList.begin();
      iter != removeList.end(); iter++) {
      QMap<QString, QVariant> map;
      map = (*iter).toMap();
      packagesToRemove[map["id"].toString()] = QVariant(map);
-     packagesToRemove.append(QVariant(map));
   }
 
 #ifdef DEBUG
@@ -675,7 +673,6 @@ void ZmdUpdaterCore::transactData(const QValueList<QVariant>& data, const QVaria
       QString packageId = tempMap["id"].toString();
 
       if (packagesToInstall.find(packageId) == packagesToInstall.end()) {
-        //tempMap.erase("catalog"); //Catalog is often invalid XML
         packagesToInstall[packageId] = QVariant(tempMap);
       }
     }
@@ -685,7 +682,6 @@ void ZmdUpdaterCore::transactData(const QValueList<QVariant>& data, const QVaria
       QString packageId = tempMap["id"].toString();
 
       if (packagesToUpdate.find(packageId) == packagesToUpdate.end()) {
-        //tempMap.erase("catalog"); //Catalog is often invalid XML
         packagesToUpdate[packageId] = QVariant(tempMap);
       }
     }
@@ -695,7 +691,6 @@ void ZmdUpdaterCore::transactData(const QValueList<QVariant>& data, const QVaria
       QString packageId = tempMap["id"].toString();
 
       if (packagesToRemove.find(packageId) == packagesToRemove.end()) {
-        tempMap.erase("catalog"); //Catalog is often invalid XML
         packagesToRemove[packageId] = QVariant(tempMap);
       }
 
