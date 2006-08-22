@@ -110,21 +110,21 @@ void ZmdInstallWindow::gotDepInfo(QValueList<Package> installs,
 	if (installs.size() > 0) {	
 		text = i18n("The following packages will be installed:\n");
 		for (iter = installs.begin(); iter != installs.end(); iter++) {
-			text += (*iter).name;
+			text += (*iter).name + " " + (*iter).version;
 			text += "\n";
 		}
 	}
 	if (updates.size() > 0) {
 		text += i18n("The following packages will be updated:\n");
 		for (iter = updates.begin(); iter != updates.end(); iter++) {
-			text += (*iter).name;
+			text += (*iter).name + " " + (*iter).version;
 			text += "\n";
 		}
 	}
 	if (removals.size() > 0) {
 		text += i18n("\nThe following packages must also be removed:\n");
 		for (iter = removals.begin(); iter != removals.end(); iter++) {
-			text += (*iter).name;
+			text += (*iter).name + " " + (*iter).version;
 			text += "\n";
 		}
 	}

@@ -296,7 +296,7 @@ class ZmdUpdaterCore : public QObject {
 		void patchInfo(Patch);
 		void packageDetails(PackageDetails);
 		void patchDetails(PatchDetails);
-		void depInfo(QString id, QValueList<Package> provides,
+		void depInfo(QString name, QValueList<Package> provides,
 								 QValueList<Package> requires,
 								 QValueList<Package> conflicts,
 								 QValueList<Package> obsoletes);

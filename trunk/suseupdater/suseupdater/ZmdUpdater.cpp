@@ -169,18 +169,24 @@ void ZmdUpdater::startInstall() {
 		do {
 			if (item->state() == QCheckListItem::On) {
 				Package p;
+				QMap<QString, QString>::iterator iter;
 
+				for (iter = catalogNames.begin(); iter != catalogNames.end(); iter++) {
+					if (iter.data() == item->text(COLUMN_CATALOG)) {
+						p.catalog = iter.key();
+					}
+				}
+				p.id = item->text(COLUMN_ID); //gets the id
 				if (item->text(COLUMN_MISC) == "") {
 					p.name = item->text(COLUMN_NAME); //gets the name
 					p.version = item->text(COLUMN_NEW_VERSION);
 					p.type = "package";
+					upList.append(p);
 				} else {
-//					p.name = item->text(COLUMN_MISC); //gets the patch name
+					p.name = item->text(COLUMN_MISC); //gets the patch name
 					p.type = "patch";
+					instList.append(p);
 				}
-
-				p.id = item->text(COLUMN_ID); //gets the id
-				upList.append(p);
 			}
 		} while ((item = (UpdateListItem*)(item->nextSibling())) != 0);
 		/* From reading the ZMD source, we only need name and ID for packages or patches. This may change in the future, was not in the API */
@@ -277,7 +283,9 @@ void ZmdUpdater::gotCatalogListing(QValueList<Catalog> catalogs) {
 
 	for (iter = catalogs.begin(); iter != catalogs.end(); iter++) {
 		if ((*iter).subscribed) {
-			catalogNames[(*iter).name] = (*iter).displayName;
+			catalogNames[(*iter).id] = ((*iter).displayName != "") ? 
+																	(*iter).displayName : 
+																	(*iter).name;
 			core->getUpdates(*iter);
 			core->getPatches(*iter);
 		}
@@ -339,7 +347,7 @@ void ZmdUpdater::gotPatchListing(QValueList<Patch> patchList) {
 
 		//build our dep tree
 		core->getDepInfo(*iter);
-		patchDeps[(*iter).id] = QValueList<Package>();
+		patchDeps[(*iter).name] = QValueList<Package>();
 	}
 
 	if (patchList.size() > 0) {
@@ -389,15 +397,16 @@ void ZmdUpdater::gotPatchInfo(Patch patch) {
 	currentDescription += "<b>" + i18n("Description: ") + "</b><br>";
 	currentDescription += patch.description + "<br>";
 	currentDescription += i18n("<b>Upgrading to version:</b> ") + patch.version + "<br>";
-	if (patchDeps.find(patch.id) != patchDeps.end()) {
-		QValueList<Package> reqs = patchDeps[patch.id];
-		QValueList<Package>::iterator iter;
-
-		currentDescription += "<b>" + i18n("Requires: ") + "</b><br>";
-		for (iter = reqs.begin(); iter != reqs.end(); iter++) 
-			currentDescription += (*iter).name + " " + (*iter).version + "<br>";
-	}
-
+/*
+*	if (patchDeps.find(patch.name) != patchDeps.end()) {
+*		QValueList<Package> reqs = patchDeps[patch.name];
+*		QValueList<Package>::iterator iter;
+*
+*		currentDescription += "<b>" + i18n("Requires: ") + "</b><br>";
+*		for (iter = reqs.begin(); iter != reqs.end(); iter++) 
+*			currentDescription += (*iter).name + " " + (*iter).version + "<br>";
+*	}
+*/
 	if (patch.rebootRequired == true) {
 		currentDescription += i18n("<b>Reboot Required</b>");
 	} 
@@ -408,14 +417,11 @@ void ZmdUpdater::gotPatchInfo(Patch patch) {
 	emit(returnDescription(currentDescription));
 }
 
-void ZmdUpdater::gotDepInfo(QString id, QValueList<Package> provides,
+void ZmdUpdater::gotDepInfo(QString name, QValueList<Package> provides,
 														QValueList<Package> requires,
 														QValueList<Package> conflicts,
 														QValueList<Package> obsoletes) {
-	patchDeps[id] = requires;
-	kdWarning() << "Dep info" << endl;
-	kdWarning() << id << endl;
-	kdWarning() << requires.front().name << endl;
+	patchDeps[name] = requires;
 }
 
 /*

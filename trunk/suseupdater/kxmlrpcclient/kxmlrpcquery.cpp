@@ -122,7 +122,6 @@ KXmlRpcResult KXmlRpcQuery::parseMessageResponse( const QDomDocument &doc ) cons
 		response.m_data << demarshal( paramNode.firstChild().toElement() );
 		paramNode = paramNode.nextSibling();
 	}
-
 	return response;
 }
 

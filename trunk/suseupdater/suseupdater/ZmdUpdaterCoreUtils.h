@@ -202,9 +202,11 @@ class Package {
 			QMap<QString,QVariant> map;
 
 			if (type == "patch") {
-				map["type"] = 3;
+				map["type"] = (int)3;
 			} else if (type == "package") {
-				map["type"] = 0;
+				map["type"] = (int)0;
+			} else {
+				map["type"] = (int)0;
 			}
 
 			if (name != "")
@@ -213,9 +215,8 @@ class Package {
 				map["id"] = id.toInt();
 			if (version != "")
 				map["version"] = version;
-			//if (catalog != "")
-				//NNN
-				//map["catalog"] = catalog;
+			if (catalog != "")
+				map["catalog"] = catalog;
 			if (description != "")
 				map["summary"] = description;
 			if (installed != 3)
@@ -240,6 +241,7 @@ class Patch : public Package {
 
 		void fromMap(const QMap<QString,QVariant> &map) {
 			name = map["name"].toString();
+			type = "patch";
 			id = map["id"].toString();
 			version = map["version"].toString();
 			catalog = map["catalog"].toString();
@@ -249,25 +251,6 @@ class Patch : public Package {
 			status = map["status"].toInt();
 			rebootRequired = map["reboot_req"].toBool();
 			restartRequired = map["restart_req"].toBool();
-		}
-
-		QMap<QString, QVariant> toMap() {
-			QMap<QString,QVariant> map;
-
-			if (name != "")
-				map["name"] = name;
-			map["type"] = 3; //set to patch
-			if (id != "")
-				map["id"] = id.toInt();
-			if (version != "")
-				map["version"] = version;
-			if (description != "")
-				map["summary"] = description;
-			if (installed != 3)
-				map["installed"] = installed;
-			if (category  != "")
-				map["category"] = category;
-			return map;
 		}
 
 		QString category;

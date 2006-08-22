@@ -322,7 +322,7 @@ QValueList<Package> ZmdUpdaterCore::mapListToPackageList(QValueList<QVariant> da
     QMap<QString, QVariant> map = (*iter).toMap();
     Package pack;
 
-    if (map["id"].toString() == "") //bad package, try again
+    if (map["name"].toString() == "") //bad package, try again
       continue;
 
     pack.fromMap(map);
@@ -480,7 +480,7 @@ void ZmdUpdaterCore::getDepInfo(Package pack) {
 
 	map = pack.toMap();
 	wrapper.append(QVariant(map));
-	temp = pack.id;
+	temp = pack.name;
 
   server->call("zmd.packsys.resolvable_dependencies", wrapper, 
   this, SLOT(depData(const QValueList<QVariant>&, const QVariant&)),
@@ -496,12 +496,10 @@ void ZmdUpdaterCore::depData(const QValueList<QVariant> &data, const QVariant &t
 		QValueList<Package> obsoletesList;
 
 		QMap<QString, QVariant> outerMap = data.front().toMap();
-		
 		providesList = mapListToPackageList(outerMap["provides"].toList());
 		requiresList = mapListToPackageList(outerMap["requires"].toList());
 		conflictsList = mapListToPackageList(outerMap["conflicts"].toList());
 		obsoletesList = mapListToPackageList(outerMap["obsoletes"].toList());
-
 		emit(depInfo(temp, providesList, requiresList, conflictsList, obsoletesList));
 		temp = "";
 	}
@@ -677,7 +675,7 @@ void ZmdUpdaterCore::transactData(const QValueList<QVariant>& data, const QVaria
       QString packageId = tempMap["id"].toString();
 
       if (packagesToInstall.find(packageId) == packagesToInstall.end()) {
-        tempMap.erase("catalog"); //Catalog is often invalid XML
+        //tempMap.erase("catalog"); //Catalog is often invalid XML
         packagesToInstall[packageId] = QVariant(tempMap);
       }
     }
@@ -687,7 +685,7 @@ void ZmdUpdaterCore::transactData(const QValueList<QVariant>& data, const QVaria
       QString packageId = tempMap["id"].toString();
 
       if (packagesToUpdate.find(packageId) == packagesToUpdate.end()) {
-        tempMap.erase("catalog"); //Catalog is often invalid XML
+        //tempMap.erase("catalog"); //Catalog is often invalid XML
         packagesToUpdate[packageId] = QVariant(tempMap);
       }
     }
