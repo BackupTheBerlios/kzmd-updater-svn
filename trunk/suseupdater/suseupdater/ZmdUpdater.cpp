@@ -96,17 +96,22 @@ void ZmdUpdater::populateUpdateList(QListView *updateList) {
 					this, SLOT(gotServiceListing(QValueList<Service>)));
 
 	core->getServices();
+  currentPackages.clear();
+  currentPatches.clear();
 }
 
 void ZmdUpdater::updateSelected(QListViewItem *item) {
-	
+
+  QString id;	
+
 	currentUpdate = item;
-	//Ok, so...if MISC is empty, that means we have a package and use COLUMN_NAME
-	//if MISC is not empty, we have a patch and we use COLUMN_MISC as the name
-	if (item->text(COLUMN_MISC) == "")
-		core->getPackageInfo(item->text(COLUMN_NAME));
-	else
-		core->getPatchInfo(item->text(COLUMN_MISC));
+  id = item->text(COLUMN_ID);
+
+  if ( currentPackages.find( id ) != currentPackages.end() ) {
+		core->getPackageInfo(currentPackages[id].name);
+	} else if ( currentPatches.find( id ) != currentPatches.end() ) {
+		core->getPatchInfo(currentPatches[id].name);
+  }
 }
 
 void ZmdUpdater::updateMenu(QListViewItem *item, const QPoint& point) {
@@ -129,6 +134,7 @@ void ZmdUpdater::updateMenu(QListViewItem *item, const QPoint& point) {
 									package holds yet
 *****************************************************************************/
 void ZmdUpdater::holdPackage() {
+/*
 	QListViewItem *item;
 	PackageLock lock;
 
@@ -140,9 +146,11 @@ void ZmdUpdater::holdPackage() {
 	lock.pack.catalog = item->text(COLUMN_CATALOG);
 	lock.pack.name = (item->text(COLUMN_MISC == "")) ? item->text(COLUMN_NAME) : item->text(COLUMN_MISC);
 	core->lockPackage(lock);
+*/
 }
 
 void ZmdUpdater::removeHold() {
+/*
 	QListViewItem *item;
 	PackageLock lock;
 
@@ -151,6 +159,7 @@ void ZmdUpdater::removeHold() {
 		return;
 
 //This does nothing, since locking support is not available in ZMD as of yet
+*/
 }
 /******************************************************************************
 ******************************************************************************/
@@ -168,28 +177,26 @@ void ZmdUpdater::startInstall() {
 
 		do {
 			if (item->state() == QCheckListItem::On) {
-				Package p;
-				QMap<QString, QString>::iterator iter;
+        QString id;
+				id = item->text(COLUMN_ID); //gets the id
 
-				for (iter = catalogNames.begin(); iter != catalogNames.end(); iter++) {
-					if (iter.data() == item->text(COLUMN_CATALOG)) {
-						p.catalog = iter.key();
-					}
-				}
-				p.id = item->text(COLUMN_ID); //gets the id
-				if (item->text(COLUMN_MISC) == "") {
-					p.name = item->text(COLUMN_NAME); //gets the name
-					p.version = item->text(COLUMN_NEW_VERSION);
-					p.type = "package";
-					upList.append(p);
-				} else {
-					p.name = item->text(COLUMN_MISC); //gets the patch name
-					p.type = "patch";
-					instList.append(p);
-				}
+        if ( currentPackages.find( id ) != currentPackages.end() ) {
+          Package p;
+          p = currentPackages[id];
+          if ( p.installed == true )
+            upList.append(p);
+          else
+            instList.append(p);          
+        } else if ( currentPatches.find( id ) != currentPatches.end() ) {
+          Patch p;
+          p = currentPatches[id];
+          if ( p.installed == true )
+            upList.append((Package)p); //can patches be upgraded?
+          else 
+            instList.append((Package)p);
+        }
 			}
 		} while ((item = (UpdateListItem*)(item->nextSibling())) != 0);
-		/* From reading the ZMD source, we only need name and ID for packages or patches. This may change in the future, was not in the API */
 
 		if (instList.size() > 0 || upList.size() > 0) {
 			ZmdInstallWindow *win = new ZmdInstallWindow(core); //deletes itself
@@ -233,8 +240,9 @@ void ZmdUpdater::configureUpdater() {
 
 */
 
+//ZMD Lock Support Incomplete Via XML-RPC (Hence we don't support it yet)
 void ZmdUpdater::gotLockListing(QValueList<PackageLock> locks) {
-
+/*
 	QListViewItem *item;
 	QValueList<PackageLock>::iterator iter;
 
@@ -254,7 +262,7 @@ void ZmdUpdater::gotLockListing(QValueList<PackageLock> locks) {
 			}
 		}
 	}
-
+*/
 }
 
 void ZmdUpdater::gotServiceListing(QValueList<Service> list) {
@@ -306,12 +314,12 @@ void ZmdUpdater::gotUpdateListing(QValueList<Package> packageList) {
 		newItem = new UpdateListItem(tempList, (*iter).name, QCheckListItem::CheckBox);
 
 		newItem->setText(COLUMN_NEW_VERSION,(*iter).version);
-		newItem->setText(COLUMN_SIZE, "Unknown");
 		newItem->setText(COLUMN_ID, (*iter).id);
-		newItem->setText(COLUMN_INSTALLED, ((*iter).installed == true) ? "Yes" : "No");
 		newItem->setText(COLUMN_CATALOG, catalogNames[(*iter).catalog]);
 		newItem->setText(COLUMN_MISC, "");
 
+    //Load list
+    currentPackages[(*iter).id] = (*iter);
 	}
 
 	if (packageList.size() > 0) {
@@ -338,9 +346,7 @@ void ZmdUpdater::gotPatchListing(QValueList<Patch> patchList) {
 		newItem = new UpdateListItem(tempList, (*iter).description, QCheckListItem::CheckBox);
 
 		newItem->setText(COLUMN_NEW_VERSION,(*iter).version);
-		newItem->setText(COLUMN_SIZE, "Unknown");
 		newItem->setText(COLUMN_ID, (*iter).id);
-		newItem->setText(COLUMN_INSTALLED, ((*iter).installed == true) ? "Yes" : "No");
 		newItem->setText(COLUMN_CATALOG, catalogNames[(*iter).catalog]);
 		newItem->setText(COLUMN_MISC, (*iter).name);
 		newItem->setText(COLUMN_CATEGORY, (*iter).category);
@@ -348,6 +354,9 @@ void ZmdUpdater::gotPatchListing(QValueList<Patch> patchList) {
 		//build our dep tree
 		core->getDepInfo(*iter);
 		patchDeps[(*iter).name] = QValueList<Package>();
+
+    //Load list
+    currentPatches[(*iter).id] = (*iter);
 	}
 
 	if (patchList.size() > 0) {
@@ -360,19 +369,18 @@ void ZmdUpdater::gotPatchListing(QValueList<Patch> patchList) {
 /* Info/Details routines for packages */
 
 void ZmdUpdater::gotPackageInfo(Package pack) {
+  QString id = currentUpdate->text(COLUMN_ID);
 
-	if (currentUpdate->text(COLUMN_MISC) == "") {
-		if (pack.installed == false)
-			return;
-		currentDescription = pack.version;
+  if ( currentPackages.find( id ) != currentPackages.end() ) {
+    if (pack.installed == false)
+      return;
+    currentDescription = pack.version;     
 
-		connect(core, SIGNAL(packageDetails(PackageDetails)), 
+ 		connect(core, SIGNAL(packageDetails(PackageDetails)), 
 						this, SLOT(gotPackageDetails(PackageDetails)));
 
 		core->getPackageDetails(pack);
-	} else {
-
-	}
+  } 
 }
 
 void ZmdUpdater::gotPackageDetails(PackageDetails details) {

@@ -154,6 +154,51 @@ class Catalog {
 		bool subscribed;
 };
 
+class PackageDetails {
+
+	public:
+
+		PackageDetails() : installOnly(0), installSize(0) {}
+
+		void fromMap(const QMap<QString, QVariant> &map) {
+			summary = map["summary"].toString();
+			description = map["description"].toString();
+			vendor = map["vendor"].toString();
+			installOnly = map["install_only"].toBool();
+			installSize = map["install_size"].toInt();
+		}
+
+		QString id;
+		QString summary;
+		QString description;
+		QString vendor;
+		bool installOnly;
+		int installSize;
+};
+
+class PatchDetails {
+
+	public:
+
+		PatchDetails() : creationTime(0), 
+										 rebootRequired(false),
+										 restartRequired(false),
+										 interactive(false) {}
+
+		void fromMap(const QMap<QString, QVariant> &map) {
+			creationTime = map["creation_time"].toInt();
+			rebootRequired = map["reboot_req"].toBool();
+			restartRequired = map["restart_req"].toBool();
+			interactive = map["interactive"].toBool();
+		}
+
+		QString id;
+		int creationTime;
+		bool rebootRequired;
+		bool restartRequired;
+		bool interactive;
+};
+
 /*
 
 	This is the "base" class. It can represent either a package 
@@ -231,6 +276,9 @@ class Package {
 		QString catalog;
 		QString description;
 		bool installed;	
+
+    //The details
+    PackageDetails details;
 };
 
 class Patch : public Package {
@@ -257,51 +305,12 @@ class Patch : public Package {
 		int status;
 		bool rebootRequired;
 		bool restartRequired;
-};
 
-class PackageDetails {
+    //The details
+    PatchDetails details;
 
-	public:
-
-		PackageDetails() : installOnly(0), installSize(0) {}
-
-		void fromMap(const QMap<QString, QVariant> &map) {
-			summary = map["summary"].toString();
-			description = map["description"].toString();
-			vendor = map["vendor"].toString();
-			installOnly = map["install_only"].toBool();
-			installSize = map["install_size"].toInt();
-		}
-
-		QString id;
-		QString summary;
-		QString description;
-		QString vendor;
-		bool installOnly;
-		int installSize;
-};
-
-class PatchDetails {
-
-	public:
-
-		PatchDetails() : creationTime(0), 
-										 rebootRequired(false),
-										 restartRequired(false),
-										 interactive(false) {}
-
-		void fromMap(const QMap<QString, QVariant> &map) {
-			creationTime = map["creation_time"].toInt();
-			rebootRequired = map["reboot_req"].toBool();
-			restartRequired = map["restart_req"].toBool();
-			interactive = map["interactive"].toBool();
-		}
-
-		QString id;
-		int creationTime;
-		bool rebootRequired;
-		bool restartRequired;
-		bool interactive;
+    //The deps
+//    QValueList<Package> patchDeps;
 };
 
 class PackageLock {

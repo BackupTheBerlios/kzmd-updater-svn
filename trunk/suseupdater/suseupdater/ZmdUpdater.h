@@ -161,6 +161,10 @@ class ZmdUpdater : public Updater {
 		//Experimental patch handling
 		QMap<QString, QValueList<Package> > patchDeps;
 
+		//Experimental package/patch handling
+		QMap<QString, Package> currentPackages;
+		QMap<QString, Patch> currentPatches;
+
 		//The core updater functionality
 		ZmdUpdaterCore *core;
 
