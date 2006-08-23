@@ -258,14 +258,14 @@ class Package {
 				map["name"] = name;
 			if (id != "")
 				map["id"] = id.toInt();
+/*
 			if (version != "")
 				map["version"] = version;
+*/
+
 			if (catalog != "")
 				map["catalog"] = catalog;
-			if (description != "")
-				map["summary"] = description;
-			if (installed != 3)
-				map["installed"] = installed;
+
 			return map;
 		}
 		
