@@ -310,7 +310,7 @@ class Patch : public Package {
     PatchDetails details;
 
     //The deps
-//    QValueList<Package> patchDeps;
+    QValueList<Package> patchDeps;
 };
 
 class PackageLock {
