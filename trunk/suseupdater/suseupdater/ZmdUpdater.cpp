@@ -313,6 +313,7 @@ void ZmdUpdater::gotUpdateListing(QValueList<Package> packageList) {
 	for (iter = packageList.begin(); iter != packageList.end(); iter++) {
 		newItem = new UpdateListItem(tempList, (*iter).name, QCheckListItem::CheckBox);
 
+		newItem->setText(COLUMN_TYPE, i18n("Update"));
 		newItem->setText(COLUMN_NEW_VERSION,(*iter).version);
 		newItem->setText(COLUMN_ID, (*iter).id);
 		newItem->setText(COLUMN_CATALOG, catalogNames[(*iter).catalog]);
@@ -345,6 +346,7 @@ void ZmdUpdater::gotPatchListing(QValueList<Patch> patchList) {
 
 		newItem = new UpdateListItem(tempList, (*iter).description, QCheckListItem::CheckBox);
 
+		newItem->setText(COLUMN_TYPE, i18n("Patch"));
 		newItem->setText(COLUMN_NEW_VERSION,(*iter).version);
 		newItem->setText(COLUMN_ID, (*iter).id);
 		newItem->setText(COLUMN_CATALOG, catalogNames[(*iter).catalog]);
@@ -401,7 +403,7 @@ void ZmdUpdater::gotPackageDetails(PackageDetails details) {
 
 void ZmdUpdater::gotPatchInfo(Patch patch) {
 
-	currentDescription = "<b>" + i18n("Patch Type: ") + "</b>" + patch.category + "<br>";
+	currentDescription = "<b>" + i18n("Patch Category: ") + "</b>" + patch.category + "<br>";
 	currentDescription += "<b>" + i18n("Description: ") + "</b><br>";
 	currentDescription += patch.description + "<br>";
 	currentDescription += i18n("<b>Upgrading to version:</b> ") + patch.version + "<br>";

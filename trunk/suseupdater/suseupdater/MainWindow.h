@@ -51,6 +51,7 @@ class HeaderWidget;
 */
 enum { 	
 		COLUMN_NAME, 						/** The Package Name or Patch Description **/
+		COLUMN_TYPE,						/** Patch or Package **/
 		COLUMN_NEW_VERSION,			/** The Version We Are Upgrading To **/
 		COLUMN_CATALOG,					/** The Catalog **/ 
 		COLUMN_ID,							/** The ID of the Package/Patch **/

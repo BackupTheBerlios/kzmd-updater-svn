@@ -124,6 +124,7 @@ void MainWindow::initGUI() {
 
 	updateList->addColumn(i18n("Name"), 300);
 	updateList->setColumnWidthMode(COLUMN_NAME, QListView::Manual);
+	updateList->addColumn(i18n("Type"));
 	updateList->addColumn(i18n("New Version"));
 	updateList->addColumn(i18n("Catalog"), 10000); //cover the rest of the window
 	updateList->setHScrollBarMode(QListView::AlwaysOff);
