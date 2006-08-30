@@ -82,8 +82,8 @@ void ZmdServerDialog::initGUI() {
 	QRadioButton *yButton = new QRadioButton("YUM", typeGroup);
 	QRadioButton *aButton = new QRadioButton("ZENworks", typeGroup);
 	QRadioButton *mButton = new QRadioButton("Mount", typeGroup);
-	QRadioButton *nButton = new QRadioButton("NU Server", typeGroup);
-	QRadioButton *rButton = new QRadioButton("RCE Server", typeGroup);
+	QRadioButton *nButton = new QRadioButton(i18n("NU Server"), typeGroup);
+	QRadioButton *rButton = new QRadioButton(i18n("RCE Server"), typeGroup);
 	cancelButton = new KPushButton(KStdGuiItem::cancel(), this);
 	addButton = new KPushButton(KStdGuiItem::add(), this);
 
