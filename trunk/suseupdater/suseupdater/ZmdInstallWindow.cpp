@@ -68,7 +68,7 @@ void ZmdInstallWindow::initGUI() {
 	progressBar = new KProgress(100, this);
 	mainLayout = new QVBoxLayout(this);
 
-	header->setDescription("<b>Installing updates and patches:</b><br> Below is a description of the transaction and its progress.<br>");
+	header->setDescription(i18n("<b>Installing updates and patches:</b><br> Below is a description of the transaction and its progress.<br>"));
 
 #ifdef _ABORT_SUPPORTED_
 	// we can't yet abort an upgrade
@@ -142,7 +142,7 @@ void ZmdInstallWindow::download(Progress status) {
 
 	//If the following is true, we are starting at 100%...this is a Zypp bug
 	if (status.status == 2 && watchingDownload == false) {
-		transactionList->setText(transactionList->text() + "\nWe are currently unable to show the progress for the download. This is caused by a bug in ZMD, which should be fixed soon. We apologize for any inconvenience this may cause." + "\nPackages Are Downloading...");	
+		transactionList->setText(transactionList->text() + i18n("\nWe are currently unable to show the progress for the download. This is caused by a bug in ZMD, which should be fixed soon. We apologize for any inconvenience this may cause.") + i18n("\nPackages Are Downloading..."));	
 		progressBar->setDisabled(true);
 		watchingDownload = true; //So we will be dropping into the real code on the next progress drop
 
@@ -150,13 +150,13 @@ void ZmdInstallWindow::download(Progress status) {
 		progressBar->setValue((int)status.percent);
 
 		if (watchingDownload == false) { //if this is the first time we are watching a package
-			transactionList->setText(transactionList->text() + "\n" + "Packages Are Downloading...");
+			transactionList->setText(transactionList->text() + "\n" + i18n("Packages Are Downloading..."));
 			watchingDownload = true;
 			downloadDone = false;
 		}
 
 		if (status.status == 2 && downloadDone == false) {
-			transactionList->setText(transactionList->text() + "Done");
+			transactionList->setText(transactionList->text() + i18n("Done"));
 			downloadDone = true;
 		}
 	} else {
@@ -171,7 +171,7 @@ void ZmdInstallWindow::progress(Progress status) {
 
 		//if we get here and download Done is falt, we are encountering the zypp bug
 		if (downloadDone == false) { //we have just started the transaction, download is now done
-			transactionList->setText(transactionList->text() + "Done");
+			transactionList->setText(transactionList->text() + i18n("Done"));
 			//Re-enable when download is really done
 			progressBar->setDisabled(false);
 			downloadDone = true;
@@ -180,12 +180,12 @@ void ZmdInstallWindow::progress(Progress status) {
 		progressBar->setValue((int)status.percent);
 		if (watchingPackage == false && status.status == 1) {
 			//if we are not already watching a package and the transaction is running
-			transactionList->setText(transactionList->text() + "\n" + "Packages Are Being Installed...");
+			transactionList->setText(transactionList->text() + "\n" + i18n("Packages Are Being Installed..."));
 			watchingPackage = true;
 		}
 		if (status.status ==2 && packageDone == false) {
 			//if the transaction is done and we have not already marked it done
-			transactionList->setText(transactionList->text() + " Done.");
+			transactionList->setText(transactionList->text() + i18n(" Done."));
 			watchingPackage = false;
 			packageDone = true;
 		}	
@@ -201,7 +201,7 @@ void ZmdInstallWindow::finished(int status, QString error) {
 	} else if (status == ERROR_TRANS_FAIL) {
 		KMessageBox::error(this, i18n("Upgrade Failed: ") + error);
 	} else {
-		transactionList->setText("Done!");
+		transactionList->setText(i18n("Done!"));
 	}
 	closeWindow();
 }

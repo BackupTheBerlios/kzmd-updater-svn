@@ -432,6 +432,8 @@ void ZmdUpdater::gotDepInfo(QString name, QValueList<Package> provides,
 														QValueList<Package> conflicts,
 														QValueList<Package> obsoletes) {
 	patchDeps[name] = requires;
+
+//At this point prune the list perhaps?
 }
 
 /*
