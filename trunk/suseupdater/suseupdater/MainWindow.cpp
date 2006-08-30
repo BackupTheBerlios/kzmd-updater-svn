@@ -133,20 +133,6 @@ void MainWindow::initGUI() {
 		Hidden Columns, we use these to store data about the packages/patches
 	*/
 	updateList->addColumn("ID", 0); // This is a hidden column to hold the ID of the patch/package
-	updateList->setColumnWidthMode(COLUMN_ID, QListView::Manual);
-	updateList->addColumn("Description", 0); // The Package/Patch description
-	updateList->setColumnWidthMode(COLUMN_DESC, QListView::Manual);
-	updateList->addColumn("Installed?", 0); // Is it installed? (Is it an update)
-	updateList->setColumnWidthMode(COLUMN_INSTALLED, QListView::Manual);
-	updateList->addColumn("Size", 0); //This is hidden for the moment, but it shouldn't be
-	updateList->setColumnWidthMode(COLUMN_SIZE, QListView::Manual);
-	updateList->addColumn("Misc", 0); //This is used to store misc info (patch name for zmd)
-	updateList->setColumnWidthMode(COLUMN_MISC, QListView::Manual);
-	updateList->addColumn("LockID", 0); //Stores our lock id
-	updateList->setColumnWidthMode(COLUMN_LOCK, QListView::Manual);
-	updateList->addColumn("PatchCategory", 0); //Stores our category, if we are a patch that is 
-	updateList->setColumnWidthMode(COLUMN_CATEGORY, QListView::Manual);
-
 
 	connect(updateList, SIGNAL(selectionChanged(QListViewItem*)), 
 					this, SLOT(slotPackageSelected(QListViewItem*)));

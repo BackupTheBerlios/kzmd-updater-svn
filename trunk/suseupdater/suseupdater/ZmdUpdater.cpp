@@ -317,7 +317,6 @@ void ZmdUpdater::gotUpdateListing(QValueList<Package> packageList) {
 		newItem->setText(COLUMN_NEW_VERSION,(*iter).version);
 		newItem->setText(COLUMN_ID, (*iter).id);
 		newItem->setText(COLUMN_CATALOG, catalogNames[(*iter).catalog]);
-		newItem->setText(COLUMN_MISC, "");
 
     //Load list
     currentPackages[(*iter).id] = (*iter);
@@ -350,8 +349,6 @@ void ZmdUpdater::gotPatchListing(QValueList<Patch> patchList) {
 		newItem->setText(COLUMN_NEW_VERSION,(*iter).version);
 		newItem->setText(COLUMN_ID, (*iter).id);
 		newItem->setText(COLUMN_CATALOG, catalogNames[(*iter).catalog]);
-		newItem->setText(COLUMN_MISC, (*iter).name);
-		newItem->setText(COLUMN_CATEGORY, (*iter).category);
 
 		//build our dep tree
 		core->getDepInfo(*iter);

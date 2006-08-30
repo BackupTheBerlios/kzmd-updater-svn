@@ -55,12 +55,6 @@ enum {
 		COLUMN_NEW_VERSION,			/** The Version We Are Upgrading To **/
 		COLUMN_CATALOG,					/** The Catalog **/ 
 		COLUMN_ID,							/** The ID of the Package/Patch **/
-		COLUMN_DESC,						/** The Description **/
-		COLUMN_INSTALLED,				/** Is it installed? **/
-		COLUMN_SIZE,						/** The size, that we cannot fetch at the moment **/
-		COLUMN_MISC, 						/** Only used for patches, the real name **/
-		COLUMN_LOCK,						/** The unused magic lock variable... **/
-		COLUMN_CATEGORY,				/** The category of a patch, only used for patches **/
 };  
 
 /**
