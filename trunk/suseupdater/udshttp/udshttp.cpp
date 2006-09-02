@@ -102,7 +102,6 @@ void kio_udshttpProtocol::special(const QByteArray &data) {
 			break;
 		case 99:
 			m_connectionDone = true;
-			kdWarning(DEBUGCODE) << "Exiting" << endl;
 			httpCloseConnection();
 			setTimeoutSpecialCommand(-1); //clear out the timeouts
 			exit(); 
@@ -115,8 +114,6 @@ void kio_udshttpProtocol::post(const KURL& url) {
 
 	m_url = url;
 
-	kdWarning(DEBUGCODE) << "Entering post" << endl;
-
 	fetchMeta();
 	parseUrl();
 	httpOpenConnection();
@@ -126,18 +123,15 @@ void kio_udshttpProtocol::post(const KURL& url) {
 		int result;
 		QByteArray tempData;
 
-		kdWarning(DEBUGCODE) << "About to fetch data" << endl;
 		dataReq();
 		if ((result = readData(tempData)) < 0) {
 			error(ERR_INTERNAL, i18n("There were errors getting data from job"));
 		} else if (result == 0) {
-			kdWarning(DEBUGCODE) << "Got 0 bytes of data" << endl;
 			data(QByteArray());
 			finished();
 		}
 		m_data.insert(0, tempData);
 	}
-	kdWarning(DEBUGCODE) << "Got data: " << m_data << endl;
 	buildReqLine();
 	buildHeader();
 
@@ -148,8 +142,6 @@ void kio_udshttpProtocol::post(const KURL& url) {
 void kio_udshttpProtocol::get(const KURL& url ) {
 
 	m_url = url;
-
-	kdWarning(DEBUGCODE) << "Entering get" << endl;
 
 	fetchMeta();
 	parseUrl();
@@ -166,8 +158,6 @@ void kio_udshttpProtocol::head(const KURL& url) {
 
 	m_url = url;
 
-	kdWarning(DEBUGCODE) << "Entering head" << endl;
-
 	fetchMeta();
 	parseUrl();
 	httpOpenConnection();
@@ -183,7 +173,6 @@ void kio_udshttpProtocol::mimetype(const KURL& url) {
 	head(url);
 	data(QCString(m_contentType.local8Bit()));
 	data(QByteArray());
-	kdWarning(DEBUGCODE) << "Sent data to job" << endl;
 	finished();
 }
 
@@ -223,7 +212,6 @@ void kio_udshttpProtocol::httpCloseConnection() {
 		
 	}
 
-	kdWarning(DEBUGCODE) << "Setting KeepAliveTimeout" << endl;
 	setTimeoutSpecialCommand(KEEP_ALIVE_TIMEOUT, data);
 }
 
@@ -266,8 +254,6 @@ void kio_udshttpProtocol::getSocketResponse() {
 
 	//clear any data we had sitting around
 	m_outputData.truncate(0);
-
-	kdWarning(DEBUGCODE) << "Connect timeout: " << m_connectTimeout << endl;
 
 	if (poll(&fd, 1, m_connectTimeout) > 0) {
 		while ((count = recv(m_socket->socket(), buffer, 1024, MSG_DONTWAIT)) > 0) {
@@ -397,7 +383,7 @@ void kio_udshttpProtocol::parseResponse() {
 	switch (responseCode) {
 		case 100:
 			//HTTP_1_1 only 
-			kdWarning(450) << "Got a continue" << endl;
+			//Continue
 			break;
 		case 200:
 			break;
@@ -417,7 +403,7 @@ void kio_udshttpProtocol::parseResponse() {
 			error(ERR_SERVICE_NOT_AVAILABLE, i18n("Service unavailable"));
 			break;
 		case 505:
-			kdWarning(450) << "HTTP 1.1 not supported, dropping back to 1.0" << endl;
+			//1.1 not supported, drop to 1.0.
 			m_httpVersion = HTTP_1_0;
 			switch (m_httpMethod) {
 				case HTTP_POST:
