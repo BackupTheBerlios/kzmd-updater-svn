@@ -404,16 +404,7 @@ void ZmdUpdater::gotPatchInfo(Patch patch) {
 	currentDescription += "<b>" + i18n("Description: ") + "</b><br>";
 	currentDescription += patch.description + "<br>";
 	currentDescription += i18n("<b>Upgrading to version:</b> ") + patch.version + "<br>";
-/*
-*	if (patchDeps.find(patch.name) != patchDeps.end()) {
-*		QValueList<Package> reqs = patchDeps[patch.name];
-*		QValueList<Package>::iterator iter;
-*
-*		currentDescription += "<b>" + i18n("Requires: ") + "</b><br>";
-*		for (iter = reqs.begin(); iter != reqs.end(); iter++) 
-*			currentDescription += (*iter).name + " " + (*iter).version + "<br>";
-*	}
-*/
+
 	if (patch.rebootRequired == true) {
 		currentDescription += i18n("<b>Reboot Required</b>");
 	} 
