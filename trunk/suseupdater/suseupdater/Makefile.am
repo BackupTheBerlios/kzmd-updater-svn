@@ -34,6 +34,8 @@ desktopdir   = $(kde_appsdir)/Utilities
 desktop_DATA = suseupdater.desktop
 
 install-data-local:
+    $(INSTALL_DATA) $(srcdir)/zmd/kzmd-auth-user.sh  \
+        $(DESTDIR)/$(prefix)/bin/kzmd-auth-user.sh
 	$(mkinstalldirs) $(DESTDIR)/$(prefix)/share/autostart
 	$(INSTALL_DATA) $(srcdir)/suseupdater-start.desktop \
 		$(DESTDIR)/$(prefix)/share/autostart/suseupdater.desktop
