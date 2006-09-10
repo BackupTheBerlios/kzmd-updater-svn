@@ -846,7 +846,7 @@ clean-metasources:
 	-rm -f  ZmdEditServers.moc.cpp ZmdDependencyDialog.moc.cpp ZmdConfigWindow.moc.cpp ZmdInstallWindow.moc.cpp ZmdProgressDialog.moc.cpp ZmdRugParser.moc.cpp ZmdUpdaterCore.moc.cpp ZmdUpdater.moc.cpp ZmdAdvancedConfig.moc.cpp ZmdServerDialog.moc.cpp
 
 #>+ 2
-KDE_DIST=Makefile.in ZmdUpdaterCoreUtils.h Makefile.am 
+KDE_DIST=Makefile.in ZmdUpdaterCoreUtils.h kzmd-auth-user.sh Makefile.am 
 
 #>+ 2
 docs-am:
