@@ -7,7 +7,7 @@ INCLUDES = $(all_includes) -I$(top_srcdir)/kxmlrpcclient -I$(top_srcdir)/updater
 libzmdqt_la_LDFLAGS = $(KDE_RPATH) $(all_libraries) 
 
 # the libraries to link against.
-libzmdqt_la_LIBADD   = $(LIB_KFILE) 
+libzmdqt_la_LIBADD   = $(LIB_KFILE) $(top_builddir)/kxmlrpcclient/libkxmlrpcclient.la -lkxmlrpcclient
 
 # which sources should be compiled for kzmdupdater
 libzmdqt_la_SOURCES = ZmdAdvancedConfig.cpp ZmdEditServers.cpp ZmdRugParser.cpp ZmdConfigWindow.cpp ZmdInstallWindow.cpp ZmdServerDialog.cpp ZmdUpdaterCore.cpp ZmdProgressDialog.cpp ZmdCatalogListItem.cpp ZmdDependencyDialog.cpp ZmdUpdater.cpp

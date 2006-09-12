@@ -34,7 +34,7 @@ make
 make DESTDIR=$RPM_BUILD_ROOT $INSTALL_TARGET
 
 rm -rf $RPM_BUILD_ROOT/opt/kde3/include
-#%suse_update_desktop_file suseupdater
+#%suse_update_desktop_file opensuse-updater 
 #%find_lang %name
 
 %post
@@ -59,9 +59,13 @@ rm -rf $RPM_BUILD_ROOT
 /opt/kde3/lib/libkxmlrpcclient.so
 /opt/kde3/lib/libkxmlrpcclient.so.0
 /opt/kde3/lib/libkxmlrpcclient.so.0.0.0
-/opt/kde3/share/doc/HTML/en/opensuse-updater/common
-/opt/kde3/share/doc/HTML/en/opensuse-updater/index.cache.bz2
-/opt/kde3/share/doc/HTML/en/opensuse-updater/index.docbook
+/opt/kde3/share/doc/HTML/en/suseupdater/common
+/opt/kde3/share/doc/HTML/en/suseupdater/index.cache.bz2
+/opt/kde3/share/doc/HTML/en/suseupdater/index.docbook
+/opt/kde3/lib/libzmdqt.la
+/opt/kde3/lib/libzmdqt.so
+/opt/kde3/lib/libzmdqt.so.0
+/opt/kde3/lib/libzmdqt.so.0.0.0
 /opt/kde3/lib/kde3/kio_udshttp.la
 /opt/kde3/lib/kde3/kio_udshttp.so
 /opt/kde3/share/services/udshttp.protocol
