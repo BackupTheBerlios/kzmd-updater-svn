@@ -1,7 +1,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=SUSE Updater Applet
-Exec=SUSEUpdater %i %m -caption "%c"
+Exec=opensuse-updater %i %m -caption "%c"
 Icon=suseupdater
 Type=Application
 Terminal=0

@@ -1,7 +1,7 @@
 lib_LTLIBRARIES = libzmdqt.la
 
 # set the include path for X, qt and KDE
-INCLUDES = $(all_includes) -I$(top_srcdir)/kxmlrpcclient -I$(top_srcdir)/suseupdater
+INCLUDES = $(all_includes) -I$(top_srcdir)/kxmlrpcclient -I$(top_srcdir)/updater
 
 # the library search path. 
 libzmdqt_la_LDFLAGS = $(KDE_RPATH) $(all_libraries) 

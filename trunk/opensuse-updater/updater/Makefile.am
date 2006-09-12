@@ -4,16 +4,16 @@ SUBDIRS=zmd
 
 # this is the program that gets installed.  it's name is used for all
 # of the other Makefile.am variables
-bin_PROGRAMS = SUSEUpdater 
+bin_PROGRAMS = opensuse-updater 
 
 # set the include path for X, qt and KDE
-INCLUDES = $(all_includes) -I$(top_srcdir)/kxmlrpcclient -I$(top_srcdir)/suseupdater/zmd
+INCLUDES = $(all_includes) -I$(top_srcdir)/kxmlrpcclient -I$(top_srcdir)/updater/zmd
 
 # the library search path. 
 SUSEUpdater_LDFLAGS = $(KDE_RPATH) $(all_libraries)
 
 # the libraries to link against.
-SUSEUpdater_LDADD   = $(LIB_KFILE) $(top_builddir)/kxmlrpcclient/libkxmlrpcclient.la -lkxmlrpcclient $(top_builddir)/suseupdater/zmd/libzmdqt.la -lzmdqt 
+SUSEUpdater_LDADD   = $(LIB_KFILE) $(top_builddir)/kxmlrpcclient/libkxmlrpcclient.la -lkxmlrpcclient $(top_builddir)/updater/zmd/libzmdqt.la -lzmdqt 
 
 # which sources should be compiled for kzmdupdater
 SUSEUpdater_SOURCES = main.cpp MainWindow.cpp HeaderWidget.cpp  UpdaterApplication.cpp GeneralConfigWindow.cpp UpdateListItem.cpp  TrayIcon.cpp
@@ -31,15 +31,15 @@ messages: rc.cpp
 
 # this is where the desktop file will go 
 desktopdir   = $(kde_appsdir)/Utilities
-desktop_DATA = suseupdater.desktop
+desktop_DATA = opensuse-updater.desktop
 
 install-data-local:
 	$(mkinstalldirs) $(DESTDIR)/$(prefix)/bin
 	$(INSTALL_DATA) $(srcdir)/zmd/kzmd-auth-user.sh \
 		$(DESTDIR)/$(prefix)/bin/kzmd-auth-user.sh
 	$(mkinstalldirs) $(DESTDIR)/$(prefix)/share/autostart
-	$(INSTALL_DATA) $(srcdir)/suseupdater-start.desktop \
-		$(DESTDIR)/$(prefix)/share/autostart/suseupdater.desktop
+	$(INSTALL_DATA) $(srcdir)/opensuse-start.desktop \
+		$(DESTDIR)/$(prefix)/share/autostart/opensuse-updater.desktop
 
 
 include $(top_srcdir)/admin/Doxyfile.am

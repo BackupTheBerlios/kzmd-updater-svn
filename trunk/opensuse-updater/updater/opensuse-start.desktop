@@ -1,8 +1,8 @@
 [Desktop Entry]
 Type=Application
-Exec=SUSEUpdater
+Exec=opensuse-updater
 Terminal=false
-Name=SUSE Updater
+Name=OpenSUSE Updater
 Icon=suseupdater
 
 X-KDE-StartupNotify=false
