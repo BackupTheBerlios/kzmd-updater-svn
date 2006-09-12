@@ -1,6 +1,6 @@
 #MIN_CONFIG(3.2.0)
 
-AM_INIT_AUTOMAKE(suseupdater, 0.1)
+AM_INIT_AUTOMAKE(opensuse-updater, 0.2)
 AC_C_BIGENDIAN
 AC_CHECK_KDEMAXPATHLEN
 KDE_INIT_DOXYGEN([The KDE Updater Applet API Reference], [Version $VERSION])
