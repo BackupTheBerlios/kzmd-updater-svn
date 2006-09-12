@@ -5,8 +5,8 @@ Name:         opensuse-updater
 License:      GPL
 Group:        System
 Summary:      Updater applet for OpenSUSE / ZMD
-Version:      0.1
-Release:      3.0
+Version:      0.2
+Release:      1.0
 URL:          http://en.opensuse.org/KDE_Updater_Applet
 BuildRoot:    %{_tmppath}/%{name}-%{version}-build
 Source0:      opensuse-updater-%{version}.tar.gz
