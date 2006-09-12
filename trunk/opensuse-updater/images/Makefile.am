@@ -1,2 +1,2 @@
 images_data_DATA= suse_green.png suse_red.png suse_logo.png
-images_datadir= $(kde_datadir)/suseupdater/pics
+images_datadir= $(kde_datadir)/opensuse-updater/pics

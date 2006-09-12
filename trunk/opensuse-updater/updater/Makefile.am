@@ -10,13 +10,13 @@ bin_PROGRAMS = opensuse-updater
 INCLUDES = $(all_includes) -I$(top_srcdir)/kxmlrpcclient -I$(top_srcdir)/updater/zmd
 
 # the library search path. 
-SUSEUpdater_LDFLAGS = $(KDE_RPATH) $(all_libraries)
+opensuse_updater_LDFLAGS = $(KDE_RPATH) $(all_libraries)
 
 # the libraries to link against.
-SUSEUpdater_LDADD   = $(LIB_KFILE) $(top_builddir)/kxmlrpcclient/libkxmlrpcclient.la -lkxmlrpcclient $(top_builddir)/updater/zmd/libzmdqt.la -lzmdqt 
+opensuse_updater_LDADD   = $(LIB_KFILE) $(top_builddir)/kxmlrpcclient/libkxmlrpcclient.la -lkxmlrpcclient $(top_builddir)/updater/zmd/libzmdqt.la -lzmdqt 
 
 # which sources should be compiled for kzmdupdater
-SUSEUpdater_SOURCES = main.cpp MainWindow.cpp HeaderWidget.cpp  UpdaterApplication.cpp GeneralConfigWindow.cpp UpdateListItem.cpp  TrayIcon.cpp
+opensuse_updater_SOURCES = main.cpp MainWindow.cpp HeaderWidget.cpp  UpdaterApplication.cpp GeneralConfigWindow.cpp UpdateListItem.cpp  TrayIcon.cpp
 
 # these are the headers for your project that won't be installed
 noinst_HEADERS = MainWindow.h HeaderWidget.h Updater.h UpdaterApplication.h GeneralConfigWindow.h UpdateListItem.h  TrayIcon.h

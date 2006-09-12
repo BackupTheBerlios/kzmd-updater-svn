@@ -1,7 +1,7 @@
 Requires: zmd >= 7.1.1.0-66 
 BuildRequires: kdelibs3-devel update-desktop-files
 
-Name:         suseupdater
+Name:         opensuse-updater 
 License:      GPL
 Group:        System
 Summary:      Updater applet for OpenSUSE / ZMD
@@ -9,7 +9,7 @@ Version:      0.1
 Release:      3.0
 URL:          http://en.opensuse.org/KDE_Updater_Applet
 BuildRoot:    %{_tmppath}/%{name}-%{version}-build
-Source0:      suseupdater-%{version}.tar.gz
+Source0:      opensuse-updater-%{version}.tar.gz
 
 %description
 Updater applet for OpenSUSE / ZMD
@@ -20,7 +20,7 @@ Authors:
 
 %debug_package
 %prep
-%setup -q -n suseupdater-%{version}
+%setup -q -n opensuse-updater-%{version}
 . /etc/opt/kde3/common_options
 update_admin --no-unsermake
 
@@ -50,18 +50,18 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-,root,root)
 /opt/kde3/bin/*
-/opt/kde3/share/apps/suseupdater/pics/*
+/opt/kde3/share/apps/opensuse-updater/pics/*
 /opt/kde3/share/icons/hicolor/*
 /opt/kde3/share/applnk/*
 /opt/kde3/share/autostart/*.desktop
-/opt/kde3/share/applications/kde/suseupdater.desktop
+/opt/kde3/share/applications/kde/opensuse-updater.desktop
 /opt/kde3/lib/libkxmlrpcclient.la
 /opt/kde3/lib/libkxmlrpcclient.so
 /opt/kde3/lib/libkxmlrpcclient.so.0
 /opt/kde3/lib/libkxmlrpcclient.so.0.0.0
-/opt/kde3/share/doc/HTML/en/suseupdater/common
-/opt/kde3/share/doc/HTML/en/suseupdater/index.cache.bz2
-/opt/kde3/share/doc/HTML/en/suseupdater/index.docbook
+/opt/kde3/share/doc/HTML/en/opensuse-updater/common
+/opt/kde3/share/doc/HTML/en/opensuse-updater/index.cache.bz2
+/opt/kde3/share/doc/HTML/en/opensuse-updater/index.docbook
 /opt/kde3/lib/kde3/kio_udshttp.la
 /opt/kde3/lib/kde3/kio_udshttp.so
 /opt/kde3/share/services/udshttp.protocol

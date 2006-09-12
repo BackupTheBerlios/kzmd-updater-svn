@@ -2,8 +2,8 @@
 Encoding=UTF-8
 Name=SUSE Updater Applet
 Exec=opensuse-updater %i %m -caption "%c"
-Icon=suseupdater
+Icon=opensuse-updater
 Type=Application
 Terminal=0
-GenericName=SUSE Updater Applet
+GenericName=OpenSUSE Updater Applet
 Categories=Qt;KDE;System;Desktop Applet
