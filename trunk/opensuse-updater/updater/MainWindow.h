@@ -62,7 +62,8 @@ enum {
 	the GUI logic.
 */
 
-class MainWindow : public QWidget {
+class MainWindow : public QWidget
+{
 
 	Q_OBJECT
 

@@ -40,13 +40,13 @@ class UpdateListItem : public QCheckListItem {
 
 		UpdateListItem(QListView *, const QString&, QCheckListItem::Type);
 
-		void setCount(int*);
+		void setCount(int);
 
 	private:
 
 		void stateChange(bool);
 
-		int *selectedCount;
+		int _selectedCount;
 };
 
 #endif

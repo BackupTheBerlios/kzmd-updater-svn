@@ -211,7 +211,7 @@ void MainWindow::populateDone() {
 		*/
 
 		while (item != NULL) {
-			((UpdateListItem*)item)->setCount(&updatesSelected);
+			((UpdateListItem*)item)->setCount(updatesSelected);
 			item = item->nextSibling();
 		}
 	}
