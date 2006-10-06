@@ -13,7 +13,7 @@ INCLUDES = $(all_includes) -I$(top_srcdir)/kxmlrpcclient -I$(top_srcdir)/updater
 opensuse_updater_LDFLAGS = $(KDE_RPATH) $(all_libraries)
 
 # the libraries to link against.
-opensuse_updater_LDADD   = $(LIB_KFILE) $(top_builddir)/kxmlrpcclient/libkxmlrpcclient.la -lkxmlrpcclient $(top_builddir)/updater/zmd/libzmdqt.la -lzmdqt 
+opensuse_updater_LDADD   = $(LIB_KFILE) $(top_builddir)/kxmlrpcclient/libkxmlrpcclient.la -lkxmlrpcclient $(top_builddir)/updater/zmd/libopensuseupdater_zmd.la
 
 # which sources should be compiled for kzmdupdater
 opensuse_updater_SOURCES = main.cpp MainWindow.cpp HeaderWidget.cpp  UpdaterApplication.cpp GeneralConfigWindow.cpp UpdateListItem.cpp  TrayIcon.cpp

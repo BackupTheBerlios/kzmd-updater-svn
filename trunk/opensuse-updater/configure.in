@@ -82,6 +82,7 @@ AC_CONFIG_FILES([ udshttp/Makefile ])
 AC_CONFIG_FILES([ udshttp/test/Makefile ])
 AC_CONFIG_FILES([ updater/Makefile ])
 AC_CONFIG_FILES([ updater/zmd/Makefile ])
+AC_CONFIG_FILES([ updater/zypp/Makefile ])
 AC_OUTPUT
 # Check if KDE_SET_PREFIX was called, and --prefix was passed to configure
 if test -n "$kde_libs_prefix" -a -n "$given_prefix"; then
