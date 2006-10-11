@@ -62,6 +62,7 @@
 
 ZYppUpdater::ZYppUpdater() : Updater()
   , _process(0L)
+  , _you_process(0L)
   , _current_patch(0L)
   , _current_source(0L)
   , _state(Unknown)
@@ -69,9 +70,11 @@ ZYppUpdater::ZYppUpdater() : Updater()
   doCheckForUpdates();
 }
 
-void ZYppUpdater::processExited( KProcess * )
+void ZYppUpdater::slotYOUProcessExited( KProcess * )
 {
-
+  delete _you_process;
+  _you_process = 0L;
+  doCheckForUpdates();
 }
  
 void ZYppUpdater::showLog()
@@ -177,50 +180,18 @@ void ZYppUpdater::updateMenu(QListViewItem *item, const QPoint& point)
 
 void ZYppUpdater::startInstall()
 {
-// 	if (tempList != NULL) {
-// 		QValueList<Package> upList;
-// 		QValueList<Package> instList;
-// 		UpdateListItem *item = (UpdateListItem*)(tempList->firstChild());
-// 
-// 		if (item == NULL) {
-// 			return;
-// 		}
-// 
-// 		do {
-// 			if (item->state() == QCheckListItem::On) {
-//         QString id;
-// 				id = item->text(COLUMN_ID); //gets the id
-// 
-//         if ( currentPackages.find( id ) != currentPackages.end() ) {
-//           Package p;
-//           p = currentPackages[id];
-//           if ( p.installed == true )
-//             upList.append(p);
-//           else
-//             instList.append(p);          
-//         } else if ( currentPatches.find( id ) != currentPatches.end() ) {
-//           Patch p;
-//           p = currentPatches[id];
-//           if ( p.installed == true )
-//             upList.append((Package)p); //can patches be upgraded?
-//           else 
-//             instList.append((Package)p);
-//         }
-// 			}
-// 		} while ((item = (UpdateListItem*)(item->nextSibling())) != 0);
-// 
-// 		if (instList.size() > 0 || upList.size() > 0) {
-// 			ZYppInstallWindow *win = new ZYppInstallWindow(core); //deletes itself
-// 			win->setPackageList(instList, upList, QValueList<Package>());
-// 			win->startUpdate();
-// 
-// 			//Allow the install window to signal an update refresh
-// 			connect(win, SIGNAL(refreshUpdates()), 
-// 							this, SLOT(startRefresh()));
-// 
-// 			win->show();
-// 		}
-// 	}
+  if ( _you_process != 0L )
+  {
+    kdDebug() << "yast already running" << endl;
+    return;
+  }
+  
+  _you_process = new KProcess;
+  *_you_process << "kdesu" << "yast2" << "online_update";
+
+  connect( _you_process, SIGNAL( processExited( KProcess * ) ),
+           SLOT( slotYouProcessExited( KProcess * ) ) );
+  _you_process->start( KProcess::NotifyOnExit );
 }
 
 // void ZYppUpdater::startRefresh()

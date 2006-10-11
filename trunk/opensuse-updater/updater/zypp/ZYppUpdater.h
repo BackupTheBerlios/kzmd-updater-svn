@@ -109,7 +109,7 @@ class ZYppUpdater : public Updater, public QXmlDefaultHandler
 
   protected slots:
     
-    void processExited( KProcess * );
+    void slotYOUProcessExited( KProcess * );
     void showLog();
     void slotProcessExited( KProcess *proc );
     void slotReceivedStdout(KProcess *proc, char *buffer, int buflen);
@@ -121,6 +121,8 @@ class ZYppUpdater : public Updater, public QXmlDefaultHandler
 
     KProcess *_process;
     QString _buffer;
+    
+    KProcess *_you_process;
     
     // parsed data, cleared between calls
     // to checkpatches
