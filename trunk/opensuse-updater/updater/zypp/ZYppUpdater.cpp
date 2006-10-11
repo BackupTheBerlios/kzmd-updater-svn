@@ -17,21 +17,21 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include <kprocess.h>
-#include <kdebug.h>
-#include <klocale.h>
-#include <kmessagebox.h>
-#include <kconfig.h>
-#include <kapp.h>
-
-#include <qpopupmenu.h>
-
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
 #include <sys/poll.h>
 #include <sys/types.h>
 #include <fcntl.h>
+
+#include <qpopupmenu.h>
+
+#include <kprocess.h>
+#include <kdebug.h>
+#include <klocale.h>
+#include <kmessagebox.h>
+#include <kconfig.h>
+#include <kapp.h>
 
 #include "ZYppUpdater.h"
 #include "MainWindow.h"

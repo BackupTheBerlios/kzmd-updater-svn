@@ -17,16 +17,18 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include <kapp.h>
+
 #include <kconfig.h>
+
+#include "UpdaterApplication.h"
 
 #include "Updater.h"
 #include "MainWindow.h"
-#include "UpdaterApplication.h"
 #include "Constants.h"
 
 //Backends
 #include "ZmdUpdater.h"
+#include "ZYppUpdater.h"
 
 UpdaterApplication::UpdaterApplication() : KUniqueApplication(true,true,false) {
 
@@ -42,7 +44,7 @@ UpdaterApplication::UpdaterApplication() : KUniqueApplication(true,true,false) {
 		case BACKEND_SMART:
 
 		default:
-			updater = new ZmdUpdater();
+			updater = new ZYppUpdater();
 
 	}
 
