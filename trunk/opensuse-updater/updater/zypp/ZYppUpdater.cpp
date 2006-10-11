@@ -35,8 +35,8 @@
 
 #include "ZYppUpdater.h"
 #include "MainWindow.h"
-#include "ZYppInstallWindow.h"
-#include "ZYppConfigWindow.h"
+//#include "ZYppInstallWindow.h"
+//#include "ZYppConfigWindow.h"
 #include "UpdateListItem.h"
 
 ZYppUpdater::ZYppUpdater() : Updater()
@@ -52,8 +52,8 @@ ZYppUpdater::ZYppUpdater() : Updater()
 
 void ZYppUpdater::populateUpdateList(QListView *updateList)
 {
-  currentPackages.clear();
-  currentPatches.clear();
+  //currentPackages.clear();
+  //currentPatches.clear();
 }
 
 void ZYppUpdater::updateSelected(QListViewItem *item)
@@ -80,13 +80,13 @@ void ZYppUpdater::updateMenu(QListViewItem *item, const QPoint& point)
 									These are all noops because we do not support
 									package holds yet
 *****************************************************************************/
-void ZYppUpdater::holdPackage()
-{
-}
-
-void ZYppUpdater::removeHold()
-{
-}
+// void ZYppUpdater::holdPackage()
+// {
+// }
+// 
+// void ZYppUpdater::removeHold()
+// {
+// }
 /******************************************************************************
 ******************************************************************************/
 
@@ -138,10 +138,10 @@ void ZYppUpdater::startInstall()
 // 	}
 }
 
-void ZYppUpdater::startRefresh()
-{
-	//emit(refreshList());
-}
+// void ZYppUpdater::startRefresh()
+// {
+// 	//emit(refreshList());
+// }
 
 void ZYppUpdater::configureUpdater()
 {

@@ -20,8 +20,6 @@
 #ifndef _ZYPP_UPDATER_H_
 #define _ZYPP_UPDATER_H_
 
-#include <qtimer.h>
-
 #include "Updater.h"
 
 /**
@@ -94,14 +92,14 @@ class ZYppUpdater : public Updater
 		QString currentDescription;
 
 		//Holds a mapping of the catalog name to the catalog display name.
-		QMap<QString, QString> catalogNames;
+		//QMap<QString, QString> catalogNames;
 
 		//Experimental patch handling
-		QMap<QString, QValueList<Package> > patchDeps;
+		//QMap<QString, QValueList<Package> > patchDeps;
 
 		//Experimental package/patch handling
-		QMap<QString, Package> currentPackages;
-		QMap<QString, Patch> currentPatches;
+		//QMap<QString, Package> currentPackages;
+		//QMap<QString, Patch> currentPatches;
 };
 
 #endif
