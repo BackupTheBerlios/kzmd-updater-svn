@@ -24,12 +24,14 @@
 #include <sys/types.h>
 #include <fcntl.h>
 
+#include <qobject.h>
 #include <qpopupmenu.h>
 
 #include <kprocess.h>
 #include <kdebug.h>
 #include <klocale.h>
 #include <kmessagebox.h>
+#include <kprocess.h>
 #include <kconfig.h>
 #include <kapp.h>
 
@@ -44,11 +46,47 @@ ZYppUpdater::ZYppUpdater() : Updater()
 
 }
 
-/********************************************************************
+void ZYppUpdater::processExited( KProcess * )
+{}
+ 
+void ZYppUpdater::showLog()
+{}
 
-	Slots recieving signals from the mainwindow 
+void ZYppUpdater::slotProcessExited( KProcess *proc )
+{}
 
-*********************************************************************/
+void ZYppUpdater::slotReceivedStdout(KProcess *proc, char *buffer, int buflen)
+{}
+
+void ZYppUpdater::slotReceivedStderr(KProcess *proc, char *buffer, int buflen)
+{}
+
+void ZYppUpdater::doCheckForUpdates()
+{
+  kdDebug() << "checking..." << endl;
+
+  if ( _process ) {
+    kdDebug() << "Check still running." << endl;
+    return;
+  }
+
+  _process = new KProcess;
+
+  //*mProcess << "online_update" << "-k" << "-s";
+  *_process << "zypp-checkpatches";
+  //if ( !mCommandLineOptions.isEmpty() ) *mProcess << mCommandLineOptions;
+  
+  QObject::connect( _process, SIGNAL( processExited( KProcess * ) ),
+           SLOT( slotProcessExited( KProcess * ) ) );
+  QObject::connect( _process, SIGNAL( receivedStdout(KProcess *, char *, int ) ),
+           SLOT( slotReceivedStdout(KProcess *, char *, int ) ) );
+  QObject::connect( _process, SIGNAL( receivedStderr(KProcess *, char *, int ) ),
+           SLOT( slotReceivedStderr(KProcess *, char *, int ) ) );
+
+
+  _process->start( KProcess::NotifyOnExit, KProcess::AllOutput );
+  //mStatusLabel->setText( i18n("Checking...") );
+}
 
 void ZYppUpdater::populateUpdateList(QListView *updateList)
 {

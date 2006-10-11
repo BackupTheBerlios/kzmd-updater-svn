@@ -31,6 +31,7 @@
 	@author Duncan Mac-Vicar <dmacvicar@novell.com>
 */
 
+class KProcess;
 
 class ZYppUpdater : public Updater
 {
@@ -80,7 +81,17 @@ class ZYppUpdater : public Updater
 		*/
 		void updateMenu(QListViewItem* item, const QPoint& point);
 
+  protected slots:
+    
+    void processExited( KProcess * );
+    void showLog();
+    void slotProcessExited( KProcess *proc );
+    void slotReceivedStdout(KProcess *proc, char *buffer, int buflen);
+    void slotReceivedStderr(KProcess *proc, char *buffer, int buflen);
+    
 	private:
+    
+    void doCheckForUpdates();
 
 		//We hold the QListView passed in "populateUpdateList" here
 		QListView *tempList;
@@ -100,6 +111,9 @@ class ZYppUpdater : public Updater
 		//Experimental package/patch handling
 		//QMap<QString, Package> currentPackages;
 		//QMap<QString, Patch> currentPatches;
+    
+    KProcess *_process;
+    QString _buffer;
 };
 
 #endif
