@@ -70,11 +70,16 @@ ZYppUpdater::ZYppUpdater() : Updater()
   doCheckForUpdates();
 }
 
-void ZYppUpdater::slotYOUProcessExited( KProcess * )
+void ZYppUpdater::slotYOUProcessExited( KProcess *p )
 {
-  delete _you_process;
+  delete p;
   _you_process = 0L;
   doCheckForUpdates();
+}
+
+void ZYppUpdater::slotInstSourceProcessExited( KProcess *p )
+{
+  delete p;
 }
  
 void ZYppUpdater::showLog()
@@ -201,8 +206,12 @@ void ZYppUpdater::startInstall()
 
 void ZYppUpdater::configureUpdater()
 {
-	//ZYppConfigWindow *win = new ZYppConfigWindow(core); //deletes itself
-	//win->show();
+	KProcess *inst_source = new KProcess;
+  *inst_source << "kdesu" << "yast2" << "inst_source";
+
+  connect( inst_source, SIGNAL( processExited( KProcess * ) ),
+           SLOT( slotInstSourceProcessExited( KProcess * ) ) );
+  inst_source->start( KProcess::NotifyOnExit );
 }
 
 // QXmlHandler stuff
