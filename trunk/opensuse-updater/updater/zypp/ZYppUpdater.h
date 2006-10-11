@@ -21,6 +21,7 @@
 #define _ZYPP_UPDATER_H_
 
 #include "Updater.h"
+#include <qxml.h>
 
 /**
 	@file
@@ -33,7 +34,27 @@
 
 class KProcess;
 
-class ZYppUpdater : public Updater
+struct ZYppPatch
+{
+  QString category;
+  QString name;
+  QString edition;
+};
+
+struct ZYppSource
+{
+  QString url;
+  QString alias;
+};
+
+typedef enum
+{
+  Unknown,
+  UpdateSources,
+  UpdateList,
+} XmlState;
+
+class ZYppUpdater : public Updater, public QXmlDefaultHandler
 {
 
 	Q_OBJECT
@@ -42,6 +63,11 @@ class ZYppUpdater : public Updater
 
 		ZYppUpdater();
 
+  // QXmlDefaultHandler implementation
+  virtual bool startDocument();
+  virtual bool startElement( const QString&, const QString&, const QString& , const QXmlAttributes& );
+  virtual bool endElement( const QString&, const QString&, const QString& );
+    
 	private slots:
 
 		/**
@@ -93,27 +119,26 @@ class ZYppUpdater : public Updater
     
     void doCheckForUpdates();
 
-		//We hold the QListView passed in "populateUpdateList" here
-		QListView *tempList;
-
-		//This holds the currently selected update in the list
-		QListViewItem *currentUpdate;
-
-		//Holds the descript for the currently selected update
-		QString currentDescription;
-
-		//Holds a mapping of the catalog name to the catalog display name.
-		//QMap<QString, QString> catalogNames;
-
-		//Experimental patch handling
-		//QMap<QString, QValueList<Package> > patchDeps;
-
-		//Experimental package/patch handling
-		//QMap<QString, Package> currentPackages;
-		//QMap<QString, Patch> currentPatches;
-    
     KProcess *_process;
     QString _buffer;
+    
+    // parsed data, cleared between calls
+    // to checkpatches
+    QValueList<ZYppPatch> _patches;
+    QValueList<ZYppSource> _sources;
+    
+    // used during parsing
+    ZYppPatch *_current_patch;
+    ZYppSource *_current_source;
+    
+    XmlState _state;
+    
+		//We hold the QListView passed in "populateUpdateList" here
+		QListView *tempList;
+		//This holds the currently selected update in the list
+		QListViewItem *currentUpdate;
+		//Holds the descript for the currently selected update
+		QString currentDescription;
 };
 
 #endif

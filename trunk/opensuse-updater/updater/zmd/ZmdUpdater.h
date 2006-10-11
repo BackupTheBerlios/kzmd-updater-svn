@@ -33,7 +33,6 @@
 	@author Narayan Newton <narayannewton@gmail.com>
 */
 
-
 //This is where the secret and deviceid files are stored
 //These hold the username and password for zmd
 #define ZMD_CONFIG_PATH "/etc/zmd"

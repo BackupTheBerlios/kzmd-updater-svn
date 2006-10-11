@@ -35,19 +35,21 @@ UpdaterApplication::UpdaterApplication() : KUniqueApplication(true,true,false) {
 	KConfig *config = kapp->config();
 	config->setGroup("General");
 
-	switch (config->readEntry("Backend").toInt()) {
+// 	switch (config->readEntry("Backend").toInt()) {
+// 
+// 		case BACKEND_ZMD:
+// 			updater = new ZmdUpdater();
+// 			break;
+// 		case BACKEND_ZYPP:
+// 		case BACKEND_SMART:
+// 
+// 		default:
+// 			updater = new ZYppUpdater();
+// 
+// 	}
 
-		case BACKEND_ZMD:
-			updater = new ZmdUpdater();
-			break;
-		case BACKEND_ZYPP:
-		case BACKEND_SMART:
-
-		default:
-			updater = new ZYppUpdater();
-
-	}
-
+  updater = new ZYppUpdater();
+  
 	main = new MainWindow();
 	setMainWidget(main);
 

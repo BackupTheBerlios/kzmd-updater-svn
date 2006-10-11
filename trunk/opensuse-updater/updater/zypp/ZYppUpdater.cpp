@@ -41,25 +41,74 @@
 //#include "ZYppConfigWindow.h"
 #include "UpdateListItem.h"
 
+// <?xml version='1.0'?>
+// <update-status op="success">
+//  <update-sources>
+//   <source url="http://ftp.gwdg.de/pub/suse/update/10.1" alias="http://ftp.gwdg.de/pub/suse/update/10.1"/>
+//  </update-sources>
+//  <update-list>
+//  <update category="security">
+//   <name>java-1_5_0-sun</name>
+//   <edition>1438-0</edition>
+//  </update>
+//  <update category="recommended">
+//   <name>ghostscript-library</name>
+//   <edition>1686-0</edition>
+//  </update>
+//  </update-list>
+//  <update-summary total="2" security="1"/>
+// </update-status>
+
+
 ZYppUpdater::ZYppUpdater() : Updater()
+  , _process(0L)
+  , _current_patch(0L)
+  , _current_source(0L)
+  , _state(Unknown)
+{
+  doCheckForUpdates();
+}
+
+void ZYppUpdater::processExited( KProcess * )
+{
+
+}
+ 
+void ZYppUpdater::showLog()
 {
 
 }
 
-void ZYppUpdater::processExited( KProcess * )
-{}
- 
-void ZYppUpdater::showLog()
-{}
-
 void ZYppUpdater::slotProcessExited( KProcess *proc )
-{}
+{
+  kdDebug() << "done..." << endl;
+  kdDebug() << _buffer << endl;
+  delete _process;
+  _process = 0L;
+  // parse the xml
+  
+  QXmlInputSource xml_source;
+  xml_source.setData(_buffer);
+  
+  // clear the buffer
+  _buffer.truncate(0);
+  
+  QXmlSimpleReader reader;
+  reader.setContentHandler(this);
+  reader.parse(xml_source);
+}
 
 void ZYppUpdater::slotReceivedStdout(KProcess *proc, char *buffer, int buflen)
-{}
+{
+  kdDebug() << "got..." << endl;
+  // add stdout to a buffer#
+  // we can parse it when process finishes
+  _buffer += QString::fromUtf8( buffer, buflen );
+}
 
 void ZYppUpdater::slotReceivedStderr(KProcess *proc, char *buffer, int buflen)
-{}
+{
+}
 
 void ZYppUpdater::doCheckForUpdates()
 {
@@ -72,9 +121,7 @@ void ZYppUpdater::doCheckForUpdates()
 
   _process = new KProcess;
 
-  //*mProcess << "online_update" << "-k" << "-s";
-  *_process << "zypp-checkpatches";
-  //if ( !mCommandLineOptions.isEmpty() ) *mProcess << mCommandLineOptions;
+  *_process << "/usr/sbin/zypp-checkpatches-wrapper";
   
   QObject::connect( _process, SIGNAL( processExited( KProcess * ) ),
            SLOT( slotProcessExited( KProcess * ) ) );
@@ -186,4 +233,28 @@ void ZYppUpdater::configureUpdater()
 	//ZYppConfigWindow *win = new ZYppConfigWindow(core); //deletes itself
 	//win->show();
 }
+
+// QXmlHandler stuff
+
+bool ZYppUpdater::startDocument()
+{
+
+}
+
+bool ZYppUpdater::startElement( const QString & namespaceURI, const QString & localName, const QString & qName, const QXmlAttributes & atts  )
+{
+//   Unknown,
+//   UpdateSources,
+//   UpdateList,
+  
+  // here we have to allocate a patch or source in the stack
+  kdDebug() << "xml..." << qName << endl;
+}
+
+bool ZYppUpdater::endElement( const QString&, const QString&, const QString& )
+{
+  // add the source of patch to the list
+}
+
+
 
