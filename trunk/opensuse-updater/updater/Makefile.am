@@ -27,7 +27,7 @@ METASOURCES = AUTO
 KDE_ICON = AUTO
 
 messages: rc.cpp
-	$(XGETTEXT) *.cpp -o $(podir)/kzmdupdater.pot
+	$(XGETTEXT) *.cpp -o $(podir)/opensuse-updater.pot
 
 # this is where the desktop file will go 
 desktopdir   = $(kde_appsdir)/Utilities

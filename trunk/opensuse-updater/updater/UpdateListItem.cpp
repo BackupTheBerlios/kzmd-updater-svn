@@ -19,13 +19,10 @@
 
 #include "UpdateListItem.h"
 
-UpdateListItem::UpdateListItem(	QListView *parent, 
-																const QString &text, 
-																QCheckListItem::Type style) : 
-								QCheckListItem(parent, text, style)
-  : _selectedCount(0)
+UpdateListItem::UpdateListItem(	QListView *parent, const QString &text, QCheckListItem::Type style)
+  : QCheckListItem(parent, text, style )
+  , _selectedCount(0)
 {
-
 	setTristate(false);
 }
 
