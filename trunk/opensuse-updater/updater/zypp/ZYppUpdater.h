@@ -40,6 +40,8 @@ struct ZYppPatch
   QString name;
   QString edition;
   QString source;
+  QString summary;
+  QString description;
 };
 
 struct ZYppSource
@@ -51,8 +53,10 @@ struct ZYppSource
 typedef enum
 {
   Unknown,
-  UpdateSources,
-  UpdateList,
+  Update,
+  UpdateDescription,
+  UpdateSummary,
+  UpdateSource
 } XmlState;
 
 class ZYppUpdater : public Updater, public QXmlDefaultHandler
@@ -69,7 +73,7 @@ class ZYppUpdater : public Updater, public QXmlDefaultHandler
   virtual bool startDocument();
   virtual bool startElement( const QString&, const QString&, const QString& , const QXmlAttributes& );
   virtual bool endElement( const QString&, const QString&, const QString& );
-    
+  virtual bool characters ( const QString & ch );
 	private slots:
 
 		/**
@@ -130,7 +134,7 @@ class ZYppUpdater : public Updater, public QXmlDefaultHandler
     
     // parsed data, cleared between calls
     // to checkpatches
-    QValueList<ZYppPatch> _patches;
+    QPtrList<ZYppPatch> _patches;
     QValueList<ZYppSource> _sources;
     
     ZYppSource _current_source;
@@ -142,7 +146,9 @@ class ZYppUpdater : public Updater, public QXmlDefaultHandler
 		//This holds the currently selected update in the list
 		QListViewItem *currentUpdate;
 		//Holds the descript for the currently selected update
-		QString currentDescription;
+		
+    ZYppPatch *_current_patch;
+    
     int _update_counter;
     
     QListView *_list_view;

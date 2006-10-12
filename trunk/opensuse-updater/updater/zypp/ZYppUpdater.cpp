@@ -24,6 +24,7 @@
 #include <sys/types.h>
 #include <fcntl.h>
 
+#include <qptrlist.h>
 #include <qlistview.h>
 #include <qobject.h>
 #include <qpopupmenu.h>
@@ -37,6 +38,7 @@
 #include <kapp.h>
 
 #include "ZYppUpdater.h"
+#include "ZYppListItem.h"
 #include "MainWindow.h"
 //#include "ZYppInstallWindow.h"
 //#include "ZYppConfigWindow.h"
@@ -115,16 +117,16 @@ void ZYppUpdater::slotProcessExited( KProcess *proc )
   if ( ! _list_view )
     return;
   
-  kdDebug() << "populating... " << _patches.size() << " patches" << endl;
-  for ( QValueList<ZYppPatch>::const_iterator it = _patches.begin(); it != _patches.end(); ++it )
+  kdDebug() << "populating... " << _patches.count() << " patches" << endl;
+  for ( QPtrList<ZYppPatch>::const_iterator it = _patches.begin(); it != _patches.end(); ++it )
   {
     QListViewItem *newItem;
-    newItem = new QListViewItem(_list_view, (*it).name );
+    newItem = new ZYppListItem( (*it), _list_view, (*it)->summary );
 
-		newItem->setText(COLUMN_TYPE, i18n("Update"));
-		newItem->setText(COLUMN_NEW_VERSION,(*it).edition);
+		newItem->setText(COLUMN_TYPE, ((*it)->category == "security") ? i18n("Security") : i18n("Patch") );
+		newItem->setText(COLUMN_NEW_VERSION,(*it)->edition);
 		//newItem->setText(COLUMN_ID, (*iter).id);
-		newItem->setText(COLUMN_CATALOG, (*it).source );
+		newItem->setText(COLUMN_CATALOG, (*it)->source );
   }
   _list_view = 0L;
   emit(populateDone());
@@ -176,7 +178,14 @@ void ZYppUpdater::populateUpdateList(QListView *updateList)
 
 void ZYppUpdater::updateSelected(QListViewItem *item)
 {
-
+  kdDebug() << "updating item" << endl;
+  ZYppListItem *zi = dynamic_cast<ZYppListItem *>(item);
+  if ( zi )
+  {
+    ZYppPatch *patch = zi->patch();
+    emit(returnDescription(patch->description));
+  }
+  
 }
 
 void ZYppUpdater::updateMenu(QListViewItem *item, const QPoint& point)
@@ -245,7 +254,22 @@ bool ZYppUpdater::startDocument()
 {
   kdDebug() << "start document..." << endl;
 
+  _patches.setAutoDelete(true);
   _patches.clear();
+  return true;
+}
+
+bool ZYppUpdater::characters ( const QString & ch )
+{
+  if ( _state == UpdateDescription )
+  {
+    _current_patch->description += ch;
+  }
+  if ( _state == UpdateSummary )
+  {
+    _current_patch->summary += ch;
+  }
+  return true;
 }
 
 bool ZYppUpdater::startElement( const QString & namespaceURI, const QString & localName, const QString & qName, const QXmlAttributes & atts  )
@@ -260,12 +284,37 @@ bool ZYppUpdater::startElement( const QString & namespaceURI, const QString & lo
   if ( qName == "update" )
   {
     kdDebug() << "found patch..." << qName << endl;
-    ZYppPatch current_patch;
-    current_patch.name = atts.value("name");
-    current_patch.category = atts.value("category");
-    current_patch.edition = atts.value("edition");
-    current_patch.source = atts.value("source");
-    _patches.push_back(current_patch);
+    _current_patch = new ZYppPatch();
+    _current_patch->name = atts.value("name");
+    _current_patch->category = atts.value("category");
+    _current_patch->edition = atts.value("edition");
+    _current_patch->source = atts.value("source");
+    
+    _state = Update;
+    // ignore sources for now
+    return true;
+  }
+  if ( qName == "description" )
+  {
+    _state = UpdateDescription;
+    return true;
+  }
+  if ( qName == "summary" )
+  {
+    _state = UpdateSummary;
+    // ignore sources for now
+    return true;
+  }
+  if ( qName == "source" )
+  {
+    if ( _state == Update )
+    {
+    
+    }
+    else
+    {
+    
+    }
     // ignore sources for now
     return true;
   }
@@ -274,6 +323,29 @@ bool ZYppUpdater::startElement( const QString & namespaceURI, const QString & lo
 
 bool ZYppUpdater::endElement( const QString &uri , const QString &localname, const QString &qName )
 {
+  if ( qName == "description" )
+  {
+    _state = Update;
+    return true;
+  }
+  if ( qName == "summary" )
+  {
+    _state = Update;
+    // ignore sources for now
+    return true;
+  }
+  if ( qName == "update" )
+  {
+    _state = Unknown;
+    _patches.append(_current_patch);
+    // ignore sources for now
+    
+    kdDebug() << _current_patch->name << endl;
+    kdDebug() << _current_patch->summary << endl;
+    
+    return true;
+  }
+  
   return true;
 }
 
