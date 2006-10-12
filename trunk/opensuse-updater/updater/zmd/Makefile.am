@@ -10,7 +10,7 @@ libopensuseupdater_zmd_la_LDFLAGS = $(KDE_RPATH) $(all_libraries)
 libopensuseupdater_zmd_la_LIBADD   = $(LIB_KFILE) $(top_builddir)/kxmlrpcclient/libkxmlrpcclient.la
 
 # which sources should be compiled for kzmdupdater
-libopensuseupdater_zmd_la_SOURCES = ZmdAdvancedConfig.cpp ZmdEditServers.cpp ZmdRugParser.cpp ZmdConfigWindow.cpp ZmdInstallWindow.cpp ZmdServerDialog.cpp ZmdUpdaterCore.cpp ZmdProgressDialog.cpp ZmdCatalogListItem.cpp ZmdDependencyDialog.cpp ZmdUpdater.cpp
+libopensuseupdater_zmd_la_SOURCES = ZmdAdvancedConfig.cpp ZmdEditServers.cpp ZmdRugParser.cpp ZmdConfigWindow.cpp ZmdInstallWindow.cpp ZmdServerDialog.cpp ZmdUpdaterCore.cpp ZmdProgressDialog.cpp ZmdCatalogListItem.cpp ZmdDependencyDialog.cpp ZmdUpdater.cpp ZmdUpdateListItem.cpp
 
 noinst_HEADERS = ZmdAdvancedConfig.h ZmdEditServers.h ZmdRugParser.h ZmdUpdater.h ZmdConfigWindow.h ZmdInstallWindow.h ZmdServerDialog.h ZmdUpdaterCore.h ZmdProgressDialog.h ZmdCatalogListItem.h ZmdDependencyDialog.h
 

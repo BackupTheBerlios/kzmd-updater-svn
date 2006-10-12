@@ -37,7 +37,7 @@
 #include "MainWindow.h"
 #include "ZmdInstallWindow.h"
 #include "ZmdConfigWindow.h"
-#include "UpdateListItem.h"
+#include "ZmdUpdateListItem.h"
 
 ZmdUpdater::ZmdUpdater() : Updater() {
 
@@ -81,6 +81,13 @@ ZmdUpdater::ZmdUpdater() : Updater() {
 
 }
 
+UpdaterCapabilities ZmdUpdater::capabilities()
+{
+  UpdaterCapabilities caps;
+  caps.canSelectIndividualUpdates = true;
+  return caps;
+}
+
 /********************************************************************
 
 	Slots recieving signals from the mainwindow 
@@ -90,7 +97,7 @@ ZmdUpdater::ZmdUpdater() : Updater() {
 void ZmdUpdater::populateUpdateList(QListView *updateList) {
 
 	tempList = updateList;
-	emit(updateApplet(APPLET_NO_UPDATES));
+	emit(updateApplet(APPLET_NO_UPDATES, 0));
 	
 	connect(core, SIGNAL(serviceListing(QValueList<Service>)), 
 					this, SLOT(gotServiceListing(QValueList<Service>)));
@@ -169,7 +176,7 @@ void ZmdUpdater::startInstall() {
 	if (tempList != NULL) {
 		QValueList<Package> upList;
 		QValueList<Package> instList;
-		UpdateListItem *item = (UpdateListItem*)(tempList->firstChild());
+		ZmdUpdateListItem *item = (ZmdUpdateListItem*)(tempList->firstChild());
 
 		if (item == NULL) {
 			return;
@@ -196,7 +203,7 @@ void ZmdUpdater::startInstall() {
             instList.append((Package)p);
         }
 			}
-		} while ((item = (UpdateListItem*)(item->nextSibling())) != 0);
+		} while ((item = (ZmdUpdateListItem*)(item->nextSibling())) != 0);
 
 		if (instList.size() > 0 || upList.size() > 0) {
 			ZmdInstallWindow *win = new ZmdInstallWindow(core); //deletes itself
@@ -302,16 +309,16 @@ void ZmdUpdater::gotCatalogListing(QValueList<Catalog> catalogs) {
 
 void ZmdUpdater::gotUpdateListing(QValueList<Package> packageList) {
 	QValueList<Package>::iterator iter;
-	UpdateListItem *newItem;
+	ZmdUpdateListItem *newItem;
 
 	if (packageList.size() > 0 || tempList->childCount() > 0) {
-		emit(updateApplet(APPLET_UPDATES));
+		emit(updateApplet(APPLET_UPDATES, packageList.size() ));
 	} else {
-		emit(updateApplet(APPLET_NO_UPDATES));
+		emit(updateApplet(APPLET_NO_UPDATES, 0));
 	}
 
 	for (iter = packageList.begin(); iter != packageList.end(); iter++) {
-		newItem = new UpdateListItem(tempList, (*iter).name, QCheckListItem::CheckBox);
+		newItem = new ZmdUpdateListItem(tempList, (*iter).name, QCheckListItem::CheckBox);
 
 		newItem->setText(COLUMN_TYPE, i18n("Update"));
 		newItem->setText(COLUMN_NEW_VERSION,(*iter).version);
@@ -331,19 +338,19 @@ void ZmdUpdater::gotUpdateListing(QValueList<Package> packageList) {
 
 void ZmdUpdater::gotPatchListing(QValueList<Patch> patchList) {
 	QValueList<Patch>::iterator iter;
-	UpdateListItem *newItem;
+	ZmdUpdateListItem *newItem;
 
 	if (patchList.size() > 0 || tempList->childCount() > 0) {
-		emit(updateApplet(APPLET_UPDATES));
+		emit(updateApplet(APPLET_UPDATES, patchList.size() ) );
 	} else {
-		emit(updateApplet(APPLET_NO_UPDATES));
+		emit(updateApplet(APPLET_NO_UPDATES, 0));
 	}
 
 	for (iter = patchList.begin(); iter != patchList.end(); iter++) {
 		if ((*iter).status != 3)
 			continue;
 
-		newItem = new UpdateListItem(tempList, (*iter).description, QCheckListItem::CheckBox);
+		newItem = new ZmdUpdateListItem(tempList, (*iter).description, QCheckListItem::CheckBox);
 
 		newItem->setText(COLUMN_TYPE, i18n("Patch"));
 		newItem->setText(COLUMN_NEW_VERSION,(*iter).version);

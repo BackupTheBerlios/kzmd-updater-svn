@@ -17,33 +17,34 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef _UPDATE_LIST_ITEM_H_
-#define _UPDATE_LIST_ITEM_H_
+#include "ZmdUpdateListItem.h"
 
-#include <qlistview.h>
+ZmdUpdateListItem::ZmdUpdateListItem(	QListView *parent, const QString &text, QCheckListItem::Type style)
+  : QCheckListItem(parent, text, style )
+  , _selectedCount(0)
+{
+	setTristate(false);
+}
 
-/**
-	@file
+void ZmdUpdateListItem::setCount(int count)
+{
+	_selectedCount = count;
+}
 
-	Defines UpdateListItem.
-**/
-
-/**
-	UpdateListItem basically just allows for special "refcounting."
-	It keeps track of user clicks and increments/decrements a counter
-
-	@author Narayan Newton <narayannewton@gmail.com>
-**/
-class UpdateListItem : public QListViewItem {
-
-	public:
-
-		UpdateListItem(QListView *, const QString& );
-
+void ZmdUpdateListItem::stateChange(bool state)
+{
 	
-	private:
-
-};
-
-#endif
+	//Deal with tristate, even when we disable this
+	switch (this->state()) {
+		case QCheckListItem::Off:
+		case QCheckListItem::NoChange:
+			setOn(false);
+				_selectedCount--;
+			break;
+		case QCheckListItem::On:
+			setOn(true);
+				_selectedCount++;
+			break;
+	}
+}
 

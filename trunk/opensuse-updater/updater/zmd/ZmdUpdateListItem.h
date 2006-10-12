@@ -34,15 +34,20 @@
 
 	@author Narayan Newton <narayannewton@gmail.com>
 **/
-class UpdateListItem : public QListViewItem {
+class ZmdUpdateListItem : public QCheckListItem
+{
 
 	public:
 
-		UpdateListItem(QListView *, const QString& );
+		ZmdUpdateListItem(QListView *, const QString&, QCheckListItem::Type);
 
-	
+		void setCount(int);
+
 	private:
 
+		void stateChange(bool);
+
+		int _selectedCount;
 };
 
 #endif

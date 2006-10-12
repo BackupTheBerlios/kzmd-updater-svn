@@ -24,6 +24,7 @@
 #include <qlistview.h>
 
 #include "Constants.h"
+#include "UpdaterCapabilities.h"
 
 /**
 	@file
@@ -39,7 +40,7 @@
 	Constants that define the various states our applet can be in. 
 	Currently APPLET_CHECKING is a useless constant.
 **/
-enum { 
+enum {
 		APPLET_NO_UPDATES, /** No updates **/
 		APPLET_UPDATES,		 /** Updates available **/
 		APPLET_CHECKING 	 /** Checking for updates **/
@@ -48,7 +49,8 @@ enum {
 /**
 	Parent class for all updater backends
 */
-class Updater : public QObject {
+class Updater : public QObject
+{
 
 	Q_OBJECT
 
@@ -56,14 +58,20 @@ class Updater : public QObject {
 
 		Updater() : QObject() {}
 
+    /**
+			Used by GUI to retrieve updater capabilities
+		**/
+		virtual UpdaterCapabilities capabilities() = 0;
+    
 	signals:
 
 		/** This is a signal sent to the MainWindow class. 
 			It updates the applet to the specified state.
 			@param state this is the state the updater applet 
+      @param n number of updates
 			will be refreshed to reflect
 		**/
-		void updateApplet(int state);
+		void updateApplet(int state, int n);
 
 		/** 
 			Send this signal to force an update list refresh. 
@@ -142,6 +150,7 @@ class Updater : public QObject {
 			@param point where to show the menu.
 		**/
 		virtual void updateMenu(QListViewItem *item, const QPoint &point) = 0;
+
 };
 
 #endif

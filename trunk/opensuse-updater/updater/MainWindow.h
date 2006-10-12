@@ -21,6 +21,7 @@
 #define _MAIN_WINDOW_H_
 
 #include <qwidget.h>
+#include "UpdaterCapabilities.h"
 
 class TrayIcon;
 class KTextEdit;
@@ -73,7 +74,7 @@ class MainWindow : public QWidget
 			Init function
 			@param parent the parent window, always null in our case.
 		*/
-		MainWindow(QWidget *parent=0);
+		MainWindow( const UpdaterCapabilities &caps, QWidget *parent=0);
 
 	signals:
 
@@ -125,7 +126,7 @@ class MainWindow : public QWidget
 
 			@param state the state, taken from Updater.h definition.
 		*/
-		void appletState(int state);
+		void appletState(int state, int n);
 
 		/**
 			Tells the backend to repopulate our list.
@@ -202,6 +203,8 @@ class MainWindow : public QWidget
 
 		//This is only for CheckListItems, holds the number of items selected
 		int updatesSelected;
+    
+    UpdaterCapabilities _caps;
 };
 
 #endif

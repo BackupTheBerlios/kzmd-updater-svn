@@ -17,8 +17,9 @@
    Boston, MA 02110-1301, USA.
 */
 
-
+#include <kglobal.h>
 #include <kconfig.h>
+#include <kdebug.h>
 
 #include "UpdaterApplication.h"
 
@@ -30,33 +31,38 @@
 #include "ZmdUpdater.h"
 #include "ZYppUpdater.h"
 
-UpdaterApplication::UpdaterApplication() : KUniqueApplication(true,true,false) {
+UpdaterApplication::UpdaterApplication() : KUniqueApplication(true,true,false)
+{
 
-	KConfig *config = kapp->config();
+	KConfig *config = KGlobal::config();
 	config->setGroup("General");
 
-// 	switch (config->readEntry("Backend").toInt()) {
-// 
-// 		case BACKEND_ZMD:
-// 			updater = new ZmdUpdater();
-// 			break;
-// 		case BACKEND_ZYPP:
-// 		case BACKEND_SMART:
-// 
-// 		default:
-// 			updater = new ZYppUpdater();
-// 
-// 	}
-
-  updater = new ZYppUpdater();
+ 	QString backend =  config->readEntry("Backend" );
   
-	main = new MainWindow();
+  
+ 	if ( backend == "zmd" )
+  {
+      kdDebug() << "Using ZMD backend..." << endl;
+ 			updater = new ZmdUpdater();
+  }
+ 	else if ( backend == "zypp" )
+  {
+      kdDebug() << "Using ZYPP backend..." << endl;
+      updater = new ZYppUpdater();
+  }
+  else
+  {
+      kdDebug() << "No backend. Using ZYPP backend..." << endl;
+ 			updater = new ZYppUpdater();
+ 	}
+
+	main = new MainWindow(updater->capabilities());
 	setMainWidget(main);
 
 	//Connects the signals 
 
 	//Signal that controls applet state
-	connect(updater, SIGNAL(updateApplet(int)), main, SLOT(appletState(int)));
+	connect(updater, SIGNAL(updateApplet(int, int)), main, SLOT(appletState(int, int)));
 
 	//Signal which allows updater "plugins" to force an update refresh
 	connect(updater, SIGNAL(refreshList()), main, SLOT(checkUpdates()));

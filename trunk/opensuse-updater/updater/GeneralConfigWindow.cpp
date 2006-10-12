@@ -36,7 +36,7 @@ enum { GCONFIG_ZMD = 0, GCONFIG_ZYPP };
 
 GeneralConfigWindow::GeneralConfigWindow() : QWidget(NULL, NULL, Qt::WDestructiveClose) {
 
-	config = kapp->config();
+	config = KGlobal::config();
 	config->setGroup("General");
 	initGUI();
 	readConfig();
@@ -47,7 +47,7 @@ void GeneralConfigWindow::initGUI() {
 	mainLayout = new QVBoxLayout(this);
 	header = new HeaderWidget(this);
 	intervalSpin = new QSpinBox(this);
-	backendGroup = new QVButtonGroup(i18n("Select Your Preferred Updater"), this);
+	backendGroup = new QVButtonGroup(i18n("Get updates via:"), this);
 	cancelButton = new KPushButton(KStdGuiItem::cancel(), this);
 	okButton = new KPushButton(KStdGuiItem::ok(), this);
 	autostartButton = new QCheckBox(i18n("Automatically start updater on login"), this);
@@ -62,7 +62,8 @@ void GeneralConfigWindow::initGUI() {
 
 	mainLayout->addWidget(autostartButton, false, 0);
 
-	QRadioButton *zmdButton = new QRadioButton(i18n("ZMD Updater"), backendGroup);
+	QRadioButton *zmdButton = new QRadioButton(i18n("Novell ZenWorks"), backendGroup);
+  QRadioButton *zyppButton = new QRadioButton(i18n("Default"), backendGroup);
 //	QRadioButton *zyppButton = new QRadioButton(i18n("ZYPP Updater"), backendGroup);
 	backendGroup->setRadioButtonExclusive(true);
 	mainLayout->addWidget(backendGroup, false, 0);
@@ -85,14 +86,20 @@ void GeneralConfigWindow::readConfig() {
 	if (intervalSpin->value() <= 0)
 		intervalSpin->setValue(15);
 
-	switch(config->readEntry("Backend").toInt()) {
-		case BACKEND_ZMD:
-			backendGroup->setButton(GCONFIG_ZMD);
-			break;
-		default:
-			backendGroup->setButton(GCONFIG_ZMD);
-			break;
-	}
+	QString backend = config->readEntry("Backend");
+  
+  if ( backend == "zmd" )
+  {
+    backendGroup->setButton(GCONFIG_ZMD);
+  }
+  if ( backend == "zypp" )
+  {
+    backendGroup->setButton(GCONFIG_ZYPP);
+  }
+  else
+  {
+    backendGroup->setButton(GCONFIG_ZYPP);
+  }
 
 	switch(config->readEntry("Autostart") == "true") {
 
@@ -110,21 +117,20 @@ void GeneralConfigWindow::readConfig() {
 
 void GeneralConfigWindow::okButtonClicked() {
 
-	int backend;
-
 	config->setGroup("General");
 
 	switch (backendGroup->selectedId()) {
 	case GCONFIG_ZMD:
-		backend = BACKEND_ZMD;
+		config->writeEntry("Backend", "zmd");
 		break;
 	case GCONFIG_ZYPP:
-//		backend = BACKEND_ZYPP;
-		backend = BACKEND_ZMD;
+    config->writeEntry("Backend", "zypp");
+    break;
+  default:
+		config->writeEntry("Backend", "zypp");
 		break;
 	}
-
-	config->writeEntry("Backend", backend);
+  
 	config->writeEntry("Interval", intervalSpin->value());
 	config->writeEntry("Autostart", autostartButton->isChecked());
 	emit(configChanged());

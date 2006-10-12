@@ -22,6 +22,7 @@
 #include <kprocess.h>
 #include <kpopupmenu.h>
 #include <kapp.h>
+#include <kglobal.h>
 #include <kconfig.h>
 #include <kdebug.h>
 #include <ksystemtray.h>
@@ -42,7 +43,10 @@
 #include "TrayIcon.h"
 
 
-MainWindow::MainWindow(QWidget *parent) : QWidget(parent) {
+MainWindow::MainWindow( const UpdaterCapabilities &caps, QWidget *parent)
+  : QWidget(parent)
+    , _caps(caps)
+{
 
 	KIconLoader iconLoader(PROGRAM_NAME);
 
@@ -70,8 +74,9 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent) {
 **************************************************************/
 
 // Read in the config, just the interval really as we cannot deal with the updater itself
-void MainWindow::readConfig() {
-	KConfig *config = kapp->config();
+void MainWindow::readConfig()
+{
+	KConfig *config = KGlobal::config();
 	int interval;
 
 	config->setGroup("General");
@@ -84,7 +89,8 @@ void MainWindow::readConfig() {
 }
 
 //Build GUI, setup system tray and hide GUI initially.
-void MainWindow::initGUI() {
+void MainWindow::initGUI()
+{
 	
 	mainBox = new QVBoxLayout(this);
 	header = new HeaderWidget(this);
@@ -93,16 +99,30 @@ void MainWindow::initGUI() {
 	configureButton = new KPushButton(i18n("Add/Remove Servers"), this);
 	cancelButton = new KPushButton(KStdGuiItem::cancel(), this);
 	installButton = new KPushButton(i18n("Install"), this);
-	selectAllButton = new KPushButton(i18n("Select All"), this);
-	clearSelectionButton = new KPushButton(i18n("Clear Selection"), this);
+  
+  if ( _caps.canSelectIndividualUpdates )
+  {
+	 selectAllButton = new KPushButton(i18n("Select All"), this);
+	 clearSelectionButton = new KPushButton(i18n("Clear Selection"), this);
+  }
+  else
+  {
+    selectAllButton = 0L;
+	  clearSelectionButton = 0L;
+  }
+   
 	
 	mainBox->addWidget(header, 0, 0);
 	mainBox->addWidget(updateList, 0, 0);
 	
 	selectionButtonsLayout = new QHBoxLayout(mainBox);
-	selectionButtonsLayout->addWidget(selectAllButton, false, Qt::AlignLeft);
-	selectionButtonsLayout->addWidget(clearSelectionButton, false, Qt::AlignRight);
-
+  
+  if ( _caps.canSelectIndividualUpdates )
+  {
+	 selectionButtonsLayout->addWidget(selectAllButton, false, Qt::AlignLeft);
+	 selectionButtonsLayout->addWidget(clearSelectionButton, false, Qt::AlignRight);
+  }
+  
 	packageDescription->setReadOnly(true);
 	packageDescription->setMinimumHeight(125);
 	mainBox->addWidget(packageDescription, 0, 0);
@@ -117,9 +137,13 @@ void MainWindow::initGUI() {
 	connect(configureButton, SIGNAL(clicked()), this, SLOT(serverButtonClicked()));
 	connect(installButton, SIGNAL(clicked()), this, SLOT(installButtonClicked()));
 	connect(cancelButton, SIGNAL(clicked()), this, SLOT(hide()));
-	connect(selectAllButton, SIGNAL(clicked()), this, SLOT(selectButtonClicked()));
-	connect(clearSelectionButton, SIGNAL(clicked()), this, SLOT(clearButtonClicked()));
-
+  
+  if ( _caps.canSelectIndividualUpdates )
+  {
+	 connect(selectAllButton, SIGNAL(clicked()), this, SLOT(selectButtonClicked()));
+	 connect(clearSelectionButton, SIGNAL(clicked()), this, SLOT(clearButtonClicked()));
+  }
+  
 	header->setDescription(i18n("<b>Available Updates:</b><br> The following are software upgrades and patches to add features and fix bugs.<br> <u>Select those you would like and press install.</u>"));
 
 	updateList->addColumn(i18n("Name"), 300);
@@ -192,12 +216,15 @@ void MainWindow::disableButtons(bool disable) {
 
 *********************************************************************/
 
-void MainWindow::appletState(int state) {
+void MainWindow::appletState(int state, int n)
+{
 	applet->setUpdates(updateList->childCount());
 	applet->setState(state);
+  applet->setUpdates(n);
 }
 
-void MainWindow::populateDone() {
+void MainWindow::populateDone()
+{
 
 	//if selectAllButton is not NULL, then we have check boxes
 	if (selectAllButton != NULL) {
@@ -211,11 +238,11 @@ void MainWindow::populateDone() {
 		*/
 
 		while (item != NULL) {
-			((UpdateListItem*)item)->setCount(updatesSelected);
+			//((UpdateListItem*)item)->setCount(updatesSelected);
 			item = item->nextSibling();
 		}
 	}
-	applet->setUpdates(updateList->childCount());
+	//applet->setUpdates(updateList->childCount());
 }
 
 void MainWindow::disableSelectButtons() {
@@ -329,7 +356,8 @@ void MainWindow::slotPackageRightClicked(QListViewItem *update, const QPoint &po
 }
 
 //This is where we actually close, called from the system tray
-void MainWindow::slotExit() {
+void MainWindow::slotExit()
+{
 	kapp->quit();
 }
 

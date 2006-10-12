@@ -24,6 +24,7 @@
 #include <sys/types.h>
 #include <fcntl.h>
 
+#include <qlistview.h>
 #include <qobject.h>
 #include <qpopupmenu.h>
 
@@ -63,11 +64,17 @@
 ZYppUpdater::ZYppUpdater() : Updater()
   , _process(0L)
   , _you_process(0L)
-  , _current_patch(0L)
-  , _current_source(0L)
   , _state(Unknown)
+  , _update_counter(0)
+  , _list_view(0)
 {
-  doCheckForUpdates();
+}
+
+UpdaterCapabilities ZYppUpdater::capabilities()
+{
+  UpdaterCapabilities caps;
+  caps.canSelectIndividualUpdates = false;
+  return caps;
 }
 
 void ZYppUpdater::slotYOUProcessExited( KProcess *p )
@@ -104,6 +111,23 @@ void ZYppUpdater::slotProcessExited( KProcess *proc )
   QXmlSimpleReader reader;
   reader.setContentHandler(this);
   reader.parse(xml_source);
+  
+  if ( ! _list_view )
+    return;
+  
+  kdDebug() << "populating... " << _patches.size() << " patches" << endl;
+  for ( QValueList<ZYppPatch>::const_iterator it = _patches.begin(); it != _patches.end(); ++it )
+  {
+    QListViewItem *newItem;
+    newItem = new QListViewItem(_list_view, (*it).name );
+
+		newItem->setText(COLUMN_TYPE, i18n("Update"));
+		newItem->setText(COLUMN_NEW_VERSION,(*it).edition);
+		//newItem->setText(COLUMN_ID, (*iter).id);
+		newItem->setText(COLUMN_CATALOG, (*it).source );
+  }
+  _list_view = 0L;
+  emit(populateDone());
 }
 
 void ZYppUpdater::slotReceivedStdout(KProcess *proc, char *buffer, int buflen)
@@ -144,9 +168,10 @@ void ZYppUpdater::doCheckForUpdates()
 }
 
 void ZYppUpdater::populateUpdateList(QListView *updateList)
-{
-  //currentPackages.clear();
-  //currentPatches.clear();
+{ 
+  _list_view = updateList;
+  emit(updateApplet(APPLET_NO_UPDATES, 0));
+  doCheckForUpdates();
 }
 
 void ZYppUpdater::updateSelected(QListViewItem *item)
@@ -218,7 +243,9 @@ void ZYppUpdater::configureUpdater()
 
 bool ZYppUpdater::startDocument()
 {
+  kdDebug() << "start document..." << endl;
 
+  _patches.clear();
 }
 
 bool ZYppUpdater::startElement( const QString & namespaceURI, const QString & localName, const QString & qName, const QXmlAttributes & atts  )
@@ -226,14 +253,28 @@ bool ZYppUpdater::startElement( const QString & namespaceURI, const QString & lo
 //   Unknown,
 //   UpdateSources,
 //   UpdateList,
-  
+ 
   // here we have to allocate a patch or source in the stack
   kdDebug() << "xml..." << qName << endl;
+  
+  if ( qName == "update" )
+  {
+    kdDebug() << "found patch..." << qName << endl;
+    ZYppPatch current_patch;
+    current_patch.name = atts.value("name");
+    current_patch.category = atts.value("category");
+    current_patch.edition = atts.value("edition");
+    current_patch.source = atts.value("source");
+    _patches.push_back(current_patch);
+    // ignore sources for now
+    return true;
+  }
+  return true;
 }
 
-bool ZYppUpdater::endElement( const QString&, const QString&, const QString& )
+bool ZYppUpdater::endElement( const QString &uri , const QString &localname, const QString &qName )
 {
-  // add the source of patch to the list
+  return true;
 }
 
 

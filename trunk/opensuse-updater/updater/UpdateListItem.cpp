@@ -19,32 +19,9 @@
 
 #include "UpdateListItem.h"
 
-UpdateListItem::UpdateListItem(	QListView *parent, const QString &text, QCheckListItem::Type style)
-  : QCheckListItem(parent, text, style )
-  , _selectedCount(0)
+UpdateListItem::UpdateListItem(	QListView *parent, const QString &text )
+  : QListViewItem(parent, text )
 {
-	setTristate(false);
 }
 
-void UpdateListItem::setCount(int count)
-{
-	_selectedCount = count;
-}
-
-void UpdateListItem::stateChange(bool state)
-{
-	
-	//Deal with tristate, even when we disable this
-	switch (this->state()) {
-		case QCheckListItem::Off:
-		case QCheckListItem::NoChange:
-			setOn(false);
-				_selectedCount--;
-			break;
-		case QCheckListItem::On:
-			setOn(true);
-				_selectedCount++;
-			break;
-	}
-}
 

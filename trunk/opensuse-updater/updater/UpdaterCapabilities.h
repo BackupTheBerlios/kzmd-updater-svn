@@ -1,5 +1,5 @@
 /* 
-   Copyright (C) 2006 Narayan Newton <narayannewton@gmail.com>
+   Copyright (C) 2006 Novell Inc.
 
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public
@@ -17,33 +17,30 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef _UPDATE_LIST_ITEM_H_
-#define _UPDATE_LIST_ITEM_H_
-
-#include <qlistview.h>
+#ifndef _UPDATER_CAPABILITIES_H_
+#define _UPDATER_CAPABILITIES_H_
 
 /**
 	@file
 
-	Defines UpdateListItem.
+	Defines Capabilities for update backend
 **/
 
 /**
-	UpdateListItem basically just allows for special "refcounting."
-	It keeps track of user clicks and increments/decrements a counter
-
-	@author Narayan Newton <narayannewton@gmail.com>
+	@author Duncan Mac-Vicar <dmacvicar@novell.com>
 **/
-class UpdateListItem : public QListViewItem {
-
-	public:
-
-		UpdateListItem(QListView *, const QString& );
-
-	
-	private:
-
+class UpdaterCapabilities
+{
+  public:
+  UpdaterCapabilities()
+   : canSelectIndividualUpdates(false)
+  {
+  
+  }
+  
+  bool canSelectIndividualUpdates;
 };
+
 
 #endif
 

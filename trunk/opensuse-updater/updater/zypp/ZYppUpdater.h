@@ -39,6 +39,7 @@ struct ZYppPatch
   QString category;
   QString name;
   QString edition;
+  QString source;
 };
 
 struct ZYppSource
@@ -62,8 +63,9 @@ class ZYppUpdater : public Updater, public QXmlDefaultHandler
 	public:
 
 		ZYppUpdater();
-
-  // QXmlDefaultHandler implementation
+  virtual UpdaterCapabilities capabilities();
+  
+      // QXmlDefaultHandler implementation
   virtual bool startDocument();
   virtual bool startElement( const QString&, const QString&, const QString& , const QXmlAttributes& );
   virtual bool endElement( const QString&, const QString&, const QString& );
@@ -89,7 +91,7 @@ class ZYppUpdater : public Updater, public QXmlDefaultHandler
 			@param updateList the list on the main window
 		*/
 		void populateUpdateList(QListView* updateList);
-
+    
 		/**
 			Slot which gets called when the user selects an update. 
 			We are expected to write a description of the update and pass it back.
@@ -131,9 +133,7 @@ class ZYppUpdater : public Updater, public QXmlDefaultHandler
     QValueList<ZYppPatch> _patches;
     QValueList<ZYppSource> _sources;
     
-    // used during parsing
-    ZYppPatch *_current_patch;
-    ZYppSource *_current_source;
+    ZYppSource _current_source;
     
     XmlState _state;
     
@@ -143,6 +143,9 @@ class ZYppUpdater : public Updater, public QXmlDefaultHandler
 		QListViewItem *currentUpdate;
 		//Holds the descript for the currently selected update
 		QString currentDescription;
+    int _update_counter;
+    
+    QListView *_list_view;
 };
 
 #endif
