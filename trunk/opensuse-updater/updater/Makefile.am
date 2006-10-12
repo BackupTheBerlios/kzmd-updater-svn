@@ -19,7 +19,7 @@ opensuse_updater_LDADD   = $(LIB_KFILE) $(top_builddir)/kxmlrpcclient/libkxmlrpc
 opensuse_updater_SOURCES = main.cpp MainWindow.cpp HeaderWidget.cpp  UpdaterApplication.cpp GeneralConfigWindow.cpp UpdateListItem.cpp  TrayIcon.cpp
 
 # these are the headers for your project that won't be installed
-noinst_HEADERS = MainWindow.h HeaderWidget.h Updater.h UpdaterApplication.h GeneralConfigWindow.h UpdateListItem.h  TrayIcon.h
+noinst_HEADERS = MainWindow.h HeaderWidget.h Updater.h UpdaterApplication.h UpdaterCapabilities.h GeneralConfigWindow.h UpdateListItem.h  TrayIcon.h
 
 
 # let automoc handle all of the meta source files (moc)
