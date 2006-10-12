@@ -17,7 +17,8 @@ Updater applet for OpenSUSE / ZMD
 Authors:
 --------
     Narayan Newton <narayannewton@gmail.com>
-
+    Duncan Mac-Vicar <dmacvicar@novell.com>
+    Martin Vidner <mvidner@novell.com>
 %debug_package
 %prep
 %setup -q -n opensuse-updater-%{version}
@@ -62,10 +63,7 @@ rm -rf $RPM_BUILD_ROOT
 /opt/kde3/share/doc/HTML/en/suseupdater/common
 /opt/kde3/share/doc/HTML/en/suseupdater/index.cache.bz2
 /opt/kde3/share/doc/HTML/en/suseupdater/index.docbook
-/opt/kde3/lib/libzmdqt.la
-/opt/kde3/lib/libzmdqt.so
-/opt/kde3/lib/libzmdqt.so.0
-/opt/kde3/lib/libzmdqt.so.0.0.0
+/opt/kde3/lib/*
 /opt/kde3/lib/kde3/kio_udshttp.la
 /opt/kde3/lib/kde3/kio_udshttp.so
 /opt/kde3/share/services/udshttp.protocol
