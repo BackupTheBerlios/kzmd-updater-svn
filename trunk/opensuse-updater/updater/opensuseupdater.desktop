@@ -2,7 +2,7 @@
 Encoding=UTF-8
 Name=SUSE Updater Applet
 Exec=opensuseupdater %i %m -caption "%c"
-Icon=opensuseupdater
+Icon=www
 Type=Application
 Terminal=0
 GenericName=OpenSUSE Updater Applet

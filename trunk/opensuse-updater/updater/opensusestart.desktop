@@ -3,7 +3,7 @@ Type=Application
 Exec=opensuseupdater
 Terminal=false
 Name=OpenSUSE Updater
-Icon=opensuseupdater
+Icon=www
 
 X-KDE-StartupNotify=false
 X-KDE-autostart-condition=opensuse-updaterrc:General:Autostart:true
