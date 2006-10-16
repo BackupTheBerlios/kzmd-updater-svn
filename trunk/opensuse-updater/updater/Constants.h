@@ -20,8 +20,8 @@
 #ifndef _CONSTANTS_H_
 #define _CONSTANTS_H_
 
-#define PROGRAM_NAME "opensuse-updater"
-#define VERSION "0.2"
+#define PROGRAM_NAME "opensuseupdater"
+#define VERSION "0.333"
 
 #define TRAY_ICON_GREEN "suse_green.png"
 #define TRAY_ICON_RED	"suse_red.png"
