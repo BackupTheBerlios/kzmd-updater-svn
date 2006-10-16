@@ -1,9 +1,9 @@
 [Desktop Entry]
 Type=Application
-Exec=opensuse-updater
+Exec=opensuseupdater
 Terminal=false
 Name=OpenSUSE Updater
-Icon=opensuse-updater
+Icon=opensuseupdater
 
 X-KDE-StartupNotify=false
 X-KDE-autostart-condition=opensuse-updaterrc:General:Autostart:true
