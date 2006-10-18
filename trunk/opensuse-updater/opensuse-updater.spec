@@ -8,7 +8,7 @@
 # Please submit bugfixes or comments via http://bugs.opensuse.org/
 #
 
-%define svn_r 410
+%define svn_r 413
 %define maj_r 0.3
  
 Name:           opensuse-updater
