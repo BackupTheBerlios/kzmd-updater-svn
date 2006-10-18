@@ -70,7 +70,7 @@ AC_C_BIGENDIAN
 AC_CHECK_KDEMAXPATHLEN
 KDE_INIT_DOXYGEN([The KDE Updater Applet API Reference], [Version $VERSION])
 
-KDE_CREATE_SUBDIRSLIST
+AC_OUTPUT( opensuse-updater.spec )KDE_CREATE_SUBDIRSLIST
 AC_CONFIG_FILES([ Makefile ])
 AC_CONFIG_FILES([ doc/Makefile ])
 AC_CONFIG_FILES([ doc/en/Makefile ])

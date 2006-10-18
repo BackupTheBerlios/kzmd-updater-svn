@@ -28,7 +28,7 @@ include admin/Doxyfile.am
 package: 	package-local
 #package: 	check-up-to-date package-local
 
-package-local:	dist-bzip2
+package-local:	dist-bzip2 opensuse-updater.spec
 	@if [ `bunzip2 -c $(distdir).tar.bz2 | wc --bytes` = 0 ] ; then \
 		echo "Error: $(distdir).tar.bz2 is empty" ; \
 		exit 1 ; \
