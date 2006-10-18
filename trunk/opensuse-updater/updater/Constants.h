@@ -25,6 +25,9 @@
 
 #define TRAY_ICON_GREEN "suse_green.png"
 #define TRAY_ICON_RED	"suse_red.png"
+#define TRAY_ICON_YELLOW	"suse_yellow.png"
+#define TRAY_ICON_PROBLEM	"messagebox_warning"
+#define TRAY_ICON_CHECKING "main"
 
 /** Enum to represent the various backends installed. 
 		New backends added here
@@ -37,4 +40,5 @@ enum { 	BACKEND_ZMD, /** ZMD **/
 //ZYPP and SMART don't actually exist at this point by the way...
 
 #endif
+
 

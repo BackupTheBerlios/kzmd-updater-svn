@@ -43,7 +43,9 @@
 enum {
 		APPLET_NO_UPDATES, /** No updates **/
 		APPLET_UPDATES,		 /** Updates available **/
-		APPLET_CHECKING 	 /** Checking for updates **/
+    APPLET_CRITICAL_UPDATES,		 /** Updates available (security) **/
+		APPLET_CHECKING,	 /** Checking for updates **/
+    APPLET_PROBLEM 	 /** problem **/ 
 };
 
 /**

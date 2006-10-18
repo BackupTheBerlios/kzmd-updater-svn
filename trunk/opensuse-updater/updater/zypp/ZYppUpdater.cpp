@@ -130,6 +130,9 @@ void ZYppUpdater::slotProcessExited( KProcess *proc )
 		//newItem->setText(COLUMN_ID, (*iter).id);
 		newItem->setText(COLUMN_CATALOG, (*it)->source );
   }
+   
+  emit(updateApplet(APPLET_UPDATES, _patches.count()));
+  
   _list_view = 0L;
   emit(populateDone());
 }
@@ -169,6 +172,7 @@ void ZYppUpdater::doCheckForUpdates()
 
   _process->start( KProcess::NotifyOnExit, KProcess::AllOutput );
   kdDebug() << "check process started.." << endl;
+  emit(updateApplet(APPLET_CHECKING, 0));
   //mStatusLabel->setText( i18n("Checking...") );
 }
 
@@ -233,7 +237,7 @@ void ZYppUpdater::startInstall()
   *_you_process << "kdesu" << "yast2" << "online_update";
 
   connect( _you_process, SIGNAL( processExited( KProcess * ) ),
-           SLOT( slotYouProcessExited( KProcess * ) ) );
+           SLOT( slotYOUProcessExited( KProcess * ) ) );
   _you_process->start( KProcess::NotifyOnExit );
 }
 
@@ -284,7 +288,18 @@ bool ZYppUpdater::startElement( const QString & namespaceURI, const QString & lo
  
   // here we have to allocate a patch or source in the stack
   kdDebug() << "xml..." << qName << endl;
-  
+  if ( qName == "update-status" )
+  {
+    if ( atts.value("op") == "error" )
+    {
+      _state = Error;
+      emit(updateApplet(APPLET_PROBLEM, 0));
+    }
+  }
+  if ( (qName == "error") && (_state == Error) )
+  {
+    _state = ErrorMessage;
+  }
   if ( qName == "update" )
   {
     kdDebug() << "found patch..." << qName << endl;
@@ -327,6 +342,14 @@ bool ZYppUpdater::startElement( const QString & namespaceURI, const QString & lo
 
 bool ZYppUpdater::endElement( const QString &uri , const QString &localname, const QString &qName )
 {
+  if ( qName == "update-status" )
+  {
+      _state = Unknown;
+  }
+  if ( (qName == "error") && (_state == ErrorMessage) )
+  {
+    _state = Error;
+  }
   if ( qName == "description" )
   {
     _state = Update;

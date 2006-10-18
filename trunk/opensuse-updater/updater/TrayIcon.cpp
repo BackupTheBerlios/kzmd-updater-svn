@@ -17,6 +17,7 @@
    Boston, MA 02110-1301, USA.
 */
 
+#include <kdebug.h>
 #include <kiconloader.h>
 #include <klocale.h>
 
@@ -35,21 +36,37 @@ TrayIcon::TrayIcon(QWidget *parent) : KSystemTray(parent),
 	setState(APPLET_NO_UPDATES);
 }
 
-void TrayIcon::setState(int state) {
+void TrayIcon::setState(int state, const QString &description )
+{
+  kdDebug() << "Set applet status to: " << state << endl;
 	QToolTip::remove(this);
 	appletState = state;
 	switch (state) {
-		case APPLET_CHECKING: //We do not have a special icon for checking updates
+		case APPLET_CHECKING:
+			setPixmap(UserIcon(TRAY_ICON_CHECKING));
+			QToolTip::add(this, i18n("Checking for updates..."));
+			break;
+    case APPLET_PROBLEM:
+			setPixmap(loadIcon(TRAY_ICON_PROBLEM));
+			QToolTip::add(this, i18n("Error:\n" + description ));
+			break;
 		case APPLET_NO_UPDATES:
 			setPixmap(UserIcon(TRAY_ICON_GREEN));
 			QToolTip::add(this, i18n("No Updates Available"));
 			break;
 		case APPLET_UPDATES:
-			setPixmap(UserIcon(TRAY_ICON_RED));
+			setPixmap(UserIcon(TRAY_ICON_YELLOW));
 			QToolTip::add(this, QString().setNum(updateCount) + 
 													( updateCount == 1 ? 
 														i18n(" Update Available") :
 														i18n(" Updates Available")));
+		  break;
+    case APPLET_CRITICAL_UPDATES:
+			setPixmap(UserIcon(TRAY_ICON_RED));
+			QToolTip::add(this, QString().setNum(updateCount) + 
+													( updateCount == 1 ? 
+														i18n(" Important Update Available") :
+														i18n(" Important Updates Available")));
 			break;
 	}
 }

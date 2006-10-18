@@ -43,8 +43,8 @@ class TrayIcon : public KSystemTray {
 		TrayIcon(QWidget *parent=0);
 
 	public slots:
-
-		void setState(int state);
+    
+    void setState(int state, const QString &description = QString() );
 		void setUpdates(int count);
 
 	private:
