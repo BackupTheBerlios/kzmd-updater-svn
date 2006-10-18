@@ -4,5 +4,4 @@ AM_INIT_AUTOMAKE(opensuseupdater, 0.3)
 AC_C_BIGENDIAN
 AC_CHECK_KDEMAXPATHLEN
 KDE_INIT_DOXYGEN([The KDE Updater Applet API Reference], [Version $VERSION])
-
-AC_OUTPUT( opensuse-updater.spec )
+#AC_OUTPUT(opensuse-updater.spec)
