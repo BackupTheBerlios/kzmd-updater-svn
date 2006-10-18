@@ -8,7 +8,6 @@
 # Please submit bugfixes or comments via http://bugs.opensuse.org/
 #
 
-%define svn_r 413
 %define maj_r 0.3
  
 Name:           opensuse-updater
@@ -16,7 +15,7 @@ BuildRequires:  kdelibs3-devel update-desktop-files
 License:        GPL
 Group:          System/Management
 Summary:        KDE updater applet for OpenSUSE
-Version:        %{maj_r}.svn.r%{svn_r}
+Version:        %{maj_r}
 Release:        1
 URL:            http://en.opensuse.org/KDE_Updater_Applet
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
