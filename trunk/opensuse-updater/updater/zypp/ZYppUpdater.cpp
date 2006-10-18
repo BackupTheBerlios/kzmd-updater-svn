@@ -155,6 +155,7 @@ void ZYppUpdater::doCheckForUpdates()
 
   if ( _process ) {
     kdDebug() << "Check process still running. Will not run this time." << endl;
+    emit(updateApplet(APPLET_CHECKING, 0));
     return;
   }
 

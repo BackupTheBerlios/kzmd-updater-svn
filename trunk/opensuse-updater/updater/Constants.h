@@ -27,7 +27,7 @@
 #define TRAY_ICON_RED	"suse_red.png"
 #define TRAY_ICON_YELLOW	"suse_yellow.png"
 #define TRAY_ICON_PROBLEM	"messagebox_warning"
-#define TRAY_ICON_CHECKING "main"
+#define TRAY_ICON_CHECKING "misc"
 
 /** Enum to represent the various backends installed. 
 		New backends added here

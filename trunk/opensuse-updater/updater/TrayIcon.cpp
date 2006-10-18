@@ -34,6 +34,7 @@ TrayIcon::TrayIcon(QWidget *parent) : KSystemTray(parent),
 	setPixmap(UserIcon(TRAY_ICON_GREEN));
 	setScaledContents(true);
 	setState(APPLET_NO_UPDATES);
+  kdDebug() << "Tray Icon ready" << endl;
 }
 
 void TrayIcon::setState(int state, const QString &description )
@@ -41,9 +42,10 @@ void TrayIcon::setState(int state, const QString &description )
   kdDebug() << "Set applet status to: " << state << endl;
 	QToolTip::remove(this);
 	appletState = state;
-	switch (state) {
+	switch (state)
+  {
 		case APPLET_CHECKING:
-			setPixmap(UserIcon(TRAY_ICON_CHECKING));
+			setPixmap(loadIcon(TRAY_ICON_CHECKING));
 			QToolTip::add(this, i18n("Checking for updates..."));
 			break;
     case APPLET_PROBLEM:
