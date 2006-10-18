@@ -52,8 +52,9 @@ UpdaterApplication::UpdaterApplication() : KUniqueApplication(true,true,false)
   }
   else
   {
-      kdDebug() << "No backend. Using ZYPP backend..." << endl;
+      kdDebug() << "No backend selected. Using ZYPP backend..." << endl;
  			updater = new ZYppUpdater();
+      kdDebug() << "backend initialized" << endl;
  	}
 
 	main = new MainWindow(updater->capabilities());

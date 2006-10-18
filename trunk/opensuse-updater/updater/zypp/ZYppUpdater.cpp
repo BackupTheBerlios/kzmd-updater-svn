@@ -70,6 +70,8 @@ ZYppUpdater::ZYppUpdater() : Updater()
   , _update_counter(0)
   , _list_view(0)
 {
+  kdDebug() << "Initializing zypp backend" << endl;
+  doCheckForUpdates();
 }
 
 UpdaterCapabilities ZYppUpdater::capabilities()
@@ -98,7 +100,7 @@ void ZYppUpdater::showLog()
 
 void ZYppUpdater::slotProcessExited( KProcess *proc )
 {
-  kdDebug() << "done..." << endl;
+  kdDebug() << "check process finished..." << endl;
   kdDebug() << _buffer << endl;
   delete _process;
   _process = 0L;
@@ -149,7 +151,7 @@ void ZYppUpdater::doCheckForUpdates()
   kdDebug() << "checking..." << endl;
 
   if ( _process ) {
-    kdDebug() << "Check still running." << endl;
+    kdDebug() << "Check process still running. Will not run this time." << endl;
     return;
   }
 
@@ -166,11 +168,13 @@ void ZYppUpdater::doCheckForUpdates()
 
 
   _process->start( KProcess::NotifyOnExit, KProcess::AllOutput );
+  kdDebug() << "check process started.." << endl;
   //mStatusLabel->setText( i18n("Checking...") );
 }
 
 void ZYppUpdater::populateUpdateList(QListView *updateList)
-{ 
+{
+  kdDebug() << "got populate UI request..." << endl;
   _list_view = updateList;
   emit(updateApplet(APPLET_NO_UPDATES, 0));
   doCheckForUpdates();
