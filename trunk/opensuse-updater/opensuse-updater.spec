@@ -1,27 +1,38 @@
-Requires: zmd >= 7.1.1.0-66 
-BuildRequires: kdelibs3-devel update-desktop-files
+#
+# spec file for package opensuse-updater (Version 0.1.svn.r390)
+#
+# Copyright (c) 2006 SUSE LINUX Products GmbH, Nuernberg, Germany.
+# This file and all modifications and additions to the pristine
+# package are under the same license as the package itself.
+#
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
 
-Name:         opensuse-updater 
-License:      GPL
-Group:        System
-Summary:      Updater applet for OpenSUSE / ZMD
-Version:      0.2
-Release:      1.0
-URL:          http://en.opensuse.org/KDE_Updater_Applet
-BuildRoot:    %{_tmppath}/%{name}-%{version}-build
-Source0:      opensuse-updater-%{version}.tar.gz
+%define svn_r 410
+%define maj_r 0.3
+ 
+Name:           opensuse-updater
+BuildRequires:  kdelibs3-devel update-desktop-files
+License:        GPL
+Group:          System/Management
+Summary:        KDE updater applet for OpenSUSE
+Version:        %{maj_r}.svn.r%{svn_r}
+Release:        1
+URL:            http://en.opensuse.org/KDE_Updater_Applet
+BuildRoot:      %{_tmppath}/%{name}-%{version}-build
+Source0:        opensuseupdater-%{maj_r}.tar.gz
 
 %description
-Updater applet for OpenSUSE / ZMD
+KDE updater applet for OpenSUSE
 
 Authors:
 --------
     Narayan Newton <narayannewton@gmail.com>
     Duncan Mac-Vicar <dmacvicar@novell.com>
     Martin Vidner <mvidner@novell.com>
-%debug_package
+
 %prep
-%setup -q -n opensuse-updater-%{version}
+%setup -q -n opensuseupdater-%{maj_r} 
 . /etc/opt/kde3/common_options
 update_admin --no-unsermake
 
@@ -33,10 +44,8 @@ make
 %install
 . /etc/opt/kde3/common_options
 make DESTDIR=$RPM_BUILD_ROOT $INSTALL_TARGET
-
 rm -rf $RPM_BUILD_ROOT/opt/kde3/include
-#%suse_update_desktop_file opensuse-updater 
-#%find_lang %name
+%suse_update_desktop_file opensuseupdater
 
 %post
 %run_ldconfig
@@ -46,33 +55,24 @@ rm -rf $RPM_BUILD_ROOT/opt/kde3/include
 
 %clean
 rm -rf $RPM_BUILD_ROOT
-
 #%files -f %name.lang
+
 %files
 %defattr(-,root,root)
 /opt/kde3/bin/*
-/opt/kde3/share/apps/opensuse-updater/pics/*
+%dir /opt/kde3/share/apps/opensuseupdater/
+%dir /opt/kde3/share/apps/opensuseupdater/pics
+/opt/kde3/share/apps/opensuseupdater/pics/*
 /opt/kde3/share/icons/hicolor/*
 /opt/kde3/share/applnk/*
 /opt/kde3/share/autostart/*.desktop
-/opt/kde3/share/applications/kde/opensuse-updater.desktop
-/opt/kde3/lib/libkxmlrpcclient.la
-/opt/kde3/lib/libkxmlrpcclient.so
-/opt/kde3/lib/libkxmlrpcclient.so.0
-/opt/kde3/lib/libkxmlrpcclient.so.0.0.0
-/opt/kde3/share/doc/HTML/en/suseupdater/common
-/opt/kde3/share/doc/HTML/en/suseupdater/index.cache.bz2
-/opt/kde3/share/doc/HTML/en/suseupdater/index.docbook
-/opt/kde3/lib/*
-/opt/kde3/lib/kde3/kio_udshttp.la
-/opt/kde3/lib/kde3/kio_udshttp.so
-/opt/kde3/share/services/udshttp.protocol
+/opt/kde3/share/applications/kde/opensuseupdater.desktop
+/opt/kde3/%{_lib}/*
+/opt/kde3/share/doc/*
+/opt/kde3/share/services/*
 
 %changelog -n opensuse-updater
-* Thu Aug 17 2006 - narayannewton@gmail.com
-- Update for uds ioslave
-* Wed Jul 5 2006 - dmacvicar@suse.de
-- revision 179
-* Mon Jul 3 2006 - dmacvicar@suse.de
-- initial package from svn
-
+* Wed Aug 30 2006 - stbinner@suse.de
+- fix build
+* Tue Aug 29 2006 - dmacvicar@suse.de
+- revision 390
