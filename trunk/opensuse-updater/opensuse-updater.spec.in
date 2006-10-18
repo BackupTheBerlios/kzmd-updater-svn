@@ -17,7 +17,7 @@ Version:        0.3
 Release:        1
 URL:            http://en.opensuse.org/KDE_Updater_Applet
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
-Source0:        opensuseupdater-%{maj_r}.tar.bz2
+Source0:        opensuseupdater-%{version}.tar.bz2
 
 %description
 KDE updater applet for OpenSUSE
@@ -29,7 +29,7 @@ Authors:
     Martin Vidner <mvidner@novell.com>
 
 %prep
-%setup -q -n opensuseupdater-%{maj_r} 
+%setup -q -n opensuseupdater-%{version} 
 . /etc/opt/kde3/common_options
 update_admin --no-unsermake
 
