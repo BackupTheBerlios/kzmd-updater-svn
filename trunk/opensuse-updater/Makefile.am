@@ -10,7 +10,7 @@ $(top_srcdir)/acinclude.m4: $(top_srcdir)/admin/acinclude.m4.in $(top_srcdir)/ad
 	@cd $(top_srcdir) && cat admin/acinclude.m4.in admin/libtool.m4.in > acinclude.m4
 
 $(top_srcdir)/opensuse-updater.spec: opensuse-updater.spec.in
-	cd $(top_srcdir) && $(MAKE) -f admin/Makefile.common opensuse-updater.spec.in ;
+	cd $(top_srcdir) && cp opensuse-updater.spec.in opensuse-updater.spec ;
 
 MAINTAINERCLEANFILES = subdirs configure.in acinclude.m4 configure.files opensuse-updater.spec
 
