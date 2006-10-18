@@ -25,9 +25,10 @@ include admin/Doxyfile.am
 
 .PHONY: package package-local check-up-to-date
 
-package: 	check-up-to-date package-local
+package: 	package-local
+#package: 	check-up-to-date package-local
 
-package-local:	dist-bzip2 libzypp.spec
+package-local:	dist-bzip2
 	@if [ `bunzip2 -c $(distdir).tar.bz2 | wc --bytes` = 0 ] ; then \
 		echo "Error: $(distdir).tar.bz2 is empty" ; \
 		exit 1 ; \
