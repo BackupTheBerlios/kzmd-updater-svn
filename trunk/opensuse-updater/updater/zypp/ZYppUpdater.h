@@ -56,7 +56,6 @@ typedef enum
   Update,
   UpdateDescription,
   UpdateSummary,
-  UpdateSource,
   Error,
   ErrorMessage
 } XmlState;

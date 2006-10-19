@@ -136,11 +136,7 @@ void ZYppUpdater::slotProcessExited( KProcess *proc )
     emit(updateAppletError(_error_message_buffer));
     _error_message_buffer.truncate(0);
     
-    // clear the buffer
-    _stderr_buffer.truncate(0);
-    _buffer.truncate(0);
-    emit(populateDone());
-    return;
+    
   }  
   
   // clear the buffer
@@ -316,10 +312,6 @@ bool ZYppUpdater::characters ( const QString & ch )
   {
     _error_message_buffer += ch;
   }
-  if ( _state == UpdateSource )
-  {
-    _current_patch->source += ch;
-  }
   return true;
 }
 
@@ -351,7 +343,6 @@ bool ZYppUpdater::startElement( const QString & namespaceURI, const QString & lo
     _current_patch->name = atts.value("name");
     _current_patch->category = atts.value("category");
     _current_patch->edition = atts.value("edition");
-    _current_patch->source = atts.value("source");
     
     _state = Update;
     // ignore sources for now
@@ -372,7 +363,7 @@ bool ZYppUpdater::startElement( const QString & namespaceURI, const QString & lo
   {
     if ( _state == Update )
     {
-      _state = UpdateSource;
+      _current_patch->source = atts.value("alias");
     }
     else
     {
@@ -401,7 +392,7 @@ bool ZYppUpdater::endElement( const QString &uri , const QString &localname, con
 {
   if ( qName == "source" )
   {
-    _state = Update;
+    //_state = Update;
   }
   if ( qName == "update-status" )
   {
