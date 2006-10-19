@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Thu Oct 19 16:54:27 CEST 2006 - dmacvicar@suse.de
+
+- show sources in list
+- show error descriptions 
+- r433
+
+-------------------------------------------------------------------
 Wed Oct 18 16:34:34 CEST 2006 - dmacvicar@suse.de
 
 - show the right status
