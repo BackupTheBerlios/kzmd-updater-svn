@@ -63,8 +63,10 @@ UpdaterApplication::UpdaterApplication() : KUniqueApplication(true,true,false)
 	//Connects the signals 
 
 	//Signal that controls applet state
-	connect(updater, SIGNAL(updateApplet(int, int)), main, SLOT(appletState(int, int)));
+	connect(updater, SIGNAL(updateApplet(int, int)), main, SLOT(slotAppletState(int, int)));
 
+  connect(updater, SIGNAL(updateAppletError(const QString &)), main, SLOT(slotAppletError(const QString &)));
+  
 	//Signal which allows updater "plugins" to force an update refresh
 	connect(updater, SIGNAL(refreshList()), main, SLOT(checkUpdates()));
 

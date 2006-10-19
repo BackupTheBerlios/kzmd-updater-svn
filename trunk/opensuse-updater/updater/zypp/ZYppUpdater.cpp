@@ -69,6 +69,9 @@ ZYppUpdater::ZYppUpdater() : Updater()
   , _state(Unknown)
   , _update_counter(0)
   , _list_view(0)
+  , _found_update_status_tag(false)
+  , _end_document_reached(false)
+  , _error(false)
 {
   kdDebug() << "Initializing zypp backend" << endl;
   doCheckForUpdates();
@@ -109,12 +112,40 @@ void ZYppUpdater::slotProcessExited( KProcess *proc )
   QXmlInputSource xml_source;
   xml_source.setData(_buffer);
   
-  // clear the buffer
-  _buffer.truncate(0);
-  
   QXmlSimpleReader reader;
   reader.setContentHandler(this);
   reader.parse(xml_source);
+  
+  if ( !_end_document_reached )
+  {
+    kdDebug() << "Houston, we have a problem." << endl;
+    if ( _buffer.isEmpty() && !_stderr_buffer.isEmpty() )
+        updateAppletError( i18n("helper program returned:\n") + _stderr_buffer );
+    else
+      updateAppletError( i18n("helper program returned:\n") + _buffer );
+    
+    // clear the buffer
+    _stderr_buffer.truncate(0);
+    _buffer.truncate(0);
+    emit(populateDone());
+    return;
+  }
+  
+  if ( _error )
+  {
+    emit(updateAppletError(_error_message_buffer));
+    _error_message_buffer.truncate(0);
+    
+    // clear the buffer
+    _stderr_buffer.truncate(0);
+    _buffer.truncate(0);
+    emit(populateDone());
+    return;
+  }  
+  
+  // clear the buffer
+  _stderr_buffer.truncate(0);
+  _buffer.truncate(0);
   
   if ( ! _list_view )
     return;
@@ -147,6 +178,7 @@ void ZYppUpdater::slotReceivedStdout(KProcess *proc, char *buffer, int buflen)
 
 void ZYppUpdater::slotReceivedStderr(KProcess *proc, char *buffer, int buflen)
 {
+  _stderr_buffer += QString::fromUtf8( buffer, buflen );
 }
 
 void ZYppUpdater::doCheckForUpdates()
@@ -262,7 +294,9 @@ void ZYppUpdater::configureUpdater()
 bool ZYppUpdater::startDocument()
 {
   kdDebug() << "start document..." << endl;
-
+  _found_update_status_tag = false;
+  _end_document_reached = false;
+  _error = false;
   _patches.setAutoDelete(true);
   _patches.clear();
   return true;
@@ -278,6 +312,14 @@ bool ZYppUpdater::characters ( const QString & ch )
   {
     _current_patch->summary += ch;
   }
+  if ( _state == ErrorMessage )
+  {
+    _error_message_buffer += ch;
+  }
+  if ( _state == UpdateSource )
+  {
+    _current_patch->source += ch;
+  }
   return true;
 }
 
@@ -291,15 +333,16 @@ bool ZYppUpdater::startElement( const QString & namespaceURI, const QString & lo
   kdDebug() << "xml..." << qName << endl;
   if ( qName == "update-status" )
   {
+    _found_update_status_tag = true;
     if ( atts.value("op") == "error" )
     {
       _state = Error;
-      emit(updateApplet(APPLET_PROBLEM, 0));
     }
   }
   if ( (qName == "error") && (_state == Error) )
   {
     _state = ErrorMessage;
+    _error = true;
   }
   if ( qName == "update" )
   {
@@ -329,7 +372,7 @@ bool ZYppUpdater::startElement( const QString & namespaceURI, const QString & lo
   {
     if ( _state == Update )
     {
-    
+      _state = UpdateSource;
     }
     else
     {
@@ -341,8 +384,25 @@ bool ZYppUpdater::startElement( const QString & namespaceURI, const QString & lo
   return true;
 }
 
+bool ZYppUpdater::endDocument()
+{
+  _end_document_reached = true;
+  kdDebug() << "end document" << endl;
+  if ( ! _found_update_status_tag )
+  {
+    kdDebug() << "Wrong xml output" << endl;
+    emit(updateAppletError(_buffer));
+    return false;
+  }
+  return true;
+}
+
 bool ZYppUpdater::endElement( const QString &uri , const QString &localname, const QString &qName )
 {
+  if ( qName == "source" )
+  {
+    _state = Update;
+  }
   if ( qName == "update-status" )
   {
       _state = Unknown;
@@ -365,6 +425,7 @@ bool ZYppUpdater::endElement( const QString &uri , const QString &localname, con
   if ( qName == "update" )
   {
     _state = Unknown;
+    kdDebug() << _current_patch->name << " appended" << endl;
     _patches.append(_current_patch);
     // ignore sources for now
     

@@ -216,7 +216,14 @@ void MainWindow::disableButtons(bool disable) {
 
 *********************************************************************/
 
-void MainWindow::appletState(int state, int n)
+void MainWindow::slotAppletError(const QString &desc)
+{
+  kdDebug() << "Applet error, description length: " << desc.length() << endl;
+	applet->setUpdates(0);
+	applet->setState(APPLET_PROBLEM, desc);
+}
+
+void MainWindow::slotAppletState(int state, int n)
 {
 	applet->setUpdates(updateList->childCount());
 	applet->setState(state);

@@ -126,8 +126,14 @@ class MainWindow : public QWidget
 
 			@param state the state, taken from Updater.h definition.
 		*/
-		void appletState(int state, int n);
+		void slotAppletState(int state, int n);
 
+    /**
+			Updates the applet to error state.
+      @param desc Description or error messages
+		*/
+		void slotAppletError(const QString &desc);
+    
 		/**
 			Tells the backend to repopulate our list.
 		*/

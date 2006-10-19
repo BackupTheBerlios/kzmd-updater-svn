@@ -75,6 +75,14 @@ class Updater : public QObject
 		**/
 		void updateApplet(int state, int n);
 
+    /** This is a signal sent to the MainWindow class. 
+			It updates the applet to the specified state.
+			@param state this is the state the updater applet 
+      @param n number of updates
+			will be refreshed to reflect
+		**/
+		void updateAppletError( const QString &desc );
+    
 		/** 
 			Send this signal to force an update list refresh. 
 			You should do this after an installation or after 

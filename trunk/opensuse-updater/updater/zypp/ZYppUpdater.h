@@ -73,6 +73,7 @@ class ZYppUpdater : public Updater, public QXmlDefaultHandler
   
       // QXmlDefaultHandler implementation
   virtual bool startDocument();
+  virtual bool endDocument();
   virtual bool startElement( const QString&, const QString&, const QString& , const QXmlAttributes& );
   virtual bool endElement( const QString&, const QString&, const QString& );
   virtual bool characters ( const QString & ch );
@@ -132,6 +133,9 @@ class ZYppUpdater : public Updater, public QXmlDefaultHandler
     KProcess *_process;
     QString _buffer;
     
+    QString _stderr_buffer;
+    QString _error_message_buffer;
+    
     KProcess *_you_process;
     
     // parsed data, cleared between calls
@@ -154,6 +158,9 @@ class ZYppUpdater : public Updater, public QXmlDefaultHandler
     int _update_counter;
     
     QListView *_list_view;
+    bool _found_update_status_tag;
+    bool _end_document_reached;
+    bool _error;
 };
 
 #endif
