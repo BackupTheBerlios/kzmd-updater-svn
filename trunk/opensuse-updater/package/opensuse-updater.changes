@@ -1,4 +1,12 @@
 -------------------------------------------------------------------
+Mon Oct 23 18:27:17 CEST 2006 - dmacvicar@suse.de
+
+- string fixes
+- Use KConfigXT and KConfigDialog instead of
+  a plain QWidget for general settings
+- r435 
+
+-------------------------------------------------------------------
 Thu Oct 19 16:54:27 CEST 2006 - dmacvicar@suse.de
 
 - show sources in list
