@@ -16,10 +16,12 @@ opensuseupdater_LDFLAGS = $(KDE_RPATH) $(all_libraries)
 opensuseupdater_LDADD   = $(LIB_KFILE) $(top_builddir)/kxmlrpcclient/libkxmlrpcclient.la -lkxmlrpcclient $(top_builddir)/updater/zmd/libopensuseupdater_zmd.la $(top_builddir)/updater/zypp/libopensuseupdater_zypp.la
 
 # which sources should be compiled for kzmdupdater
-opensuseupdater_SOURCES = main.cpp MainWindow.cpp HeaderWidget.cpp  UpdaterApplication.cpp GeneralConfigWindow.cpp UpdateListItem.cpp  TrayIcon.cpp
+opensuseupdater_SOURCES = main.cpp MainWindow.cpp HeaderWidget.cpp  UpdaterApplication.cpp UpdateListItem.cpp  TrayIcon.cpp opensuseupdater_settings.kcfgc updatersettingswidget_base.ui
+
+kde_kcfg_DATA = opensuseupdater_settings.kcfg
 
 # these are the headers for your project that won't be installed
-noinst_HEADERS = MainWindow.h HeaderWidget.h Updater.h UpdaterApplication.h UpdaterCapabilities.h GeneralConfigWindow.h UpdateListItem.h  TrayIcon.h
+noinst_HEADERS = MainWindow.h HeaderWidget.h Updater.h UpdaterApplication.h UpdaterCapabilities.h UpdateListItem.h  TrayIcon.h
 
 
 # let automoc handle all of the meta source files (moc)

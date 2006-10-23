@@ -120,9 +120,9 @@ void ZYppUpdater::slotProcessExited( KProcess *proc )
   {
     kdDebug() << "Houston, we have a problem." << endl;
     if ( _buffer.isEmpty() && !_stderr_buffer.isEmpty() )
-        updateAppletError( i18n("helper program returned:\n") + _stderr_buffer );
+      updateAppletError( i18n("helper program returned:\n%1").arg(_stderr_buffer) );
     else
-      updateAppletError( i18n("helper program returned:\n") + _buffer );
+      updateAppletError(i18n("helper program returned:\n%1").arg(_buffer) );
     
     // clear the buffer
     _stderr_buffer.truncate(0);

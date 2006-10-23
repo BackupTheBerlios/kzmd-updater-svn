@@ -140,9 +140,20 @@ class MainWindow : public QWidget
 		void checkUpdates();
 
 		/**
+			react to value changes
+		*/
+		void slotConfigChanged();
+    
+    /**
 			Reads in the config file
 		*/
-		void readConfig();
+		void slotLoadConfig();
+    
+    /**
+			Saves in the config file
+		*/
+		void slotSaveConfig();
+    
 
 		/**
 			Hides and deletes the "Select All" and "Clear Selection" 

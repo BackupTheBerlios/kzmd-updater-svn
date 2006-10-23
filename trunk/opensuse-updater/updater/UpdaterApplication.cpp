@@ -22,6 +22,7 @@
 #include <kdebug.h>
 
 #include "UpdaterApplication.h"
+#include "opensuseupdater_settings.h"
 
 #include "Updater.h"
 #include "MainWindow.h"
@@ -34,18 +35,15 @@
 UpdaterApplication::UpdaterApplication() : KUniqueApplication(true,true,false)
 {
 
-	KConfig *config = KGlobal::config();
-	config->setGroup("General");
-
- 	QString backend =  config->readEntry("Backend" );
+ 	UpdaterSettings::EnumBackend::type backend;
   
   
- 	if ( backend == "zmd" )
+ 	if ( backend == UpdaterSettings::EnumBackend::zmd )
   {
       kdDebug() << "Using ZMD backend..." << endl;
  			updater = new ZmdUpdater();
   }
- 	else if ( backend == "zypp" )
+ 	else if ( backend == UpdaterSettings::EnumBackend::zypp )
   {
       kdDebug() << "Using ZYPP backend..." << endl;
       updater = new ZYppUpdater();

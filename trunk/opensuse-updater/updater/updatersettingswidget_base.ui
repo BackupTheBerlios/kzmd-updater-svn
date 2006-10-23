@@ -1,0 +1,93 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>UpdaterSettingsWidget_Base</class>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>UpdaterSettingsWidget_Base</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>600</width>
+            <height>166</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>Form1</string>
+    </property>
+    <vbox>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <widget class="QSpinBox">
+            <property name="name">
+                <cstring>kcfg_Interval</cstring>
+            </property>
+            <property name="prefix">
+                <string>Check For Updates Every </string>
+            </property>
+            <property name="suffix">
+                <string> Minutes</string>
+            </property>
+        </widget>
+        <widget class="QCheckBox">
+            <property name="name">
+                <cstring>kcfg_Autostart</cstring>
+            </property>
+            <property name="text">
+                <string>Automa&amp;tically start updater on login</string>
+            </property>
+            <property name="accel">
+                <string>Alt+T</string>
+            </property>
+        </widget>
+        <widget class="QButtonGroup">
+            <property name="name">
+                <cstring>kcfg_Backend</cstring>
+            </property>
+            <property name="title">
+                <string>Get Updates Via</string>
+            </property>
+            <vbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QRadioButton">
+                    <property name="name">
+                        <cstring>radioButton2</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Default</string>
+                    </property>
+                </widget>
+                <widget class="QRadioButton">
+                    <property name="name">
+                        <cstring>radioButton1</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Novell ZENWorks</string>
+                    </property>
+                </widget>
+            </vbox>
+        </widget>
+        <spacer>
+            <property name="name">
+                <cstring>spacer1</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>20</width>
+                    <height>20</height>
+                </size>
+            </property>
+        </spacer>
+    </vbox>
+</widget>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>

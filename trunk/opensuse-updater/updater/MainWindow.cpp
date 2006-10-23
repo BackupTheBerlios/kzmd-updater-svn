@@ -37,7 +37,9 @@
 #include "Constants.h"
 #include "HeaderWidget.h"
 #include "MainWindow.h"
-#include "GeneralConfigWindow.h"
+#include "kconfigdialog.h"
+#include "updatersettingswidget_base.h"
+#include "opensuseupdater_settings.h"
 #include "Updater.h"
 #include "UpdateListItem.h"
 #include "TrayIcon.h"
@@ -55,7 +57,7 @@ MainWindow::MainWindow( const UpdaterCapabilities &caps, QWidget *parent)
 	connect(applet, SIGNAL(quitSelected()), this, SLOT(slotExit()));
 
 	timer = new QTimer(this);
-	readConfig();
+	slotConfigChanged();
 	connect(timer, SIGNAL(timeout()), this, SLOT(checkUpdates()));
 	//timerInterval is read in by readConfig
 	timer->start(timerInterval,false);
@@ -74,16 +76,10 @@ MainWindow::MainWindow( const UpdaterCapabilities &caps, QWidget *parent)
 **************************************************************/
 
 // Read in the config, just the interval really as we cannot deal with the updater itself
-void MainWindow::readConfig()
+void MainWindow::slotConfigChanged()
 {
-	KConfig *config = KGlobal::config();
 	int interval;
-
-	config->setGroup("General");
-	if ((interval = config->readEntry("Interval").toInt()) <= 0) {
-		interval = 15; // set a reasonable default
-	}
-	interval = interval * 60 * 1000; // convert to ms
+	interval = UpdaterSettings::self()->interval() * 60 * 1000; // convert to ms
 	timerInterval = interval;
 	timer->changeInterval(timerInterval);
 }
@@ -96,7 +92,7 @@ void MainWindow::initGUI()
 	header = new HeaderWidget(this);
 	updateList = new QListView(this);
 	packageDescription = new KTextEdit(this);
-	configureButton = new KPushButton(i18n("Add/Remove Servers"), this);
+	configureButton = new KPushButton(i18n("Add/Remove Update Sources..."), this);
 	cancelButton = new KPushButton(KStdGuiItem::cancel(), this);
 	installButton = new KPushButton(i18n("Install"), this);
   
@@ -144,7 +140,7 @@ void MainWindow::initGUI()
 	 connect(clearSelectionButton, SIGNAL(clicked()), this, SLOT(clearButtonClicked()));
   }
   
-	header->setDescription(i18n("<b>Available Updates:</b><br> The following are software upgrades and patches to add features and fix bugs.<br> <u>Select those you would like and press install.</u>"));
+	header->setDescription(i18n("<b>Available Updates:</b><br> The following are software upgrades and patches to add features and fix bugs.<br>"));
 
 	updateList->addColumn(i18n("Name"), 300);
 	updateList->setColumnWidthMode(COLUMN_NAME, QListView::Manual);
@@ -176,10 +172,11 @@ void MainWindow::initGUI()
 	return;
 }
 
-void MainWindow::initMenu() {
+void MainWindow::initMenu()
+{
 	KPopupMenu *menu = applet->contextMenu();
-	menu->insertItem(i18n("Configure Applet"), this, SLOT(configButtonClicked()),0,-1,1);
-	menu->insertItem(i18n("Add/Remove Servers"), this, SLOT(serverButtonClicked()),0,-1,1);
+	menu->insertItem(i18n("Configure Applet..."), this, SLOT(configButtonClicked()),0,-1,1);
+	menu->insertItem(i18n("Add/Remove Update Sources..."), this, SLOT(serverButtonClicked()),0,-1,1);
 }
 
 /*
@@ -284,10 +281,35 @@ void MainWindow::serverButtonClicked() {
 	emit(configureUpdater());
 }
 
-void MainWindow::configButtonClicked() {
-	GeneralConfigWindow *win = new GeneralConfigWindow(); //deletes itself
-	connect(win, SIGNAL(configChanged()), this, SLOT(readConfig()));
-	win->show();
+void MainWindow::configButtonClicked()
+{
+  //An instance of your dialog could be already created and could be cached, 
+  //in which case you want to display the cached dialog instead of creating 
+  //another one 
+  if ( KConfigDialog::showDialog( "updater-settings" ) ) 
+    return;
+ 
+  //KConfigDialog didn't find an instance of this dialog, so lets create it : 
+  KConfigDialog* dialog = new KConfigDialog( this, "updater-settings", UpdaterSettings::self() );
+  UpdaterSettingsWidget_Base* confWdg =  new UpdaterSettingsWidget_Base( 0L, "General" ); 
+
+  dialog->addPage( confWdg, i18n("General"), "general" );
+ 
+  //User edited the configuration - update your local copies of the 
+  //configuration data 
+  connect( dialog, SIGNAL(settingsChanged()), this, SLOT(slotConfigChanged()) );
+
+  dialog->show();
+}
+
+void MainWindow::slotLoadConfig()
+{
+
+}
+
+void MainWindow::slotSaveConfig()
+{
+  
 }
 
 void MainWindow::installButtonClicked() {

@@ -1,0 +1,4 @@
+File=opensuseupdater_settings.kcfg
+ClassName=UpdaterSettings
+Singleton=true
+Mutators=true
