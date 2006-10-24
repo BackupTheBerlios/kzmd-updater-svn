@@ -67,6 +67,7 @@ rm -rf $RPM_BUILD_ROOT
 /opt/kde3/%{_lib}/*
 /opt/kde3/share/doc/*
 /opt/kde3/share/services/*
+/opt/kde3/share/config.kcfg/opensuseupdater_settings.kcfg
 
 %changelog -n opensuse-updater
 * Wed Aug 30 2006 - stbinner@suse.de
