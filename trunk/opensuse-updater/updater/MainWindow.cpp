@@ -79,7 +79,7 @@ MainWindow::MainWindow( const UpdaterCapabilities &caps, QWidget *parent)
 void MainWindow::slotConfigChanged()
 {
 	int interval;
-	interval = UpdaterSettings::self()->interval() * 60 * 1000; // convert to ms
+	interval = UpdaterSettings::self()->interval() * 60 * 60 * 1000; // convert to ms
 	timerInterval = interval;
 	timer->changeInterval(timerInterval);
 }
