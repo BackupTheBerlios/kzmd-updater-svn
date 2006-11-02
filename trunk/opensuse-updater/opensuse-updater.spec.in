@@ -13,11 +13,12 @@ BuildRequires:  kdelibs3-devel update-desktop-files
 License:        GPL
 Group:          System/Management
 Summary:        KDE updater applet for OpenSUSE
-Version:        0.3
+Version:        0.4
 Release:        1
 URL:            http://en.opensuse.org/KDE_Updater_Applet
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Source0:        opensuseupdater-%{version}.tar.bz2
+Requires:       zypper >= 0.5.3
 
 %description
 KDE updater applet for OpenSUSE

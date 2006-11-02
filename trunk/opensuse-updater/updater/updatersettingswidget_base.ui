@@ -27,7 +27,10 @@
                 <string>Check For Updates Every </string>
             </property>
             <property name="suffix">
-                <string> Minutes</string>
+                <string> Hours</string>
+            </property>
+            <property name="minValue">
+                <number>1</number>
             </property>
         </widget>
         <widget class="QCheckBox">

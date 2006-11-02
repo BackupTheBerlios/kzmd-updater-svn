@@ -129,14 +129,6 @@ void ZYppUpdater::slotProcessExited( KProcess *proc )
     _buffer.truncate(0);
     emit(populateDone());
     return;
-  }
-  
-  if ( _error )
-  {
-    emit(updateAppletError(_error_message_buffer));
-    _error_message_buffer.truncate(0);
-    
-    
   }  
   
   // clear the buffer
@@ -159,6 +151,12 @@ void ZYppUpdater::slotProcessExited( KProcess *proc )
   }
    
   emit(updateApplet(APPLET_UPDATES, _patches.count()));
+  
+  if ( _error )
+  {
+    emit(updateAppletError(_error_message_buffer));
+    _error_message_buffer.truncate(0);
+  }
   
   _list_view = 0L;
   emit(populateDone());
@@ -308,7 +306,7 @@ bool ZYppUpdater::characters ( const QString & ch )
   {
     _current_patch->summary += ch;
   }
-  if ( _state == ErrorMessage )
+  if ( _state == Error )
   {
     _error_message_buffer += ch;
   }
@@ -326,14 +324,14 @@ bool ZYppUpdater::startElement( const QString & namespaceURI, const QString & lo
   if ( qName == "update-status" )
   {
     _found_update_status_tag = true;
-    if ( atts.value("op") == "error" )
-    {
-      _state = Error;
-    }
   }
-  if ( (qName == "error") && (_state == Error) )
+  if ( qName == "errors")
   {
-    _state = ErrorMessage;
+    _state = Errors;
+  }
+  if ( (qName == "error") && (_state == Errors ) )
+  {
+    _state = Error;
     _error = true;
   }
   if ( qName == "update" )
@@ -398,9 +396,14 @@ bool ZYppUpdater::endElement( const QString &uri , const QString &localname, con
   {
       _state = Unknown;
   }
-  if ( (qName == "error") && (_state == ErrorMessage) )
+  if ( (qName == "error") && (_state == Error) )
   {
-    _state = Error;
+    _error_message_buffer += "\n";
+    _state = Errors;
+  }
+  if ( (qName == "errors") )
+  {
+    _state = Unknown;
   }
   if ( qName == "description" )
   {

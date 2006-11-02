@@ -56,8 +56,8 @@ typedef enum
   Update,
   UpdateDescription,
   UpdateSummary,
+  Errors,
   Error,
-  ErrorMessage
 } XmlState;
 
 class ZYppUpdater : public Updater, public QXmlDefaultHandler
