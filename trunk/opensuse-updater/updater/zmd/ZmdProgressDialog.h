@@ -1,4 +1,4 @@
-/* 
+/*
    Copyright (C) 2006 Narayan Newton <narayannewton@gmail.com>
 
    This program is free software; you can redistribute it and/or
@@ -44,40 +44,41 @@ class KProgress;
 	and wait for a finished signal from updater core. In either mode, we are
 	going to be modal.
 **/
-class ZmdProgressDialog : public QDialog {
+class ZmdProgressDialog : public QDialog
+{
 
-	Q_OBJECT
+  Q_OBJECT
 
-	public:
+public:
 
-		//first argument true for a progress bar, false for text only.
-		ZmdProgressDialog(bool progressGUI, QWidget *parent=0);
+  //first argument true for a progress bar, false for text only.
+  ZmdProgressDialog(bool progressGUI, QWidget *parent=0);
 
-		void setTitle(QString);
-		void setDescription(QString);
+  void setTitle(QString);
+  void setDescription(QString);
 
-	public slots:
-	
-		void progress(Progress);
+public slots:
 
-		void finished(QString,int,QString);
+  void progress(Progress);
 
-	private slots:
+  void finished(QString,int,QString);
 
-		//Keep this window up while the transaction continues
-		void closeEvent(QCloseEvent *e);
+private slots:
 
-	private:
+  //Keep this window up while the transaction continues
+  void closeEvent(QCloseEvent *e);
 
-		void initProgressGUI();
-		void initTextGUI();
+private:
 
-		QVBoxLayout *mainLayout;
-		KProgress *progressBar;
-		QLabel *description;
+  void initProgressGUI();
+  void initTextGUI();
 
-		//Mark if we should really exit
-		bool reallyDone;
+  QVBoxLayout *mainLayout;
+  KProgress *progressBar;
+  QLabel *description;
+
+  //Mark if we should really exit
+  bool reallyDone;
 };
 
 #endif

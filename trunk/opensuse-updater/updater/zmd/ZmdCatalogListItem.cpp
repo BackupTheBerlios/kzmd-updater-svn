@@ -1,4 +1,4 @@
-/* 
+/*
    Copyright (C) 2006 Narayan Newton <narayannewton@gmail.com>
 
    This program is free software; you can redistribute it and/or
@@ -18,39 +18,42 @@
 */
 
 #include "ZmdCatalogListItem.h"
-#include "ZmdConfigWindow.h" 
+#include "ZmdConfigWindow.h"
 
 #include <kdebug.h>
 
-ZmdCatalogListItem::ZmdCatalogListItem(	QListViewItem *parent, 
-										const QString &text, 
-										ZmdUpdaterCore *_core) : 
-					QCheckListItem(	parent, 
-									text, 
-									QCheckListItem::CheckBox), 
-					core(_core) {
+ZmdCatalogListItem::ZmdCatalogListItem(	QListViewItem *parent,
+                                        const QString &text,
+                                        ZmdUpdaterCore *_core) :
+    QCheckListItem(	parent,
+                    text,
+                    QCheckListItem::CheckBox),
+    core(_core)
+{
 
-	//Make sure this isn't a tristate
-	setTristate(false);
+  //Make sure this isn't a tristate
+  setTristate(false);
 }
 
-void ZmdCatalogListItem::stateChange(bool state) {
-	Catalog cat;
+void ZmdCatalogListItem::stateChange(bool state)
+{
+  Catalog cat;
 
-	cat.name = text(CONFW_NAME);
-	cat.id = text(CONFW_ID);
+  cat.name = text(CONFW_NAME);
+  cat.id = text(CONFW_ID);
 
-	if (cat.id == "")
-		return;
+  if (cat.id == "")
+    return;
 
-	//Deal with tristate, even when we disable this
-	switch (this->state()) {
-		case QCheckListItem::Off:
-			core->unsubscribeCatalog(cat);
-			break;
-		case QCheckListItem::On:
-			core->subscribeCatalog(cat);
-			break;
-	}
+  //Deal with tristate, even when we disable this
+  switch (this->state())
+  {
+  case QCheckListItem::Off:
+    core->unsubscribeCatalog(cat);
+    break;
+  case QCheckListItem::On:
+    core->subscribeCatalog(cat);
+    break;
+  }
 }
 

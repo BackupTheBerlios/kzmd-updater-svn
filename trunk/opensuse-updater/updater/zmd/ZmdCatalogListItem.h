@@ -1,4 +1,4 @@
-/* 
+/*
    Copyright (C) 2006 Narayan Newton <narayannewton@gmail.com>
 
    This program is free software; you can redistribute it and/or
@@ -24,19 +24,20 @@
 
 #include "ZmdUpdaterCore.h"
 
-class ZmdCatalogListItem : public QCheckListItem {
+class ZmdCatalogListItem : public QCheckListItem
+{
 
-	public:
+public:
 
-		ZmdCatalogListItem(	QListViewItem *parent, 
-							const QString &text, 
-							ZmdUpdaterCore *_core);
+  ZmdCatalogListItem(	QListViewItem *parent,
+                      const QString &text,
+                      ZmdUpdaterCore *_core);
 
-	private:
+private:
 
-		void stateChange(bool);
+  void stateChange(bool);
 
-		ZmdUpdaterCore *core;
+  ZmdUpdaterCore *core;
 };
 
 #endif

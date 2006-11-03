@@ -1,4 +1,4 @@
-/* 
+/*
    Copyright (C) 2006 Narayan Newton <narayannewton@gmail.com>
 
    This program is free software; you can redistribute it and/or
@@ -32,9 +32,9 @@
 
 /** Enum for the various columns in the server list **/
 enum { 	CONFW_NAME=0, 		/** Name **/
-				CONFW_URI, 				/** URI **/
-				CONFW_ID, 				/** ID **/
-};
+        CONFW_URI, 				/** URI **/
+        CONFW_ID, 				/** ID **/
+     };
 
 //Forward declare so we can compile a bit faster
 class ZmdUpdaterCore;
@@ -50,35 +50,36 @@ class KPushButton;
 	The ZmdEditWindow, for adding/removing servers
 	The ZmdAdvancedConfig, for configuring ZMD itself
 **/
-class ZmdConfigWindow : public QWidget {
+class ZmdConfigWindow : public QWidget
+{
 
-	Q_OBJECT
+  Q_OBJECT
 
-	public:
+public:
 
-		ZmdConfigWindow(ZmdUpdaterCore *_core=0, QWidget *parent=0);
-		~ZmdConfigWindow();
+  ZmdConfigWindow(ZmdUpdaterCore *_core=0, QWidget *parent=0);
+  ~ZmdConfigWindow();
 
-	signals:
+signals:
 
-		void refreshUpdates();
+  void refreshUpdates();
 
-	private slots:
+private slots:
 
-		void tabChanged(QWidget *);
+  void tabChanged(QWidget *);
 
-	private:
+private:
 
-		void initGUI();
+  void initGUI();
 
-		QVBoxLayout *mainLayout;
-		HeaderWidget *header;
-		QTabWidget *tabs;
-		KPushButton *closeButton;
+  QVBoxLayout *mainLayout;
+  HeaderWidget *header;
+  QTabWidget *tabs;
+  KPushButton *closeButton;
 
-		ZmdEditServers *editServers;
-		ZmdAdvancedConfig *advancedConfig;		
-		ZmdUpdaterCore *core;
+  ZmdEditServers *editServers;
+  ZmdAdvancedConfig *advancedConfig;
+  ZmdUpdaterCore *core;
 };
 
 #endif

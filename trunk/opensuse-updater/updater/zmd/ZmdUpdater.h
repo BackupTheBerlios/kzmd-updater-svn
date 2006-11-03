@@ -1,4 +1,4 @@
-/* 
+/*
    Copyright (C) 2006 Narayan Newton <narayannewton@gmail.com>
 
    This program is free software; you can redistribute it and/or
@@ -38,136 +38,137 @@
 #define ZMD_CONFIG_PATH "/etc/zmd"
 
 /** Enum to represent the two protocols for ZMD **/
-enum { 
-				ZMD_TCP,	/** TCP **/
-				ZMD_UDS,	/** Unix Domain Sockets **/ 
+enum {
+  ZMD_TCP,	/** TCP **/
+  ZMD_UDS,	/** Unix Domain Sockets **/
 };
 
 /* The TCP and UDS address of the local zmd server */
 #define TCP_SERVER_ADDY "127.0.0.1"
 #define TCP_SERVER_POSTFIX ":2544/zmd/RPC2"
-#define UDS_SERVER_ADDY "udshttp:/var/run/zmd/zmd-web.socket" 
+#define UDS_SERVER_ADDY "udshttp:/var/run/zmd/zmd-web.socket"
 
 //Program Options
 #define BUGGY_ZMD //turns on bug workarounds for ZMD
 #define NO_PACKAGE_LOCKS //turns off support for locking packages
 
 /**
-		Our ZMD Backend class. Is connected to the 
+		Our ZMD Backend class. Is connected to the
 		MainWindow class via UpdaterApp
 	*/
-class ZmdUpdater : public Updater {
+class ZmdUpdater : public Updater
+{
 
-	Q_OBJECT
+  Q_OBJECT
 
-	public:
+public:
 
-		ZmdUpdater();
+  ZmdUpdater();
 
-    virtual UpdaterCapabilities capabilities();
-    
-	private slots:
+  virtual UpdaterCapabilities capabilities();
 
-		//Slots implemented from Updater abstract class
+private slots:
 
-		/**
-			Slot which gets called when we need to throw up the add/remove server dialog.
-		*/
-		void configureUpdater();
+  //Slots implemented from Updater abstract class
 
-		/**
-			Slot which gets called when we need to start an update. 
-			Collect our update info from the list we got passed 
-			in populateList and go. 
-		*/
-		void startInstall();
+  /**
+  	Slot which gets called when we need to throw up the add/remove server dialog.
+  */
+  void configureUpdater();
 
-		/**
-			Slot which gets called when we need to check for updates 
-			and load up the list. 
+  /**
+  	Slot which gets called when we need to start an update. 
+  	Collect our update info from the list we got passed 
+  	in populateList and go. 
+  */
+  void startInstall();
 
-			@param updateList the list on the main window
-		*/
-		void populateUpdateList(QListView* updateList);
+  /**
+  	Slot which gets called when we need to check for updates 
+  	and load up the list. 
 
-		/**
-			Slot which gets called when the user selects an update. 
-			We are expected to write a description of the update and pass it back.
+  	@param updateList the list on the main window
+  */
+  void populateUpdateList(QListView* updateList);
 
-			@param item the update itself
+  /**
+  	Slot which gets called when the user selects an update. 
+  	We are expected to write a description of the update and pass it back.
 
-		*/
-		void updateSelected(QListViewItem* item);
+  	@param item the update itself
 
-		/**
-			Slot which gets called when the user right clicks an update.
+  */
+  void updateSelected(QListViewItem* item);
 
-			@param updateItem the update itself.
-			@param point where to show the menu
-		*/
-		void updateMenu(QListViewItem* item, const QPoint& point);
+  /**
+  	Slot which gets called when the user right clicks an update.
 
-
-		//Our own slots
-		void startRefresh();
-		void gotLockListing(QValueList<PackageLock>);
-		void gotCatalogListing(QValueList<Catalog>);
-		void gotServiceListing(QValueList<Service>);
-		void gotUpdateListing(QValueList<Package>);
-		void gotPatchListing(QValueList<Patch>);
-		void gotPackageInfo(Package);
-		void gotPatchInfo(Patch);
-		void gotPackageDetails(PackageDetails);
-		void gotDepInfo(QString, QValueList<Package>,
-										QValueList<Package>,
-										QValueList<Package>,
-										QValueList<Package>);
-		void holdPackage();
-		void removeHold();
-
-		//Error handling 
-		void error(QString, int); //Recieves error messages (generalFault) from the backend.
+  	@param updateItem the update itself.
+  	@param point where to show the menu
+  */
+  void updateMenu(QListViewItem* item, const QPoint& point);
 
 
-	private:
+  //Our own slots
+  void startRefresh();
+  void gotLockListing(QValueList<PackageLock>);
+  void gotCatalogListing(QValueList<Catalog>);
+  void gotServiceListing(QValueList<Service>);
+  void gotUpdateListing(QValueList<Package>);
+  void gotPatchListing(QValueList<Patch>);
+  void gotPackageInfo(Package);
+  void gotPatchInfo(Patch);
+  void gotPackageDetails(PackageDetails);
+  void gotDepInfo(QString, QValueList<Package>,
+                  QValueList<Package>,
+                  QValueList<Package>,
+                  QValueList<Package>);
+  void holdPackage();
+  void removeHold();
 
-		/**
-			Does the auth routine for the core ZMD functions. 
-			Basically, just gets the user/pass and gives it to 
-			the backend. This will change later when we get a real 
-			auth routine.
-		*/
-		void authorizeCore();
+  //Error handling
+  void error(QString, int); //Recieves error messages (generalFault) from the backend.
 
-		//Watch variable to control the generalFault message (ZMD TCP Error)
-		//We should only show the error on first data drop, otherwise error is probably due to
-		//zmd shutting down, sleeping or suspend. 
-		bool showGeneralFaultError; 
 
-		//Read in configuration for ZMD and tell the core backend what protocol to use
-		void readConfig();
+private:
 
-		//We hold the QListView passed in "populateUpdateList" here
-		QListView *tempList;
+  /**
+  	Does the auth routine for the core ZMD functions. 
+  	Basically, just gets the user/pass and gives it to 
+  	the backend. This will change later when we get a real 
+  	auth routine.
+  */
+  void authorizeCore();
 
-		//This holds the currently selected update in the list
-		QListViewItem *currentUpdate;
+  //Watch variable to control the generalFault message (ZMD TCP Error)
+  //We should only show the error on first data drop, otherwise error is probably due to
+  //zmd shutting down, sleeping or suspend.
+  bool showGeneralFaultError;
 
-		//Holds the descript for the currently selected update
-		QString currentDescription;
+  //Read in configuration for ZMD and tell the core backend what protocol to use
+  void readConfig();
 
-		//Holds a mapping of the catalog name to the catalog display name.
-		QMap<QString, QString> catalogNames;
+  //We hold the QListView passed in "populateUpdateList" here
+  QListView *tempList;
 
-		//Experimental patch handling
-		QMap<QString, QValueList<Package> > patchDeps;
+  //This holds the currently selected update in the list
+  QListViewItem *currentUpdate;
 
-		//Experimental package/patch handling
-		QMap<QString, Package> currentPackages;
-		QMap<QString, Patch> currentPatches;
+  //Holds the descript for the currently selected update
+  QString currentDescription;
 
-		//The core updater functionality
-		ZmdUpdaterCore *core;
+  //Holds a mapping of the catalog name to the catalog display name.
+  QMap<QString, QString> catalogNames;
+
+  //Experimental patch handling
+  QMap<QString, QValueList<Package> > patchDeps;
+
+  //Experimental package/patch handling
+  QMap<QString, Package> currentPackages;
+  QMap<QString, Patch> currentPatches;
+
+  //The core updater functionality
+  ZmdUpdaterCore *core;
 
 };
 

@@ -1,4 +1,4 @@
-/* 
+/*
    Copyright (C) 2006 Narayan Newton <narayannewton@gmail.com>
 
    This program is free software; you can redistribute it and/or
@@ -39,27 +39,28 @@ class QStringList;
 	Class that parses the preferences output from rug. Stores the properties and
 	allows you to fetch them from the class.
 **/
-class ZmdRugParser : public QObject {
+class ZmdRugParser : public QObject
+{
 
-	Q_OBJECT
+  Q_OBJECT
 
-	public:
+public:
 
-		ZmdRugParser(QObject *parent=0);
-		ZmdRugParser(const QString rugOutput, QObject *parent=0);
+  ZmdRugParser(QObject *parent=0);
+  ZmdRugParser(const QString rugOutput, QObject *parent=0);
 
-		void setData(const QString);
+  void setData(const QString);
 
-		QString getProperty(QString);
-		QString getDescription(QString);
+  QString getProperty(QString);
+  QString getDescription(QString);
 
-	private:
+private:
 
-		void parse();
+  void parse();
 
-		QString data;
-		QDict<QString> propertyMap;
-		QDict<QString> descriptionMap;
+  QString data;
+  QDict<QString> propertyMap;
+  QDict<QString> descriptionMap;
 };
 
 #endif

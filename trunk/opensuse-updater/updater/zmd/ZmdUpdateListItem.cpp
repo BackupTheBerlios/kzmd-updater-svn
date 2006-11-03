@@ -1,4 +1,4 @@
-/* 
+/*
    Copyright (C) 2006 Narayan Newton <narayannewton@gmail.com>
 
    This program is free software; you can redistribute it and/or
@@ -20,31 +20,32 @@
 #include "ZmdUpdateListItem.h"
 
 ZmdUpdateListItem::ZmdUpdateListItem(	QListView *parent, const QString &text, QCheckListItem::Type style)
-  : QCheckListItem(parent, text, style )
-  , _selectedCount(0)
+    : QCheckListItem(parent, text, style )
+    , _selectedCount(0)
 {
-	setTristate(false);
+  setTristate(false);
 }
 
 void ZmdUpdateListItem::setCount(int count)
 {
-	_selectedCount = count;
+  _selectedCount = count;
 }
 
 void ZmdUpdateListItem::stateChange(bool state)
 {
-	
-	//Deal with tristate, even when we disable this
-	switch (this->state()) {
-		case QCheckListItem::Off:
-		case QCheckListItem::NoChange:
-			setOn(false);
-				_selectedCount--;
-			break;
-		case QCheckListItem::On:
-			setOn(true);
-				_selectedCount++;
-			break;
-	}
+
+  //Deal with tristate, even when we disable this
+  switch (this->state())
+  {
+  case QCheckListItem::Off:
+  case QCheckListItem::NoChange:
+    setOn(false);
+    _selectedCount--;
+    break;
+  case QCheckListItem::On:
+    setOn(true);
+    _selectedCount++;
+    break;
+  }
 }
 

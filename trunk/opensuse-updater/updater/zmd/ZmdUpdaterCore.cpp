@@ -1,4 +1,4 @@
-/* 
+/*
    Copyright (C) 2006 Narayan Newton <narayannewton@gmail.com>
 
    This program is free software; you can redistribute it and/or
@@ -29,27 +29,30 @@
  *
  ********************************************************************/
 
-ZmdUpdaterCore::ZmdUpdaterCore(QObject *parent) : QObject(parent) {
+ZmdUpdaterCore::ZmdUpdaterCore(QObject *parent) : QObject(parent)
+{
   server = new KXmlRpcServer(KURL());
   server->setUserAgent("ZMDUPDATER/0.1");
 
   timer = new QTimer(this);
   connect(timer, SIGNAL(timeout()), this, SLOT(timerSlot()));
-  
+
   timeoutCount = 0;
 }
 
-ZmdUpdaterCore::~ZmdUpdaterCore() {
+ZmdUpdaterCore::~ZmdUpdaterCore()
+{
   delete server;
 }
 
 /********************************************************************
  *
- *                    User/Pass Functions 
+ *                    User/Pass Functions
  *
  ********************************************************************/
 
-void ZmdUpdaterCore::setUser(QString user) {
+void ZmdUpdaterCore::setUser(QString user)
+{
   KURL url(server->url());
   username = user; //we never actually use this
 
@@ -57,7 +60,8 @@ void ZmdUpdaterCore::setUser(QString user) {
   server->setUrl(url);
 }
 
-void ZmdUpdaterCore::setPass(QString pass) {
+void ZmdUpdaterCore::setPass(QString pass)
+{
   KURL url(server->url());
   password = pass; //we never actually use this
 
@@ -65,7 +69,8 @@ void ZmdUpdaterCore::setPass(QString pass) {
   server->setUrl(url);
 }
 
-void ZmdUpdaterCore::addUser(Identity id) {
+void ZmdUpdaterCore::addUser(Identity id)
+{
   IS_ZMD_BUSY;
 
   QValueList<QVariant> data;
@@ -73,19 +78,21 @@ void ZmdUpdaterCore::addUser(Identity id) {
   data.append(QVariant(map));
 
   server->call("zmd.system.identity_add", data,
-  this, SLOT(identityData(const QValueList<QVariant>&, const QVariant&)), 
-  this, SLOT(faultData(int, const QString&, const QVariant&)));
+               this, SLOT(identityData(const QValueList<QVariant>&, const QVariant&)),
+               this, SLOT(faultData(int, const QString&, const QVariant&)));
 }
 
-void ZmdUpdaterCore::removeUser(QString user) {
+void ZmdUpdaterCore::removeUser(QString user)
+{
   IS_ZMD_BUSY;
 
   server->call("zmd.system.identity_remove", user,
-  this, SLOT(identityData(const QValueList<QVariant>&, const QVariant&)), 
-  this, SLOT(faultData(int, const QString&, const QVariant&)));
+               this, SLOT(identityData(const QValueList<QVariant>&, const QVariant&)),
+               this, SLOT(faultData(int, const QString&, const QVariant&)));
 }
 
-void ZmdUpdaterCore::modifyUser(Identity id) {
+void ZmdUpdaterCore::modifyUser(Identity id)
+{
   IS_ZMD_BUSY;
 
   QValueList<QVariant> data;
@@ -93,45 +100,50 @@ void ZmdUpdaterCore::modifyUser(Identity id) {
   data.append(QVariant(map));
 
   server->call("zmd.system.identity_modify", data,
-  this, SLOT(identityData(const QValueList<QVariant>&, const QVariant&)), 
-  this, SLOT(faultData(int, const QString&, const QVariant&)));
+               this, SLOT(identityData(const QValueList<QVariant>&, const QVariant&)),
+               this, SLOT(faultData(int, const QString&, const QVariant&)));
 }
 
-void ZmdUpdaterCore::listUsers() {
+void ZmdUpdaterCore::listUsers()
+{
   IS_ZMD_BUSY;
 
   server->call("zmd.system.identity_list", QValueList<QVariant>(),
-  this, SLOT(identityData(const QValueList<QVariant>&, const QVariant&)), 
-  this, SLOT(faultData(int, const QString&, const QVariant&)));
+               this, SLOT(identityData(const QValueList<QVariant>&, const QVariant&)),
+               this, SLOT(faultData(int, const QString&, const QVariant&)));
 }
 
-void ZmdUpdaterCore::identityData(const QValueList<QVariant>& data, const QVariant& t) {
+void ZmdUpdaterCore::identityData(const QValueList<QVariant>& data, const QVariant& t)
+{
 
-  if (data.front().canCast(QVariant::List) == true) {
+  if (data.front().canCast(QVariant::List) == true)
+  {
     //We got a list back, is identity list
     QValueList<QVariant> list;
     list = (data.front().toList());
     QValueList<QVariant>::iterator iter;
     QValueList<Identity> identityList;
 
-    for (iter = list.begin(); iter != list.end(); iter++) {
+    for (iter = list.begin(); iter != list.end(); iter++)
+    {
       QMap<QString, QVariant> map = (*iter).toMap();
       Identity id;
       id.fromMap(map);
       identityList.append(id);
     }
     emit(userListing(identityList));
-  } 
+  }
 
 }
 
 /********************************************************************
  *
- *                    Server Settings 
+ *                    Server Settings
  *
  ********************************************************************/
 
-void ZmdUpdaterCore::setServer(KURL url) {
+void ZmdUpdaterCore::setServer(KURL url)
+{
 
   QString user;
   QString pass;
@@ -149,19 +161,21 @@ void ZmdUpdaterCore::setServer(KURL url) {
 
 /********************************************************************
  *
- *                     Add/Remove/Get Services 
+ *                     Add/Remove/Get Services
  *
  ********************************************************************/
 
-void ZmdUpdaterCore::getServices() {
+void ZmdUpdaterCore::getServices()
+{
   IS_ZMD_BUSY;
 
   server->call("zmd.system.service_list", QValueList<QVariant>(),
-  this, SLOT(serviceData(const QValueList<QVariant>&, const QVariant&)), 
-  this, SLOT(faultData(int, const QString&, const QVariant&)));
+               this, SLOT(serviceData(const QValueList<QVariant>&, const QVariant&)),
+               this, SLOT(faultData(int, const QString&, const QVariant&)));
 }
 
-void ZmdUpdaterCore::addService(Service serv) {
+void ZmdUpdaterCore::addService(Service serv)
+{
   IS_ZMD_BUSY;
 
   QValueList<QVariant> data;
@@ -170,42 +184,51 @@ void ZmdUpdaterCore::addService(Service serv) {
   temp = serv.name;
 
   server->call("zmd.system.service_add", data,
-  this, SLOT(serviceData(const QValueList<QVariant>&, const QVariant&)), 
-  this, SLOT(faultData(int, const QString&, const QVariant&)));
+               this, SLOT(serviceData(const QValueList<QVariant>&, const QVariant&)),
+               this, SLOT(faultData(int, const QString&, const QVariant&)));
 }
 
-void ZmdUpdaterCore::removeService(Service serv) {
+void ZmdUpdaterCore::removeService(Service serv)
+{
   IS_ZMD_BUSY;
 
   server->call("zmd.system.service_remove", serv.id,
-  this, SLOT(serviceData(const QValueList<QVariant>&, const QVariant&)), 
-  this, SLOT(faultData(int, const QString&, const QVariant&)));
+               this, SLOT(serviceData(const QValueList<QVariant>&, const QVariant&)),
+               this, SLOT(faultData(int, const QString&, const QVariant&)));
 }
 
 //Data slot, returning information from xml-rpc
-void ZmdUpdaterCore::serviceData(const QValueList<QVariant>& data, const QVariant& t) {
+void ZmdUpdaterCore::serviceData(const QValueList<QVariant>& data, const QVariant& t)
+{
 
-  if (data.front().canCast(QVariant::String) == true && data.front().toString().isEmpty() != true) {
+  if (data.front().canCast(QVariant::String) == true && data.front().toString().isEmpty() != true)
+  {
     //We get a string back and its not empty, must have come from adding a service
     //So, we block and start the poll loop
     ZMD_BLOCK(data.front().toString());
     timer->start(CHECK_INTERVAL,false);
-  } else if (data.front().canCast(QVariant::List) == true) {
+  }
+  else if (data.front().canCast(QVariant::List) == true)
+  {
     //We got a list back, is a service list
     QValueList<QVariant> list;
     list = (data.front().toList());
     QValueList<QVariant>::iterator iter;
     QValueList<Service> serviceList;
 
-    for (iter = list.begin(); iter != list.end(); iter++) {
+    for (iter = list.begin(); iter != list.end(); iter++)
+    {
       QMap<QString, QVariant> map = (*iter).toMap();
       Service serv;
       serv.fromMap(map);
       serviceList.append(serv);
     }
     emit(serviceListing(serviceList));
-  } else if (data.front().canCast(QVariant::String) == true) {
-    if (data.front().toString() == "") {
+  }
+  else if (data.front().canCast(QVariant::String) == true)
+  {
+    if (data.front().toString() == "")
+    {
 #ifdef DEBUG
       kdWarning() << "Service Removed" << endl;
 #endif
@@ -216,45 +239,50 @@ void ZmdUpdaterCore::serviceData(const QValueList<QVariant>& data, const QVarian
 
 /********************************************************************
  *
- *                     Sub/Unsub/Get Catalogs 
+ *                     Sub/Unsub/Get Catalogs
  *
  ********************************************************************/
 
-void ZmdUpdaterCore::getCatalogs() {
+void ZmdUpdaterCore::getCatalogs()
+{
   IS_ZMD_BUSY;
 
-  server->call("zmd.system.catalog_list", QValueList<QVariant>(), 
-  this, SLOT(catalogData(const QValueList<QVariant>&, const QVariant&)),
-  this, SLOT(faultData(int, const QString&, const QVariant&)));
+  server->call("zmd.system.catalog_list", QValueList<QVariant>(),
+               this, SLOT(catalogData(const QValueList<QVariant>&, const QVariant&)),
+               this, SLOT(faultData(int, const QString&, const QVariant&)));
 }
 
-void ZmdUpdaterCore::subscribeCatalog(Catalog cat) {
+void ZmdUpdaterCore::subscribeCatalog(Catalog cat)
+{
   IS_ZMD_BUSY;
 
   QValueList<QVariant> argList;
   argList.append(cat.id);
   argList.append(true);
 
-  server->call("zmd.system.catalog_subscribe", argList, 
-  this, SLOT(catalogData(const QValueList<QVariant>&, const QVariant&)),
-  this, SLOT(faultData(int, const QString&, const QVariant&)));
+  server->call("zmd.system.catalog_subscribe", argList,
+               this, SLOT(catalogData(const QValueList<QVariant>&, const QVariant&)),
+               this, SLOT(faultData(int, const QString&, const QVariant&)));
 }
 
-void ZmdUpdaterCore::unsubscribeCatalog(Catalog cat) {
+void ZmdUpdaterCore::unsubscribeCatalog(Catalog cat)
+{
   IS_ZMD_BUSY;
 
   QValueList<QVariant> argList;
   argList.append(cat.id);
   argList.append(false);
 
-  server->call("zmd.system.catalog_subscribe", argList, 
-  this, SLOT(catalogData(const QValueList<QVariant>&, const QVariant&)),
-  this, SLOT(faultData(int, const QString&, const QVariant&)));
+  server->call("zmd.system.catalog_subscribe", argList,
+               this, SLOT(catalogData(const QValueList<QVariant>&, const QVariant&)),
+               this, SLOT(faultData(int, const QString&, const QVariant&)));
 }
 
-void ZmdUpdaterCore::catalogData(const QValueList<QVariant>& data, const QVariant& t) {
+void ZmdUpdaterCore::catalogData(const QValueList<QVariant>& data, const QVariant& t)
+{
 
-  if (data.front().canCast(QVariant::String) == true) {
+  if (data.front().canCast(QVariant::String) == true)
+  {
     /*
       If we get a string back, it is from a catalog sub/unsub
     */
@@ -262,14 +290,17 @@ void ZmdUpdaterCore::catalogData(const QValueList<QVariant>& data, const QVarian
     kdWarning() << "Catalog Sub Changed" << endl;
 #endif
     emit(catalogSubscriptionChanged());
-  } else if (data.front().canCast(QVariant::List) == true) {
+  }
+  else if (data.front().canCast(QVariant::List) == true)
+  {
     //If we get a list, it is because we got a catalog listing
     QValueList<QVariant> list;
     list = (data.front().toList());
     QValueList<QVariant>::iterator iter;
     QValueList<Catalog> catalogList;
 
-    for (iter = list.begin(); iter != list.end(); iter++) {
+    for (iter = list.begin(); iter != list.end(); iter++)
+    {
       QMap<QString, QVariant> map = (*iter).toMap();
       Catalog cat;
       cat.fromMap(map);
@@ -290,35 +321,40 @@ void ZmdUpdaterCore::catalogData(const QValueList<QVariant>& data, const QVarian
  ********************************************************************/
 
 /* Package Handling (call and data slot) */
-void ZmdUpdaterCore::getPatches(Catalog cat) {
+void ZmdUpdaterCore::getPatches(Catalog cat)
+{
   IS_ZMD_BUSY;
 
-  server->call("zmd.packsys.get_patches", cat.id, 
-  this, SLOT(patchData(const QValueList<QVariant>&, const QVariant&)),
-  this, SLOT(faultData(int, const QString&, const QVariant&)));
+  server->call("zmd.packsys.get_patches", cat.id,
+               this, SLOT(patchData(const QValueList<QVariant>&, const QVariant&)),
+               this, SLOT(faultData(int, const QString&, const QVariant&)));
 
 }
 
-void ZmdUpdaterCore::getUpdates(Catalog cat) {
+void ZmdUpdaterCore::getUpdates(Catalog cat)
+{
   IS_ZMD_BUSY;
 
-  server->call("zmd.packsys.get_updates", cat.id, 
-  this, SLOT(updateData(const QValueList<QVariant>&, const QVariant&)),
-  this, SLOT(faultData(int, const QString&, const QVariant&)));
+  server->call("zmd.packsys.get_updates", cat.id,
+               this, SLOT(updateData(const QValueList<QVariant>&, const QVariant&)),
+               this, SLOT(faultData(int, const QString&, const QVariant&)));
 
 }
-void ZmdUpdaterCore::updateData(const QValueList<QVariant>& data, const QVariant&t) {
+void ZmdUpdaterCore::updateData(const QValueList<QVariant>& data, const QVariant&t)
+{
   QValueList<Package> packageList;
-  
+
   packageList = mapListToPackageList(data.front().toList());
   emit(updateListing(packageList));
 }
 
-QValueList<Package> ZmdUpdaterCore::mapListToPackageList(QValueList<QVariant> data) {
+QValueList<Package> ZmdUpdaterCore::mapListToPackageList(QValueList<QVariant> data)
+{
   QValueList<QVariant>::iterator iter;
   QValueList<Package> packageList;
 
-  for (iter = data.begin(); iter != data.end(); iter++) {
+  for (iter = data.begin(); iter != data.end(); iter++)
+  {
     QMap<QString, QVariant> map = (*iter).toMap();
     Package pack;
 
@@ -331,13 +367,15 @@ QValueList<Package> ZmdUpdaterCore::mapListToPackageList(QValueList<QVariant> da
   return packageList;
 }
 
-void ZmdUpdaterCore::patchData(const QValueList<QVariant>& data, const QVariant& t) {
+void ZmdUpdaterCore::patchData(const QValueList<QVariant>& data, const QVariant& t)
+{
   QValueList<QVariant> list;
   list = (data.front().toList());
   QValueList<QVariant>::iterator iter;
   QValueList<Patch> patchList;
 
-  for (iter = list.begin(); iter != list.end(); iter++) {
+  for (iter = list.begin(); iter != list.end(); iter++)
+  {
     QMap<QString, QVariant> map = (*iter).toMap();
     Patch patch;
     patch.fromMap(map);
@@ -356,7 +394,8 @@ void ZmdUpdaterCore::patchData(const QValueList<QVariant>& data, const QVariant&
  *
  ********************************************************************/
 
-void ZmdUpdaterCore::getPackageInfo(QString packageName) {
+void ZmdUpdaterCore::getPackageInfo(QString packageName)
+{
 
   QValueList<QVariant> wrapper;
   QValueList<QVariant> args;
@@ -367,12 +406,13 @@ void ZmdUpdaterCore::getPackageInfo(QString packageName) {
 
   wrapper.append(args);
 
-  server->call("zmd.packsys.query", wrapper, 
-  this, SLOT(infoPackageData(const QValueList<QVariant>&, const QVariant&)),
-  this, SLOT(faultData(int, const QString&, const QVariant&)));
+  server->call("zmd.packsys.query", wrapper,
+               this, SLOT(infoPackageData(const QValueList<QVariant>&, const QVariant&)),
+               this, SLOT(faultData(int, const QString&, const QVariant&)));
 }
 
-void ZmdUpdaterCore::getPatchInfo(QString patchName) {
+void ZmdUpdaterCore::getPatchInfo(QString patchName)
+{
 
   QValueList<QVariant> wrapper;
   QValueList<QVariant> args;
@@ -383,12 +423,13 @@ void ZmdUpdaterCore::getPatchInfo(QString patchName) {
 
   wrapper.append(args);
 
-  server->call("zmd.packsys.query_patches", wrapper, 
-  this, SLOT(infoPatchData(const QValueList<QVariant>&, const QVariant&)),
-  this, SLOT(faultData(int, const QString&, const QVariant&)));
+  server->call("zmd.packsys.query_patches", wrapper,
+               this, SLOT(infoPatchData(const QValueList<QVariant>&, const QVariant&)),
+               this, SLOT(faultData(int, const QString&, const QVariant&)));
 }
 
-void ZmdUpdaterCore::getPackageDetails(Package pack) {
+void ZmdUpdaterCore::getPackageDetails(Package pack)
+{
   QMap<QString, QVariant> map;
   QValueList<QVariant> args;
 
@@ -398,13 +439,14 @@ void ZmdUpdaterCore::getPackageDetails(Package pack) {
   //We need an id in packageDetails, but it does not return it
   temp = pack.id;
 
-  server->call("zmd.packsys.package_details", args, 
-  this, SLOT(infoPackageData(const QValueList<QVariant>&, const QVariant&)),
-  this, SLOT(faultData(int, const QString&, const QVariant&)));
+  server->call("zmd.packsys.package_details", args,
+               this, SLOT(infoPackageData(const QValueList<QVariant>&, const QVariant&)),
+               this, SLOT(faultData(int, const QString&, const QVariant&)));
 
 }
 
-void ZmdUpdaterCore::getPatchDetails(Patch patch) {
+void ZmdUpdaterCore::getPatchDetails(Patch patch)
+{
   QMap<QString, QVariant> map;
   QValueList<QVariant> args;
 
@@ -414,26 +456,31 @@ void ZmdUpdaterCore::getPatchDetails(Patch patch) {
   //We need an id in patchDetails, but it does not return it
   temp = patch.id;
 
-  server->call("zmd.packsys.patch_details", args, 
-  this, SLOT(infoPatchData(const QValueList<QVariant>&, const QVariant&)),
-  this, SLOT(faultData(int, const QString&, const QVariant&)));
+  server->call("zmd.packsys.patch_details", args,
+               this, SLOT(infoPatchData(const QValueList<QVariant>&, const QVariant&)),
+               this, SLOT(faultData(int, const QString&, const QVariant&)));
 
 }
 
-void ZmdUpdaterCore::infoPackageData(const QValueList<QVariant>& data, const QVariant& t) {
+void ZmdUpdaterCore::infoPackageData(const QValueList<QVariant>& data, const QVariant& t)
+{
 
   //We either get a List or a Map in this return. If its a list, then we just called getInfo
-  if (data.front().canCast(QVariant::List) == true) {
+  if (data.front().canCast(QVariant::List) == true)
+  {
 
     QValueList<QVariant>::const_iterator iter;
-    for (iter = (data.front().toList().begin()); iter != (data.front().toList().end()); iter++) {
+    for (iter = (data.front().toList().begin()); iter != (data.front().toList().end()); iter++)
+    {
       Package pack;
       pack.fromMap((*iter).toMap());
 
       emit(packageInfo(pack));
     }
-  } else {
-  //And if its a map, we just called getDetails
+  }
+  else
+  {
+    //And if its a map, we just called getDetails
     PackageDetails packDet;
 
     packDet.fromMap(data.front().toMap());
@@ -443,20 +490,25 @@ void ZmdUpdaterCore::infoPackageData(const QValueList<QVariant>& data, const QVa
   }
 }
 
-void ZmdUpdaterCore::infoPatchData(const QValueList<QVariant>& data, const QVariant& t) {
+void ZmdUpdaterCore::infoPatchData(const QValueList<QVariant>& data, const QVariant& t)
+{
 
   //We either get a List or a Map in this return. If its a list, then we just called getInfo
-  if (data.front().canCast(QVariant::List) == true) {
+  if (data.front().canCast(QVariant::List) == true)
+  {
 
     QValueList<QVariant>::const_iterator iter;
-    for (iter = (data.front().toList().begin()); iter != (data.front().toList().end()); iter++) {
+    for (iter = (data.front().toList().begin()); iter != (data.front().toList().end()); iter++)
+    {
       Patch patch;
       patch.fromMap((*iter).toMap());
 
       emit(patchInfo(patch));
     }
-  } else {
-  //And if its a map, we just called getDetails
+  }
+  else
+  {
+    //And if its a map, we just called getDetails
     PatchDetails patchDet;
 
     patchDet.fromMap(data.front().toMap());
@@ -468,41 +520,44 @@ void ZmdUpdaterCore::infoPatchData(const QValueList<QVariant>& data, const QVari
 
 /*******************************************************************
  *
- *           	Get Dependency Information 
+ *           	Get Dependency Information
  *
  ******************************************************************/
 
-void ZmdUpdaterCore::getDepInfo(Package pack) {
-	IS_ZMD_BUSY;
+void ZmdUpdaterCore::getDepInfo(Package pack)
+{
+  IS_ZMD_BUSY;
 
-	QMap<QString, QVariant> map;
-	QValueList<QVariant> wrapper;
+  QMap<QString, QVariant> map;
+  QValueList<QVariant> wrapper;
 
-	map = pack.toMap();
-	wrapper.append(QVariant(map));
-	temp = pack.name;
+  map = pack.toMap();
+  wrapper.append(QVariant(map));
+  temp = pack.name;
 
-  server->call("zmd.packsys.resolvable_dependencies", wrapper, 
-  this, SLOT(depData(const QValueList<QVariant>&, const QVariant&)),
-  this, SLOT(faultData(int, const QString&, const QVariant&)));
+  server->call("zmd.packsys.resolvable_dependencies", wrapper,
+               this, SLOT(depData(const QValueList<QVariant>&, const QVariant&)),
+               this, SLOT(faultData(int, const QString&, const QVariant&)));
 }
 
-void ZmdUpdaterCore::depData(const QValueList<QVariant> &data, const QVariant &t) {
+void ZmdUpdaterCore::depData(const QValueList<QVariant> &data, const QVariant &t)
+{
 
-	if (data.front().canCast(QVariant::Map) == true) {
-		QValueList<Package> providesList;
-		QValueList<Package> requiresList;
-		QValueList<Package> conflictsList;
-		QValueList<Package> obsoletesList;
+  if (data.front().canCast(QVariant::Map) == true)
+  {
+    QValueList<Package> providesList;
+    QValueList<Package> requiresList;
+    QValueList<Package> conflictsList;
+    QValueList<Package> obsoletesList;
 
-		QMap<QString, QVariant> outerMap = data.front().toMap();
-		providesList = mapListToPackageList(outerMap["provides"].toList());
-		requiresList = mapListToPackageList(outerMap["requires"].toList());
-		conflictsList = mapListToPackageList(outerMap["conflicts"].toList());
-		obsoletesList = mapListToPackageList(outerMap["obsoletes"].toList());
-		emit(depInfo(temp, providesList, requiresList, conflictsList, obsoletesList));
-		temp = "";
-	}
+    QMap<QString, QVariant> outerMap = data.front().toMap();
+    providesList = mapListToPackageList(outerMap["provides"].toList());
+    requiresList = mapListToPackageList(outerMap["requires"].toList());
+    conflictsList = mapListToPackageList(outerMap["conflicts"].toList());
+    obsoletesList = mapListToPackageList(outerMap["obsoletes"].toList());
+    emit(depInfo(temp, providesList, requiresList, conflictsList, obsoletesList));
+    temp = "";
+  }
 }
 
 /*******************************************************************
@@ -511,12 +566,13 @@ void ZmdUpdaterCore::depData(const QValueList<QVariant> &data, const QVariant &t
  *
  ******************************************************************/
 
-void ZmdUpdaterCore::lockPackage(PackageLock lock) {
+void ZmdUpdaterCore::lockPackage(PackageLock lock )
+{
   IS_ZMD_BUSY;
 
   QMap<QString, QVariant> map;
   QValueList<QVariant> wrapper;
-  
+
   map = lock.toMap();
 
 #ifdef DEBUG
@@ -527,38 +583,42 @@ void ZmdUpdaterCore::lockPackage(PackageLock lock) {
 
   wrapper.append(map);
 
-  server->call("zmd.packsys.add_lock", wrapper, 
-  this, SLOT(lockData(const QValueList<QVariant>&, const QVariant&)),
-  this, SLOT(faultData(int, const QString&, const QVariant&)));
+  server->call("zmd.packsys.add_lock", wrapper,
+               this, SLOT(lockData(const QValueList<QVariant>&, const QVariant&)),
+               this, SLOT(faultData(int, const QString&, const QVariant&)));
 }
 
-void ZmdUpdaterCore::unlockPackage(PackageLock lock) {
+void ZmdUpdaterCore::unlockPackage(PackageLock lock )
+{
   IS_ZMD_BUSY;
 
   QValueList<QVariant> wrapper;
 
-  if (lock.id == "") 
+  if (lock.id == "")
     return;
 
   wrapper.append(lock.id);
 
-  server->call("zmd.packsys.remove_lock", wrapper, 
-  this, SLOT(lockData(const QValueList<QVariant>&, const QVariant&)),
-  this, SLOT(faultData(int, const QString&, const QVariant&)));
+  server->call("zmd.packsys.remove_lock", wrapper,
+               this, SLOT(lockData(const QValueList<QVariant>&, const QVariant&)),
+               this, SLOT(faultData(int, const QString&, const QVariant&)));
 }
 
-void ZmdUpdaterCore::getLocks() {
+void ZmdUpdaterCore::getLocks()
+{
   IS_ZMD_BUSY;
 
-  server->call("zmd.packsys.get_locks", QValueList<QVariant>(), 
-  this, SLOT(lockData(const QValueList<QVariant>&, const QVariant&)),
-  this, SLOT(faultData(int, const QString&, const QVariant&)));
+  server->call("zmd.packsys.get_locks", QValueList<QVariant>(),
+               this, SLOT(lockData(const QValueList<QVariant>&, const QVariant&)),
+               this, SLOT(faultData(int, const QString&, const QVariant&)));
 
 }
 
-void ZmdUpdaterCore::lockData(const QValueList<QVariant>& data, const QVariant &t) {
+void ZmdUpdaterCore::lockData(const QValueList<QVariant>& data, const QVariant &t)
+{
 
-  if (data.front().canCast(QVariant::List) == true) {
+  if (data.front().canCast(QVariant::List) == true)
+  {
     QMap<QString, QVariant> map;
     QValueList<QVariant> list;
     QValueList<PackageLock> lockList;
@@ -567,22 +627,25 @@ void ZmdUpdaterCore::lockData(const QValueList<QVariant>& data, const QVariant &
     kdWarning() << "got a list of locks" << endl;
 #endif
     list = data.front().toList();
-    for (QValueList<QVariant>::iterator iter = list.begin(); iter != list.end(); iter++) {
-      PackageLock lock;
+    for (QValueList<QVariant>::iterator iter = list.begin(); iter != list.end(); iter++)
+    {
+      PackageLock lock ;
 
-      map = (*iter).toMap();
+    map = (*iter).toMap();
       lock.fromMap(map);
-      
+
 #ifdef DEBUG
       kdWarning() << "Lock info: " << endl;
       kdWarning() << lock.id << endl;
       kdWarning() << lock.pack.name << endl;
 #endif
 
-      lockList.append(lock);
+      lockList.append(lock );
     }
     emit(lockListing(lockList));
-  } else {
+  }
+  else
+  {
     kdWarning() << "Got something in the lock data function that was not a list" << endl;
   }
 }
@@ -593,9 +656,10 @@ void ZmdUpdaterCore::lockData(const QValueList<QVariant>& data, const QVariant &
  *
  ********************************************************************/
 
-void ZmdUpdaterCore::startTransaction(QValueList<Package> installList, 
-                  QValueList<Package> updateList,
-                  QValueList<Package> removeList) {
+void ZmdUpdaterCore::startTransaction(QValueList<Package> installList,
+                                      QValueList<Package> updateList,
+                                      QValueList<Package> removeList)
+{
 
   IS_ZMD_BUSY;
 
@@ -603,36 +667,40 @@ void ZmdUpdaterCore::startTransaction(QValueList<Package> installList,
   packagesToInstall.clear();
   packagesToUpdate.clear();
   packagesToRemove.clear();
-  
+
   for (QValueList<Package>::iterator iter = installList.begin();
-     iter != installList.end(); iter++) {
-     QMap<QString, QVariant> map;
-     map = (*iter).toMap();
-     packagesToInstall[map["id"].toString()] = QVariant(map);
+       iter != installList.end(); iter++)
+  {
+    QMap<QString, QVariant> map;
+    map = (*iter).toMap();
+    packagesToInstall[map["id"].toString()] = QVariant(map);
   }
   for (QValueList<Package>::iterator iter = updateList.begin();
-     iter != updateList.end(); iter++) {
-     QMap<QString, QVariant> map;
-     map = (*iter).toMap();
-     packagesToUpdate[map["id"].toString()] = QVariant(map);
+       iter != updateList.end(); iter++)
+  {
+    QMap<QString, QVariant> map;
+    map = (*iter).toMap();
+    packagesToUpdate[map["id"].toString()] = QVariant(map);
   }
   for (QValueList<Package>::iterator iter = removeList.begin();
-     iter != removeList.end(); iter++) {
-     QMap<QString, QVariant> map;
-     map = (*iter).toMap();
-     packagesToRemove[map["id"].toString()] = QVariant(map);
+       iter != removeList.end(); iter++)
+  {
+    QMap<QString, QVariant> map;
+    map = (*iter).toMap();
+    packagesToRemove[map["id"].toString()] = QVariant(map);
   }
 
 #ifdef DEBUG
   kdWarning() << "Asking for dep verification" << endl;
 #endif
-  server->call("zmd.packsys.verify", QValueList<QVariant>(), 
-  this, SLOT(transactData(const QValueList<QVariant>&, const QVariant&)),
-  this, SLOT(faultData(int, const QString&, const QVariant&)));
+  server->call("zmd.packsys.verify", QValueList<QVariant>(),
+               this, SLOT(transactData(const QValueList<QVariant>&, const QVariant&)),
+               this, SLOT(faultData(int, const QString&, const QVariant&)));
 }
 
-void ZmdUpdaterCore::runTransaction() {
-  
+void ZmdUpdaterCore::runTransaction()
+{
+
   QValueList<QVariant> argList;
 
   argList.append(packagesToInstall.values());
@@ -640,9 +708,9 @@ void ZmdUpdaterCore::runTransaction() {
   argList.append(packagesToRemove.values());
   argList.append(0); //Run it, no dry run
 
-  server->call("zmd.packsys.transact", argList, 
-  this, SLOT(transactData(const QValueList<QVariant>&, const QVariant&)),
-  this, SLOT(faultData(int, const QString&, const QVariant&)));
+  server->call("zmd.packsys.transact", argList,
+               this, SLOT(transactData(const QValueList<QVariant>&, const QVariant&)),
+               this, SLOT(faultData(int, const QString&, const QVariant&)));
 
   //Don't need these anymore
   packagesToInstall.clear();
@@ -650,12 +718,14 @@ void ZmdUpdaterCore::runTransaction() {
   packagesToUpdate.clear();
 }
 
-void ZmdUpdaterCore::transactData(const QValueList<QVariant>& data, const QVariant &t) {
+void ZmdUpdaterCore::transactData(const QValueList<QVariant>& data, const QVariant &t)
+{
   static bool verification = true;
   QValueList<QVariant> argList;
-  
+
   // Is the first member of the arg list a map? If so, we just got verification/dep info
-  if ((data.front()).canCast(QVariant::Map) == true) {
+  if ((data.front()).canCast(QVariant::Map) == true)
+  {
 
     QMap<QString,QVariant> map;
     QValueList<QVariant> list;
@@ -668,29 +738,35 @@ void ZmdUpdaterCore::transactData(const QValueList<QVariant>& data, const QVaria
       the reason for including a package and then the package itself
       we only want the package
     ***********************************************************************/
-    for ( listIter = list.begin(); listIter != list.end(); listIter++) {
+    for ( listIter = list.begin(); listIter != list.end(); listIter++)
+    {
       QMap<QString, QVariant> tempMap = (*listIter).toMap()["resolvable"].toMap();
       QString packageId = tempMap["id"].toString();
 
-      if (packagesToInstall.find(packageId) == packagesToInstall.end()) {
+      if (packagesToInstall.find(packageId) == packagesToInstall.end())
+      {
         packagesToInstall[packageId] = QVariant(tempMap);
       }
     }
     list = map["upgrades"].toList();
-    for (listIter = list.begin(); listIter != list.end(); listIter++) {
+    for (listIter = list.begin(); listIter != list.end(); listIter++)
+    {
       QMap<QString, QVariant> tempMap = (*listIter).toMap()["resolvable"].toMap();
       QString packageId = tempMap["id"].toString();
 
-      if (packagesToUpdate.find(packageId) == packagesToUpdate.end()) {
+      if (packagesToUpdate.find(packageId) == packagesToUpdate.end())
+      {
         packagesToUpdate[packageId] = QVariant(tempMap);
       }
     }
     list = map["removals"].toList();
-    for (listIter = list.begin(); listIter != list.end(); listIter++) {
+    for (listIter = list.begin(); listIter != list.end(); listIter++)
+    {
       QMap<QString, QVariant> tempMap = (*listIter).toMap()["resolvable"].toMap();
       QString packageId = tempMap["id"].toString();
 
-      if (packagesToRemove.find(packageId) == packagesToRemove.end()) {
+      if (packagesToRemove.find(packageId) == packagesToRemove.end())
+      {
         packagesToRemove[packageId] = QVariant(tempMap);
       }
 
@@ -700,19 +776,22 @@ void ZmdUpdaterCore::transactData(const QValueList<QVariant>& data, const QVaria
     argList.append(packagesToUpdate.values());
     argList.append(packagesToRemove.values());
 
-    if (verification) { //If this is true, the info we just got is verification info 
-      server->call("zmd.packsys.resolve_dependencies", argList, 
-      this, SLOT(transactData(const QValueList<QVariant>&, const QVariant&)),
-      this, SLOT(faultData(int, const QString&, const QVariant&))); 
+    if (verification)
+    { //If this is true, the info we just got is verification info
+      server->call("zmd.packsys.resolve_dependencies", argList,
+                   this, SLOT(transactData(const QValueList<QVariant>&, const QVariant&)),
+                   this, SLOT(faultData(int, const QString&, const QVariant&)));
       verification = false; //next time through we do the transact
 
-    } else {
+    }
+    else
+    {
 
       QValueList<Package> installs;
       QValueList<Package> removals;
       QValueList<Package> updates;
 
-      
+
       installs = mapListToPackageList(packagesToInstall.values());
       removals = mapListToPackageList(packagesToRemove.values());
       updates = mapListToPackageList(packagesToUpdate.values());
@@ -722,14 +801,17 @@ void ZmdUpdaterCore::transactData(const QValueList<QVariant>& data, const QVaria
     }
 
 
-  } else { //or else we got two IDs for transact
+  }
+  else
+  { //or else we got two IDs for transact
     ZMD_BLOCK(data.front().toList().last().toString()); // block on the transaction ID
     downloadID = data.front().toList().front().toString(); //save the downloadID
     timer->start(CHECK_INTERVAL,false);
   }
 }
 
-void ZmdUpdaterCore::cancelTransaction() {
+void ZmdUpdaterCore::cancelTransaction()
+{
   //Currently just clear the package lists and stop the poll
   packagesToInstall.clear();
   packagesToUpdate.clear();
@@ -738,14 +820,14 @@ void ZmdUpdaterCore::cancelTransaction() {
   ZMD_CLEAR;
 
 #ifdef _ABORT_SUPPORTED_
-  server->call("zmd.packsys.abort_transaction", QValueList<QVariant>(), 
-  this, SLOT(abortData(const QValueList<QVariant>&, const QVariant&)),
-  this, SLOT(faultData(int, const QString&, const QVariant&))); 
+  server->call("zmd.packsys.abort_transaction", QValueList<QVariant>(),
+               this, SLOT(abortData(const QValueList<QVariant>&, const QVariant&)),
+               this, SLOT(faultData(int, const QString&, const QVariant&)));
 #endif
 }
 
-void ZmdUpdaterCore::abortData(const QValueList<QVariant>& data, const QVariant& t) {
-}
+void ZmdUpdaterCore::abortData(const QValueList<QVariant>& data, const QVariant& t)
+{}
 
 /********************************************************************
  *
@@ -753,23 +835,29 @@ void ZmdUpdaterCore::abortData(const QValueList<QVariant>& data, const QVariant&
  *
  ********************************************************************/
 
-void ZmdUpdaterCore::timerSlot() {
+void ZmdUpdaterCore::timerSlot()
+{
 
-  if (downloadID != "") {
-    server->call("zmd.system.poll", downloadID, 
-    this, SLOT(timerData(const QValueList<QVariant>&, const QVariant&)),
-    this, SLOT(faultData(int, const QString&, const QVariant&))); 
+  if (downloadID != "")
+  {
+    server->call("zmd.system.poll", downloadID,
+                 this, SLOT(timerData(const QValueList<QVariant>&, const QVariant&)),
+                 this, SLOT(faultData(int, const QString&, const QVariant&)));
 
-  } else {
-    server->call("zmd.system.poll", pollID, 
-    this, SLOT(timerData(const QValueList<QVariant>&, const QVariant&)),
-    this, SLOT(faultData(int, const QString&, const QVariant&)));
+  }
+  else
+  {
+    server->call("zmd.system.poll", pollID,
+                 this, SLOT(timerData(const QValueList<QVariant>&, const QVariant&)),
+                 this, SLOT(faultData(int, const QString&, const QVariant&)));
   }
 }
 
-void ZmdUpdaterCore::timerData(const QValueList<QVariant>& data, const QVariant &t) {
+void ZmdUpdaterCore::timerData(const QValueList<QVariant>& data, const QVariant &t)
+{
 
-  if (data.front().canCast(QVariant::Map) == true) {
+  if (data.front().canCast(QVariant::Map) == true)
+  {
     QMap<QString, QVariant> map = data.front().toMap();
     Progress status;
     status.fromMap(map);
@@ -781,40 +869,57 @@ void ZmdUpdaterCore::timerData(const QValueList<QVariant>& data, const QVariant 
     kdWarning() << "Message: " << status.messages.front() << endl;
 #endif
 
-    if (status.name == "Downloading Packages") {
-      if (status.percent > 99) {
+    if (status.name == "Downloading Packages")
+    {
+      if (status.percent > 99)
+      {
         downloadID = "";
-      } 
-      if (status.status == 4) {
+      }
+      if (status.status == 4)
+      {
         ZMD_CLEAR;
         timer->stop();
         downloadID = "";
         emit(transactionFinished(ERROR_TRANS_FAIL, status.messages.front()));
-      } else {
-        emit(downloadProgress(status)); 
       }
-    } else {
-      if (status.messages.front() == "Preparing..." && status.status == 4) {
+      else
+      {
+        emit(downloadProgress(status));
+      }
+    }
+    else
+    {
+      if (status.messages.front() == "Preparing..." && status.status == 4)
+      {
         status.status = 1; //this is a bug in ZMD, somehow it transmits this as an error
       }
-      if (downloadID.isEmpty() && map["status"].toInt() > 1) {
+      if (downloadID.isEmpty() && map["status"].toInt() > 1)
+      {
         ZMD_CLEAR;
         timer->stop();
-        
-        if (temp != "") {
-          if (status.status == 4) {
+
+        if (temp != "")
+        {
+          if (status.status == 4)
+          {
             emit(serviceAdded(temp, ERROR_INVALID, status.messages.front()));
-          } else {
+          }
+          else
+          {
             emit(serviceAdded(temp, ERROR_NONE, QString()));
           }
           temp = "";
-        } else {
+        }
+        else
+        {
           if (status.status == 4)
             emit(transactionFinished(ERROR_TRANS_FAIL, status.messages.front()));
           else
             emit(transactionFinished(ERROR_NONE, QString()));
         }
-      } else {
+      }
+      else
+      {
         emit(progress(status));
       }
     }
@@ -827,93 +932,98 @@ void ZmdUpdaterCore::timerData(const QValueList<QVariant>& data, const QVariant 
  *
  ********************************************************************/
 
-void ZmdUpdaterCore::faultData(int code, const QString& message, const QVariant&t) {
-  switch (code) {
+void ZmdUpdaterCore::faultData(int code, const QString& message, const QVariant&t)
+{
+  switch (code)
+  {
 
-    case -1:
-      emit(generalFault("We just had some communication trouble with ZMD, it is likely this will not impact your current operation", code));
+  case -1:
+    emit(generalFault("We just had some communication trouble with ZMD, it is likely this will not impact your current operation", code));
+    break;
+  case 0:
+    //Thread dies or transaction in progress or many other things
+    emit(transactionFinished(ERROR_TRANS_FAIL, message));
+    break;
+  case 23:
+    //Could not connection to host
+    emit(generalFault(message, code));
+    break;
+  case 24: //Connection broken
+    emit(generalFault(message, code));
+    break;
+  case 49:
+    //Timeout
+    //Don't say anything, sometimes we are just busy...until we get to 4
+    if (timeoutCount++ < 4)
       break;
-    case 0:
-      //Thread dies or transaction in progress or many other things
-      emit(transactionFinished(ERROR_TRANS_FAIL, message));
-      break;
-    case 23:
-      //Could not connection to host
+    else
       emit(generalFault(message, code));
-      break;
-    case 24: //Connection broken
-      emit(generalFault(message, code));
-      break;
-    case 49:
-      //Timeout
-      //Don't say anything, sometimes we are just busy...until we get to 4
-      if (timeoutCount++ < 4)
-        break;
-      else 
-        emit(generalFault(message, code));
-      break;
-    case -601:
-      //Resolveable not found
-      emit(transactionFinished(ERROR_DEP_FAIL, message));
-      ZMD_CLEAR;
-      timer->stop();
-      packagesToInstall.clear();
-      packagesToRemove.clear();
-      packagesToUpdate.clear();
-      break;
-    case -603:
-      //Dep Failure
-      emit(transactionFinished(ERROR_DEP_FAIL, message));
-      ZMD_CLEAR;
-      timer->stop();
-      //clear out the package list after we get a dep failure. 
-      packagesToInstall.clear();
-      packagesToRemove.clear();
-      packagesToUpdate.clear();
-      break;
-    case -605:
-      //Invalid package specified
+    break;
+  case -601:
+    //Resolveable not found
+    emit(transactionFinished(ERROR_DEP_FAIL, message));
+    ZMD_CLEAR;
+    timer->stop();
+    packagesToInstall.clear();
+    packagesToRemove.clear();
+    packagesToUpdate.clear();
+    break;
+  case -603:
+    //Dep Failure
+    emit(transactionFinished(ERROR_DEP_FAIL, message));
+    ZMD_CLEAR;
+    timer->stop();
+    //clear out the package list after we get a dep failure.
+    packagesToInstall.clear();
+    packagesToRemove.clear();
+    packagesToUpdate.clear();
+    break;
+  case -605:
+    //Invalid package specified
+    emit(transactionFinished(ERROR_INVALID, message));
+    ZMD_CLEAR;
+    timer->stop();
+    break;
+  case -606:
+    //Invalid catalog specified
+    break;
+  case -607:
+    //Invalid progress ID
+    if (temp == "")
+    {
+      //If temp is empty, we did not store a service name and thus this is a transaction
       emit(transactionFinished(ERROR_INVALID, message));
-      ZMD_CLEAR;
-      timer->stop();
-      break;
-    case -606:
-      //Invalid catalog specified
-      break;
-    case -607:
-      //Invalid progress ID
-      if (temp == "") {
-        //If temp is empty, we did not store a service name and thus this is a transaction
-        emit(transactionFinished(ERROR_INVALID, message));
-      } else {
-        emit(serviceAdded(temp, ERROR_INVALID, message));
-        temp = "";
-      }
-      ZMD_CLEAR;
-      timer->stop();
-      break;
-    case -617:
-      //Invalid service specified
+    }
+    else
+    {
       emit(serviceAdded(temp, ERROR_INVALID, message));
-      ZMD_CLEAR;
-      timer->stop();
       temp = "";
-      break;
-    case -619: 
-      //Invalid service type specified
-      emit(serviceAdded(temp, ERROR_INVALID_TYPE, message));
-      ZMD_CLEAR;
-      timer->stop();
-      temp = "";
-      break;
-    case -667:
-      //Invalid id
-      emit(generalFault(message, code));
-      break;
-    default:
-      //Things we do not handle
-      emit(generalFault(message, code));
-      break;
+    }
+    ZMD_CLEAR;
+    timer->stop();
+    break;
+  case -617:
+    //Invalid service specified
+    emit(serviceAdded(temp, ERROR_INVALID, message));
+    ZMD_CLEAR;
+    timer->stop();
+    temp = "";
+    break;
+  case -619:
+    //Invalid service type specified
+    emit(serviceAdded(temp, ERROR_INVALID_TYPE, message));
+    ZMD_CLEAR;
+    timer->stop();
+    temp = "";
+    break;
+  case -667:
+    //Invalid id
+    emit(generalFault(message, code));
+    break;
+  default:
+    //Things we do not handle
+    emit(generalFault(message, code));
+    break;
   }
 #ifdef DEBUG
   kdError() << "Fault: " << message << endl;

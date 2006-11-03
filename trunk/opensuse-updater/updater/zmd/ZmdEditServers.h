@@ -1,4 +1,4 @@
-/* 
+/*
    Copyright (C) 2006 Narayan Newton <narayannewton@gmail.com>
 
    This program is free software; you can redistribute it and/or
@@ -42,41 +42,42 @@ class QString;
 /**
 	Allows users to add and remove servers from ZMD
 **/
-class ZmdEditServers : public QWidget {
+class ZmdEditServers : public QWidget
+{
 
-	Q_OBJECT
+  Q_OBJECT
 
-	public:
+public:
 
-		ZmdEditServers(ZmdUpdaterCore *_core, QWidget *parent=0);
+  ZmdEditServers(ZmdUpdaterCore *_core, QWidget *parent=0);
 
-	private slots:
+private slots:
 
-		void addButtonClicked();
-		void removeButtonClicked();
+  void addButtonClicked();
+  void removeButtonClicked();
 
-		//Core Signals
+  //Core Signals
 
-		void gotServiceList(QValueList<Service>);
-		void gotCatalogList(QValueList<Catalog>);
-		void addedServer(QString, int, QString);
-		void removedServer();
-		void serverFault(QString, int);
+  void gotServiceList(QValueList<Service>);
+  void gotCatalogList(QValueList<Catalog>);
+  void addedServer(QString, int, QString);
+  void removedServer();
+  void serverFault(QString, int);
 
-	private:
+private:
 
-		void initGUI();
-		void clearList();
-		void initList();
+  void initGUI();
+  void clearList();
+  void initList();
 
-		QVBoxLayout	*mainLayout;
-		QHBoxLayout *buttonLayout;
-		QListView *serverList;
-		KPushButton *addButton;
-		KPushButton *removeButton;
-		KPushButton *closeButton;
+  QVBoxLayout	*mainLayout;
+  QHBoxLayout *buttonLayout;
+  QListView *serverList;
+  KPushButton *addButton;
+  KPushButton *removeButton;
+  KPushButton *closeButton;
 
-		ZmdUpdaterCore *core;
+  ZmdUpdaterCore *core;
 };
 
 #endif

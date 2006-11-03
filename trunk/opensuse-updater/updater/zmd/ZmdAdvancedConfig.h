@@ -1,4 +1,4 @@
-/* 
+/*
    Copyright (C) 2006 Narayan Newton <narayannewton@gmail.com>
 
    This program is free software; you can redistribute it and/or
@@ -45,81 +45,82 @@ class ZmdUpdaterCore;
 	A widget that gives users control over security, connection,
 	proxy and download options for ZMD.
 **/
-class ZmdAdvancedConfig : public QWidget {
+class ZmdAdvancedConfig : public QWidget
+{
 
-	Q_OBJECT
+  Q_OBJECT
 
-	public:
+public:
 
-		ZmdAdvancedConfig(ZmdUpdaterCore *_core, QWidget *parent=0);
-		~ZmdAdvancedConfig();
-	
-	private slots:
+  ZmdAdvancedConfig(ZmdUpdaterCore *_core, QWidget *parent=0);
+  ~ZmdAdvancedConfig();
 
-		void stdinReady();		
-		void radioButtonsChange(int id);
-		void hostUrlChange();
-		void logLevelChange(const QString&);
-		void securityLevelChange(const QString&);
-		void maxDownloadsValueChange(int);
-		void proxyUrlChange();
-		void proxyEnableUserPass();
-		void proxyUsernameChange();
-		void proxyPasswordChange();
-		void errorReady();
+private slots:
 
-	private:
-	
-		void initGUI();
-		void saveSettings(QString setting, QString value);
-		
-		QGridLayout *mainLayout;
-		QVGroupBox *securityBox;
-		QVGroupBox *connectionBox;
-		QVGroupBox *proxyBox;
-		QVGroupBox *otherBox;
+  void stdinReady();
+  void radioButtonsChange(int id);
+  void hostUrlChange();
+  void logLevelChange(const QString&);
+  void securityLevelChange(const QString&);
+  void maxDownloadsValueChange(int);
+  void proxyUrlChange();
+  void proxyEnableUserPass();
+  void proxyUsernameChange();
+  void proxyPasswordChange();
+  void errorReady();
 
-		QLabel *hostLabel;
-		KLineEdit *hostEdit;
+private:
 
-		QLabel *remoteLabel;
-		QHButtonGroup *remoteButtons;
+  void initGUI();
+  void saveSettings(QString setting, QString value);
 
-		QLabel *securityLevelLabel;
-		QComboBox *securityLevelBox;
+  QGridLayout *mainLayout;
+  QVGroupBox *securityBox;
+  QVGroupBox *connectionBox;
+  QVGroupBox *proxyBox;
+  QVGroupBox *otherBox;
 
-		QLabel *certLabel;
-		QHButtonGroup *certButtons;
+  QLabel *hostLabel;
+  KLineEdit *hostEdit;
 
-		QLabel *logLabel;
-		QComboBox *logBox;
+  QLabel *remoteLabel;
+  QHButtonGroup *remoteButtons;
 
-		QLabel *rollbackLabel;
-		QHButtonGroup *rollbackButtons;
+  QLabel *securityLevelLabel;
+  QComboBox *securityLevelBox;
 
-		QLabel *maxDownloadsLabel;
-		QSpinBox *maxDownloadsSpinner;
+  QLabel *certLabel;
+  QHButtonGroup *certButtons;
 
-		QLabel *proxyUrlLabel;
-		KLineEdit *proxyUrlEdit;
+  QLabel *logLabel;
+  QComboBox *logBox;
 
-		QLabel *proxyUsernameLabel;
-		KLineEdit *proxyUsernameEdit;
+  QLabel *rollbackLabel;
+  QHButtonGroup *rollbackButtons;
 
-		QLabel *proxyPasswordLabel;
-		KLineEdit *proxyPasswordEdit;
+  QLabel *maxDownloadsLabel;
+  QSpinBox *maxDownloadsSpinner;
 
-		//proc to fetch current settings
-		QProcess *proc;
-		//proc to save settings
-		QProcess *saveProc;
+  QLabel *proxyUrlLabel;
+  KLineEdit *proxyUrlEdit;
 
-		//Our  parser for actually "reading" the settings
-		ZmdRugParser *parser;
+  QLabel *proxyUsernameLabel;
+  KLineEdit *proxyUsernameEdit;
 
-		//backend and variable to watch for required backend restart.
-		ZmdUpdaterCore *core;
-		bool restartZMDOnExit;
+  QLabel *proxyPasswordLabel;
+  KLineEdit *proxyPasswordEdit;
+
+  //proc to fetch current settings
+  QProcess *proc;
+  //proc to save settings
+  QProcess *saveProc;
+
+  //Our  parser for actually "reading" the settings
+  ZmdRugParser *parser;
+
+  //backend and variable to watch for required backend restart.
+  ZmdUpdaterCore *core;
+  bool restartZMDOnExit;
 };
 
 #endif

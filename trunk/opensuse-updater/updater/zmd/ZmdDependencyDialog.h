@@ -1,4 +1,4 @@
-/* 
+/*
    Copyright (C) 2006 Narayan Newton <narayannewton@gmail.com>
 
    This program is free software; you can redistribute it and/or
@@ -40,27 +40,28 @@ class QHBoxLayout;
 	A window that prompts the user to approve a dep resolve.
 	This is the last chance for a user to stop a transaction.
 **/
-class ZmdDependencyDialog : public QDialog {
+class ZmdDependencyDialog : public QDialog
+{
 
-	Q_OBJECT
+  Q_OBJECT
 
-	public:
+public:
 
-		ZmdDependencyDialog(QWidget *parent=0);
-		
-		void setTitle(QString);
-		void setText(QString);
+  ZmdDependencyDialog(QWidget *parent=0);
 
-	private:
+  void setTitle(QString);
+  void setText(QString);
 
-		void initGUI();
+private:
 
-		QVBoxLayout *mainLayout;
-		QHBoxLayout *buttonLayout;
+  void initGUI();
 
-		KPushButton *okButton;
-		KPushButton *cancelButton;
-		KTextEdit *packages;
+  QVBoxLayout *mainLayout;
+  QHBoxLayout *buttonLayout;
+
+  KPushButton *okButton;
+  KPushButton *cancelButton;
+  KTextEdit *packages;
 };
 
 #endif

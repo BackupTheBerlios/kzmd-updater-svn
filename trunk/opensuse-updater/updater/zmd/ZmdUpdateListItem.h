@@ -1,4 +1,4 @@
-/* 
+/*
    Copyright (C) 2006 Narayan Newton <narayannewton@gmail.com>
 
    This program is free software; you can redistribute it and/or
@@ -37,17 +37,17 @@
 class ZmdUpdateListItem : public QCheckListItem
 {
 
-	public:
+public:
 
-		ZmdUpdateListItem(QListView *, const QString&, QCheckListItem::Type);
+  ZmdUpdateListItem(QListView *, const QString&, QCheckListItem::Type);
 
-		void setCount(int);
+  void setCount(int);
 
-	private:
+private:
 
-		void stateChange(bool);
+  void stateChange(bool);
 
-		int _selectedCount;
+  int _selectedCount;
 };
 
 #endif

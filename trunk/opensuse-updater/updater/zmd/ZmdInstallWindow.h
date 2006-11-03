@@ -1,4 +1,4 @@
-/* 
+/*
    Copyright (C) 2006 Narayan Newton <narayannewton@gmail.com>
 
    This program is free software; you can redistribute it and/or
@@ -40,72 +40,73 @@ class QVBoxLayout;
 class HeaderWidget;
 
 /**
-	The installation status window, shows download 
+	The installation status window, shows download
 	and transaction progress.
 **/
-class ZmdInstallWindow : public QWidget {
+class ZmdInstallWindow : public QWidget
+{
 
-	Q_OBJECT
+  Q_OBJECT
 
-	public:
+public:
 
-		ZmdInstallWindow(ZmdUpdaterCore *_core, QWidget *parent=0);
+  ZmdInstallWindow(ZmdUpdaterCore *_core, QWidget *parent=0);
 
-		void setPackageList(QValueList<Package> installs, 
-												QValueList<Package> updates, 
-												QValueList<Package> removals);
+  void setPackageList(QValueList<Package> installs,
+                      QValueList<Package> updates,
+                      QValueList<Package> removals);
 
-		void startUpdate();
+  void startUpdate();
 
-	signals:
+signals:
 
-		//We fire this to refresh the update list after 
-		//we install some packages/patches
-		void refreshUpdates();
+  //We fire this to refresh the update list after
+  //we install some packages/patches
+  void refreshUpdates();
 
-	private slots:
+private slots:
 
-		void abortButtonClicked();
-		void closeEvent(QCloseEvent*);
-		//Core Signals
+  void abortButtonClicked();
+  void closeEvent(QCloseEvent*);
+  //Core Signals
 
-		void progress(Progress);
-		void download(Progress);
-		void finished(int, QString);
-		void gotDepInfo(QValueList<Package>, 
-										QValueList<Package>, 
-										QValueList<Package>);
-		void generalFault(QString, int);
+  void progress(Progress);
+  void download(Progress);
+  void finished(int, QString);
+  void gotDepInfo(QValueList<Package>,
+                  QValueList<Package>,
+                  QValueList<Package>);
+  void generalFault(QString, int);
 
-	private:
+private:
 
-		void initGUI();
-		void closeWindow();
+  void initGUI();
+  void closeWindow();
 
-		HeaderWidget *header;
-		KTextEdit *transactionList;
-		KProgress *progressBar;
-		KPushButton *abortButton;
+  HeaderWidget *header;
+  KTextEdit *transactionList;
+  KProgress *progressBar;
+  KPushButton *abortButton;
 
-		QVBoxLayout *mainLayout;
+  QVBoxLayout *mainLayout;
 
-		ZmdUpdaterCore	*core;
+  ZmdUpdaterCore	*core;
 
-		QValueList<Package>	installList;
-		QValueList<Package>	updateList;
-		QValueList<Package>	removeList;
+  QValueList<Package>	installList;
+  QValueList<Package>	updateList;
+  QValueList<Package>	removeList;
 
-		//temp variables for the two progress functions
-		bool watchingDownload;
-		bool downloadDone;
-		bool watchingPackage;
-		bool packageDone;
+  //temp variables for the two progress functions
+  bool watchingDownload;
+  bool downloadDone;
+  bool watchingPackage;
+  bool packageDone;
 
-		//variable to decide if we should really close the window
-		bool reallyDone;
+  //variable to decide if we should really close the window
+  bool reallyDone;
 
-		//Here we hold the ID of the last error
-		int lastError;
+  //Here we hold the ID of the last error
+  int lastError;
 };
 
 

@@ -1,4 +1,4 @@
-/* 
+/*
    Copyright (C) 2006 Narayan Newton <narayannewton@gmail.com>
 
    This program is free software; you can redistribute it and/or
@@ -42,38 +42,39 @@ class QButtonGroup;
 	Our add/remove server dialog, fetches name, uri and type
 	from the user.
 **/
-class ZmdServerDialog : public QDialog {
+class ZmdServerDialog : public QDialog
+{
 
-	Q_OBJECT
+  Q_OBJECT
 
-	public:
+public:
 
-		ZmdServerDialog(QWidget *parent=0);
+  ZmdServerDialog(QWidget *parent=0);
 
-		QValueList<QString> getServerInfo();
+  QValueList<QString> getServerInfo();
 
-	private slots:
-		
-		void addButtonClicked();
-		void cancelButtonClicked();
+private slots:
 
-	private:
+  void addButtonClicked();
+  void cancelButtonClicked();
 
-		void initGUI();
+private:
 
-		QVBoxLayout	*layout;
-		QHBoxLayout	*buttonLayout;
+  void initGUI();
 
-		QLabel *nameLabel;
-		QLabel *serverLabel;
-		KLineEdit *nameEdit;
-		KLineEdit *serverEdit;
-		KPushButton *cancelButton;
-		KPushButton *addButton;
-		QButtonGroup *typeGroup;
+  QVBoxLayout	*layout;
+  QHBoxLayout	*buttonLayout;
 
-		QString server;
-		QString name;
+  QLabel *nameLabel;
+  QLabel *serverLabel;
+  KLineEdit *nameEdit;
+  KLineEdit *serverEdit;
+  KPushButton *cancelButton;
+  KPushButton *addButton;
+  QButtonGroup *typeGroup;
+
+  QString server;
+  QString name;
 };
 
 #endif

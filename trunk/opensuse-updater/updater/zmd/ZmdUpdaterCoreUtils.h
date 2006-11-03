@@ -1,4 +1,4 @@
-/* 
+/*
    Copyright (C) 2006 Narayan Newton <narayannewton@gmail.com>
 
    This program is free software; you can redistribute it and/or
@@ -23,333 +23,373 @@
 #include <qmap.h>
 
 
-class Identity {
+class Identity
+{
 
-	public:
+public:
 
-		Identity() {}
+  Identity()
+  {}
 
-		void fromMap(const QMap<QString, QVariant> &map) {
+  void fromMap(const QMap<QString, QVariant> &map)
+  {
 
-			name = map["name"].toString();
-			pass = map["password"].toString();
-			privs = map["privs"].toString();
-		}
+    name = map["name"].toString();
+    pass = map["password"].toString();
+    privs = map["privs"].toString();
+  }
 
-		QMap<QString, QVariant> toMap() {
+  QMap<QString, QVariant> toMap()
+  {
 
-			QMap<QString, QVariant> map;
+    QMap<QString, QVariant> map;
 
-			if (name != "")
-				map["name"] = name;
-			if (pass != "") 
-				map["password"] = pass;
-			if (privs != "") 
-				map["privs"] = privs;
+    if (name != "")
+      map["name"] = name;
+    if (pass != "")
+      map["password"] = pass;
+    if (privs != "")
+      map["privs"] = privs;
 
-			return map;
-		}
+    return map;
+  }
 
-		QString name;
-		QString pass;
-		QString privs;
+  QString name;
+  QString pass;
+  QString privs;
 };
 
 
-class Progress {
+class Progress
+{
 
-	public:
+public:
 
-		Progress() : status(-1), expectedTime(-1), remainingTime(-1), percent(-1.0L) {}
+  Progress() : status(-1), expectedTime(-1), remainingTime(-1), percent(-1.0L)
+  {}
 
-		void fromMap(const QMap<QString,QVariant> &map) {
-			QValueList<QVariant>::const_iterator iter;
+  void fromMap(const QMap<QString,QVariant> &map)
+  {
+    QValueList<QVariant>::const_iterator iter;
 
-			name = map["name"].toString();
-			status = map["status"].toInt();
-			expectedTime = map["expected_time"].toInt();
-			remainingTime = map["remaining_time"].toInt();
-			percent = map["percent"].toDouble();
+    name = map["name"].toString();
+    status = map["status"].toInt();
+    expectedTime = map["expected_time"].toInt();
+    remainingTime = map["remaining_time"].toInt();
+    percent = map["percent"].toDouble();
 
-			for (iter = map["messages"].toList().begin(); iter != map["messages"].toList().end();
-				 iter++) {
-				messages.append((*iter).toString());
-			}
-		}
+    for (iter = map["messages"].toList().begin(); iter != map["messages"].toList().end();
+         iter++)
+    {
+      messages.append((*iter).toString());
+    }
+  }
 
-		QString name;
-		int status;
-		int expectedTime;
-		int remainingTime;
-		double percent;	
-		QValueList<QString> messages;
+  QString name;
+  int status;
+  int expectedTime;
+  int remainingTime;
+  double percent;
+  QValueList<QString> messages;
 };
 
-class Service {
+class Service
+{
 
-	public:
+public:
 
-		Service() : activated(3) {}
+  Service() : activated(3)
+  {}
 
-		void fromMap(const QMap<QString,QVariant> &map) {
-			name = map["name"].toString();
-			id = map["id"].toString();
-			uri = map["uri"].toString();
-			type = map["type"].toString();
-			activated = map["active"].toInt();
-		}
+  void fromMap(const QMap<QString,QVariant> &map)
+  {
+    name = map["name"].toString();
+    id = map["id"].toString();
+    uri = map["uri"].toString();
+    type = map["type"].toString();
+    activated = map["active"].toInt();
+  }
 
-		QMap<QString, QVariant> toMap() {
-			QMap<QString,QVariant> map;
-			if (name != "")
-				map["name"] = name;
-			if (id != "")
-				map["id"] = id;
-			if (uri != "")
-				map["uri"] = uri;
-			if (type != "")
-				map["type"] = type;
-			return map;
-		}
+  QMap<QString, QVariant> toMap()
+  {
+    QMap<QString,QVariant> map;
+    if (name != "")
+      map["name"] = name;
+    if (id != "")
+      map["id"] = id;
+    if (uri != "")
+      map["uri"] = uri;
+    if (type != "")
+      map["type"] = type;
+    return map;
+  }
 
-		QString name;
-		QString id;
-		QString uri;
-		QString type;
-		bool activated;
-	
+  QString name;
+  QString id;
+  QString uri;
+  QString type;
+  bool activated;
+
 };
 
-class Catalog {
+class Catalog
+{
 
-	public:
+public:
 
-		Catalog() : subscribed(3) {}
+  Catalog() : subscribed(3)
+  {}
 
-		void fromMap(const QMap<QString,QVariant> &map) {
-			name = map["name"].toString();
-			id = map["id"].toString();
-			displayName = map["display_name"].toString();
-			subscribed = map["subscribed"].toBool();
-			service = map["service"].toString();
-		}
+  void fromMap(const QMap<QString,QVariant> &map)
+  {
+    name = map["name"].toString();
+    id = map["id"].toString();
+    displayName = map["display_name"].toString();
+    subscribed = map["subscribed"].toBool();
+    service = map["service"].toString();
+  }
 
-		QMap<QString, QVariant> toMap() {
-			QMap<QString,QVariant> map;
-			if (name != "")
-				map["name"] = name;
-			if (id != "")
-				map["id"] = id;
-			if (displayName != "")
-				map["display_name"] = displayName;
-			if (subscribed != 3)
-				map["subscribed"] = subscribed;
-			return map;
-		}
+  QMap<QString, QVariant> toMap()
+  {
+    QMap<QString,QVariant> map;
+    if (name != "")
+      map["name"] = name;
+    if (id != "")
+      map["id"] = id;
+    if (displayName != "")
+      map["display_name"] = displayName;
+    if (subscribed != 3)
+      map["subscribed"] = subscribed;
+    return map;
+  }
 
-		QString name;
-		QString id;
-		QString displayName;
-		QString service;
-		bool subscribed;
+  QString name;
+  QString id;
+  QString displayName;
+  QString service;
+  bool subscribed;
 };
 
-class PackageDetails {
+class PackageDetails
+{
 
-	public:
+public:
 
-		PackageDetails() : installOnly(0), installSize(0) {}
+  PackageDetails() : installOnly(0), installSize(0)
+  {}
 
-		void fromMap(const QMap<QString, QVariant> &map) {
-			summary = map["summary"].toString();
-			description = map["description"].toString();
-			vendor = map["vendor"].toString();
-			installOnly = map["install_only"].toBool();
-			installSize = map["install_size"].toInt();
-		}
+  void fromMap(const QMap<QString, QVariant> &map)
+  {
+    summary = map["summary"].toString();
+    description = map["description"].toString();
+    vendor = map["vendor"].toString();
+    installOnly = map["install_only"].toBool();
+    installSize = map["install_size"].toInt();
+  }
 
-		QString id;
-		QString summary;
-		QString description;
-		QString vendor;
-		bool installOnly;
-		int installSize;
+  QString id;
+  QString summary;
+  QString description;
+  QString vendor;
+  bool installOnly;
+  int installSize;
 };
 
-class PatchDetails {
+class PatchDetails
+{
 
-	public:
+public:
 
-		PatchDetails() : creationTime(0), 
-										 rebootRequired(false),
-										 restartRequired(false),
-										 interactive(false) {}
+  PatchDetails() : creationTime(0),
+      rebootRequired(false),
+      restartRequired(false),
+      interactive(false)
+  {}
 
-		void fromMap(const QMap<QString, QVariant> &map) {
-			creationTime = map["creation_time"].toInt();
-			rebootRequired = map["reboot_req"].toBool();
-			restartRequired = map["restart_req"].toBool();
-			interactive = map["interactive"].toBool();
-		}
+  void fromMap(const QMap<QString, QVariant> &map)
+  {
+    creationTime = map["creation_time"].toInt();
+    rebootRequired = map["reboot_req"].toBool();
+    restartRequired = map["restart_req"].toBool();
+    interactive = map["interactive"].toBool();
+  }
 
-		QString id;
-		int creationTime;
-		bool rebootRequired;
-		bool restartRequired;
-		bool interactive;
+  QString id;
+  int creationTime;
+  bool rebootRequired;
+  bool restartRequired;
+  bool interactive;
 };
 
 /*
 
-	This is the "base" class. It can represent either a package 
+	This is the "base" class. It can represent either a package
 	or a patch for the backend
 */
-class Package {
-	
-	public:
+class Package
+{
 
-		Package() : installed(3) {}
+public:
 
-		void fromMap(const QMap<QString,QVariant> &map) {
-			int rawType = 0;
+  Package() : installed(3)
+  {}
 
-			rawType = map["type"].toInt();
-			switch(rawType) {
-				case 0: 
-					type = "package";
-					break;
-				case 1:
-					type = "script";
-					break;
-				case 2: 
-					type = "message";
-					break;
-				case 3:
-					type = "patch";
-					break;
-				case 4:
-					type = "pattern";
-					break;
-				case 5:
-					type = "product";
-					break;
-			}
+  void fromMap(const QMap<QString,QVariant> &map)
+  {
+    int rawType = 0;
 
-			name = map["name"].toString();
-			id = map["id"].toString();
-			version = map["version"].toString();
-			catalog = map["catalog"].toString();
-			description = map["summary"].toString();
-			installed = map["installed"].toBool();
-		}
+    rawType = map["type"].toInt();
+    switch (rawType)
+    {
+    case 0:
+      type = "package";
+      break;
+    case 1:
+      type = "script";
+      break;
+    case 2:
+      type = "message";
+      break;
+    case 3:
+      type = "patch";
+      break;
+    case 4:
+      type = "pattern";
+      break;
+    case 5:
+      type = "product";
+      break;
+    }
 
-		QMap<QString, QVariant> toMap() {
-			QMap<QString,QVariant> map;
+    name = map["name"].toString();
+    id = map["id"].toString();
+    version = map["version"].toString();
+    catalog = map["catalog"].toString();
+    description = map["summary"].toString();
+    installed = map["installed"].toBool();
+  }
 
-			if (type == "patch") {
-				map["type"] = (int)3;
-			} else if (type == "package") {
-				map["type"] = (int)0;
-			} else {
-				map["type"] = (int)0;
-			}
+  QMap<QString, QVariant> toMap()
+  {
+    QMap<QString,QVariant> map;
 
-			if (name != "")
-				map["name"] = name;
-			if (id != "")
-				map["id"] = id.toInt();
-/*
-			if (version != "")
-				map["version"] = version;
-*/
+    if (type == "patch")
+    {
+      map["type"] = (int)3;
+    }
+    else if (type == "package")
+    {
+      map["type"] = (int)0;
+    }
+    else
+    {
+      map["type"] = (int)0;
+    }
 
-			if (catalog != "")
-				map["catalog"] = catalog;
+    if (name != "")
+      map["name"] = name;
+    if (id != "")
+      map["id"] = id.toInt();
+    /*
+    			if (version != "")
+    				map["version"] = version;
+    */
 
-			return map;
-		}
-		
-		QString type;
-		QString name;
-		QString id;
-		QString version;
-		QString catalog;
-		QString description;
-		bool installed;	
+    if (catalog != "")
+      map["catalog"] = catalog;
 
-    //The details
-    PackageDetails details;
+    return map;
+  }
+
+  QString type;
+  QString name;
+  QString id;
+  QString version;
+  QString catalog;
+  QString description;
+  bool installed;
+
+  //The details
+  PackageDetails details;
 };
 
-class Patch : public Package {
+class Patch : public Package
+{
 
-	public:
+public:
 
-		Patch() : Package() {}
+  Patch() : Package()
+  {}
 
-		void fromMap(const QMap<QString,QVariant> &map) {
-			name = map["name"].toString();
-			type = "patch";
-			id = map["id"].toString();
-			version = map["version"].toString();
-			catalog = map["catalog"].toString();
-			description = map["summary"].toString();
-			installed = map["installed"].toBool();
-			category = map["category"].toString();
-			status = map["status"].toInt();
-			rebootRequired = map["reboot_req"].toBool();
-			restartRequired = map["restart_req"].toBool();
-		}
+  void fromMap(const QMap<QString,QVariant> &map)
+  {
+    name = map["name"].toString();
+    type = "patch";
+    id = map["id"].toString();
+    version = map["version"].toString();
+    catalog = map["catalog"].toString();
+    description = map["summary"].toString();
+    installed = map["installed"].toBool();
+    category = map["category"].toString();
+    status = map["status"].toInt();
+    rebootRequired = map["reboot_req"].toBool();
+    restartRequired = map["restart_req"].toBool();
+  }
 
-		QString category;
-		int status;
-		bool rebootRequired;
-		bool restartRequired;
+  QString category;
+  int status;
+  bool rebootRequired;
+  bool restartRequired;
 
-    //The details
-    PatchDetails details;
+  //The details
+  PatchDetails details;
 
-    //The deps
-    QValueList<Package> patchDeps;
+  //The deps
+  QValueList<Package> patchDeps;
 };
 
-class PackageLock {
+class PackageLock
+{
 
-	public:
+public:
 
-		PackageLock() {}
+  PackageLock()
+  {}
 
-		void fromMap(const QMap<QString, QVariant> &map) {
-			id = map["id"].toString();
-			catalog = map["catalog"].toString();
-			glob = map["glob"].toString();
+  void fromMap(const QMap<QString, QVariant> &map)
+  {
+    id = map["id"].toString();
+    catalog = map["catalog"].toString();
+    glob = map["glob"].toString();
 
-			if (map.contains("dependency") == true) {
-				QMap<QString, QVariant> depMap;
+    if (map.contains("dependency") == true)
+    {
+      QMap<QString, QVariant> depMap;
 
-				depMap = map["dependency"].toMap();
-				pack.fromMap(depMap);
-			}
-		}
+      depMap = map["dependency"].toMap();
+      pack.fromMap(depMap);
+    }
+  }
 
-		QMap<QString, QVariant> toMap() {
-			QMap<QString, QVariant> map;
-			
-			if (id != "")
-				map["id"] = id;
-			if (catalog != "")
-				map["catalog"] = catalog;
-			if (glob != "") 
-				map["glob"] = glob;
-			if (pack.id != "")
-				map["dependency"] = pack.toMap();
-			return map;
-		}
+  QMap<QString, QVariant> toMap()
+  {
+    QMap<QString, QVariant> map;
 
-		QString id;
-		QString catalog;
-		QString glob; 
-		Package pack;
+    if (id != "")
+      map["id"] = id;
+    if (catalog != "")
+      map["catalog"] = catalog;
+    if (glob != "")
+      map["glob"] = glob;
+    if (pack.id != "")
+      map["dependency"] = pack.toMap();
+    return map;
+  }
+
+  QString id;
+  QString catalog;
+  QString glob;
+  Package pack;
 };
 
 #endif

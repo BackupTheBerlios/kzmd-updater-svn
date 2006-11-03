@@ -1,4 +1,4 @@
-/* 
+/*
    Copyright (C) 2006 Narayan Newton <narayannewton@gmail.com>
 
    This program is free software; you can redistribute it and/or
@@ -26,44 +26,48 @@
 #include <qlabel.h>
 #include <qlayout.h>
 
-ZmdDependencyDialog::ZmdDependencyDialog(QWidget *parent) : QDialog(parent) {
+ZmdDependencyDialog::ZmdDependencyDialog(QWidget *parent) : QDialog(parent)
+{
 
-	initGUI();
+  initGUI();
 }
 
-void ZmdDependencyDialog::initGUI() {
+void ZmdDependencyDialog::initGUI()
+{
 
-	mainLayout = new QVBoxLayout(this);
-	okButton = new KPushButton(KStdGuiItem::ok(), this);
-	cancelButton = new KPushButton(KStdGuiItem::cancel(), this);
-	packages = new KTextEdit(this);
+  mainLayout = new QVBoxLayout(this);
+  okButton = new KPushButton(KStdGuiItem::ok(), this);
+  cancelButton = new KPushButton(KStdGuiItem::cancel(), this);
+  packages = new KTextEdit(this);
 
-	mainLayout->addWidget(packages);
-	packages->setReadOnly(true);
+  mainLayout->addWidget(packages);
+  packages->setReadOnly(true);
 
-	buttonLayout = new QHBoxLayout(mainLayout);
-	buttonLayout->setSpacing(5);
-	buttonLayout->addWidget(okButton, 0, Qt::AlignCenter);
-	buttonLayout->addWidget(cancelButton, 0, Qt::AlignCenter);
-	cancelButton->setDefault(true);
-	cancelButton->setFocus();
+  buttonLayout = new QHBoxLayout(mainLayout);
+  buttonLayout->setSpacing(5);
+  buttonLayout->addWidget(okButton, 0, Qt::AlignCenter);
+  buttonLayout->addWidget(cancelButton, 0, Qt::AlignCenter);
+  cancelButton->setDefault(true);
+  cancelButton->setFocus();
 
-	connect(okButton, SIGNAL(clicked()), 
-					this, SLOT(accept()));
+  connect(okButton, SIGNAL(clicked()),
+          this, SLOT(accept()));
 
-	connect(cancelButton, SIGNAL(clicked()), 
-					this, SLOT(reject()));
+  connect(cancelButton, SIGNAL(clicked()),
+          this, SLOT(reject()));
 
-	mainLayout->setMargin(10);
-	mainLayout->setSpacing(10);
-	resize(400,200);
+  mainLayout->setMargin(10);
+  mainLayout->setSpacing(10);
+  resize(400,200);
 }
 
-void ZmdDependencyDialog::setTitle(QString text) {
-	setCaption(text);
+void ZmdDependencyDialog::setTitle(QString text)
+{
+  setCaption(text);
 }
 
-void ZmdDependencyDialog::setText(QString text) {
-	packages->setText(text);
+void ZmdDependencyDialog::setText(QString text)
+{
+  packages->setText(text);
 }
 
