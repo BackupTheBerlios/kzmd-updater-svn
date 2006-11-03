@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Fri Nov  3 17:01:48 CET 2006 - dmacvicar@suse.de
+
+- fix reading backend on startup
+- version 0.4
+- r442  
+
+-------------------------------------------------------------------
 Tue Oct 24 14:49:04 CEST 2006 - dmacvicar@suse.de
 
 - missing kcfg file in spec file 
