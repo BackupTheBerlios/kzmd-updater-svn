@@ -35,8 +35,7 @@
 UpdaterApplication::UpdaterApplication() : KUniqueApplication(true,true,false)
 {
 
- 	UpdaterSettings::EnumBackend::type backend;
-  
+  int backend = UpdaterSettings::self()->backend();
   
  	if ( backend == UpdaterSettings::EnumBackend::zmd )
   {

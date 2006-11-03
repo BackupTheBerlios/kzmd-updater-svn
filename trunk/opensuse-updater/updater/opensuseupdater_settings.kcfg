@@ -12,7 +12,7 @@
       <default>true</default>
     </entry> 
     <entry name="Backend" type="Enum"> 
-      <label>Width of the main window.</label> 
+      <label>Update engine backend</label> 
       <choices>
         <choice name="zypp"/>
         <choice name="zmd"/>
