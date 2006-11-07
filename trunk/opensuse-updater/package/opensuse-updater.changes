@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Tue Nov  7 15:18:01 CET 2006 - dmacvicar@suse.de
+
+- add translations
+- r445 
+
+-------------------------------------------------------------------
 Fri Nov  3 17:01:48 CET 2006 - dmacvicar@suse.de
 
 - fix reading backend on startup
