@@ -46,7 +46,7 @@ ZmdUpdater::ZmdUpdater() : Updater()
   core = new ZmdUpdaterCore(this);
   showGeneralFaultError = true;
   readConfig();
-  authorizeCore();
+  //authorizeCore();
 
   //Connect core signals
   connect(core, SIGNAL(updateListing(QValueList<Package>)),
@@ -508,21 +508,22 @@ void ZmdUpdater::readConfig()
   KConfig *config = kapp->config();
   config->setGroup("General");
 
-  switch (config->readEntry("ZmdProto").toInt())
-  {
+  //switch (config->readEntry("ZmdProto").toInt())
+  //{
 
-  case ZMD_TCP:
-    serverIP = config->readEntry("ZmdServer", TCP_SERVER_ADDY);
-    core->setServer(QString("http://") + serverIP + QString(TCP_SERVER_POSTFIX));
-    break;
-  case ZMD_UDS:
+  //case ZMD_TCP:
+  //  serverIP = config->readEntry("ZmdServer", TCP_SERVER_ADDY);
+  //  core->setServer(QString("http://") + serverIP + QString(TCP_SERVER_POSTFIX));
+ //   break;
+ // case ZMD_UDS:
     core->setServer(UDS_SERVER_ADDY);
-    break;
-  default:
-    core->setServer(QString("http://") + TCP_SERVER_ADDY + QString(TCP_SERVER_POSTFIX));
-    config->writeEntry("ZmdProto", ZMD_TCP);
-    break;
-  }
+    core->setUser("dmacvicar");
+   // break;
+  //default:
+  //  core->setServer(QString("http://") + TCP_SERVER_ADDY + QString(TCP_SERVER_POSTFIX));
+  //  config->writeEntry("ZmdProto", ZMD_TCP);
+  //  break;
+  //}
 
 }
 

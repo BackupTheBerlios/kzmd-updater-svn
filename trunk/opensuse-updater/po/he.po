@@ -1,0 +1,168 @@
+# @TITLE@
+# Copyright (C) 2006, SUSE Linux GmbH, Nuremberg
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+# This file is distributed under the same license as @PACKAGE@ package. FIRST
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: @PACKAGE@\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-10-26 11:26+0200\n"
+"PO-Revision-Date: 2004-08-09 10:24+0200\n"
+"Last-Translator: xxx <yyy@example.org>\n"
+"Language-Team: Hebrew <i18n@suse.de>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: MainWindow.cpp:95 MainWindow.cpp:179
+msgid "Add/Remove Update Sources..."
+msgstr ""
+
+# IT
+#: MainWindow.cpp:97
+msgid "Install"
+msgstr "התקן"
+
+#: MainWindow.cpp:102
+msgid "Clear Selection"
+msgstr ""
+
+#: MainWindow.cpp:143
+msgid "<b>Available Updates:</b><br> The following are software upgrades and patches to add features and fix bugs.<br>"
+msgstr ""
+
+#  table header texts
+#: MainWindow.cpp:145
+msgid "Name"
+msgstr "שם"
+
+#  Column header
+#: MainWindow.cpp:147
+msgid "Type"
+msgstr "סוג"
+
+#: MainWindow.cpp:148
+#, fuzzy
+msgid "New Version"
+msgstr "גרסה"
+
+#: MainWindow.cpp:149
+#, fuzzy
+msgid "Catalog"
+msgstr "קטלונית"
+
+#: MainWindow.cpp:170
+msgid "Available Updates"
+msgstr ""
+
+#: MainWindow.cpp:178
+msgid "Configure Applet..."
+msgstr ""
+
+#: MainWindow.cpp:296
+msgid "General"
+msgstr ""
+
+#: TrayIcon.cpp:49
+msgid "Checking for updates..."
+msgstr ""
+
+#: TrayIcon.cpp:53
+#, fuzzy
+msgid "Error:\n"
+msgstr "שגיאה"
+
+#: TrayIcon.cpp:57
+msgid "No Updates Available"
+msgstr ""
+
+#: TrayIcon.cpp:63
+msgid " Update Available"
+msgstr ""
+
+#: TrayIcon.cpp:64
+msgid " Updates Available"
+msgstr ""
+
+#: TrayIcon.cpp:70
+msgid " Important Update Available"
+msgstr ""
+
+#: TrayIcon.cpp:71
+msgid " Important Updates Available"
+msgstr ""
+
+#: _translatorinfo.cpp:1
+msgid ""
+"_: NAME OF TRANSLATORS\n"
+"Your names"
+msgstr ""
+
+#: _translatorinfo.cpp:3
+msgid ""
+"_: EMAIL OF TRANSLATORS\n"
+"Your emails"
+msgstr ""
+
+#. i18n: file updatersettingswidget_base.ui line 16
+#: rc.cpp:3 updatersettingswidget_base.cpp:75
+#, no-c-format
+msgid "Form1"
+msgstr ""
+
+#. i18n: file updatersettingswidget_base.ui line 27
+#: rc.cpp:6 updatersettingswidget_base.cpp:76
+#, no-c-format
+msgid "Check For Updates Every "
+msgstr ""
+
+#. i18n: file updatersettingswidget_base.ui line 30
+#: rc.cpp:9 updatersettingswidget_base.cpp:77
+#, no-c-format
+msgid " Minutes"
+msgstr ""
+
+#. i18n: file updatersettingswidget_base.ui line 38
+#: rc.cpp:12 updatersettingswidget_base.cpp:78
+#, no-c-format
+msgid "Automa&tically start updater on login"
+msgstr ""
+
+#. i18n: file updatersettingswidget_base.ui line 41
+#: rc.cpp:15 updatersettingswidget_base.cpp:79
+#, no-c-format
+msgid "Alt+T"
+msgstr ""
+
+#. i18n: file updatersettingswidget_base.ui line 49
+#: rc.cpp:18 updatersettingswidget_base.cpp:80
+#, no-c-format
+msgid "Get Updates Via"
+msgstr ""
+
+#. i18n: file updatersettingswidget_base.ui line 68
+#: rc.cpp:24 updatersettingswidget_base.cpp:82
+#, no-c-format
+msgid "Novell ZENWorks"
+msgstr ""
+
+#. i18n: file opensuseupdater_settings.kcfg line 7
+#: rc.cpp:27
+#, no-c-format
+msgid "How often to check for updates."
+msgstr ""
+
+#. i18n: file opensuseupdater_settings.kcfg line 11
+#: rc.cpp:30
+#, no-c-format
+msgid "Automatically start the applet on login"
+msgstr ""
+
+#. i18n: file opensuseupdater_settings.kcfg line 15
+#: rc.cpp:33
+#, no-c-format
+msgid "Width of the main window."
+msgstr ""

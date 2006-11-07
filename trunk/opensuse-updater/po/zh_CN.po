@@ -1,0 +1,162 @@
+# Copyright (C) 2006 SuSE Linux Products GmbH, Nuernberg
+# This file is distributed under the same license as the package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: opensuseupdater\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-10-26 11:26+0200\n"
+"PO-Revision-Date: 2006-11-02 14:21\n"
+"Last-Translator: Novell Language <language@novell.com>\n"
+"Language-Team: Novell Language <language@novell.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: MainWindow.cpp:95 MainWindow.cpp:179
+msgid "Add/Remove Update Sources..."
+msgstr "添加/去除更新源...】"
+
+#: MainWindow.cpp:97
+msgid "Install"
+msgstr "安装"
+
+#: MainWindow.cpp:102
+msgid "Clear Selection"
+msgstr "清除选择"
+
+#: MainWindow.cpp:143
+msgid "<b>Available Updates:</b><br> The following are software upgrades and patches to add features and fix bugs.<br>"
+msgstr "<b>可用更新：</b><br>下面是添加功能和修复 bug 的软件升级和增补程序。<br>"
+
+#: MainWindow.cpp:145
+msgid "Name"
+msgstr "姓名"
+
+#: MainWindow.cpp:147
+msgid "Type"
+msgstr "类型"
+
+#: MainWindow.cpp:148
+msgid "New Version"
+msgstr "新版本"
+
+#: MainWindow.cpp:149
+msgid "Catalog"
+msgstr "编目"
+
+#: MainWindow.cpp:170
+msgid "Available Updates"
+msgstr "可用的更新"
+
+#: MainWindow.cpp:178
+msgid "Configure Applet..."
+msgstr "配置小程序..."
+
+#: MainWindow.cpp:296
+msgid "General"
+msgstr "常规"
+
+#: TrayIcon.cpp:49
+msgid "Checking for updates..."
+msgstr "正在检查更新..."
+
+#: TrayIcon.cpp:53
+msgid "Error:\n"
+msgstr "错误：\n"
+
+#: TrayIcon.cpp:57
+msgid "No Updates Available"
+msgstr "无更新可用"
+
+#: TrayIcon.cpp:63
+msgid " Update Available"
+msgstr " 更新可用"
+
+#: TrayIcon.cpp:64
+msgid " Updates Available"
+msgstr " 更新可用"
+
+#: TrayIcon.cpp:70
+msgid " Important Update Available"
+msgstr " 重要更新可用"
+
+#: TrayIcon.cpp:71
+msgid " Important Updates Available"
+msgstr " 重要更新可用"
+
+#: _translatorinfo.cpp:1
+msgid ""
+"_: NAME OF TRANSLATORS\n"
+"Your names"
+msgstr ""
+"_: 翻译者姓名\n"
+"您的姓名"
+
+#: _translatorinfo.cpp:3
+msgid ""
+"_: EMAIL OF TRANSLATORS\n"
+"Your emails"
+msgstr ""
+"_: 翻译者电子邮件\n"
+"您的电子邮件"
+
+#. i18n: file updatersettingswidget_base.ui line 16
+#: rc.cpp:3 updatersettingswidget_base.cpp:75
+#, no-c-format
+msgid "Form1"
+msgstr "Form1"
+
+#. i18n: file updatersettingswidget_base.ui line 27
+#: rc.cpp:6 updatersettingswidget_base.cpp:76
+#, no-c-format
+msgid "Check For Updates Every "
+msgstr "检查更新频率，每 "
+
+#. i18n: file updatersettingswidget_base.ui line 30
+#: rc.cpp:9 updatersettingswidget_base.cpp:77
+#, no-c-format
+msgid " Minutes"
+msgstr " 分钟"
+
+#. i18n: file updatersettingswidget_base.ui line 38
+#: rc.cpp:12 updatersettingswidget_base.cpp:78
+#, no-c-format
+msgid "Automa&tically start updater on login"
+msgstr "登录时自动启动更新程序(&T)"
+
+#. i18n: file updatersettingswidget_base.ui line 41
+#: rc.cpp:15 updatersettingswidget_base.cpp:79
+#, no-c-format
+msgid "Alt+T"
+msgstr "Alt+T"
+
+#. i18n: file updatersettingswidget_base.ui line 49
+#: rc.cpp:18 updatersettingswidget_base.cpp:80
+#, no-c-format
+msgid "Get Updates Via"
+msgstr "获取更新方式"
+
+#. i18n: file updatersettingswidget_base.ui line 68
+#: rc.cpp:24 updatersettingswidget_base.cpp:82
+#, no-c-format
+msgid "Novell ZENWorks"
+msgstr "Novell ZENWorks"
+
+#. i18n: file opensuseupdater_settings.kcfg line 7
+#: rc.cpp:27
+#, no-c-format
+msgid "How often to check for updates."
+msgstr "检查更新的频率。"
+
+#. i18n: file opensuseupdater_settings.kcfg line 11
+#: rc.cpp:30
+#, no-c-format
+msgid "Automatically start the applet on login"
+msgstr "登录时自动启动该小程序"
+
+#. i18n: file opensuseupdater_settings.kcfg line 15
+#: rc.cpp:33
+#, no-c-format
+msgid "Width of the main window."
+msgstr "主窗口的宽度。"

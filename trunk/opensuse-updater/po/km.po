@@ -1,0 +1,173 @@
+# translation of opensuseupdater.km.po to khmer
+# @TITLE@
+# Copyright (C) 2006, SUSE Linux GmbH, Nuremberg
+#
+# This file is distributed under the same license as @PACKAGE@ package. FIRST
+#
+# auk piseth <piseth_dv@khmeros.info>, 2006.
+msgid ""
+msgstr ""
+"Project-Id-Version: opensuseupdater.km\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-10-26 11:26+0200\n"
+"PO-Revision-Date: 2006-10-26 16:03+0700\n"
+"Last-Translator: auk piseth <piseth_dv@khmeros.info>\n"
+"Language-Team: khmer <support@khmeros.info>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: KBabel 1.11.4\n"
+
+#: MainWindow.cpp:95 MainWindow.cpp:179
+#, fuzzy
+msgid "Add/Remove Update Sources..."
+msgstr "បន្ថែម/យក​ម៉ាស៊ីន​បម្រើ​ចេញ"
+
+#: MainWindow.cpp:97
+msgid "Install"
+msgstr "ដំឡើង"
+
+#: MainWindow.cpp:102
+msgid "Clear Selection"
+msgstr "សម្អាត​ជម្រើស"
+
+#: MainWindow.cpp:143
+msgid "<b>Available Updates:</b><br> The following are software upgrades and patches to add features and fix bugs.<br>"
+msgstr "<b>ភាព​ទាន់​សម័យ​ដែល​មាន ៖</b><br> ខាងក្រោម​នេះ​គឺ​ជា​ការ​ធ្វើ​ឲ្យ​កម្មវិធី​ប្រសើ និង បំណះ​ដើម្បី​បន្ថែម​លក្ខណៈ​ពិសេស និង ជួសជុល​កំហុស ។<br> <u>ជ្រើស​ពួកវា​ដែល​អ្នក​ចង់​ដំឡើង ហើយ ចុច​ដំឡើង ។</u>"
+
+#: MainWindow.cpp:145
+msgid "Name"
+msgstr "ឈ្មោះ"
+
+#: MainWindow.cpp:147
+msgid "Type"
+msgstr "ប្រភេទ"
+
+#: MainWindow.cpp:148
+msgid "New Version"
+msgstr "កំណែ​ថ្មី"
+
+#: MainWindow.cpp:149
+msgid "Catalog"
+msgstr "កាតាឡុក"
+
+#: MainWindow.cpp:170
+msgid "Available Updates"
+msgstr "ភាព​ទាន់សម័យ​ដែល​មាន"
+
+#: MainWindow.cpp:178
+#, fuzzy
+msgid "Configure Applet..."
+msgstr "កំណត់​រចនា​សម្ព័ន្ធ​អាប់​ភ្លេត"
+
+#: MainWindow.cpp:296
+msgid "General"
+msgstr "ទូទៅ"
+
+#: TrayIcon.cpp:49
+#, fuzzy
+msgid "Checking for updates..."
+msgstr "កំពុង​ពិនិត្យ​មើល​ភាព​អាស្រ័យ"
+
+#: TrayIcon.cpp:53
+#, fuzzy
+msgid "Error:\n"
+msgstr "កំហុស ៖"
+
+#: TrayIcon.cpp:57
+msgid "No Updates Available"
+msgstr "មិន​មាន​ភាព​ទាន់​សម័យ"
+
+#: TrayIcon.cpp:63
+msgid " Update Available"
+msgstr " ភាព​ទាន់​សម័យ"
+
+#: TrayIcon.cpp:64
+msgid " Updates Available"
+msgstr " ភាពទាន់​សម័យ"
+
+#: TrayIcon.cpp:70
+#, fuzzy
+msgid " Important Update Available"
+msgstr "មិន​មាន​ភាព​ទាន់​សម័យ​ឡើយ"
+
+#: TrayIcon.cpp:71
+#, fuzzy
+msgid " Important Updates Available"
+msgstr "មិន​មាន​ភាព​ទាន់​សម័យ​ឡើយ"
+
+#: _translatorinfo.cpp:1
+msgid ""
+"_: NAME OF TRANSLATORS\n"
+"Your names"
+msgstr "ខឹម សុខែម, ប៉ុច សុគន្ធ, អេង វណ្ណៈ, អោក ពិសិដ្ឋ"
+
+#: _translatorinfo.cpp:3
+msgid ""
+"_: EMAIL OF TRANSLATORS\n"
+"Your emails"
+msgstr "khoemsokhem@khmeros.info,sokun_poch@khmeros.info,evannak@khmeros.info,piseth_dv@khmeros.info"
+
+#. i18n: file updatersettingswidget_base.ui line 16
+#: rc.cpp:3 updatersettingswidget_base.cpp:75
+#, no-c-format
+msgid "Form1"
+msgstr ""
+
+#. i18n: file updatersettingswidget_base.ui line 27
+#: rc.cpp:6 updatersettingswidget_base.cpp:76
+#, no-c-format
+msgid "Check For Updates Every "
+msgstr "ពិនិត្យ​រកមើល​ភាព​ទាន់​សម័យ​នៅរាល់ "
+
+#. i18n: file updatersettingswidget_base.ui line 30
+#: rc.cpp:9 updatersettingswidget_base.cpp:77
+#, no-c-format
+msgid " Minutes"
+msgstr " នាទី"
+
+#. i18n: file updatersettingswidget_base.ui line 38
+#: rc.cpp:12 updatersettingswidget_base.cpp:78
+#, fuzzy, no-c-format
+msgid "Automa&tically start updater on login"
+msgstr "ចាប់​ផ្ដើម​កម្មវិធី​ធ្វើឲ្យទាន់​សម័យ​នៅពេល​ចូល​ដោយ​ស្វ័យ​ប្រវត្តិ"
+
+#. i18n: file updatersettingswidget_base.ui line 41
+#: rc.cpp:15 updatersettingswidget_base.cpp:79
+#, fuzzy, no-c-format
+msgid "Alt+T"
+msgstr "ជំនួស+S"
+
+#. i18n: file updatersettingswidget_base.ui line 49
+#: rc.cpp:18 updatersettingswidget_base.cpp:80
+#, fuzzy, no-c-format
+msgid "Get Updates Via"
+msgstr "យក​ភាព​ទាន់​សម័យ​តាម​រយៈ ៖"
+
+#. i18n: file updatersettingswidget_base.ui line 68
+#: rc.cpp:24 updatersettingswidget_base.cpp:82
+#, fuzzy, no-c-format
+msgid "Novell ZENWorks"
+msgstr "ZenWorks របស់​ណូវែល"
+
+#. i18n: file opensuseupdater_settings.kcfg line 7
+#: rc.cpp:27
+#, no-c-format
+msgid "How often to check for updates."
+msgstr ""
+
+#. i18n: file opensuseupdater_settings.kcfg line 11
+#: rc.cpp:30
+#, fuzzy, no-c-format
+msgid "Automatically start the applet on login"
+msgstr "ចាប់​ផ្ដើម​កម្មវិធី​ធ្វើឲ្យទាន់​សម័យ​នៅពេល​ចូល​ដោយ​ស្វ័យ​ប្រវត្តិ"
+
+#. i18n: file opensuseupdater_settings.kcfg line 15
+#: rc.cpp:33
+#, no-c-format
+msgid "Width of the main window."
+msgstr ""
+
+#~ msgid "<b>Configure The Updater:</b><br> Below you can select the updater you would  like to use and when we should check for updates<br><u>After switching backends, this applet must be restarted</u>"
+#~ msgstr "<b>កំណត់​រចនា​សម្ព័ន្ធ​កម្មវិធី​ធ្វើឲ្យទាន់​សម័យ ៖</b><br> នៅខាង​ក្រោម​ គឺ​អ្នកអាច​ជ្រើស​កម្មវិធី​ធ្វើ​ឲ្យទាន់​សម័យ​ដែល​អ្នក​ចង់​ប្រើ និង ពេល​ដែល​យើង​គួរតែ​ពិនិត្យ​រក​មើល​ភាព​ទាន់​សម័យ<br><u> បន្ទាប់​ពី​ប្ដូរ​ផ្នែក​ខាងក្រោយ​រួចមក គឺ​អាប់​ភ្លេត​នេះ​ត្រួវតែ​ចាប់​ផ្ដើម​ឡើងវិញ</u>"
