@@ -44,6 +44,7 @@ make
 make DESTDIR=$RPM_BUILD_ROOT $INSTALL_TARGET
 rm -rf $RPM_BUILD_ROOT/opt/kde3/include
 %suse_update_desktop_file opensuseupdater
+%find_lang opensuseupdater
 
 %post
 %run_ldconfig
@@ -53,9 +54,8 @@ rm -rf $RPM_BUILD_ROOT/opt/kde3/include
 
 %clean
 rm -rf $RPM_BUILD_ROOT
-#%files -f %name.lang
 
-%files
+%files -f opensuseupdater.lang
 %defattr(-,root,root)
 /opt/kde3/bin/*
 %dir /opt/kde3/share/apps/opensuseupdater/
