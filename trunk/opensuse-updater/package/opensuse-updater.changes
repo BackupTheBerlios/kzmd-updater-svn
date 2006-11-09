@@ -1,4 +1,12 @@
 -------------------------------------------------------------------
+Thu Nov  9 14:49:45 CET 2006 - dmacvicar@suse.de
+
+- Complain if can't launch the helper
+- Use plural and .arg() for translations
+- extract strings from ui fles
+- r448 
+
+-------------------------------------------------------------------
 Tue Nov  7 15:18:01 CET 2006 - dmacvicar@suse.de
 
 - add translations
