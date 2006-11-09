@@ -3,6 +3,10 @@ lib_LTLIBRARIES = libkxmlrpcclient.la
 # set the include path for X, qt and KDE
 INCLUDES = $(all_includes)
 
+messages: rc.cpp
+	$(EXTRACTRC) *.ui >> rc.cpp
+	$(XGETTEXT) *.cpp -o $(podir)/kxmlrpcclient.pot
+
 # the library search path. 
 libkxmlrpcclient_la_LDFLAGS = $(KDE_RPATH) $(all_libraries)
 

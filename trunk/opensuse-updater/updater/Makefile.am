@@ -2,9 +2,9 @@
 # there are none, comment this out
 SUBDIRS = zmd zypp
 
-messages:
-	$(EXTRACTRC) `find . -name \*.ui -o -name \*.rc` >> rc.cpp
-	$(XGETTEXT) `find . -name \*.h -o -name \*.cpp -o -name \*.c` -o $(podir)/opensuseupdater.pot
+messages: rc.cpp
+	$(EXTRACTRC) *.ui >> rc.cpp
+	$(XGETTEXT) *.cpp -o $(podir)/opensuseupdater.pot
 
 # this is the program that gets installed.  it's name is used for all
 # of the other Makefile.am variables
@@ -31,9 +31,6 @@ noinst_HEADERS = MainWindow.h HeaderWidget.h Updater.h UpdaterApplication.h Upda
 # let automoc handle all of the meta source files (moc)
 METASOURCES = AUTO
 KDE_ICON = AUTO
-
-messages: rc.cpp
-	$(XGETTEXT) *.cpp -o $(podir)/opensuseupdater.pot
 
 # this is where the desktop file will go 
 desktopdir   = $(kde_appsdir)/Utilities

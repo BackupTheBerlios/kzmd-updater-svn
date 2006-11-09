@@ -17,5 +17,10 @@ noinst_HEADERS = ZYppUpdater.h ZYppListItem.h
 # let automoc handle all of the meta source files (moc)
 METASOURCES = AUTO
 
+messages: rc.cpp
+	$(EXTRACTRC) *.ui >> rc.cpp
+	$(XGETTEXT) *.cpp -o $(podir)/opensuseupdater.pot
+
+
 include $(top_srcdir)/admin/Doxyfile.am
 
