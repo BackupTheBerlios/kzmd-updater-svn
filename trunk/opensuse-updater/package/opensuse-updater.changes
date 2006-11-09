@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Thu Nov  9 15:20:41 CET 2006 - dmacvicar@suse.de
+
+- fix message extraction
+- r450 
+
+-------------------------------------------------------------------
 Thu Nov  9 14:49:45 CET 2006 - dmacvicar@suse.de
 
 - Complain if can't launch the helper
