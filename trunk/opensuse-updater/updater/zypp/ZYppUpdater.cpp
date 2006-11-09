@@ -197,7 +197,18 @@ void ZYppUpdater::doCheckForUpdates()
            SLOT( slotReceivedStderr(KProcess *, char *, int ) ) );
 
 
-  _process->start( KProcess::NotifyOnExit, KProcess::AllOutput );
+  bool result = _process->start( KProcess::NotifyOnExit, KProcess::AllOutput );
+  if ( ! result )
+  {
+    kdDebug() << "error launching zypp-checkpatches-wrapper..." << endl;
+    emit(updateAppletError(i18n("Can't launch zypp-checkpatches-wrapper helper program. Make sure zypper package is installed and working.")));
+    _list_view = 0L;
+    delete _process;
+    _process = 0L;
+    emit(populateDone());
+    return;
+  }
+  
   kdDebug() << "check process started.." << endl;
   emit(updateApplet(APPLET_CHECKING, 0));
   //mStatusLabel->setText( i18n("Checking...") );

@@ -2,6 +2,10 @@
 # there are none, comment this out
 SUBDIRS = zmd zypp
 
+messages:
+	$(EXTRACTRC) `find . -name \*.ui -o -name \*.rc` >> rc.cpp
+	$(XGETTEXT) `find . -name \*.h -o -name \*.cpp -o -name \*.c` -o $(podir)/opensuseupdater.pot
+
 # this is the program that gets installed.  it's name is used for all
 # of the other Makefile.am variables
 bin_PROGRAMS = opensuseupdater 

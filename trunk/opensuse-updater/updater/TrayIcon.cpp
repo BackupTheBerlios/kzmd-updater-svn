@@ -58,17 +58,12 @@ void TrayIcon::setState(int state, const QString &description )
 			break;
 		case APPLET_UPDATES:
 			setPixmap(UserIcon(TRAY_ICON_YELLOW));
-			QToolTip::add(this, QString().setNum(updateCount) + 
-													( updateCount == 1 ? 
-														i18n(" Update Available") :
-														i18n(" Updates Available")));
+			QToolTip::add(this, i18n("1 Update Available", "%n Updates Available", updateCount) );
+      
 		  break;
     case APPLET_CRITICAL_UPDATES:
 			setPixmap(UserIcon(TRAY_ICON_RED));
-			QToolTip::add(this, QString().setNum(updateCount) + 
-													( updateCount == 1 ? 
-														i18n(" Important Update Available") :
-														i18n(" Important Updates Available")));
+			QToolTip::add(this, i18n("1 Important Update Available", "%n Important Updates Available", updateCount) );
 			break;
 	}
 }
