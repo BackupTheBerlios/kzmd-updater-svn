@@ -1,4 +1,12 @@
 -------------------------------------------------------------------
+Tue Nov 14 19:15:03 CET 2006 - dmacvicar@suse.de
+
+- fix autostart (#220209)
+- allow checking from the UI (#219954)
+- use KDE's network service to skip check if offline (#220193) 
+- r455
+
+-------------------------------------------------------------------
 Fri Nov 10 18:42:16 CET 2006 - dmacvicar@suse.de
 
 - new icons by the Interfaces and Applications team.
