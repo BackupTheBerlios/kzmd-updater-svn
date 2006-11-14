@@ -17,6 +17,8 @@
    Boston, MA 02110-1301, USA.
 */
 
+#include <kaction.h>
+#include <kstdaction.h>
 #include <kiconloader.h>
 #include <klocale.h>
 #include <kprocess.h>
@@ -46,7 +48,7 @@
 
 
 MainWindow::MainWindow( const UpdaterCapabilities &caps, QWidget *parent)
-  : QWidget(parent)
+  : KMainWindow(parent)
     , _caps(caps)
 {
 
@@ -61,10 +63,21 @@ MainWindow::MainWindow( const UpdaterCapabilities &caps, QWidget *parent)
 	connect(timer, SIGNAL(timeout()), this, SLOT(checkUpdates()));
 	//timerInterval is read in by readConfig
 	timer->start(timerInterval,false);
-
+  
 	initGUI();
-	initMenu();
-
+  
+  _edit_sources_action = new KAction(i18n("Add/Remove Update Sources..."),0,0,this,SLOT(serverButtonClicked()), actionCollection(),"edit_sources");
+  _configure_applet_action = new KAction(i18n("Configure Applet..."),0,0,this,SLOT(configButtonClicked()), actionCollection(),"confgure_applet");
+  _check_updates_action = new KAction(i18n("Check now..."),0,0,this,SLOT(checkUpdates()), actionCollection(),"configure_applet");
+   
+  _quit_action = KStdAction::quit(this, SLOT(slotExit()), actionCollection(), 0);
+  _install_updates_action = new KAction(i18n("Install"),0,0,this,SLOT(installButtonClicked()), actionCollection(),"configure_applet");;
+  _hide_action = KStdAction::close (this, SLOT(hide()), actionCollection(), 0);
+  
+	_edit_sources_action->plug(applet->contextMenu());
+  _configure_applet_action->plug(applet->contextMenu());;
+  _check_updates_action->plug(applet->contextMenu());;
+  
 	//Initially we have 0 selected updates of course. 
 	updatesSelected = 0;
 }
@@ -92,9 +105,10 @@ void MainWindow::initGUI()
 	header = new HeaderWidget(this);
 	updateList = new QListView(this);
 	packageDescription = new KTextEdit(this);
-	configureButton = new KPushButton(i18n("Add/Remove Update Sources..."), this);
-	cancelButton = new KPushButton(KStdGuiItem::cancel(), this);
-	installButton = new KPushButton(i18n("Install"), this);
+	
+  configureButton = new KPushButton(i18n("Add/Remove Update Sources..."), this);
+  cancelButton = new KPushButton(KStdGuiItem::cancel(), this);
+  installButton = new KPushButton(i18n("Install"), this);
   
   if ( _caps.canSelectIndividualUpdates )
   {
@@ -129,10 +143,11 @@ void MainWindow::initGUI()
 	buttonsLayout->addWidget(installButton, false, Qt::AlignRight);
 	buttonsLayout->addSpacing(10);
 	buttonsLayout->addWidget(cancelButton, false, Qt::AlignRight);
+  
+  connect(configureButton, SIGNAL(clicked()), this, SLOT(serverButtonClicked()));
+  connect(installButton, SIGNAL(clicked()), this, SLOT(installButtonClicked()));
+  connect(cancelButton, SIGNAL(clicked()), this, SLOT(hide()));
 
-	connect(configureButton, SIGNAL(clicked()), this, SLOT(serverButtonClicked()));
-	connect(installButton, SIGNAL(clicked()), this, SLOT(installButtonClicked()));
-	connect(cancelButton, SIGNAL(clicked()), this, SLOT(hide()));
   
   if ( _caps.canSelectIndividualUpdates )
   {
@@ -170,13 +185,6 @@ void MainWindow::initGUI()
 	setCaption(i18n("Available Updates"));
 	hide();
 	return;
-}
-
-void MainWindow::initMenu()
-{
-	KPopupMenu *menu = applet->contextMenu();
-	menu->insertItem(i18n("Configure Applet..."), this, SLOT(configButtonClicked()),0,-1,1);
-	menu->insertItem(i18n("Add/Remove Update Sources..."), this, SLOT(serverButtonClicked()),0,-1,1);
 }
 
 /*

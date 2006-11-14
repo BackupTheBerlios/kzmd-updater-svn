@@ -127,6 +127,8 @@ class ZYppUpdater : public Updater, public QXmlDefaultHandler
     
 	private:
     
+    bool networkOnline() const;
+    
     void doCheckForUpdates();
 
     KProcess *_process;

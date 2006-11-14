@@ -20,7 +20,7 @@
 #ifndef _MAIN_WINDOW_H_
 #define _MAIN_WINDOW_H_
 
-#include <qwidget.h>
+#include <kmainwindow.h>
 #include "UpdaterCapabilities.h"
 
 class TrayIcon;
@@ -34,6 +34,7 @@ class QHBoxLayout;
 class Updater;
 class HeaderWidget;
 
+class KAction;
 
 /**
 	@file
@@ -63,7 +64,7 @@ enum {
 	the GUI logic.
 */
 
-class MainWindow : public QWidget
+class MainWindow : public KMainWindow
 {
 
 	Q_OBJECT
@@ -192,8 +193,14 @@ class MainWindow : public QWidget
 
 	private:
 		
+    KAction *_edit_sources_action;
+    KAction *_configure_applet_action;
+    KAction *_check_updates_action;
+    KAction *_quit_action;
+    KAction *_install_updates_action;
+    KAction *_hide_action;
+    
 		void initGUI();
-		void initMenu();
 
 		//Decides which buttons to disable, if arg is true, 
 		//we disable all the buttons. 

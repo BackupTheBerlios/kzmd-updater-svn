@@ -29,6 +29,9 @@
 #include <qobject.h>
 #include <qpopupmenu.h>
 
+#include <kglobal.h>
+#include <dcopclient.h>
+
 #include <kprocess.h>
 #include <kdebug.h>
 #include <klocale.h>
@@ -175,10 +178,52 @@ void ZYppUpdater::slotReceivedStderr(KProcess *proc, char *buffer, int buflen)
   _stderr_buffer += QString::fromUtf8( buffer, buflen );
 }
 
+bool ZYppUpdater::networkOnline() const
+{
+  //enum EnumStatus { NoNetworks = 1, Unreachable, OfflineDisconnected,  OfflineFailed, ShuttingDown, Offline, Establishing, Online };
+  
+  int online = 1;
+  if ( kapp->dcopClient()->isApplicationRegistered( "kded" ) )
+  {
+    QByteArray data, replyData;
+    
+    QDataStream arg(data, IO_WriteOnly);
+    arg << QString("www.novell.com");
+    
+    QCString replyType;
+    if ( !kapp->dcopClient()->call( "kded", "networkstatus", "status(QString)",
+                                    data, replyType, replyData ) )
+    {
+      kdError() << "DCOP error." << endl;
+    }
+    else
+    {
+      QDataStream reply(replyData, IO_ReadOnly);
+      if (replyType == "int") reply >> online;
+      else kdDebug() << "DCOP: unexpected return type." << endl;
+    }
+  }
+  
+  return (online == 8) || ( online == 1 );
+  
+}
+
+
 void ZYppUpdater::doCheckForUpdates()
 {
   kdDebug() << "checking..." << endl;
 
+  if ( networkOnline() )
+  {
+    kdDebug() << "Network available." << endl;
+  }
+  else
+  {
+    kdDebug() << "No network, skipping check..." << endl;
+    return;
+  }
+  
+  
   if ( _process ) {
     kdDebug() << "Check process still running. Will not run this time." << endl;
     emit(updateApplet(APPLET_CHECKING, 0));
