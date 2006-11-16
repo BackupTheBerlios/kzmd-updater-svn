@@ -81,6 +81,11 @@ public:
   ~ZmdUpdaterCore();
 
   /**
+  	ping the daemon
+  **/
+  void ping();
+  
+  /**
   	This method sets the url for the server, this 
   	also decides whether it uses the http ioslave 
   	or the uds ioslave.
@@ -285,7 +290,7 @@ public:
   void cancelTransaction();
 
 signals:
-
+  void pong();
   void userListing(QValueList<Identity>);
   void serviceListing(QValueList<Service>);
   void catalogListing(QValueList<Catalog>);
@@ -333,6 +338,8 @@ signals:
 
 private slots:
 
+  void slotPong(const QValueList<QVariant>&, const QVariant&);
+  
   void catalogData(const QValueList<QVariant>&, const QVariant&);
 
   void identityData(const QValueList<QVariant>&, const QVariant&);

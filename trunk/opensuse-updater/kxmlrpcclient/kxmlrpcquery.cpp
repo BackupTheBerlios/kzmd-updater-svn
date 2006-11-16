@@ -1,4 +1,5 @@
 /**************************************************************************
+*   Copyright (C) 2006 by Novell Inc.                                     *
 *   Copyright (C) 2006 by Narayan Newton <narayannewton@gmail.com>        *
 *   Copyright (C) 2003 - 2004 by Frerich Raabe <raabe@kde.org>            *
 *                                Tobias Koenig <tokoe@kde.org>            *
@@ -9,6 +10,12 @@
 *   (at your option) any later version.                                   *
 ***************************************************************************/
 
+#include <stdio.h>
+#include <string.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <sys/un.h>
+
 #include <kdebug.h>
 #include <klocale.h>
 #include <kmdcodec.h>
@@ -18,6 +25,8 @@
 
 #include "kxmlrpcquery.h"
 
+using namespace KNetwork;
+
 /**
 
 	@file
@@ -25,77 +34,106 @@
 	Implementation of KXmlRpcResult and KXmlRpcQuery
 
 **/
-
-
 //small macro taken from HTTP IOSlave
 #define KIO_ARGS QByteArray packedArgs; QDataStream kioArgsStream( packedArgs, IO_WriteOnly ); kioArgsStream
+
+#define ZMD_UNIX_SOCKET "/var/run/zmd/zmd-web.socket"
+#define BUFFER_SIZE 6000
 
 KXmlRpcQuery *KXmlRpcQuery::create( const QVariant &id, QObject *parent, const char *name ) {
 
   return new KXmlRpcQuery( id, parent, name );
 }
 
+KXmlRpcQuery::KXmlRpcQuery( const QVariant &id, QObject *parent, const char *name )
+  : QObject( parent, name ), m_id( id )
+{
+ 
+}
+
 void KXmlRpcQuery::call( const QString &server, const QString &method,
-                  const QValueList<QVariant> &args, const QString &userAgent ) {
+                  const QValueList<QVariant> &args, const QString &userAgent )
+{
 
-	const QString xmlMarkup = markupCall( method, args );
-	QByteArray postData;
-	QDataStream stream( postData, IO_WriteOnly );
-	stream.writeRawBytes( xmlMarkup.utf8(), xmlMarkup.utf8().length() );
+ struct sockaddr_un serveraddr;
+ struct sockaddr_un clientaddr;
+ 
+ int    sd=-1, rc, bytesReceived;
+ char   buffer[BUFFER_SIZE];
+   
+ QString xmlMarkup = markupCall( method, args );
+ 
+ QByteArray postData;
+ QDataStream stream( postData, IO_WriteOnly );
+ stream.writeRawBytes( xmlMarkup.utf8(), xmlMarkup.utf8().length() );
+ 
+ sd = socket(AF_UNIX, SOCK_STREAM, 0);
+ if (sd < 0)
+ {
+    kdError() << "Can't create unix socket." << endl;
+    return;
+ }
+ 
+ kdDebug() << "socket created" << endl;
+ 
+ memset(&serveraddr, 0, sizeof(serveraddr));
+ serveraddr.sun_family = AF_UNIX;
+ strcpy(serveraddr.sun_path, ZMD_UNIX_SOCKET);
+ 
+ rc = ::connect(sd, (struct sockaddr *)&serveraddr, SUN_LEN(&serveraddr));
+ if (rc < 0)
+ {
+    kdError() << "Can't connect unix socket." << endl;
+    return;
+ }
+ kdDebug() << "socket connected" << endl;
+ 
+ rc = send(sd, postData.data(), postData.size(), 0);
+ if (rc < 0)
+ {
+    kdError() << "Can't send." << endl;
+    return;
+ }
+ kdDebug() << "sent " << rc << " bytes" << endl;
+ 
+ bytesReceived = 0;
+ 
+ shutdown(sd,1);
+ 
+ //rc = recv(sd, & buffer[bytesReceived], BUFFER_SIZE - bytesReceived, 0);
+ rc = read(sd, & buffer[bytesReceived], BUFFER_SIZE - bytesReceived );
+ 
+ if (rc < 0)
+ {
+   kdError() << "Can't receive" << endl;
+   return;
+ }
+ else if (rc == 0)
+ {
+   kdError() << "Server closed connection" << endl;
+   return;
+ }
+ bytesReceived += rc;
+  
+ kdDebug() << "Received " << bytesReceived << " bytes" << endl;
+ 
+ if (sd != -1)
+  close(sd);
+  
+ QString data_s = QString::fromUtf8( buffer, bytesReceived );
 
-	KIO_ARGS << (int)1 << KURL(server);
-	KIO::TransferJob *job = new KIO::TransferJob(KURL(server), KIO::CMD_SPECIAL, packedArgs, postData, false);
-
-	if ( !job ) {
-		kdWarning() << "Unable to create KIO job for " << server << endl;
-		return;
-	}
-	job->addMetaData( "UserAgent", userAgent );
-	job->addMetaData( "content-type", "Content-Type: text/xml; charset=utf-8" );
-	job->addMetaData( "ConnectTimeout", "50" );
-
-	connect( job, SIGNAL( data( KIO::Job *, const QByteArray & ) ),
-           this, SLOT( slotData( KIO::Job *, const QByteArray & ) ) );
-	connect( job, SIGNAL( result( KIO::Job * ) ),
-           this, SLOT( slotResult( KIO::Job * ) ) );
-
-	m_pendingJobs.append( job );
-}
-
-void KXmlRpcQuery::slotData( KIO::Job *, const QByteArray &data ) {
-
-	unsigned int oldSize = m_buffer.size();
-	m_buffer.resize( oldSize + data.size() );
-	memcpy( m_buffer.data() + oldSize, data.data(), data.size() );
-}
-
-void KXmlRpcQuery::slotResult( KIO::Job *job ) {
-
-	m_pendingJobs.remove( job );
-
-	if ( job->error() != 0 ) {
-
-		emit fault( job->error(), job->errorString(), m_id );
-		emit finished( this );
-		return ;
-	}
-
-	QString data = QString::fromUtf8( m_buffer.data(), m_buffer.size() );
-
+  kdDebug() << "got: " << endl << data_s << endl;
 	QDomDocument doc;
 	QString errMsg;
 	int errLine, errCol;
-	if ( !doc.setContent( data, false, &errMsg, &errLine, &errCol  ) ) {
-
-		emit fault( -1, i18n( "Received invalid XML markup: %1 at %2:%3" )
-                        .arg( errMsg ).arg( errLine ).arg( errCol ), m_id );
+	if ( !doc.setContent( data_s, false, &errMsg, &errLine, &errCol  ) )
+  {
+		emit fault( -1, i18n( "Received invalid XML markup: %1 at %2:%3" ).arg( errMsg ).arg( errLine ).arg( errCol ), m_id );
 		emit finished( this );
 		return ;
-	}
-
-	m_buffer.truncate( 0 );
-
-	if ( isMessageResponse( doc ) )
+  }
+  
+  if ( isMessageResponse( doc ) )
 		emit message( parseMessageResponse( doc ).data(), m_id );
 	else if ( isFaultResponse( doc ) ) {
 		emit fault( parseFaultResponse( doc ).errorCode(), parseFaultResponse( doc ).errorString(), m_id );
@@ -103,7 +141,7 @@ void KXmlRpcQuery::slotResult( KIO::Job *job ) {
 		emit fault( 1, i18n( "Unknown type of XML markup received" ), m_id );
 	}
 
-	emit finished( this );
+  emit finished( this );
 }
 
 bool KXmlRpcQuery::isMessageResponse( const QDomDocument &doc ) const {
@@ -267,13 +305,6 @@ QVariant KXmlRpcQuery::demarshal( const QDomElement &elem ) const {
 	return QVariant();
 }
 
-KXmlRpcQuery::KXmlRpcQuery( const QVariant &id, QObject *parent, const char *name )
-  : QObject( parent, name ), m_id( id )
-{}
-
-KXmlRpcQuery::~KXmlRpcQuery() {
-
-	QValueList<KIO::Job*>::Iterator it;
-	for ( it = m_pendingJobs.begin(); it != m_pendingJobs.end(); ++it )
-		(*it)->kill();
+KXmlRpcQuery::~KXmlRpcQuery()
+{
 }

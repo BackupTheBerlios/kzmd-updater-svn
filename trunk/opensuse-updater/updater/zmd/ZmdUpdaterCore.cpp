@@ -69,6 +69,24 @@ void ZmdUpdaterCore::setPass(QString pass)
   server->setUrl(url);
 }
 
+void ZmdUpdaterCore::ping()
+{
+  IS_ZMD_BUSY;
+
+  QValueList<QVariant> data;
+
+  server->call("zmd.system.ping", data,
+               this, SLOT(slotPong(const QValueList<QVariant>&, const QVariant&)),
+               this, SLOT(faultData(int, const QString&, const QVariant&)));
+}
+
+void ZmdUpdaterCore::slotPong(const QValueList<QVariant>&, const QVariant&)
+{
+  kdDebug() << "pong?" << endl;
+  emit pong();
+}
+
+
 void ZmdUpdaterCore::addUser(Identity id)
 {
   IS_ZMD_BUSY;
@@ -168,7 +186,7 @@ void ZmdUpdaterCore::setServer(KURL url)
 void ZmdUpdaterCore::getServices()
 {
   IS_ZMD_BUSY;
-
+  kdDebug() << k_funcinfo << endl;
   server->call("zmd.system.service_list", QValueList<QVariant>(),
                this, SLOT(serviceData(const QValueList<QVariant>&, const QVariant&)),
                this, SLOT(faultData(int, const QString&, const QVariant&)));
@@ -200,7 +218,7 @@ void ZmdUpdaterCore::removeService(Service serv)
 //Data slot, returning information from xml-rpc
 void ZmdUpdaterCore::serviceData(const QValueList<QVariant>& data, const QVariant& t)
 {
-
+  kdDebug() << k_funcinfo << endl;
   if (data.front().canCast(QVariant::String) == true && data.front().toString().isEmpty() != true)
   {
     //We get a string back and its not empty, must have come from adding a service
@@ -246,7 +264,7 @@ void ZmdUpdaterCore::serviceData(const QValueList<QVariant>& data, const QVarian
 void ZmdUpdaterCore::getCatalogs()
 {
   IS_ZMD_BUSY;
-
+  kdDebug() << k_funcinfo << endl;
   server->call("zmd.system.catalog_list", QValueList<QVariant>(),
                this, SLOT(catalogData(const QValueList<QVariant>&, const QVariant&)),
                this, SLOT(faultData(int, const QString&, const QVariant&)));
@@ -280,7 +298,7 @@ void ZmdUpdaterCore::unsubscribeCatalog(Catalog cat)
 
 void ZmdUpdaterCore::catalogData(const QValueList<QVariant>& data, const QVariant& t)
 {
-
+  kdDebug() << k_funcinfo << endl;
   if (data.front().canCast(QVariant::String) == true)
   {
     /*

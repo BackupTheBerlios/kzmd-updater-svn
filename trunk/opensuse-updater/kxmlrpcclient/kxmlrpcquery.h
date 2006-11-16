@@ -12,6 +12,7 @@
 #ifndef _KXML_RPC_QUERY_H_
 #define _KXML_RPC_QUERY_H_
 
+#include <kbufferedsocket.h>
 #include <kio/job.h>
 
 #include <qobject.h>
@@ -22,6 +23,7 @@
 class QString;
 class QDomDocument;
 class QDomElement;
+class KNetwork::KBufferedSocket;
 
 /**
 
@@ -98,11 +100,6 @@ class KXmlRpcQuery : public QObject {
 		void fault( int, const QString&, const QVariant &id );
 		void finished( KXmlRpcQuery* );
 
-	private slots:
-		
-		void slotData( KIO::Job *job, const QByteArray &data );
-		void slotResult( KIO::Job *job );
-
 	private:
 	
 		bool isMessageResponse( const QDomDocument &doc ) const;
@@ -121,8 +118,6 @@ class KXmlRpcQuery : public QObject {
 
 		QByteArray m_buffer;
 		QVariant m_id;
-
-		QValueList<KIO::Job*> m_pendingJobs;
 };
 
 #endif

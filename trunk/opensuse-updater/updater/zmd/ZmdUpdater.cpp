@@ -79,7 +79,7 @@ ZmdUpdater::ZmdUpdater() : Updater()
   connect(core, SIGNAL(lockListing(QValueList<PackageLock>)),
           this, SLOT(gotLockListing(QValueList<PackageLock>)));
 #endif
-
+  core->ping();
 }
 
 UpdaterCapabilities ZmdUpdater::capabilities()
@@ -517,7 +517,8 @@ void ZmdUpdater::readConfig()
  //   break;
  // case ZMD_UDS:
     core->setServer(UDS_SERVER_ADDY);
-    core->setUser("dmacvicar");
+    //core->setUser("dmacvicar");
+    
    // break;
   //default:
   //  core->setServer(QString("http://") + TCP_SERVER_ADDY + QString(TCP_SERVER_POSTFIX));
