@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Thu Nov 16 14:15:03 CET 2006 - dmacvicar@suse.de
+
+- Dont use xmlrpc over http, but direct to the socket.
+  (#218468). Zenworks backend working again.
+- r457
+
+-------------------------------------------------------------------
 Tue Nov 14 19:15:03 CET 2006 - dmacvicar@suse.de
 
 - fix autostart (#220209)
