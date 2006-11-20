@@ -33,6 +33,7 @@ class QVBoxLayout;
 class QHBoxLayout;
 class Updater;
 class HeaderWidget;
+class OSUpdaterPopup;
 
 class KAction;
 
@@ -227,6 +228,8 @@ class MainWindow : public KMainWindow
 
 		//This is only for CheckListItems, holds the number of items selected
 		int updatesSelected;
+		//popup
+		OSUpdaterPopup *popup;
     
     UpdaterCapabilities _caps;
 };

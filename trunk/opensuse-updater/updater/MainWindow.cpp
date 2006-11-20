@@ -36,6 +36,7 @@
 #include <qtimer.h>
 #include <qlayout.h>
 
+#include "osupdaterpopup.h"
 #include "Constants.h"
 #include "HeaderWidget.h"
 #include "MainWindow.h"
@@ -45,6 +46,7 @@
 #include "Updater.h"
 #include "UpdateListItem.h"
 #include "TrayIcon.h"
+
 
 
 MainWindow::MainWindow( const UpdaterCapabilities &caps, QWidget *parent)
@@ -80,6 +82,9 @@ MainWindow::MainWindow( const UpdaterCapabilities &caps, QWidget *parent)
   
 	//Initially we have 0 selected updates of course. 
 	updatesSelected = 0;
+  
+  popup = new OSUpdaterPopup(applet,this);
+  
   hide();
 }
 
@@ -233,7 +238,9 @@ void MainWindow::slotAppletState(int state, int n)
 {
 	applet->setUpdates(updateList->childCount());
 	applet->setState(state);
-  applet->setUpdates(n);
+	applet->setUpdates(n);
+
+	popup->setUpdates(n);
 }
 
 void MainWindow::populateDone()
