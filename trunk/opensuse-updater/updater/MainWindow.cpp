@@ -70,13 +70,13 @@ MainWindow::MainWindow( const UpdaterCapabilities &caps, QWidget *parent)
   _configure_applet_action = new KAction(i18n("Configure Applet..."),0,0,this,SLOT(configButtonClicked()), actionCollection(),"confgure_applet");
   _check_updates_action = new KAction(i18n("Check now..."),0,0,this,SLOT(checkUpdates()), actionCollection(),"configure_applet");
    
-  _quit_action = KStdAction::quit(this, SLOT(slotExit()), actionCollection(), 0);
   _install_updates_action = new KAction(i18n("Install"),0,0,this,SLOT(installButtonClicked()), actionCollection(),"configure_applet");;
-  _hide_action = KStdAction::close (this, SLOT(hide()), actionCollection(), 0);
   
 	_edit_sources_action->plug(applet->contextMenu());
   _configure_applet_action->plug(applet->contextMenu());;
   _check_updates_action->plug(applet->contextMenu());;
+  _hide_action = KStdAction::close (this, SLOT(hide()), actionCollection(), 0);
+  _quit_action = KStdAction::quit(this, SLOT(slotExit()), actionCollection(), 0);
   
 	//Initially we have 0 selected updates of course. 
 	updatesSelected = 0;
