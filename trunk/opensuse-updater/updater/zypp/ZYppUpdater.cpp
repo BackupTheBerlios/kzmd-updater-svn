@@ -153,7 +153,10 @@ void ZYppUpdater::slotProcessExited( KProcess *proc )
 		newItem->setText(COLUMN_CATALOG, (*it)->source );
   }
    
-  emit(updateApplet(APPLET_UPDATES, _patches.count()));
+  if ( _patches.count() > 0 )
+    emit(updateApplet(APPLET_UPDATES, _patches.count()));
+  else
+    emit(updateApplet(APPLET_NO_UPDATES, 0));
   
   if ( _error )
   {
