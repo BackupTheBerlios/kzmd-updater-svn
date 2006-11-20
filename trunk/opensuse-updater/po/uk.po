@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: opensuseupdater.uk\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-10-26 11:26+0200\n"
-"PO-Revision-Date: 2006-11-02 10:54-0800\n"
+"PO-Revision-Date: 2006-11-14 16:53-0800\n"
 "Last-Translator: Ivan Petrouchtchak <ivanpetrouchtchak@yahoo.com>\n"
 "Language-Team: Ukrainian <translation@linux.org.ua>\n"
 "MIME-Version: 1.0\n"
@@ -33,7 +33,7 @@ msgstr "Очистити вибір"
 
 #: MainWindow.cpp:143
 msgid "<b>Available Updates:</b><br> The following are software upgrades and patches to add features and fix bugs.<br>"
-msgstr "<b>Наявні оновлення:</b><br> Це - оновлення програмного забезпечення і латки з новою функціональність та виправленнями помилок.<br>"
+msgstr "<b>Наявні оновлення:</b><br> Це - оновлення програмного забезпечення і латки з новою функціональністю та виправленнями помилок.<br>"
 
 #: MainWindow.cpp:145
 msgid "Name"

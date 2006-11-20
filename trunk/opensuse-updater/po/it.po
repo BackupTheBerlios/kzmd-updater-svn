@@ -71,7 +71,7 @@ msgstr "Non sono disponibili nuovi aggiornamenti"
 
 #: TrayIcon.cpp:63
 msgid " Update Available"
-msgstr "aggiornamento disponibile"
+msgstr " aggiornamento disponibile"
 
 #: TrayIcon.cpp:64
 msgid " Updates Available"
@@ -79,11 +79,11 @@ msgstr " Aggiornamenti disponibili"
 
 #: TrayIcon.cpp:70
 msgid " Important Update Available"
-msgstr "Aggiornamento importante disponibile"
+msgstr " Aggiornamento importante disponibile"
 
 #: TrayIcon.cpp:71
 msgid " Important Updates Available"
-msgstr "Aggiornamenti importanti disponibili"
+msgstr " Aggiornamenti importanti disponibili"
 
 #: _translatorinfo.cpp:1
 msgid ""
@@ -111,13 +111,13 @@ msgstr "Modulo1"
 #: rc.cpp:6 updatersettingswidget_base.cpp:76
 #, no-c-format
 msgid "Check For Updates Every "
-msgstr "Ricerca aggiornamenti ogni"
+msgstr "Ricerca aggiornamenti ogni "
 
 #. i18n: file updatersettingswidget_base.ui line 30
 #: rc.cpp:9 updatersettingswidget_base.cpp:77
 #, no-c-format
 msgid " Minutes"
-msgstr "Minuti"
+msgstr " Minuti"
 
 #. i18n: file updatersettingswidget_base.ui line 38
 #: rc.cpp:12 updatersettingswidget_base.cpp:78

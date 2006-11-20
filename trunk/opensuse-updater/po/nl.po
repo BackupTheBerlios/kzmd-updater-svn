@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: opensuseupdater.nl\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-10-26 11:26+0200\n"
-"PO-Revision-Date: 2006-10-22 00:19+0200\n"
+"PO-Revision-Date: 2006-11-07 17:33+0100\n"
 "Last-Translator: Rinse de Vries <rinsedevries@kde.nl>\n"
 "Language-Team: Dutch <kde-i18n-nl@kde.org>\n"
 "MIME-Version: 1.0\n"
@@ -20,9 +20,8 @@ msgstr ""
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
 #: MainWindow.cpp:95 MainWindow.cpp:179
-#, fuzzy
 msgid "Add/Remove Update Sources..."
-msgstr "Servers toevoegen/verwijderen"
+msgstr "Bronnen toevoegen/verwijderen..."
 
 #: MainWindow.cpp:97
 msgid "Install"
@@ -33,9 +32,8 @@ msgid "Clear Selection"
 msgstr "Selectie opschonen"
 
 #: MainWindow.cpp:143
-#, fuzzy
 msgid "<b>Available Updates:</b><br> The following are software upgrades and patches to add features and fix bugs.<br>"
-msgstr "<b>Beschikbare updates:</b><br>De volgende zijn software-updates en patches die functionaliteit toevoegen en fouten repareren.<br><u>Selecteer degene die u wilt en klik op Installeren.</u>"
+msgstr "<b>Beschikbare updates:</b><br>De volgende zijn software-updates en patches die functionaliteit toevoegen en fouten repareren.<br>"
 
 #: MainWindow.cpp:145
 msgid "Name"
@@ -58,24 +56,20 @@ msgid "Available Updates"
 msgstr "Beschikbare updates"
 
 #: MainWindow.cpp:178
-#, fuzzy
 msgid "Configure Applet..."
-msgstr "Applet instellen"
+msgstr "Applet instellen..."
 
 #: MainWindow.cpp:296
-#, fuzzy
 msgid "General"
-msgstr "Algemene instellingen"
+msgstr "Algemeen"
 
 #: TrayIcon.cpp:49
-#, fuzzy
 msgid "Checking for updates..."
-msgstr "Afhankelijkheden controleren"
+msgstr "Controleren op updates..."
 
 #: TrayIcon.cpp:53
-#, fuzzy
 msgid "Error:\n"
-msgstr "Fout:"
+msgstr "Fout:\n"
 
 #: TrayIcon.cpp:57
 msgid "No Updates Available"
@@ -90,14 +84,12 @@ msgid " Updates Available"
 msgstr " Updates beschikbaar"
 
 #: TrayIcon.cpp:70
-#, fuzzy
 msgid " Important Update Available"
-msgstr " Update beschikbaar"
+msgstr " Belangrijke update beschikbaar"
 
 #: TrayIcon.cpp:71
-#, fuzzy
 msgid " Important Updates Available"
-msgstr "Geen updates beschikbaar"
+msgstr " Belangrijke updates beschikbaar"
 
 #: _translatorinfo.cpp:1
 msgid ""
@@ -115,7 +107,7 @@ msgstr "rinsedevries@kde.nl"
 #: rc.cpp:3 updatersettingswidget_base.cpp:75
 #, no-c-format
 msgid "Form1"
-msgstr ""
+msgstr "Form1"
 
 #. i18n: file updatersettingswidget_base.ui line 27
 #: rc.cpp:6 updatersettingswidget_base.cpp:76
@@ -131,9 +123,9 @@ msgstr " minuten"
 
 #. i18n: file updatersettingswidget_base.ui line 38
 #: rc.cpp:12 updatersettingswidget_base.cpp:78
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Automa&tically start updater on login"
-msgstr "Updater bij aanmelden automatisch starten"
+msgstr "Updater bij aanmelden automatisch s&tarten"
 
 #. i18n: file updatersettingswidget_base.ui line 41
 #: rc.cpp:15 updatersettingswidget_base.cpp:79
@@ -143,33 +135,31 @@ msgstr "Alt+T"
 
 #. i18n: file updatersettingswidget_base.ui line 49
 #: rc.cpp:18 updatersettingswidget_base.cpp:80
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Get Updates Via"
-msgstr "Updates ophalen via:"
+msgstr "Updates ophalen via"
 
 #. i18n: file updatersettingswidget_base.ui line 68
 #: rc.cpp:24 updatersettingswidget_base.cpp:82
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Novell ZENWorks"
-msgstr "Novell ZenWorks"
+msgstr "Novell ZENWorks"
 
 #. i18n: file opensuseupdater_settings.kcfg line 7
 #: rc.cpp:27
 #, no-c-format
 msgid "How often to check for updates."
-msgstr ""
+msgstr "Hoe vaak er zal worden gecontroleerd op updates."
 
 #. i18n: file opensuseupdater_settings.kcfg line 11
 #: rc.cpp:30
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Automatically start the applet on login"
-msgstr "Updater bij aanmelden automatisch starten"
+msgstr "Applet bij aanmelden automatisch starten"
 
 #. i18n: file opensuseupdater_settings.kcfg line 15
 #: rc.cpp:33
 #, no-c-format
 msgid "Width of the main window."
-msgstr ""
+msgstr "Breedte van het hoofdvenster."
 
-#~ msgid "<b>Configure The Updater:</b><br> Below you can select the updater you would  like to use and when we should check for updates<br><u>After switching backends, this applet must be restarted</u>"
-#~ msgstr "<b>Stel de updater in:</b><br>Hieronder kunt u de updater selecteren die u wilt gebruiken en aangeven wanneer er op updates zal worden gecontroleerd.<br><u>Na het wisselen van backends dient de applet opnieuw te worden gestart.</u>"

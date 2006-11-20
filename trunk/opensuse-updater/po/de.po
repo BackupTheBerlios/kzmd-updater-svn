@@ -71,11 +71,11 @@ msgstr "Keine Aktualisierungen verfügbar"
 
 #: TrayIcon.cpp:63
 msgid " Update Available"
-msgstr "Aktualisierung verfügbar"
+msgstr " Aktualisierung verfügbar"
 
 #: TrayIcon.cpp:64
 msgid " Updates Available"
-msgstr "Aktualisierungen verfügbar"
+msgstr " Aktualisierungen verfügbar"
 
 #: TrayIcon.cpp:70
 msgid " Important Update Available"
@@ -111,13 +111,13 @@ msgstr "Formular1"
 #: rc.cpp:6 updatersettingswidget_base.cpp:76
 #, no-c-format
 msgid "Check For Updates Every "
-msgstr "Auf Aktualisierungen prüfen alle"
+msgstr "Auf Aktualisierungen prüfen alle "
 
 #. i18n: file updatersettingswidget_base.ui line 30
 #: rc.cpp:9 updatersettingswidget_base.cpp:77
 #, no-c-format
 msgid " Minutes"
-msgstr "Minuten"
+msgstr " Minuten"
 
 #. i18n: file updatersettingswidget_base.ui line 38
 #: rc.cpp:12 updatersettingswidget_base.cpp:78

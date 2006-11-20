@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-10-26 11:26+0200\n"
-"PO-Revision-Date: 2005-08-18 21:16+0300\n"
+"PO-Revision-Date: 2006-11-09 18:30+0200\n"
 "Last-Translator: Borislav Mitev <morbid_viper@tkzs.org>\n"
 "Language-Team: Bulgarian <bg@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -17,23 +17,22 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: MainWindow.cpp:95 MainWindow.cpp:179
-#, fuzzy
+#: MainWindow.cpp:95
+#: MainWindow.cpp:179
 msgid "Add/Remove Update Sources..."
-msgstr "Сървър за имена"
+msgstr "Добавяне/Премахване на източници за обновления..."
 
 #: MainWindow.cpp:97
 msgid "Install"
 msgstr "Инсталиране"
 
 #: MainWindow.cpp:102
-#, fuzzy
 msgid "Clear Selection"
-msgstr "подбор"
+msgstr "Изчистване на подбора"
 
 #: MainWindow.cpp:143
 msgid "<b>Available Updates:</b><br> The following are software upgrades and patches to add features and fix bugs.<br>"
-msgstr ""
+msgstr "<b>Налични обновления:</b><br>Това са обновления на софтуера и кръпки, които добавят възможности или поправят грешки.<br>"
 
 #: MainWindow.cpp:145
 msgid "Name"
@@ -44,132 +43,129 @@ msgid "Type"
 msgstr "Тип"
 
 #: MainWindow.cpp:148
-#, fuzzy
 msgid "New Version"
-msgstr "Версия"
+msgstr "Нова версия"
 
 #: MainWindow.cpp:149
-#, fuzzy
 msgid "Catalog"
-msgstr "Каталог:"
+msgstr "Каталог"
 
 #: MainWindow.cpp:170
 msgid "Available Updates"
 msgstr "Налични кръпки"
 
 #: MainWindow.cpp:178
-#, fuzzy
 msgid "Configure Applet..."
-msgstr "Желаете ли да настроите устройството %1?"
+msgstr "Настройка на аплет..."
 
 #: MainWindow.cpp:296
-#, fuzzy
 msgid "General"
-msgstr "Общи настройки"
+msgstr "Общи"
 
 #: TrayIcon.cpp:49
-#, fuzzy
 msgid "Checking for updates..."
-msgstr "Търсене на образ \"%s\"..."
+msgstr "Проверка за обновления..."
 
 #: TrayIcon.cpp:53
-#, fuzzy
 msgid "Error:\n"
-msgstr "Грешка"
+msgstr "Грешка:\n"
 
 #: TrayIcon.cpp:57
-#, fuzzy
 msgid "No Updates Available"
-msgstr "Няма информация."
+msgstr "Няма налични обновления"
 
 #: TrayIcon.cpp:63
-#, fuzzy
 msgid " Update Available"
-msgstr "Налично"
+msgstr "Налично е обновление"
 
 #: TrayIcon.cpp:64
-#, fuzzy
 msgid " Updates Available"
-msgstr "Налично"
+msgstr "Налични са обновления"
 
 #: TrayIcon.cpp:70
-#, fuzzy
 msgid " Important Update Available"
-msgstr "Налично"
+msgstr "Налично е важно обновление"
 
 #: TrayIcon.cpp:71
-#, fuzzy
 msgid " Important Updates Available"
-msgstr "Няма информация."
+msgstr "Налични са важни обновления"
 
 #: _translatorinfo.cpp:1
 msgid ""
 "_: NAME OF TRANSLATORS\n"
 "Your names"
-msgstr ""
+msgstr "Borislav Mitev"
 
 #: _translatorinfo.cpp:3
 msgid ""
 "_: EMAIL OF TRANSLATORS\n"
 "Your emails"
-msgstr ""
+msgstr "morbid_viper@tkzs.org"
 
 #. i18n: file updatersettingswidget_base.ui line 16
-#: rc.cpp:3 updatersettingswidget_base.cpp:75
+#: rc.cpp:3
+#: updatersettingswidget_base.cpp:75
 #, no-c-format
 msgid "Form1"
-msgstr ""
+msgstr "Форма1"
 
 #. i18n: file updatersettingswidget_base.ui line 27
-#: rc.cpp:6 updatersettingswidget_base.cpp:76
+#: rc.cpp:6
+#: updatersettingswidget_base.cpp:76
 #, no-c-format
 msgid "Check For Updates Every "
-msgstr ""
+msgstr "Проверка за обновления на всеки"
 
 #. i18n: file updatersettingswidget_base.ui line 30
-#: rc.cpp:9 updatersettingswidget_base.cpp:77
+#: rc.cpp:9
+#: updatersettingswidget_base.cpp:77
 #, no-c-format
 msgid " Minutes"
-msgstr ""
+msgstr "Минути"
 
 #. i18n: file updatersettingswidget_base.ui line 38
-#: rc.cpp:12 updatersettingswidget_base.cpp:78
+#: rc.cpp:12
+#: updatersettingswidget_base.cpp:78
 #, no-c-format
 msgid "Automa&tically start updater on login"
-msgstr ""
+msgstr "Автоматично &зареждане на аплета при влизане"
 
 #. i18n: file updatersettingswidget_base.ui line 41
-#: rc.cpp:15 updatersettingswidget_base.cpp:79
+#: rc.cpp:15
+#: updatersettingswidget_base.cpp:79
 #, no-c-format
 msgid "Alt+T"
-msgstr ""
+msgstr "Alt+T"
 
 #. i18n: file updatersettingswidget_base.ui line 49
-#: rc.cpp:18 updatersettingswidget_base.cpp:80
-#, fuzzy, no-c-format
+#: rc.cpp:18
+#: updatersettingswidget_base.cpp:80
+#, no-c-format
 msgid "Get Updates Via"
-msgstr "Налично"
+msgstr "Сваляне на обновленя през"
 
 #. i18n: file updatersettingswidget_base.ui line 68
-#: rc.cpp:24 updatersettingswidget_base.cpp:82
+#: rc.cpp:24
+#: updatersettingswidget_base.cpp:82
 #, no-c-format
 msgid "Novell ZENWorks"
-msgstr ""
+msgstr "Novell ZENWorks"
 
 #. i18n: file opensuseupdater_settings.kcfg line 7
 #: rc.cpp:27
 #, no-c-format
 msgid "How often to check for updates."
-msgstr ""
+msgstr "Колко често да се проверява за обновления."
 
 #. i18n: file opensuseupdater_settings.kcfg line 11
 #: rc.cpp:30
 #, no-c-format
 msgid "Automatically start the applet on login"
-msgstr ""
+msgstr "Автоматично зареждане на аплета при влизане"
 
 #. i18n: file opensuseupdater_settings.kcfg line 15
 #: rc.cpp:33
 #, no-c-format
 msgid "Width of the main window."
-msgstr ""
+msgstr "Ширина на главния прозорец."
+
