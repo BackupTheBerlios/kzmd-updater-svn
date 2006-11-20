@@ -1,4 +1,12 @@
 -------------------------------------------------------------------
+Mon Nov 20 17:35:36 CET 2006 - dmacvicar@suse.de
+
+- applet opens its window on desktop login (#22478)
+- show no updates icon (#222485)
+- new translations
+- r461
+
+-------------------------------------------------------------------
 Thu Nov 16 14:15:03 CET 2006 - dmacvicar@suse.de
 
 - Dont use xmlrpc over http, but direct to the socket.
