@@ -80,6 +80,7 @@ MainWindow::MainWindow( const UpdaterCapabilities &caps, QWidget *parent)
   
 	//Initially we have 0 selected updates of course. 
 	updatesSelected = 0;
+  hide();
 }
 
 /*************************************************************
