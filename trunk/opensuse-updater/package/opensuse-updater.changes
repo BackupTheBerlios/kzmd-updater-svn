@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Tue Nov 21 17:58:51 CET 2006 - dmacvicar@suse.de
+
+- fix bug number in changes file for bug 222478 
+
+-------------------------------------------------------------------
 Tue Nov 21 17:02:24 CET 2006 - dmacvicar@suse.de
 
 - (#222553) opensuse-updater context menu mixed up
@@ -16,7 +21,7 @@ Mon Nov 20 18:28:54 CET 2006 - dmacvicar@suse.de
 -------------------------------------------------------------------
 Mon Nov 20 17:35:36 CET 2006 - dmacvicar@suse.de
 
-- applet opens its window on desktop login (#22478)
+- applet opens its window on desktop login (#222478)
 - show no updates icon (#222485)
 - new translations
 - r461
