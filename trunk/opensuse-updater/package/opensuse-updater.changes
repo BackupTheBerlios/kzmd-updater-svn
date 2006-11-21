@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Tue Nov 21 17:02:24 CET 2006 - dmacvicar@suse.de
+
+- (#222553) opensuse-updater context menu mixed up
+- recycle strings for the passive popup. 
+- r467
+
+-------------------------------------------------------------------
 Mon Nov 20 18:28:54 CET 2006 - dmacvicar@suse.de
 
 - (#222554) opensuseupdater.desktop misspell and duplication
