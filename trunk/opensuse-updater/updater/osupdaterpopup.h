@@ -20,16 +20,16 @@ class OSUpdaterPopup : public KPassivePopup
 	protected:
 		void	paintEvent( QPaintEvent *e );
 	private:
-		int updates;
-		QVBoxLayout *popupLayout;
-		QHBoxLayout *titleLayout;
-		QHBoxLayout *descriptionLayout;
-		QLabel *title;
-		QPushButton *closeButton;
-		QLabel *description;
-		QHBoxLayout *buttonLayout;
-		QPushButton *installButton;
-		QPushButton *cancelButton;
-		QLabel * iconLabel;
-		QBitmap mask;
+		int _updates;
+		QVBoxLayout *_popupLayout;
+		QHBoxLayout *_titleLayout;
+		QHBoxLayout *_descriptionLayout;
+		QLabel *_title;
+		QPushButton *_closeButton;
+		QLabel *_description;
+		QHBoxLayout *_buttonLayout;
+		QPushButton *_installButton;
+		QPushButton *_cancelButton;
+		QLabel * _iconLabel;
+		QBitmap _mask;
 };

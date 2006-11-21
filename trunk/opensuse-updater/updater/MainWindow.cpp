@@ -74,9 +74,9 @@ MainWindow::MainWindow( const UpdaterCapabilities &caps, QWidget *parent)
    
   _install_updates_action = new KAction(i18n("Install"),0,0,this,SLOT(installButtonClicked()), actionCollection(),"configure_applet");;
   
-	_edit_sources_action->plug(applet->contextMenu());
-  _configure_applet_action->plug(applet->contextMenu());;
-  _check_updates_action->plug(applet->contextMenu());;
+	_edit_sources_action->plug(applet->contextMenu(), 1);
+  _configure_applet_action->plug(applet->contextMenu(), 2);;
+  _check_updates_action->plug(applet->contextMenu(), 3);;
   _hide_action = KStdAction::close (this, SLOT(hide()), actionCollection(), 0);
   _quit_action = KStdAction::quit(this, SLOT(slotExit()), actionCollection(), 0);
   
