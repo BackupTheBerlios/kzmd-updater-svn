@@ -6,3 +6,4 @@ Icon=www
 Type=Application
 Terminal=0
 Categories=Qt;KDE;System;Desktop Applet
+NotShowIn=KDE
