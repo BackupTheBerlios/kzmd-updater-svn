@@ -8,3 +8,4 @@ Icon=www
 X-KDE-StartupNotify=false
 X-KDE-autostart-condition=opensuseupdaterrc:General:Autostart:true
 X-KDE-autostart-after=panel
+NotShowIn=KDE
