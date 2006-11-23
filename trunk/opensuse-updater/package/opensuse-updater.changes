@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Thu Nov 23 15:13:06 CET 2006 - dmacvicar@suse.de
+
+- did the fix in wring desktop file
+- r472 
+
+-------------------------------------------------------------------
 Thu Nov 23 14:53:36 CET 2006 - dmacvicar@suse.de
 
 - applet opens its window on desktop login (#222478), real fix
