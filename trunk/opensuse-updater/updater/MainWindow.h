@@ -190,7 +190,8 @@ class MainWindow : public KMainWindow
 		void selectButtonClicked();
 		void clearButtonClicked();
 
-		void closeEvent(QCloseEvent *e);
+//		void closeEvent(QCloseEvent *e);
+        bool queryClose();
 
 	private:
 		

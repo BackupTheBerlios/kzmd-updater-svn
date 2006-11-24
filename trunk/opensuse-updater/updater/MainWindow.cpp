@@ -335,8 +335,14 @@ void MainWindow::installButtonClicked() {
 }
 
 //Make the main window hide, not quit
-void MainWindow::closeEvent(QCloseEvent *e) {
-	hide();
+bool MainWindow::queryClose()
+{
+	if ( !kapp->sessionSaving() )
+	{
+		hide();
+		return false;
+	}
+	return true;
 }
 
 /*************************************************************************
