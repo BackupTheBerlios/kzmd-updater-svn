@@ -1,4 +1,12 @@
 -------------------------------------------------------------------
+Mon Nov 27 15:30:28 CET 2006 - dmacvicar@suse.de
+
+- enable install button when updates are available (#218182)
+- provide icon in various sizes, they doesn't look bad scaled now.
+- new busy icon, which look different than the not-found con.
+- r482 
+
+-------------------------------------------------------------------
 Fri Nov 24 13:58:45 CET 2006 - dmacvicar@suse.de
 
 - fix closeEvent, to not block logout if applet is maximized. 
