@@ -123,6 +123,12 @@ class MainWindow : public KMainWindow
 
 	public slots:
 
+    /**
+     * enables or disable install button
+     *  @param allowed installs allowed or not
+     */
+    void slotInstallAllowed( bool allowed );
+    
 		/**
 			Updates the applet to the specified state.
 

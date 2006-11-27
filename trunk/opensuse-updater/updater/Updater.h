@@ -66,7 +66,15 @@ class Updater : public QObject
 		virtual UpdaterCapabilities capabilities() = 0;
     
 	signals:
-
+    /** This is a signal sent to the MainWindow class. 
+			It tells the applet whether the backend is ready
+      to install updates at user request or not.
+      The applet can disable or enable buttons and
+      gui elements.
+			@param allowed whether it is allowed or not
+		**/
+		void installAllowed(bool allowd);
+    
 		/** This is a signal sent to the MainWindow class. 
 			It updates the applet to the specified state.
 			@param state this is the state the updater applet 

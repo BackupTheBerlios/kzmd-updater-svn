@@ -89,6 +89,9 @@ UpdaterApplication::UpdaterApplication() : KUniqueApplication(true,true,false)
 	//Signal to tell the backend to show a menu at the specified position
 	connect(main, SIGNAL(updateMenu(QListViewItem*, const QPoint&)), updater, SLOT(updateMenu(QListViewItem*, const QPoint&)));
 
+  // signal to tell the gui that install are allowed or not
+  connect( updater, SIGNAL(installAllowed(bool)), main, SLOT(slotInstallAllowed(bool)));
+  
 	main->checkUpdates();
 
 }

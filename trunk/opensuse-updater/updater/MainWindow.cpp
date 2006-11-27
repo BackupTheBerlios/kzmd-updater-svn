@@ -227,6 +227,11 @@ void MainWindow::disableButtons(bool disable) {
 
 *********************************************************************/
 
+void MainWindow::slotInstallAllowed( bool allowed )
+{
+  installButton->setEnabled(allowed);
+}
+
 void MainWindow::slotAppletError(const QString &desc)
 {
   kdDebug() << "Applet error, description length: " << desc.length() << endl;

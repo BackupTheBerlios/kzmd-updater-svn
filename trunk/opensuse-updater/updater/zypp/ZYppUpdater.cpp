@@ -154,9 +154,15 @@ void ZYppUpdater::slotProcessExited( KProcess *proc )
   }
    
   if ( _patches.count() > 0 )
+  {
     emit(updateApplet(APPLET_UPDATES, _patches.count()));
+    emit(installAllowed(true));
+  }
   else
+  {
     emit(updateApplet(APPLET_NO_UPDATES, 0));
+    emit(installAllowed(false));
+  }
   
   if ( _error )
   {
