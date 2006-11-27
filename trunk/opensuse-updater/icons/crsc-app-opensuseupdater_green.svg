@@ -9,8 +9,8 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="124"
-   height="117"
+   width="128"
+   height="128"
    viewBox="0.381 -0.047 124 117"
    overflow="visible"
    enable-background="new 0.381 -0.047 124 117"
@@ -19,11 +19,11 @@
    sodipodi:version="0.32"
    inkscape:version="0.44"
    sodipodi:docname="opensuse_updater-green.svg"
-   sodipodi:docbase="/Users/rlihm/Desktop/opensuse_updater"
+   sodipodi:docbase="/Users/rlihm/Desktop/os-u"
    version="1.0"
-   inkscape:export-filename="/Users/rlihm/Desktop/opensuse_updater/opensuse_updater-green_16.png"
-   inkscape:export-xdpi="11.538462"
-   inkscape:export-ydpi="11.538462"><defs
+   inkscape:export-filename="/Users/rlihm/Desktop/os-u/opensuse_updater-green_128.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90"><defs
    id="defs1624"><linearGradient
    id="linearGradient10979"
    inkscape:collect="always"><stop
@@ -627,7 +627,9 @@
    inkscape:window-y="22"
    inkscape:current-layer="layer1"
    showguides="true"
-   inkscape:guide-bbox="true" />
+   inkscape:guide-bbox="true"
+   width="128px"
+   height="128px" />
 
 	<path
    style="fill:#d7d7d7;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
