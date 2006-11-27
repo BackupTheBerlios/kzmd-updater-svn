@@ -23,11 +23,11 @@
 #define PROGRAM_NAME "opensuseupdater"
 #define VERSION "0.333"
 
-#define TRAY_ICON_GREEN "suse_green.png"
-#define TRAY_ICON_RED	"suse_red.png"
-#define TRAY_ICON_YELLOW	"suse_yellow.png"
+#define TRAY_ICON_GREEN "opensuseupdater_green"
+#define TRAY_ICON_RED	"opensuseupdater_red"
+#define TRAY_ICON_YELLOW	"opensuseupdater_yellow.png"
 #define TRAY_ICON_PROBLEM	"messagebox_warning"
-#define TRAY_ICON_CHECKING "misc"
+#define TRAY_ICON_CHECKING "opensuseupdater_busy"
 
 /** Enum to represent the various backends installed. 
 		New backends added here
