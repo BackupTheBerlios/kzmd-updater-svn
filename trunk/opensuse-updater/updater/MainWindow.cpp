@@ -17,14 +17,15 @@
    Boston, MA 02110-1301, USA.
 */
 
+#include <kglobal.h>
+#include <kiconloader.h>
+
 #include <kaction.h>
 #include <kstdaction.h>
-#include <kiconloader.h>
 #include <klocale.h>
 #include <kprocess.h>
 #include <kpopupmenu.h>
 #include <kapp.h>
-#include <kglobal.h>
 #include <kconfig.h>
 #include <kdebug.h>
 #include <ksystemtray.h>
@@ -106,7 +107,9 @@ void MainWindow::slotConfigChanged()
 //Build GUI, setup system tray and hide GUI initially.
 void MainWindow::initGUI()
 {
-	
+	KIconLoader *loader = KGlobal::iconLoader();
+	setIcon(loader->loadIcon(PROGRAM_NAME, KIcon::Small));
+  
 	mainBox = new QVBoxLayout(this);
 	header = new HeaderWidget(this);
 	updateList = new QListView(this);
@@ -114,7 +117,8 @@ void MainWindow::initGUI()
 	
   configureButton = new KPushButton(i18n("Add/Remove Update Sources..."), this);
   cancelButton = new KPushButton(KStdGuiItem::cancel(), this);
-  installButton = new KPushButton(i18n("Install"), this);
+  installButton = new KPushButton(KStdGuiItem::ok(), this);
+  installButton->setText(i18n("Install"));
   
   if ( _caps.canSelectIndividualUpdates )
   {
@@ -125,6 +129,7 @@ void MainWindow::initGUI()
   {
     selectAllButton = 0L;
 	  clearSelectionButton = 0L;
+    updateList->setSelectionMode ( QListView::NoSelection );
   }
    
 	
