@@ -326,7 +326,7 @@ void ZYppUpdater::startInstall()
   }
   
   _you_process = new KProcess;
-  *_you_process << "opensuseupdater-su" << "-c" << "yast2 online_update";
+  *_you_process << "opensuseupdater-su" << "-c" << "/sbin/yast2 online_update";
 
   connect( _you_process, SIGNAL( processExited( KProcess * ) ),
            SLOT( slotYOUProcessExited( KProcess * ) ) );
@@ -341,7 +341,7 @@ void ZYppUpdater::startInstall()
 void ZYppUpdater::configureUpdater()
 {
 	KProcess *inst_source = new KProcess;
-  *inst_source << "opensuseupdater-su" << "-c" << "yast2 inst_source";
+  *inst_source << "opensuseupdater-su" << "-c" << "/sbin/yast2 inst_source";
 
   connect( inst_source, SIGNAL( processExited( KProcess * ) ),
            SLOT( slotInstSourceProcessExited( KProcess * ) ) );
