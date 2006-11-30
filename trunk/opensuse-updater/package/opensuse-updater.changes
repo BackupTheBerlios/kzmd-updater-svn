@@ -1,7 +1,7 @@
 -------------------------------------------------------------------
 Thu Nov 30 16:01:41 CET 2006 - dmacvicar@suse.de
 
-- Use portland to launch yast (#224566)
+- Use xfg-su copy to launch yast (#224566)
 - disable selection of updates for backends
   which don't support it (ie: zypp)
 - fix iconname in specfile

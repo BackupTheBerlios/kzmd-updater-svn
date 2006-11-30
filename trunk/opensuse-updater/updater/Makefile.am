@@ -36,6 +36,8 @@ KDE_ICON = AUTO
 desktopdir   = $(kde_appsdir)/Utilities
 desktop_DATA = opensuseupdater.desktop
 
+bin_SCRIPTS = opensuseupdater-su
+
 install-data-local:
 	$(mkinstalldirs) $(DESTDIR)/$(prefix)/bin
 	$(INSTALL_DATA) $(srcdir)/zmd/kzmd-auth-user.sh \
