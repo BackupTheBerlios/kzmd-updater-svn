@@ -31,7 +31,7 @@ TrayIcon::TrayIcon(QWidget *parent) : KSystemTray(parent),
 																			appletState(APPLET_NO_UPDATES) {
 	KIconLoader iconLoader(PROGRAM_NAME);
 
-	setPixmap(UserIcon(TRAY_ICON_GREEN));
+	setPixmap(loadIcon(TRAY_ICON_GREEN));
 	setScaledContents(true);
 	setState(APPLET_NO_UPDATES);
   kdDebug() << "Tray Icon ready" << endl;

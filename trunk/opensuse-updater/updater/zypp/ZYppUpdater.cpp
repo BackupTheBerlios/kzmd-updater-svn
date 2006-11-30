@@ -326,7 +326,7 @@ void ZYppUpdater::startInstall()
   }
   
   _you_process = new KProcess;
-  *_you_process << "kdesu" << "yast2" << "online_update";
+  *_you_process << "xdg-open" << "/usr/share/applications/YaST2/online_update.desktop";
 
   connect( _you_process, SIGNAL( processExited( KProcess * ) ),
            SLOT( slotYOUProcessExited( KProcess * ) ) );
@@ -341,7 +341,7 @@ void ZYppUpdater::startInstall()
 void ZYppUpdater::configureUpdater()
 {
 	KProcess *inst_source = new KProcess;
-  *inst_source << "kdesu" << "yast2" << "inst_source";
+  *inst_source << "xdg-open" << "/usr/share/applications/YaST2/sw_source.desktop";
 
   connect( inst_source, SIGNAL( processExited( KProcess * ) ),
            SLOT( slotInstSourceProcessExited( KProcess * ) ) );

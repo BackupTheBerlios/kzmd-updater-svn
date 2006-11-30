@@ -21,7 +21,7 @@
 #define _CONSTANTS_H_
 
 #define PROGRAM_NAME "opensuseupdater"
-#define VERSION "0.333"
+#define VERSION "0.4"
 
 #define TRAY_ICON_GREEN "opensuseupdater_green"
 #define TRAY_ICON_RED	"opensuseupdater_red"
@@ -37,7 +37,7 @@ enum { 	BACKEND_ZMD, /** ZMD **/
 				BACKEND_SMART, /** SMART **/
 };
 
-//ZYPP and SMART don't actually exist at this point by the way...
+// SMART doesn't actually exist at this point by the way...
 
 #endif
 
