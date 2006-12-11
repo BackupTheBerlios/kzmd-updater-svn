@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Mon Dec 11 16:55:56 CET 2006 - dmacvicar@suse.de
+
+- fix yast paths (#224566 - reopened)
+- add basic infrastructure for cleanup at exit, not done yet
+- r494
+-------------------------------------------------------------------
 Thu Nov 30 16:01:41 CET 2006 - dmacvicar@suse.de
 
 - Use xfg-su copy to launch yast (#224566)
