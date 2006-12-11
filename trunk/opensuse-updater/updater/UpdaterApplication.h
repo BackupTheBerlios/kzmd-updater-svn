@@ -46,6 +46,9 @@ class UpdaterApplication : public KUniqueApplication {
 		UpdaterApplication();
 		~UpdaterApplication();
 
+    
+  signals:
+    void shutdown();
 	private:
 
 		MainWindow *main;

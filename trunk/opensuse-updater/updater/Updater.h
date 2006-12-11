@@ -64,7 +64,12 @@ class Updater : public QObject
 			Used by GUI to retrieve updater capabilities
 		**/
 		virtual UpdaterCapabilities capabilities() = 0;
-    
+  
+     /**
+     * this is called when the updater is going to quit so the
+     * backend can do cleanup
+     */
+    virtual void shutdown() = 0;
 	signals:
     /** This is a signal sent to the MainWindow class. 
 			It tells the applet whether the backend is ready
@@ -167,8 +172,7 @@ class Updater : public QObject
 			@param item the QListViewItem currently selected.
 			@param point where to show the menu.
 		**/
-		virtual void updateMenu(QListViewItem *item, const QPoint &point) = 0;
-
+		virtual void updateMenu(QListViewItem *item, const QPoint &point) = 0; 
 };
 
 #endif

@@ -217,6 +217,10 @@ bool ZYppUpdater::networkOnline() const
   
 }
 
+void ZYppUpdater::shutdown()
+{
+
+}
 
 void ZYppUpdater::doCheckForUpdates()
 {

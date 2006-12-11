@@ -96,7 +96,11 @@ UpdaterApplication::UpdaterApplication() : KUniqueApplication(true,true,false)
 
 }
 
-UpdaterApplication::~UpdaterApplication() {
+UpdaterApplication::~UpdaterApplication()
+{
+  if ( updater )
+    updater->shutdown();
+  
 	delete main;
 	delete updater;
 }

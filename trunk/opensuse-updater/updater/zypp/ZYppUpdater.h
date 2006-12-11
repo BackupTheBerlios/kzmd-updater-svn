@@ -69,7 +69,8 @@ class ZYppUpdater : public Updater, public QXmlDefaultHandler
 
 		ZYppUpdater();
   virtual UpdaterCapabilities capabilities();
-  
+  virtual void shutdown();
+    
       // QXmlDefaultHandler implementation
   virtual bool startDocument();
   virtual bool endDocument();

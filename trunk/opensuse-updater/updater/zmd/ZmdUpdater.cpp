@@ -89,6 +89,11 @@ UpdaterCapabilities ZmdUpdater::capabilities()
   return caps;
 }
 
+void ZmdUpdater::shutdown()
+{
+
+}
+
 /********************************************************************
 
 	Slots recieving signals from the mainwindow

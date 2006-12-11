@@ -68,7 +68,7 @@ public:
   ZmdUpdater();
 
   virtual UpdaterCapabilities capabilities();
-
+  virtual void shutdown();
 private slots:
 
   //Slots implemented from Updater abstract class
