@@ -1,0 +1,162 @@
+# Copyright (C) 2006 SuSE Linux Products GmbH, Nuernberg
+# This file is distributed under the same license as the package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: opensuseupdater\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-10-26 11:26+0200\n"
+"PO-Revision-Date: 2006-11-06 13:58\n"
+"Last-Translator: Novell Language <language@novell.com>\n"
+"Language-Team: Novell Language <language@novell.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: MainWindow.cpp:95 MainWindow.cpp:179
+msgid "Add/Remove Update Sources..."
+msgstr "Adicionar/Remover Origens de Atualização..."
+
+#: MainWindow.cpp:97
+msgid "Install"
+msgstr "Instalar"
+
+#: MainWindow.cpp:102
+msgid "Clear Selection"
+msgstr "Limpar Seleção"
+
+#: MainWindow.cpp:143
+msgid "<b>Available Updates:</b><br> The following are software upgrades and patches to add features and fix bugs.<br>"
+msgstr "<b>Atualizações Disponíveis:</b><br> Os itens a seguir são upgrades e patches de software para adicionar recursos e corrigir bugs.<br>"
+
+#: MainWindow.cpp:145
+msgid "Name"
+msgstr "Nome"
+
+#: MainWindow.cpp:147
+msgid "Type"
+msgstr "Tipo"
+
+#: MainWindow.cpp:148
+msgid "New Version"
+msgstr "Nova Versão"
+
+#: MainWindow.cpp:149
+msgid "Catalog"
+msgstr "Catálogo"
+
+#: MainWindow.cpp:170
+msgid "Available Updates"
+msgstr "Atualizações Disponíveis"
+
+#: MainWindow.cpp:178
+msgid "Configure Applet..."
+msgstr "Configurar Applet..."
+
+#: MainWindow.cpp:296
+msgid "General"
+msgstr "Geral"
+
+#: TrayIcon.cpp:49
+msgid "Checking for updates..."
+msgstr "Verificando atualizações..."
+
+#: TrayIcon.cpp:53
+msgid "Error:\n"
+msgstr "Erro:\n"
+
+#: TrayIcon.cpp:57
+msgid "No Updates Available"
+msgstr "Nenhuma Atualização Disponível"
+
+#: TrayIcon.cpp:63
+msgid " Update Available"
+msgstr " Atualização Disponível"
+
+#: TrayIcon.cpp:64
+msgid " Updates Available"
+msgstr " Atualizações Disponíveis"
+
+#: TrayIcon.cpp:70
+msgid " Important Update Available"
+msgstr " Atualização Importante Disponível"
+
+#: TrayIcon.cpp:71
+msgid " Important Updates Available"
+msgstr " Atualizações Importantes Disponíveis"
+
+#: _translatorinfo.cpp:1
+msgid ""
+"_: NAME OF TRANSLATORS\n"
+"Your names"
+msgstr ""
+"_: NOME DOS TRADUTORES\n"
+"Seus nomes"
+
+#: _translatorinfo.cpp:3
+msgid ""
+"_: EMAIL OF TRANSLATORS\n"
+"Your emails"
+msgstr ""
+"_: E-MAIL DOS TRADUTORES\n"
+"Seus e-mails"
+
+#. i18n: file updatersettingswidget_base.ui line 16
+#: rc.cpp:3 updatersettingswidget_base.cpp:75
+#, no-c-format
+msgid "Form1"
+msgstr "Form1"
+
+#. i18n: file updatersettingswidget_base.ui line 27
+#: rc.cpp:6 updatersettingswidget_base.cpp:76
+#, no-c-format
+msgid "Check For Updates Every "
+msgstr "Verificar Atualizações a Cada "
+
+#. i18n: file updatersettingswidget_base.ui line 30
+#: rc.cpp:9 updatersettingswidget_base.cpp:77
+#, no-c-format
+msgid " Minutes"
+msgstr " Minutos"
+
+#. i18n: file updatersettingswidget_base.ui line 38
+#: rc.cpp:12 updatersettingswidget_base.cpp:78
+#, no-c-format
+msgid "Automa&tically start updater on login"
+msgstr "Iniciar automa&ticamente o atualizador no login"
+
+#. i18n: file updatersettingswidget_base.ui line 41
+#: rc.cpp:15 updatersettingswidget_base.cpp:79
+#, no-c-format
+msgid "Alt+T"
+msgstr "Alt+T"
+
+#. i18n: file updatersettingswidget_base.ui line 49
+#: rc.cpp:18 updatersettingswidget_base.cpp:80
+#, no-c-format
+msgid "Get Updates Via"
+msgstr "Obter Atualizações Via"
+
+#. i18n: file updatersettingswidget_base.ui line 68
+#: rc.cpp:24 updatersettingswidget_base.cpp:82
+#, no-c-format
+msgid "Novell ZENWorks"
+msgstr "Novell ZENWorks"
+
+#. i18n: file opensuseupdater_settings.kcfg line 7
+#: rc.cpp:27
+#, no-c-format
+msgid "How often to check for updates."
+msgstr "Freqüência da verificação de atualizações."
+
+#. i18n: file opensuseupdater_settings.kcfg line 11
+#: rc.cpp:30
+#, no-c-format
+msgid "Automatically start the applet on login"
+msgstr "Iniciar o applet automaticamente no login"
+
+#. i18n: file opensuseupdater_settings.kcfg line 15
+#: rc.cpp:33
+#, no-c-format
+msgid "Width of the main window."
+msgstr "Largura da janela principal."

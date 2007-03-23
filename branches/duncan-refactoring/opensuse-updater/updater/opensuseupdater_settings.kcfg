@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE kcfg SYSTEM "http://www.kde.org/standards/kcfg/1.0/kcfg.dtd">
+<kcfg> 
+  <kcfgfile name="opensuseupdaterrc"/> 
+  <group name="General"> 
+    <entry name="Interval" type="Int"> 
+      <label>How often to check for updates.</label>
+      <default>24</default>
+    </entry>
+    <entry name="Autostart" type="Bool"> 
+      <label>Automatically start the applet on login</label>
+      <default>true</default>
+    </entry> 
+    <entry name="Backend" type="Enum"> 
+      <label>Update engine backend</label> 
+      <choices>
+        <choice name="zypp"/>
+        <choice name="zmd"/>
+      </choices>
+      <default>zypp</default>
+    </entry> 
+  </group> 
+</kcfg>

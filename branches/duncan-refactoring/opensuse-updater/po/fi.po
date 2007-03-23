@@ -1,0 +1,165 @@
+# translation of opensuseupdater.po to
+# @TITLE@
+# Copyright (C) 2006, SUSE Linux GmbH, Nuremberg
+#
+# This file is distributed under the same license as @PACKAGE@ package. FIRST
+#
+# Jyri Palokangas <jmp@netti.fi>, 2006.
+# Ari Österholm <ari.osterholm@nbl.fi>, 2006.
+msgid ""
+msgstr ""
+"Project-Id-Version: opensuseupdater\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-10-26 11:26+0200\n"
+"PO-Revision-Date: 2006-10-31 20:41+0200\n"
+"Last-Translator: Ari Österholm <ari.osterholm@nbl.fi>\n"
+"Language-Team:  <fi@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+
+#: MainWindow.cpp:95 MainWindow.cpp:179
+msgid "Add/Remove Update Sources..."
+msgstr "Lisää/poista päivityslähteitä..."
+
+#: MainWindow.cpp:97
+msgid "Install"
+msgstr "Asenna"
+
+#: MainWindow.cpp:102
+msgid "Clear Selection"
+msgstr "Tyhjennä valinnat"
+
+#: MainWindow.cpp:143
+msgid "<b>Available Updates:</b><br> The following are software upgrades and patches to add features and fix bugs.<br>"
+msgstr "<b>Saatavilla olevat päivitykset:</b><br> Seuraavat ovat ohjelmistopäivityksiä ja korjauksia, jotka lisäävät ominaisuuksia ja korjaavat virheitä.<br>"
+
+#: MainWindow.cpp:145
+msgid "Name"
+msgstr "Nimi"
+
+#: MainWindow.cpp:147
+msgid "Type"
+msgstr "Tyyppi"
+
+#: MainWindow.cpp:148
+msgid "New Version"
+msgstr "Uusi versio"
+
+#: MainWindow.cpp:149
+msgid "Catalog"
+msgstr "Pakettiluettelo"
+
+#: MainWindow.cpp:170
+msgid "Available Updates"
+msgstr "Saatavilla olevat päivitykset"
+
+#: MainWindow.cpp:178
+msgid "Configure Applet..."
+msgstr "Määritä sovelma..."
+
+#: MainWindow.cpp:296
+msgid "General"
+msgstr "Yleistä"
+
+#: TrayIcon.cpp:49
+msgid "Checking for updates..."
+msgstr "Tarkistetaan päivityksiä..."
+
+#: TrayIcon.cpp:53
+msgid "Error:\n"
+msgstr "Virhe:\n"
+
+#: TrayIcon.cpp:57
+msgid "No Updates Available"
+msgstr "Ei päivityksiä saatavilla."
+
+#: TrayIcon.cpp:63
+msgid " Update Available"
+msgstr " päivitys saatavilla"
+
+#: TrayIcon.cpp:64
+msgid " Updates Available"
+msgstr " päivitystä saatavilla"
+
+#: TrayIcon.cpp:70
+msgid " Important Update Available"
+msgstr " Tärkeä päivitys saatavilla"
+
+#: TrayIcon.cpp:71
+msgid " Important Updates Available"
+msgstr " Tärkeitä päivityksiä saatavilla."
+
+#: _translatorinfo.cpp:1
+msgid ""
+"_: NAME OF TRANSLATORS\n"
+"Your names"
+msgstr "Jyri Palokangas <jmp@netti.fi>,<br>Janne Ahlskog,<br>Erkka Hakkarainen,<br>Tom Himanen,<br>Jani-Matti Hätinen,<br>Jouni Hätinen,<br>Asko Isonokari,<br>Joonas Niilola <juippis@roskakori.org>,<br>Ilkka Pirskanen <upylkkanen@novell.com>,<br>Ulla Pylkkänen,<br>Jami Saarikoski <jami.saarikoski@gmail.com>,<br>Janne Tanskanen,<br>Jarno Tukiainen,<br>Ilkka Tuohela,<br>Juho Valkila,<br>Postituslista <yast-trans-fi@kotoistaminen.novell.fi>"
+
+#: _translatorinfo.cpp:3
+msgid ""
+"_: EMAIL OF TRANSLATORS\n"
+"Your emails"
+msgstr "Postituslista <yast-trans-fi@kotoistaminen.novell.fi>"
+
+#. i18n: file updatersettingswidget_base.ui line 16
+#: rc.cpp:3 updatersettingswidget_base.cpp:75
+#, no-c-format
+msgid "Form1"
+msgstr "Form1"
+
+#. i18n: file updatersettingswidget_base.ui line 27
+#: rc.cpp:6 updatersettingswidget_base.cpp:76
+#, no-c-format
+msgid "Check For Updates Every "
+msgstr "Tarkista päivitykset joka "
+
+#. i18n: file updatersettingswidget_base.ui line 30
+#: rc.cpp:9 updatersettingswidget_base.cpp:77
+#, no-c-format
+msgid " Minutes"
+msgstr " minuutti"
+
+#. i18n: file updatersettingswidget_base.ui line 38
+#: rc.cpp:12 updatersettingswidget_base.cpp:78
+#, no-c-format
+msgid "Automa&tically start updater on login"
+msgstr "Käynnistä ohjelmistonpäivittäjä automaattisesti kirjautumisen yhteydessä"
+
+#. i18n: file updatersettingswidget_base.ui line 41
+#: rc.cpp:15 updatersettingswidget_base.cpp:79
+#, no-c-format
+msgid "Alt+T"
+msgstr "Alt+T"
+
+#. i18n: file updatersettingswidget_base.ui line 49
+#: rc.cpp:18 updatersettingswidget_base.cpp:80
+#, no-c-format
+msgid "Get Updates Via"
+msgstr "Hae päivitykset käyttämällä"
+
+#. i18n: file updatersettingswidget_base.ui line 68
+#: rc.cpp:24 updatersettingswidget_base.cpp:82
+#, no-c-format
+msgid "Novell ZENWorks"
+msgstr "Novell ZENWorks"
+
+#. i18n: file opensuseupdater_settings.kcfg line 7
+#: rc.cpp:27
+#, no-c-format
+msgid "How often to check for updates."
+msgstr "Kuinka usein päivityksien tarkistus tulisi tehdä."
+
+#. i18n: file opensuseupdater_settings.kcfg line 11
+#: rc.cpp:30
+#, no-c-format
+msgid "Automatically start the applet on login"
+msgstr "Käynnistä sovelma automaattisesti kirjautumisen yhteydessä"
+
+#. i18n: file opensuseupdater_settings.kcfg line 15
+#: rc.cpp:33
+#, no-c-format
+msgid "Width of the main window."
+msgstr "Pääikkunan leveys."
+

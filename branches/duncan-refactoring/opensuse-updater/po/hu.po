@@ -1,0 +1,170 @@
+# translation of opensuseupdater.po to
+# translation of opensuseupdater.hu.po to
+# @TITLE@
+# Copyright (C) 2006, SUSE Linux GmbH, Nuremberg
+#
+# This file is distributed under the same license as @PACKAGE@ package. FIRST
+#
+# Kalman Kemenczy <kkemenczy@novell.com>, 2006.
+msgid ""
+msgstr ""
+"Project-Id-Version: opensuseupdater\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-10-26 11:26+0200\n"
+"PO-Revision-Date: 2006-11-13 18:36+0100\n"
+"Last-Translator: \n"
+"Language-Team:  <hu@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+
+#: MainWindow.cpp:95 MainWindow.cpp:179
+msgid "Add/Remove Update Sources..."
+msgstr "Frissítési forrás hozzáadása/eltávolítása..."
+
+#: MainWindow.cpp:97
+msgid "Install"
+msgstr "Telepítés"
+
+#: MainWindow.cpp:102
+msgid "Clear Selection"
+msgstr "Kiválasztások törlése"
+
+#: MainWindow.cpp:143
+msgid "<b>Available Updates:</b><br> The following are software upgrades and patches to add features and fix bugs.<br>"
+msgstr "<b>Elérhető frissítések:</b><br> Az alábbiakban felsorolt javítások és frissítések érhetők el.<br>"
+
+#: MainWindow.cpp:145
+msgid "Name"
+msgstr "Név"
+
+#: MainWindow.cpp:147
+msgid "Type"
+msgstr "Típus"
+
+#: MainWindow.cpp:148
+msgid "New Version"
+msgstr "Új verzió"
+
+#: MainWindow.cpp:149
+msgid "Catalog"
+msgstr "Katalógus"
+
+#: MainWindow.cpp:170
+msgid "Available Updates"
+msgstr "Rendelkezésre álló frissítések"
+
+#: MainWindow.cpp:178
+msgid "Configure Applet..."
+msgstr "Kisalkalmazás beállítása..."
+
+#: MainWindow.cpp:296
+msgid "General"
+msgstr "Általános"
+
+#: TrayIcon.cpp:49
+msgid "Checking for updates..."
+msgstr "Frissítések keresése..."
+
+#: TrayIcon.cpp:53
+msgid "Error:\n"
+msgstr "Hiba:\n"
+
+#: TrayIcon.cpp:57
+msgid "No Updates Available"
+msgstr "Nem találhatók frissítések."
+
+#: TrayIcon.cpp:63
+msgid " Update Available"
+msgstr " elérhető frissítés van"
+
+#: TrayIcon.cpp:64
+msgid " Updates Available"
+msgstr " van elérhető frissítés"
+
+#: TrayIcon.cpp:70
+msgid " Important Update Available"
+msgstr " Fontos frissítések érhetők el"
+
+#: TrayIcon.cpp:71
+msgid " Important Updates Available"
+msgstr " Fontos frissítések érhetők el"
+
+#: _translatorinfo.cpp:1
+msgid ""
+"_: NAME OF TRANSLATORS\n"
+"Your names"
+msgstr ""
+"_: NAME OF TRANSLATORS\n"
+"Szabolcs Varga"
+
+#: _translatorinfo.cpp:3
+msgid ""
+"_: EMAIL OF TRANSLATORS\n"
+"Your emails"
+msgstr ""
+"_: EMAIL OF TRANSLATORS\n"
+"shirokuma@shirokuma.hu"
+
+#. i18n: file updatersettingswidget_base.ui line 16
+#: rc.cpp:3 updatersettingswidget_base.cpp:75
+#, no-c-format
+msgid "Form1"
+msgstr "Form1"
+
+#. i18n: file updatersettingswidget_base.ui line 27
+#: rc.cpp:6 updatersettingswidget_base.cpp:76
+#, no-c-format
+msgid "Check For Updates Every "
+msgstr "Frissítések keresése minden"
+
+# 49593 AttribValues/label
+#. i18n: file updatersettingswidget_base.ui line 30
+#: rc.cpp:9 updatersettingswidget_base.cpp:77
+#, no-c-format
+msgid " Minutes"
+msgstr " percben"
+
+#. i18n: file updatersettingswidget_base.ui line 38
+#: rc.cpp:12 updatersettingswidget_base.cpp:78
+#, no-c-format
+msgid "Automa&tically start updater on login"
+msgstr "A szoftverfrissítő automatikus indítása bejelentkezéskor"
+
+#. i18n: file updatersettingswidget_base.ui line 41
+#: rc.cpp:15 updatersettingswidget_base.cpp:79
+#, no-c-format
+msgid "Alt+T"
+msgstr "Alt+T"
+
+#. i18n: file updatersettingswidget_base.ui line 49
+#: rc.cpp:18 updatersettingswidget_base.cpp:80
+#, no-c-format
+msgid "Get Updates Via"
+msgstr "Frissítés módja:"
+
+#. i18n: file updatersettingswidget_base.ui line 68
+#: rc.cpp:24 updatersettingswidget_base.cpp:82
+#, no-c-format
+msgid "Novell ZENWorks"
+msgstr "Novell ZENWorks"
+
+#. i18n: file opensuseupdater_settings.kcfg line 7
+#: rc.cpp:27
+#, no-c-format
+msgid "How often to check for updates."
+msgstr "Frissítések ellenőrzésének gyakorisága."
+
+#. i18n: file opensuseupdater_settings.kcfg line 11
+#: rc.cpp:30
+#, no-c-format
+msgid "Automatically start the applet on login"
+msgstr "A szoftverfrissítő automatikus indítása bejelentkezéskor"
+
+#. i18n: file opensuseupdater_settings.kcfg line 15
+#: rc.cpp:33
+#, no-c-format
+msgid "Width of the main window."
+msgstr "A főablak szélessége."
+

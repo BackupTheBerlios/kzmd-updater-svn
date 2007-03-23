@@ -1,0 +1,5 @@
+SUSE Updater 0.1
+Narayan Newton <narayannewton@gmail.com>
+----------------------------------------------------------------------
+
+This is a KDE updater applet for SUSE Linux. It currently supports the ZenWorks backend only, but should support multiple backends, including zypp and smart, in the future.

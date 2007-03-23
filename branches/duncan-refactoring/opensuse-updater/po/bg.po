@@ -1,0 +1,171 @@
+# @TITLE@
+# Copyright (C) 2006, SUSE Linux GmbH, Nuremberg
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+# This file is distributed under the same license as @PACKAGE@ package. FIRST
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: @PACKAGE@\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-10-26 11:26+0200\n"
+"PO-Revision-Date: 2006-11-09 18:30+0200\n"
+"Last-Translator: Borislav Mitev <morbid_viper@tkzs.org>\n"
+"Language-Team: Bulgarian <bg@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: MainWindow.cpp:95
+#: MainWindow.cpp:179
+msgid "Add/Remove Update Sources..."
+msgstr "Добавяне/Премахване на източници за обновления..."
+
+#: MainWindow.cpp:97
+msgid "Install"
+msgstr "Инсталиране"
+
+#: MainWindow.cpp:102
+msgid "Clear Selection"
+msgstr "Изчистване на подбора"
+
+#: MainWindow.cpp:143
+msgid "<b>Available Updates:</b><br> The following are software upgrades and patches to add features and fix bugs.<br>"
+msgstr "<b>Налични обновления:</b><br>Това са обновления на софтуера и кръпки, които добавят възможности или поправят грешки.<br>"
+
+#: MainWindow.cpp:145
+msgid "Name"
+msgstr "Име"
+
+#: MainWindow.cpp:147
+msgid "Type"
+msgstr "Тип"
+
+#: MainWindow.cpp:148
+msgid "New Version"
+msgstr "Нова версия"
+
+#: MainWindow.cpp:149
+msgid "Catalog"
+msgstr "Каталог"
+
+#: MainWindow.cpp:170
+msgid "Available Updates"
+msgstr "Налични кръпки"
+
+#: MainWindow.cpp:178
+msgid "Configure Applet..."
+msgstr "Настройка на аплет..."
+
+#: MainWindow.cpp:296
+msgid "General"
+msgstr "Общи"
+
+#: TrayIcon.cpp:49
+msgid "Checking for updates..."
+msgstr "Проверка за обновления..."
+
+#: TrayIcon.cpp:53
+msgid "Error:\n"
+msgstr "Грешка:\n"
+
+#: TrayIcon.cpp:57
+msgid "No Updates Available"
+msgstr "Няма налични обновления"
+
+#: TrayIcon.cpp:63
+msgid " Update Available"
+msgstr "Налично е обновление"
+
+#: TrayIcon.cpp:64
+msgid " Updates Available"
+msgstr "Налични са обновления"
+
+#: TrayIcon.cpp:70
+msgid " Important Update Available"
+msgstr "Налично е важно обновление"
+
+#: TrayIcon.cpp:71
+msgid " Important Updates Available"
+msgstr "Налични са важни обновления"
+
+#: _translatorinfo.cpp:1
+msgid ""
+"_: NAME OF TRANSLATORS\n"
+"Your names"
+msgstr "Borislav Mitev"
+
+#: _translatorinfo.cpp:3
+msgid ""
+"_: EMAIL OF TRANSLATORS\n"
+"Your emails"
+msgstr "morbid_viper@tkzs.org"
+
+#. i18n: file updatersettingswidget_base.ui line 16
+#: rc.cpp:3
+#: updatersettingswidget_base.cpp:75
+#, no-c-format
+msgid "Form1"
+msgstr "Форма1"
+
+#. i18n: file updatersettingswidget_base.ui line 27
+#: rc.cpp:6
+#: updatersettingswidget_base.cpp:76
+#, no-c-format
+msgid "Check For Updates Every "
+msgstr "Проверка за обновления на всеки"
+
+#. i18n: file updatersettingswidget_base.ui line 30
+#: rc.cpp:9
+#: updatersettingswidget_base.cpp:77
+#, no-c-format
+msgid " Minutes"
+msgstr "Минути"
+
+#. i18n: file updatersettingswidget_base.ui line 38
+#: rc.cpp:12
+#: updatersettingswidget_base.cpp:78
+#, no-c-format
+msgid "Automa&tically start updater on login"
+msgstr "Автоматично &зареждане на аплета при влизане"
+
+#. i18n: file updatersettingswidget_base.ui line 41
+#: rc.cpp:15
+#: updatersettingswidget_base.cpp:79
+#, no-c-format
+msgid "Alt+T"
+msgstr "Alt+T"
+
+#. i18n: file updatersettingswidget_base.ui line 49
+#: rc.cpp:18
+#: updatersettingswidget_base.cpp:80
+#, no-c-format
+msgid "Get Updates Via"
+msgstr "Сваляне на обновленя през"
+
+#. i18n: file updatersettingswidget_base.ui line 68
+#: rc.cpp:24
+#: updatersettingswidget_base.cpp:82
+#, no-c-format
+msgid "Novell ZENWorks"
+msgstr "Novell ZENWorks"
+
+#. i18n: file opensuseupdater_settings.kcfg line 7
+#: rc.cpp:27
+#, no-c-format
+msgid "How often to check for updates."
+msgstr "Колко често да се проверява за обновления."
+
+#. i18n: file opensuseupdater_settings.kcfg line 11
+#: rc.cpp:30
+#, no-c-format
+msgid "Automatically start the applet on login"
+msgstr "Автоматично зареждане на аплета при влизане"
+
+#. i18n: file opensuseupdater_settings.kcfg line 15
+#: rc.cpp:33
+#, no-c-format
+msgid "Width of the main window."
+msgstr "Ширина на главния прозорец."
+

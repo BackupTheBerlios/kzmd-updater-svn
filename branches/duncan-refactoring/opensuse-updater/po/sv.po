@@ -1,0 +1,168 @@
+# translation of opensuseupdater.po to Swedish
+# @TITLE@
+# Copyright (C) 2006, SUSE Linux GmbH, Nuremberg
+#
+# This file is distributed under the same license as @PACKAGE@ package. FIRST
+#
+# Mattias Newzella <newzella@linux.se>, 2006.
+msgid ""
+msgstr ""
+"Project-Id-Version: opensuseupdater\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-10-26 11:26+0200\n"
+"PO-Revision-Date: 2006-11-16 18:44+0100\n"
+"Last-Translator: Mattias Newzella <newzella@linux.se>\n"
+"Language-Team: Swedish <sv@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: MainWindow.cpp:95 MainWindow.cpp:179
+msgid "Add/Remove Update Sources..."
+msgstr "Lägg till/ta bort uppdateringskällor..."
+
+#: MainWindow.cpp:97
+msgid "Install"
+msgstr "Installera"
+
+#: MainWindow.cpp:102
+msgid "Clear Selection"
+msgstr "Rensa markering"
+
+#: MainWindow.cpp:143
+msgid "<b>Available Updates:</b><br> The following are software upgrades and patches to add features and fix bugs.<br>"
+msgstr "<b>Tillgängliga uppdateringar:</b><br> Följande är programuppdateringar och programfixar som lägger till funktioner och korrigerar fel.<br>"
+
+#: MainWindow.cpp:145
+msgid "Name"
+msgstr "Namn"
+
+#: MainWindow.cpp:147
+msgid "Type"
+msgstr "Typ"
+
+#: MainWindow.cpp:148
+msgid "New Version"
+msgstr "Ny version"
+
+#: MainWindow.cpp:149
+msgid "Catalog"
+msgstr "Katalog"
+
+#: MainWindow.cpp:170
+msgid "Available Updates"
+msgstr "Tillgängliga uppdateringar"
+
+#: MainWindow.cpp:178
+msgid "Configure Applet..."
+msgstr "Ställ in miniprogram..."
+
+#: MainWindow.cpp:296
+msgid "General"
+msgstr "Allmänt"
+
+#: TrayIcon.cpp:49
+msgid "Checking for updates..."
+msgstr "Kontrollerar uppdateringar..."
+
+#: TrayIcon.cpp:53
+msgid "Error:\n"
+msgstr "Fel:\n"
+
+#: TrayIcon.cpp:57
+msgid "No Updates Available"
+msgstr "Inga uppdateringar tillgängliga"
+
+#: TrayIcon.cpp:63
+msgid " Update Available"
+msgstr " Uppdatering tillgänglig"
+
+#: TrayIcon.cpp:64
+msgid " Updates Available"
+msgstr " Uppdateringar tillgängliga"
+
+#: TrayIcon.cpp:70
+msgid " Important Update Available"
+msgstr " Viktig uppdatering tillgänglig"
+
+#: TrayIcon.cpp:71
+msgid " Important Updates Available"
+msgstr " Viktiga uppdateringar tillgängliga"
+
+#: _translatorinfo.cpp:1
+msgid ""
+"_: NAME OF TRANSLATORS\n"
+"Your names"
+msgstr "Mattias Newzella"
+
+#: _translatorinfo.cpp:3
+msgid ""
+"_: EMAIL OF TRANSLATORS\n"
+"Your emails"
+msgstr "newzella@linux.se"
+
+#. i18n: file updatersettingswidget_base.ui line 16
+#: rc.cpp:3 updatersettingswidget_base.cpp:75
+#, no-c-format
+msgid "Form1"
+msgstr "Form1"
+
+#. i18n: file updatersettingswidget_base.ui line 27
+#: rc.cpp:6 updatersettingswidget_base.cpp:76
+#, no-c-format
+msgid "Check For Updates Every "
+msgstr "Kontrollera efter uppdateringar var "
+
+#. i18n: file updatersettingswidget_base.ui line 30
+#: rc.cpp:9 updatersettingswidget_base.cpp:77
+#, no-c-format
+msgid " Minutes"
+msgstr " minuter"
+
+#. i18n: file updatersettingswidget_base.ui line 38
+#: rc.cpp:12 updatersettingswidget_base.cpp:78
+#, no-c-format
+msgid "Automa&tically start updater on login"
+msgstr "S&tarta uppdateraren automatiskt vid inloggning"
+
+#. i18n: file updatersettingswidget_base.ui line 41
+#: rc.cpp:15 updatersettingswidget_base.cpp:79
+#, no-c-format
+msgid "Alt+T"
+msgstr "Alt+T"
+
+#. i18n: file updatersettingswidget_base.ui line 49
+#: rc.cpp:18 updatersettingswidget_base.cpp:80
+#, no-c-format
+msgid "Get Updates Via"
+msgstr "Hämta uppdateringar via"
+
+#. i18n: file updatersettingswidget_base.ui line 68
+#: rc.cpp:24 updatersettingswidget_base.cpp:82
+#, no-c-format
+msgid "Novell ZENWorks"
+msgstr "Novell ZENWorks"
+
+#. i18n: file opensuseupdater_settings.kcfg line 7
+#: rc.cpp:27
+#, no-c-format
+msgid "How often to check for updates."
+msgstr "Hur ofta kontroll efter uppdateringar ska göras."
+
+#. i18n: file opensuseupdater_settings.kcfg line 11
+#: rc.cpp:30
+#, no-c-format
+msgid "Automatically start the applet on login"
+msgstr "Starta uppdateraren automatiskt vid inloggning"
+
+#. i18n: file opensuseupdater_settings.kcfg line 15
+#: rc.cpp:33
+#, no-c-format
+msgid "Width of the main window."
+msgstr "Bredd på huvudfönster."
+
+#~ msgid "<b>Configure The Updater:</b><br> Below you can select the updater you would  like to use and when we should check for updates<br><u>After switching backends, this applet must be restarted</u>"
+#~ msgstr "<b>Ställ in uppdateraren:</b><br> Nedan kan du välja uppdateraren du vill använda och när den ska kontrollera efter uppdateringar<br><u>Efter byte av motor måste det här miniprogrammet startas om</u>"
+

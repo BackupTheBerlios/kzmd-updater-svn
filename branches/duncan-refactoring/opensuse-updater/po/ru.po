@@ -1,0 +1,171 @@
+# translation of opensuseupdater.ru.po to Russian
+# @TITLE@
+# Copyright (C) 2006, SUSE Linux GmbH, Nuremberg
+#
+# This file is distributed under the same license as @PACKAGE@ package. FIRST
+#
+# Aleksey Osipov <aliks-os@yandex.ru>, 2006.
+msgid ""
+msgstr ""
+"Project-Id-Version: opensuseupdater.ru\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-10-26 11:26+0200\n"
+"PO-Revision-Date: 2006-11-03 11:57+0200\n"
+"Last-Translator: Aleksey Osipov <aliks-os@yandex.ru>\n"
+"Language-Team: Russian <i18n@suse.de>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: KBabel 1.11.2\n"
+
+#  radio button label
+#: MainWindow.cpp:95 MainWindow.cpp:179
+msgid "Add/Remove Update Sources..."
+msgstr "Добавить/Удалить источники обновления..."
+
+#: MainWindow.cpp:97
+msgid "Install"
+msgstr "Установить"
+
+#: MainWindow.cpp:102
+msgid "Clear Selection"
+msgstr "Очистить выбор"
+
+#: MainWindow.cpp:143
+msgid "<b>Available Updates:</b><br> The following are software upgrades and patches to add features and fix bugs.<br>"
+msgstr "<b>Доступные обновления:</b><br> Ниже указаны обновления и исправления, чтобы расширить возможности и исправить ошибки.<br>"
+
+#: MainWindow.cpp:145
+msgid "Name"
+msgstr "Имя"
+
+#: MainWindow.cpp:147
+msgid "Type"
+msgstr "Тип"
+
+#: MainWindow.cpp:148
+msgid "New Version"
+msgstr "Новая версия"
+
+#: MainWindow.cpp:149
+msgid "Catalog"
+msgstr "Каталог"
+
+#  frame label for global sharing check boxes
+#: MainWindow.cpp:170
+msgid "Available Updates"
+msgstr "Доступные обновления"
+
+#: MainWindow.cpp:178
+msgid "Configure Applet..."
+msgstr "Апплет конфигурации..."
+
+#: MainWindow.cpp:296
+msgid "General"
+msgstr "Общее"
+
+#: TrayIcon.cpp:49
+msgid "Checking for updates..."
+msgstr "Проверяются обновления..."
+
+#: TrayIcon.cpp:53
+msgid "Error:\n"
+msgstr "Ошибка:\n"
+
+#: TrayIcon.cpp:57
+msgid "No Updates Available"
+msgstr "Нет доступных обновлений"
+
+#: TrayIcon.cpp:63
+msgid " Update Available"
+msgstr "Есть обновление"
+
+#: TrayIcon.cpp:64
+msgid " Updates Available"
+msgstr "Есть обновления"
+
+#: TrayIcon.cpp:70
+msgid " Important Update Available"
+msgstr " Есть Важное обновление"
+
+#: TrayIcon.cpp:71
+msgid " Important Updates Available"
+msgstr " Есть Важные обновления"
+
+#: _translatorinfo.cpp:1
+msgid ""
+"_: NAME OF TRANSLATORS\n"
+"Your names"
+msgstr ""
+"_: Переводчики\n"
+"Алексей Осипов"
+
+#: _translatorinfo.cpp:3
+msgid ""
+"_: EMAIL OF TRANSLATORS\n"
+"Your emails"
+msgstr ""
+"_: EMAIL Переводчиков\n"
+"aliks-os@yandex.ru"
+
+#. i18n: file updatersettingswidget_base.ui line 16
+#: rc.cpp:3 updatersettingswidget_base.cpp:75
+#, no-c-format
+msgid "Form1"
+msgstr "Form1"
+
+#. i18n: file updatersettingswidget_base.ui line 27
+#: rc.cpp:6 updatersettingswidget_base.cpp:76
+#, no-c-format
+msgid "Check For Updates Every "
+msgstr "Проверять обновление каждые"
+
+#. i18n: file updatersettingswidget_base.ui line 30
+#: rc.cpp:9 updatersettingswidget_base.cpp:77
+#, no-c-format
+msgid " Minutes"
+msgstr "Минуты"
+
+#. i18n: file updatersettingswidget_base.ui line 38
+#: rc.cpp:12 updatersettingswidget_base.cpp:78
+#, no-c-format
+msgid "Automa&tically start updater on login"
+msgstr "Автоматически запускак обновитель при входе в систему"
+
+#. i18n: file updatersettingswidget_base.ui line 41
+#: rc.cpp:15 updatersettingswidget_base.cpp:79
+#, no-c-format
+msgid "Alt+T"
+msgstr "Alt+T"
+
+#. i18n: file updatersettingswidget_base.ui line 49
+#: rc.cpp:18 updatersettingswidget_base.cpp:80
+#, no-c-format
+msgid "Get Updates Via"
+msgstr "Получить обновления через"
+
+#. i18n: file updatersettingswidget_base.ui line 68
+#: rc.cpp:24 updatersettingswidget_base.cpp:82
+#, no-c-format
+msgid "Novell ZENWorks"
+msgstr "Novell ZENWorks"
+
+#. i18n: file opensuseupdater_settings.kcfg line 7
+#: rc.cpp:27
+#, no-c-format
+msgid "How often to check for updates."
+msgstr "Как часто проверять обновления."
+
+#. i18n: file opensuseupdater_settings.kcfg line 11
+#: rc.cpp:30
+#, no-c-format
+msgid "Automatically start the applet on login"
+msgstr "Автоматически запускать апплет при входе в систему"
+
+#. i18n: file opensuseupdater_settings.kcfg line 15
+#: rc.cpp:33
+#, no-c-format
+msgid "Width of the main window."
+msgstr "Ширина главного окна."
+

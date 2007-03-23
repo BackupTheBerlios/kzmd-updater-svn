@@ -1,0 +1,172 @@
+-------------------------------------------------------------------
+Mon Dec 11 16:55:56 CET 2006 - dmacvicar@suse.de
+
+- fix yast paths (#224566 - reopened)
+- add basic infrastructure for cleanup at exit, not done yet
+- r494
+-------------------------------------------------------------------
+Thu Nov 30 16:01:41 CET 2006 - dmacvicar@suse.de
+
+- Use xfg-su copy to launch yast (#224566)
+- disable selection of updates for backends
+  which don't support it (ie: zypp)
+- fix iconname in specfile
+- r492 
+
+-------------------------------------------------------------------
+Mon Nov 27 15:30:28 CET 2006 - dmacvicar@suse.de
+
+- enable install button when updates are available (#218182)
+- provide icon in various sizes, they doesn't look bad scaled now.
+- new busy icon, which look different than the not-found con.
+- r482 
+
+-------------------------------------------------------------------
+Fri Nov 24 13:58:45 CET 2006 - dmacvicar@suse.de
+
+- fix closeEvent, to not block logout if applet is maximized. 
+  Patch by wstephenson 
+- r474
+
+-------------------------------------------------------------------
+Thu Nov 23 15:13:06 CET 2006 - dmacvicar@suse.de
+
+- did the fix in wring desktop file
+- r472 
+
+-------------------------------------------------------------------
+Thu Nov 23 14:53:36 CET 2006 - dmacvicar@suse.de
+
+- applet opens its window on desktop login (#222478), real fix
+- r470 
+
+-------------------------------------------------------------------
+Tue Nov 21 17:58:51 CET 2006 - dmacvicar@suse.de
+
+- fix bug number in changes file for bug 222478 
+
+-------------------------------------------------------------------
+Tue Nov 21 17:02:24 CET 2006 - dmacvicar@suse.de
+
+- (#222553) opensuse-updater context menu mixed up
+- recycle strings for the passive popup. 
+- r467
+
+-------------------------------------------------------------------
+Mon Nov 20 18:28:54 CET 2006 - dmacvicar@suse.de
+
+- (#222554) opensuseupdater.desktop misspell and duplication
+- (#221850) passive notifications, patch by
+   Benjamin Weber <benji.weber@gmail.com>, thanks!
+- r465
+
+-------------------------------------------------------------------
+Mon Nov 20 17:35:36 CET 2006 - dmacvicar@suse.de
+
+- applet opens its window on desktop login (#222478)
+- show no updates icon (#222485)
+- new translations
+- r461
+
+-------------------------------------------------------------------
+Thu Nov 16 14:15:03 CET 2006 - dmacvicar@suse.de
+
+- Dont use xmlrpc over http, but direct to the socket.
+  (#218468). Zenworks backend working again.
+- r457
+
+-------------------------------------------------------------------
+Tue Nov 14 19:15:03 CET 2006 - dmacvicar@suse.de
+
+- fix autostart (#220209)
+- allow checking from the UI (#219954)
+- use KDE's network service to skip check if offline (#220193) 
+- r455
+
+-------------------------------------------------------------------
+Fri Nov 10 18:42:16 CET 2006 - dmacvicar@suse.de
+
+- new icons by the Interfaces and Applications team.
+- r452 
+
+-------------------------------------------------------------------
+Thu Nov  9 15:20:41 CET 2006 - dmacvicar@suse.de
+
+- fix message extraction
+- r450 
+
+-------------------------------------------------------------------
+Thu Nov  9 14:49:45 CET 2006 - dmacvicar@suse.de
+
+- Complain if can't launch the helper
+- Use plural and .arg() for translations
+- extract strings from ui fles
+- r448 
+
+-------------------------------------------------------------------
+Tue Nov  7 15:18:01 CET 2006 - dmacvicar@suse.de
+
+- add translations
+- r445 
+
+-------------------------------------------------------------------
+Fri Nov  3 17:01:48 CET 2006 - dmacvicar@suse.de
+
+- fix reading backend on startup
+- version 0.4
+- r442  
+
+-------------------------------------------------------------------
+Tue Oct 24 14:49:04 CEST 2006 - dmacvicar@suse.de
+
+- missing kcfg file in spec file 
+- r438
+
+-------------------------------------------------------------------
+Tue Oct 24 14:22:23 CEST 2006 - dmacvicar@suse.de
+
+- fixed tarball submission 
+
+-------------------------------------------------------------------
+Mon Oct 23 18:27:17 CEST 2006 - dmacvicar@suse.de
+
+- string fixes
+- Use KConfigXT and KConfigDialog instead of
+  a plain QWidget for general settings
+- r435 
+
+-------------------------------------------------------------------
+Thu Oct 19 16:54:27 CEST 2006 - dmacvicar@suse.de
+
+- show sources in list
+- show error descriptions 
+- r433
+
+-------------------------------------------------------------------
+Wed Oct 18 16:34:34 CEST 2006 - dmacvicar@suse.de
+
+- show the right status
+- r429
+
+-------------------------------------------------------------------
+Wed Oct 18 14:34:42 CEST 2006 - dmacvicar@suse.de
+
+- start the check at startup 
+- r423
+
+-------------------------------------------------------------------
+Thu Oct 12 18:27:55 CEST 2006 - dmacvicar@suse.de
+
+- revision 405 with support for direct system access
+  via zypp 
+
+-------------------------------------------------------------------
+Wed Aug 30 10:46:36 CEST 2006 - stbinner@suse.de
+
+- fix build
+
+-------------------------------------------------------------------
+Tue Aug 29 18:09:02 CEST 2006 - dmacvicar@suse.de
+
+- revision 390
+

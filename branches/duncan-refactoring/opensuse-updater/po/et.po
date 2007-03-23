@@ -1,0 +1,164 @@
+# translation of opensuseupdater.et.po to Estonian
+# translation of
+# Copyright (C) 2006 SUSE Linux Products GmbH.
+# Estonian message file for YaST2 (@memory@).
+#
+# Ain Vagula <avagula@gmail.com>, 2006.
+msgid ""
+msgstr ""
+"Project-Id-Version: opensuseupdater.et\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-10-26 11:26+0200\n"
+"PO-Revision-Date: 2006-10-26 15:56+0300\n"
+"Last-Translator: Ain Vagula <avagula@gmail.com>\n"
+"Language-Team: Estonian <et@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: KBabel 1.11.4\n"
+
+#: MainWindow.cpp:95 MainWindow.cpp:179
+msgid "Add/Remove Update Sources..."
+msgstr "Lisa/eemalda uuenduste allikas..."
+
+#: MainWindow.cpp:97
+msgid "Install"
+msgstr "Paigalda"
+
+#: MainWindow.cpp:102
+msgid "Clear Selection"
+msgstr "Puhasta valik"
+
+#: MainWindow.cpp:143
+msgid "<b>Available Updates:</b><br> The following are software upgrades and patches to add features and fix bugs.<br>"
+msgstr "<b>Saadaolevad uuendused:</b><br> Järgnevalt on toodud tarkvara uuendused ja paigad, mis lisavad funktsioone ja parandavad vigu.<br>"
+
+#: MainWindow.cpp:145
+msgid "Name"
+msgstr "Nimi"
+
+#: MainWindow.cpp:147
+msgid "Type"
+msgstr "Tüüp"
+
+#: MainWindow.cpp:148
+msgid "New Version"
+msgstr "Uus versioon"
+
+#: MainWindow.cpp:149
+msgid "Catalog"
+msgstr "Kataloog"
+
+#: MainWindow.cpp:170
+msgid "Available Updates"
+msgstr "Saadaolevad uuendused"
+
+#: MainWindow.cpp:178
+msgid "Configure Applet..."
+msgstr "Apleti häälestamine..."
+
+#: MainWindow.cpp:296
+msgid "General"
+msgstr "Üldine"
+
+#: TrayIcon.cpp:49
+msgid "Checking for updates..."
+msgstr "Uuenduste kontrollimine..."
+
+#: TrayIcon.cpp:53
+msgid "Error:\n"
+msgstr "Viga:\n"
+
+#: TrayIcon.cpp:57
+msgid "No Updates Available"
+msgstr "Uuendusi pole"
+
+#: TrayIcon.cpp:63
+msgid " Update Available"
+msgstr " uuendus on saadaval"
+
+#: TrayIcon.cpp:64
+msgid " Updates Available"
+msgstr " uuendust on saadaval"
+
+#: TrayIcon.cpp:70
+msgid " Important Update Available"
+msgstr " tähtis uuendus on saadaval"
+
+#: TrayIcon.cpp:71
+msgid " Important Updates Available"
+msgstr " tähtsat uuendust on saadaval"
+
+#: _translatorinfo.cpp:1
+msgid ""
+"_: NAME OF TRANSLATORS\n"
+"Your names"
+msgstr "Ain Vagula"
+
+#: _translatorinfo.cpp:3
+msgid ""
+"_: EMAIL OF TRANSLATORS\n"
+"Your emails"
+msgstr "avagula@gmail.com"
+
+#. i18n: file updatersettingswidget_base.ui line 16
+#: rc.cpp:3 updatersettingswidget_base.cpp:75
+#, no-c-format
+msgid "Form1"
+msgstr "Vorm1"
+
+#. i18n: file updatersettingswidget_base.ui line 27
+#: rc.cpp:6 updatersettingswidget_base.cpp:76
+#, no-c-format
+msgid "Check For Updates Every "
+msgstr "Uuenduste kontrollimise intervall: "
+
+#. i18n: file updatersettingswidget_base.ui line 30
+#: rc.cpp:9 updatersettingswidget_base.cpp:77
+#, no-c-format
+msgid " Minutes"
+msgstr " minutit"
+
+#. i18n: file updatersettingswidget_base.ui line 38
+#: rc.cpp:12 updatersettingswidget_base.cpp:78
+#, no-c-format
+msgid "Automa&tically start updater on login"
+msgstr "Uuendaja käivitatakse sisselogimisel automaatselt"
+
+#. i18n: file updatersettingswidget_base.ui line 41
+#: rc.cpp:15 updatersettingswidget_base.cpp:79
+#, no-c-format
+msgid "Alt+T"
+msgstr "Alt+T"
+
+#. i18n: file updatersettingswidget_base.ui line 49
+#: rc.cpp:18 updatersettingswidget_base.cpp:80
+#, no-c-format
+msgid "Get Updates Via"
+msgstr "Uuenduste hankimise viis:"
+
+#. i18n: file updatersettingswidget_base.ui line 68
+#: rc.cpp:24 updatersettingswidget_base.cpp:82
+#, no-c-format
+msgid "Novell ZENWorks"
+msgstr "Novelli ZENWorks"
+
+#. i18n: file opensuseupdater_settings.kcfg line 7
+#: rc.cpp:27
+#, no-c-format
+msgid "How often to check for updates."
+msgstr "Uuenduste kontrollimise intervall."
+
+#. i18n: file opensuseupdater_settings.kcfg line 11
+#: rc.cpp:30
+#, no-c-format
+msgid "Automatically start the applet on login"
+msgstr "Aplett käivitatakse sisselogimisel automaatselt"
+
+#. i18n: file opensuseupdater_settings.kcfg line 15
+#: rc.cpp:33
+#, no-c-format
+msgid "Width of the main window."
+msgstr "Põhiakna laius."
+
