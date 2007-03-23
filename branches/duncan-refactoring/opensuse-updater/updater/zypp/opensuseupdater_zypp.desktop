@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=ZYpp backend.
+Comment=ZYpp backend for openSUSE updater
+ServiceTypes=openSUSEUpdater/Backend
+Type=Service
+X-KDE-Library=opensuseupdater_zypp

@@ -23,6 +23,7 @@
 #include <kmessagebox.h>
 #include <kconfig.h>
 #include <kapp.h>
+#include <kgenericfactory.h>
 
 #include <qpopupmenu.h>
 
@@ -39,8 +40,16 @@
 #include "ZmdConfigWindow.h"
 #include "ZmdUpdateListItem.h"
 
-ZmdUpdater::ZmdUpdater() : Updater()
+K_EXPORT_COMPONENT_FACTORY( opensuseupdater_zmd, KGenericFactory<ZmdUpdater>( "opensuseupdater_zmd" ) )
+
+ZmdUpdater::ZmdUpdater(QObject *parent, const char* name, const QStringList&) : Updater(parent, name)
 {
+  //setInstance(KGenericFactory<ZmdUpdater>::instance());
+  //setXMLFile("plugindemo_capitalizeui.rc");
+
+  // For ease announce that we have been loaded.
+  kdDebug() << "ZmdUpdater plugin loaded" << endl;
+
 
   //Init and auth the core
   core = new ZmdUpdaterCore(this);
@@ -604,4 +613,3 @@ void ZmdUpdater::authorizeCore()
   }
   close(fd);
 }
-

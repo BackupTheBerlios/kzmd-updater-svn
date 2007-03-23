@@ -30,8 +30,6 @@
 
 **/
 
-
-
 KXmlRpcServer::KXmlRpcServer( const KURL &url, QObject *parent, const char *name ) : QObject( parent, name ) {
 
 	if ( url.isValid() )

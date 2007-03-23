@@ -1,0 +1,36 @@
+PROJECT(opensuseupdater-kde)
+
+FIND_PACKAGE(KDE3 REQUIRED)
+
+#CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/config.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config.h )
+
+# Get the kde3 dir. This is a bit tricky, i'm not sure how well
+# this works on other systems.
+STRING(REPLACE "/lib" "" KDE3_DIR ${KDE3_LIB_DIR})
+
+# TODO: INSTALL PREFIX. RIGHT NOW EVERYTHING IS INSTALLED IN $KDEDIR
+if(NOT CMAKE_INSTALL_PREFIX)
+  set(CMAKE_INSTALL_PREFIX ${KDE3_DIR})
+endif(NOT CMAKE_INSTALL_PREFIX)
+set(KDE3_KCFG_DIR ${CMAKE_INSTALL_PREFIX}/share/config.kcfg)
+set(KDE3_SERVICETYPES_DIR ${CMAKE_INSTALL_PREFIX}/share/servicetypes)
+set(KDE3_SERVICES_DIR ${CMAKE_INSTALL_PREFIX}/share/services)
+set(KDE3_XDG_APPS_DIR ${CMAKE_INSTALL_PREFIX}/share/applications/kde)
+set(KDE3_LIB_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/lib)
+set(KDE3_PLUGIN_INSTALL_DIR ${KDE3_LIB_INSTALL_DIR}/kde3)
+
+# tell cmake where to search for libraries:
+link_directories(${KDE3_LIB_DIR})
+
+
+ADD_SUBDIRECTORY( doc ) 
+ADD_SUBDIRECTORY( icons ) 
+ADD_SUBDIRECTORY( images ) 
+ADD_SUBDIRECTORY( kxmlrpcclient ) 
+ADD_SUBDIRECTORY( kzmdauthutil ) 
+ADD_SUBDIRECTORY( po ) 
+#ADD_SUBDIRECTORY( udshttp ) 
+ADD_SUBDIRECTORY( updater ) 
+
+INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${KDE3_INCLUDE_DIR} ${QT_INCLUDE_DIR}  )
+

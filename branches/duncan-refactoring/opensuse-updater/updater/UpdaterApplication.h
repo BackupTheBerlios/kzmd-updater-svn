@@ -45,14 +45,14 @@ class UpdaterApplication : public KUniqueApplication {
 
 		UpdaterApplication();
 		~UpdaterApplication();
-
-    
+    void loadPlugins();
+    void setupUpdater( Updater *updater );
   signals:
     void shutdown();
 	private:
 
-		MainWindow *main;
-		Updater *updater;
+		MainWindow *_main;
+		Updater *_updater;
 
 };
 

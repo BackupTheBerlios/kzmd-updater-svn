@@ -51,3 +51,5 @@ HeaderWidget::~HeaderWidget() {
 	delete pic;
 }
 
+#include "HeaderWidget.moc"
+

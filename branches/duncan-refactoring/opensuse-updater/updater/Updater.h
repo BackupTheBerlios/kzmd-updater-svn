@@ -53,13 +53,11 @@ enum {
 */
 class Updater : public QObject
 {
-
 	Q_OBJECT
-
 	public:
 
-		Updater() : QObject() {}
-
+		Updater( QObject *parent, const char* name=0 ) : QObject( parent, name ) {}
+    virtual ~Updater() {};
     /**
 			Used by GUI to retrieve updater capabilities
 		**/

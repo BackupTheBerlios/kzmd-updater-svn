@@ -76,3 +76,4 @@ void TrayIcon::setUpdates(int count) {
 	setState(appletState);
 }
 
+#include "TrayIcon.moc"

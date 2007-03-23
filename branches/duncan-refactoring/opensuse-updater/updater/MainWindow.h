@@ -20,6 +20,7 @@
 #ifndef _MAIN_WINDOW_H_
 #define _MAIN_WINDOW_H_
 
+#include <qobject.h>
 #include <kmainwindow.h>
 #include "UpdaterCapabilities.h"
 
@@ -67,9 +68,7 @@ enum {
 
 class MainWindow : public KMainWindow
 {
-
-	Q_OBJECT
-
+Q_OBJECT
 	public:
 
 		/**

@@ -60,13 +60,11 @@ enum {
 	*/
 class ZmdUpdater : public Updater
 {
-
   Q_OBJECT
-
 public:
 
-  ZmdUpdater();
-
+  ZmdUpdater( QObject *parent, const char* name,  const QStringList& );
+  virtual ~ZmdUpdater() {};
   virtual UpdaterCapabilities capabilities();
   virtual void shutdown();
 private slots:

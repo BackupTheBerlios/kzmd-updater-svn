@@ -422,3 +422,4 @@ void MainWindow::slotExit()
 	kapp->quit();
 }
 
+#include "MainWindow.moc"

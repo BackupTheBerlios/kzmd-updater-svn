@@ -62,12 +62,12 @@ typedef enum
 
 class ZYppUpdater : public Updater, public QXmlDefaultHandler
 {
-
 	Q_OBJECT
-
 	public:
 
-		ZYppUpdater();
+  ZYppUpdater( QObject *parent, const char* name, const QStringList&);
+  virtual ~ZYppUpdater() {};
+
   virtual UpdaterCapabilities capabilities();
   virtual void shutdown();
     

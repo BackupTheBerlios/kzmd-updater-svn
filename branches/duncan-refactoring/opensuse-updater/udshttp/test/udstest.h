@@ -7,15 +7,10 @@
 
 
 class UDSTest : public QObject {
-
 	Q_OBJECT
-
 	public:
-
 		UDSTest(QObject *parent=0);
-
 	private slots:
-
 		void slotData(KIO::Job *, const QByteArray&);
 		void slotResult(KIO::Job *);
 };

@@ -32,6 +32,7 @@
 #include <kglobal.h>
 #include <dcopclient.h>
 
+#include <kgenericfactory.h>
 #include <kprocess.h>
 #include <kdebug.h>
 #include <klocale.h>
@@ -65,8 +66,9 @@
 //  <update-summary total="2" security="1"/>
 // </update-status>
 
+K_EXPORT_COMPONENT_FACTORY( opensuseupdater_zypp, KGenericFactory<ZYppUpdater>( "opensuseupdater_zypp" ) )
 
-ZYppUpdater::ZYppUpdater() : Updater()
+ZYppUpdater::ZYppUpdater( QObject *parent, const char* name, const QStringList& ) : Updater( parent, name )
   , _process(0L)
   , _you_process(0L)
   , _state(Unknown)
@@ -76,6 +78,12 @@ ZYppUpdater::ZYppUpdater() : Updater()
   , _end_document_reached(false)
   , _error(false)
 {
+  //setInstance(KGenericFactory<ZYppUpdater>::instance());
+  //setXMLFile("plugindemo_capitalizeui.rc");
+
+  // For ease announce that we have been loaded.
+  kdDebug() << "ZmdUpdater plugin loaded" << endl;
+
   kdDebug() << "Initializing zypp backend" << endl;
   doCheckForUpdates();
 }
