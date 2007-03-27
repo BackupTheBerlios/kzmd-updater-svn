@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Tue Mar 27 14:54:07 CEST 2007 - dmacvicar@suse.de
+
+- remove some useless files from the tarbal
+- r500 
+
+-------------------------------------------------------------------
 Mon Dec 11 16:55:56 CET 2006 - dmacvicar@suse.de
 
 - fix yast paths (#224566 - reopened)
